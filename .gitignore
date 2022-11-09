@@ -1,0 +1,16 @@
+### 프로젝트 메인 디렉터리 관리.
+
+## 직무 디렉터리 관리 -> 직무군 별로 별도 설정?
+
+## 공용 개발 디렉터리
+.DS_store
+.README.md
+.env.config
+.idea
+/node_modules
+
+## FE 개발 디렉터리
+/Client
+
+## BE 개발 디렉터리
+/Server
