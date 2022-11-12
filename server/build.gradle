@@ -59,7 +59,7 @@ tasks.named('asciidoctor') {
 
 //@SpringBootApplication이 선언된 MainClass 설정
 bootJar {
-    mainClassName = 'seb.project.Codetech.CodetechApplication'
+    mainClass = 'seb.project.Codetech.CodetechApplication'
 }
 
 //profiles 설정
