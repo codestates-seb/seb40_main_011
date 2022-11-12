@@ -8,3 +8,5 @@
 .env.config
 .idea
 /node_modules
+
+application-prod.yml

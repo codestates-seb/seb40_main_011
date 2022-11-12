@@ -37,4 +37,5 @@ out/
 .vscode/
 
 ### 백엔드 설정 ###
-/Client
+/client
+application-prod.yml
