@@ -10,6 +10,6 @@ public class HelloController {
 
 	@GetMapping("/codetech")
 	public String hello() {
-		return "젠킨스 테스트 커밋 후 자동 빌드 성공!!!";
+		return "젠킨스 테스트 커밋 후 자동 빌드 성공!!!!!!!!";
 	}
 }
