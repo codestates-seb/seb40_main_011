@@ -10,7 +10,7 @@ jar {
 }
 
 group = 'seb.project'
-version = '0.0.3-SNAPSHOT' // 버전 관리는 큰 패치의 경우는 0.1.0 작은 리비전의 경우는 0.0.1 정식 빌드의 경우 1.0.0 으로 관리한다.
+version = '0.0.4-SNAPSHOT' // 버전 관리는 큰 패치의 경우는 0.1.0 작은 리비전의 경우는 0.0.1 정식 빌드의 경우 1.0.0 으로 관리한다.
 sourceCompatibility = '11'
 
 configurations {

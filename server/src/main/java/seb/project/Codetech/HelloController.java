@@ -10,6 +10,6 @@ public class HelloController {
 
 	@GetMapping("/codetech")
 	public String hello() {
-		return "codeTech is CI/CD run? ok change?";
+		return "codeTech is CI/CD run? ok change? 0.0.4";
 	}
 }
