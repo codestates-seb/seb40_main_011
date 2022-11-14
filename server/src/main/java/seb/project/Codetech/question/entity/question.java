@@ -17,11 +17,11 @@ import seb.project.Codetech.global.auditing.BaseTime;
 public class Question extends BaseTime {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long Id;
+	private Long id;
 
 	@Column
 	private Long pickId;
 
-	@Column(columnDefinition = "TEXT")
+	@Column(columnDefinition = "TEXT", nullable = false)
 	private String content;
 }
