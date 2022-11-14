@@ -4,7 +4,7 @@ import './App.css';
 function App() {
   const [data, setData] = useState(null);
   useEffect(() => {
-    fetch(`https://codetech.nworld.dev/codetech`)
+    fetch(`http://localhost:8080/codetech`)
       .then((res) => {
         if (!res.ok) {
           // error coming back from server
