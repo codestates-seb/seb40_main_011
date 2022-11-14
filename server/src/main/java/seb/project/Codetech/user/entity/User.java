@@ -44,10 +44,10 @@ public class User extends BaseTime {
     private String image;
 
     @Column(nullable = false)
-    private Long point;
+    private Long point = 0L;
 
     @Column(nullable = false)
-    private Boolean status;
+    private Boolean status = false;
 
     @OneToMany(mappedBy = "user")
     private List<Review> reviews = new ArrayList<>();
