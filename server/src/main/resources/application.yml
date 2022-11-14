@@ -2,7 +2,7 @@ spring:
   jpa:
     open-in-view: false
     hibernate:
-      ddl-auto: create # 경고 절대 다른 것으로 수정하지 마세요!!
+      ddl-auto: none # 경고 절대 다른 것으로 수정하지 마세요!!
     properties:
       hibernate:
         format_sql: true
