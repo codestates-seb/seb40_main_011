@@ -1,11 +1,19 @@
 package seb.project.Codetech.product.entity;
 
 public enum Type {
-	keyboard("키보드"), // 임시 사용을 위한 열거형 값
-	mouse("마우스"),
-	monitor("모니터"),
-	desktop("본체"),
-	notebook("노트북");
+	MONITOR("모니터"),
+	MOUSE("마우스"),
+	MIKE("마이크"),
+	KEYBOARD("키보드"),
+	SPEAKER("스피커"),
+	LAPTOP("랩탑"),
+	GAMEPAD("게임패드"),
+	TABLET("타플랫"),
+	MODEM("모뎀"),
+	HEADSET("해드셋"),
+	PHONE("핸드폰"),
+	LIGHTBAR("라이트바"),
+	WEBCAM("웹캠");
 
 	private final String value;
 

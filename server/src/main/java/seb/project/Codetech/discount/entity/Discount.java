@@ -1,10 +1,24 @@
 package seb.project.Codetech.discount.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
 import lombok.Getter;
 import lombok.Setter;
 import seb.project.Codetech.global.auditing.BaseTime;
-
-import javax.persistence.*;
+import seb.project.Codetech.product.entity.Type;
+import seb.project.Codetech.user.entity.User;
 
 @Getter
 @Setter
@@ -17,8 +31,11 @@ public class Discount extends BaseTime {
     @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false,columnDefinition = "TEXT")
+    @Column(nullable = false, columnDefinition = "MEDIUMTEXT")
     private String content;
+
+    @Column(nullable = false)
+    private Long view = 0L;
 
     @Column
     private String discountImg;
@@ -26,27 +43,25 @@ public class Discount extends BaseTime {
     @Column(nullable = false)
     private String link;
 
-    public enum Type {
-        MONITOR("모니터"),
-        MOUSE("마우스"),
-        MIKE("마이크"),
-        KEYBOARD("키보드"),
-        SPEAKER("스피커"),
-        LAPTOP("랩탑"),
-        GAMEPAD("게임패드"),
-        TABLET("타플랫"),
-        MODEM("모뎀"),
-        HEADSET("해드셋"),
-        PHONE("핸드폰"),
-        LIGHTBAR("라이트바"),
-        WEBCAM("웹캠");
-
-        private String type;
-
-        Type(String type){this.type = type;}
-    }
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Type type;
 
     @Column(nullable = false)
     private Boolean soldOut;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @OneToMany(mappedBy = "discount")
+    private List<DiscountComment> discountComment = new ArrayList<>();
+
+    public void setUser(User user) {
+        this.user = user;
+
+        if (!user.getDiscounts().contains(this)) {
+            user.getDiscounts().add(this);
+        }
+    }
 }
