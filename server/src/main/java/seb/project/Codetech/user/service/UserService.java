@@ -31,4 +31,26 @@ public class UserService {
         Optional<User> user = userRepository.findByEmail(email);
         if(user.isPresent()) throw new BusinessLogicException(ExceptionCode.USER_EXISTS);
     }
+
+    public User updateUser(User user, Long id){
+        User findUser = findVerifiedUser(user.getId());
+
+        Optional.ofNullable(user.getEmail()).ifPresent(findUser::setEmail);
+        Optional.ofNullable(user.getNickname()).ifPresent(findUser::setNickname);
+        Optional.ofNullable(user.getPassword()).ifPresent(findUser::setPassword);
+        Optional.ofNullable(user.getImage()).ifPresent(findUser::setImage);
+
+        return userRepository.save(findUser);
+    }
+
+    public Long findUserId(String email) {
+        Optional<User> optionalUser = userRepository.findByEmail(email);
+        User findUser = optionalUser.orElseThrow(() -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
+        return findUser.getId();
+    }
+
+    public User findVerifiedUser(long id){
+        Optional<User> optionalUser = userRepository.findById(id);
+        return optionalUser.orElseThrow(() -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
+    }
 }

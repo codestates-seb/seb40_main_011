@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import seb.project.Codetech.discount.entity.Discount;
 import seb.project.Codetech.discount.entity.DiscountComment;
@@ -25,6 +26,7 @@ import seb.project.Codetech.snackreview.entity.SnackReview;
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
 public class User extends BaseTime {
 
     @Id
