@@ -38,4 +38,10 @@ public class UserController {
         User user = userService.updateUser(mapper.userPatchDtoToUser(patch),id);
         return ResponseEntity.ok(mapper.userToUserResponseDto(user));
     }
+
+    @GetMapping("/user/{id}")
+    public ResponseEntity getUser(@PathVariable("id") Long id){
+        User user = userService.findVerifiedUser(id);
+        return ResponseEntity.ok(mapper.userToUserResponseDto(user));
+    }
 }
