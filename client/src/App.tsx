@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import './App.css';
 
 function App() {
   const [data, setData] = useState(null);
   useEffect(() => {
-    fetch(`http://localhost:8080/codetech`)
+    fetch(`/codetech`)
       .then((res) => {
         if (!res.ok) {
           // error coming back from server
