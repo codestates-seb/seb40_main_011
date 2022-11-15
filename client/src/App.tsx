@@ -7,8 +7,10 @@ import Main from './pages/Main';
 import MyPage from './pages/MyPage';
 import './components/common.css';
 
+
 function App() {
   return (
+
     <BrowserRouter>
       <Header />
       <main>
@@ -19,6 +21,7 @@ function App() {
       </main>
       <Footer />
     </BrowserRouter>
+
   );
 }
 
