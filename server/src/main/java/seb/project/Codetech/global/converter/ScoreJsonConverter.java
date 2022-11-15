@@ -1,4 +1,4 @@
-package seb.project.Codetech.jpa.converter;
+package seb.project.Codetech.global.converter;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
