@@ -55,7 +55,7 @@ public class SnackReview extends BaseTime {
 
 	public void setUser(User user) {
 		if (this.user != null) {
-			user.getSnackReviews().remove(this);
+			this.user.getSnackReviews().remove(this);
 		}
 		this.user = user;
 		user.getSnackReviews().add(this);
@@ -63,7 +63,7 @@ public class SnackReview extends BaseTime {
 
 	public void setProduct(Product product) {
 		if (this.product != null) {
-			product.getSnackReviews().remove(this);
+			this.product.getSnackReviews().remove(this);
 		}
 		this.product = product;
 		product.getSnackReviews().add(this);
