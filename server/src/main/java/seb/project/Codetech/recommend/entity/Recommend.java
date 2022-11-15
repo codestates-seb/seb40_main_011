@@ -32,18 +32,18 @@ public class Recommend extends BaseTime {
 	private User user;
 
 	public void setReview(Review review) {
-		this.review = review;
-
-		if (!review.getRecommends().contains(this)) {
-			review.getRecommends().add(this);
+		if (this.review != null) {
+			this.review.getRecommends().remove(this);
 		}
+		this.review = review;
+		review.getRecommends().add(this);
 	}
 
 	public void setUser(User user) {
-		this.user = user;
-
-		if (!user.getRecommends().contains(this)) {
-			user.getRecommends().add(this);
+		if (this.user != null) {
+			this.user.getRecommends().remove(this);
 		}
+		this.user = user;
+		user.getRecommends().add(this);
 	}
 }
