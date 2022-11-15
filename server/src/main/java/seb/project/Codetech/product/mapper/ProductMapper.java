@@ -13,5 +13,7 @@ public interface ProductMapper {
 	Product productPostDtoToProduct(ProductDto.Post postDto);
 	Product productGetDtoToProduct(ProductDto.Get getDto);
 
+	Product productPatchDtoToProduct(ProductDto.Patch patchDto);
+
 	List<ProductDto.Response> productsToproductResponse(List<Product> products);
 }

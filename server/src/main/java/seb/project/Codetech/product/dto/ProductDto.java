@@ -16,6 +16,16 @@ public class ProductDto {
 		private String detail;
 	}
 
+	@Getter
+	@NoArgsConstructor
+	public static class Patch {
+		private Long id;
+		private String name;
+		private String image;
+		private String detail;
+	}
+
+
 	@Getter @Setter
 	@NoArgsConstructor
 	public static class Get {
