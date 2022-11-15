@@ -1,0 +1,41 @@
+{
+  "signup": {
+    "email": "",
+    "password": "",
+    "displayName": ""
+  },
+
+  "login": {
+    "username": "",
+    "password": ""
+  },
+
+  "questions": {
+    "title": "",
+    "content": ""
+  },
+
+  "product": {
+    "id": 0,
+    "name": "A 키보드",
+    "TYPE": "KEYBOARD",
+    "image": "url",
+    "detail": "유저가 제품 추가하면서 넣은 텍스트",
+    "createdAt": "2022. 11. 10",
+    "modifiedAt": "2022. 11. 10"
+  },
+
+  "review": {
+    "id": 0,
+    "nickname": "응애개발자",
+    "productName": 1,
+    "TYPE": "KEYBOARD",
+    "TITLE": "글로리어스 GMMK2 96% Prebuilt 기계식 키보드",
+    "CONTENT": "인기 FPS, 오버워치에 등장하는 한국인 캐릭터 송하나의 대사입니다. 한국인들은 게임을 할 때 즐기기보다 이기려고 하는 성향을 잘 반영한 대사라고 생각합니다. 게임에서 이기기 위해서는 실력도 있어야겠지만 장비의 성능도 중요합니다.",
+    "VIEW": 10,
+    "THUMNAIL_IMG": "url",
+    "REVIEW_IMG": "url",
+    "CREATED_AT": "2022. 11. 10",
+    "MODIFIED_AT": "2022. 11. 15"
+  }
+}
