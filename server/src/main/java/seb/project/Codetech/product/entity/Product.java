@@ -4,9 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,6 +15,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import seb.project.Codetech.global.auditing.BaseTime;
+import seb.project.Codetech.global.converter.TypeConverter;
 import seb.project.Codetech.review.entity.Review;
 import seb.project.Codetech.snackreview.entity.SnackReview;
 
@@ -32,7 +32,7 @@ public class Product extends BaseTime {
 	private String name;
 
 	@Column(nullable = false)
-	@Enumerated(EnumType.STRING)
+	@Convert(converter = TypeConverter.class)
 	private Type type;
 
 	@Column(nullable = false)
