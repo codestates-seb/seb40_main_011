@@ -78,4 +78,9 @@ public class SnackReview extends BaseTime {
 			return totalScore / 5.0f;
 		}
 	}
+
+	public void setScore(Score score) {
+		this.score = score;
+		this.grade = score.getGrade();
+	}
 }
