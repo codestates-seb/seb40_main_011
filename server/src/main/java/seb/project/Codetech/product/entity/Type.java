@@ -1,9 +1,11 @@
 package seb.project.Codetech.product.entity;
 
-public enum Type {
+import seb.project.Codetech.global.converter.TypeValue;
+
+public enum Type implements TypeValue {
 	MONITOR("모니터"),
 	MOUSE("마우스"),
-	MIKE("마이크"),
+	MICE("마이크"),
 	KEYBOARD("키보드"),
 	SPEAKER("스피커"),
 	LAPTOP("랩탑"),
@@ -15,12 +17,13 @@ public enum Type {
 	LIGHTBAR("라이트바"),
 	WEBCAM("웹캠");
 
-	private final String value;
+	private String value;
 
 	Type(String value) {
 		this.value = value;
 	}
 
+	@Override
 	public String getValue() {
 		return value;
 	}
