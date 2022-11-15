@@ -68,7 +68,7 @@ public class Review extends BaseTime {
 
 	public void setUser(User user) {
 		if (this.user != null) {
-			user.getReviews().remove(this);
+			this.user.getReviews().remove(this);
 		}
 		this.user = user;
 		user.getReviews().add(this);
@@ -76,7 +76,7 @@ public class Review extends BaseTime {
 
 	public void setProduct(Product product) {
 		if (this.product != null) {
-			product.getReviews().remove(this);
+			this.product.getReviews().remove(this);
 		}
 		this.product = product;
 		product.getReviews().add(this);
