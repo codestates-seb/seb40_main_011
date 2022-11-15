@@ -2,9 +2,11 @@ package seb.project.Codetech.global.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -12,7 +14,13 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import seb.project.Codetech.global.auth.filter.JwtAuthenticationFilter;
+import seb.project.Codetech.global.auth.filter.JwtVerificationFilter;
+import seb.project.Codetech.global.auth.handler.UserAccessDeniedHandler;
+import seb.project.Codetech.global.auth.handler.UserAuthenticationEntryPoint;
+import seb.project.Codetech.global.auth.handler.UserAuthenticationFailureHandler;
+import seb.project.Codetech.global.auth.handler.UserAuthenticationSuccessHandler;
 import seb.project.Codetech.global.auth.jwt.JwtTokenizer;
+import seb.project.Codetech.global.auth.utils.UserAuthorityUtils;
 
 import java.util.Arrays;
 
@@ -22,9 +30,11 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class SecurityConfiguration {
 
     private final JwtTokenizer jwtTokenizer;
+    private final UserAuthorityUtils authorityUtils;
 
-    public SecurityConfiguration(JwtTokenizer jwtTokenizer){
+    public SecurityConfiguration(JwtTokenizer jwtTokenizer, UserAuthorityUtils authorityUtils){
         this.jwtTokenizer = jwtTokenizer;
+        this.authorityUtils = authorityUtils;
     }
 
     @Bean
@@ -34,14 +44,21 @@ public class SecurityConfiguration {
                 .and()
                 .csrf().disable()
                 .cors(withDefaults())
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
                 .formLogin().disable()
                 .httpBasic().disable()
+                .exceptionHandling()
+                .authenticationEntryPoint(new UserAuthenticationEntryPoint())
+                .accessDeniedHandler(new UserAccessDeniedHandler())
+                .and()
                 .apply(new CustomFilterConfigurer())
-//                .exceptionHandling()
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
-//                        .antMatchers(HttpMethod.PATCH,"/api/user/**").hasRole("USER")
-                        .antMatchers("/**").permitAll());
+                        .antMatchers(HttpMethod.POST,"api/register").permitAll()
+                        .antMatchers(HttpMethod.PATCH,"/api/user/**").hasRole("USER")
+                        .antMatchers(HttpMethod.GET,"/api/user/{id}").permitAll()
+                        .anyRequest().permitAll());
         return http.build();
 
     }
@@ -68,8 +85,14 @@ public class SecurityConfiguration {
 
             JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer);
             jwtAuthenticationFilter.setFilterProcessesUrl("/api/login");
+            jwtAuthenticationFilter.setAuthenticationSuccessHandler(new UserAuthenticationSuccessHandler());
+            jwtAuthenticationFilter.setAuthenticationFailureHandler(new UserAuthenticationFailureHandler());
 
-            builder.addFilter(jwtAuthenticationFilter);
+            JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtils);
+
+            builder
+                    .addFilter(jwtAuthenticationFilter)
+                    .addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class);
         }
     }
 }
