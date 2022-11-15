@@ -1,5 +1,7 @@
 package seb.project.Codetech.snackreview.entity;
 
+import java.lang.reflect.Field;
+
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -66,7 +68,7 @@ public class SnackReview extends BaseTime {
 		}
 	}
 
-	public class Score {
+	public static class Score {
 		private int costEfficiency;
 		private int quality;
 		private int satisfaction;
@@ -74,8 +76,24 @@ public class SnackReview extends BaseTime {
 		private int performance;
 
 		public float getGrade() {
-			float totalScore = costEfficiency + quality + satisfaction + design + performance;
-			return totalScore / 5.0f;
+			float totalScore = 0;
+			int totalCount = 0;
+
+			for (Field field : Score.class.getDeclaredFields()) {
+				if (field.getName().equals("this$0")) {
+					continue;
+				}
+
+				try {
+					totalScore += field.getInt(this);
+				} catch (IllegalAccessException e) {
+
+				} finally {
+					totalCount += 1;
+				}
+			}
+
+			return totalScore / totalCount;
 		}
 	}
 
