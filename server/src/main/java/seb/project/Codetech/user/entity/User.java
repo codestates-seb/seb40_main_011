@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import seb.project.Codetech.discount.entity.Discount;
 import seb.project.Codetech.discount.entity.DiscountComment;
@@ -25,6 +26,7 @@ import seb.project.Codetech.snackreview.entity.SnackReview;
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
 public class User extends BaseTime {
 
     @Id
@@ -44,10 +46,10 @@ public class User extends BaseTime {
     private String image;
 
     @Column(nullable = false)
-    private Long point;
+    private Long point = 0L;
 
     @Column(nullable = false)
-    private Boolean status;
+    private Boolean status = false;
 
     @OneToMany(mappedBy = "user")
     private List<Review> reviews = new ArrayList<>();
