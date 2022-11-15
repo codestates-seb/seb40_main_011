@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
+import Footer from './components/Footer/Footer';
 
 function App() {
   const [data, setData] = useState(null);
   useEffect(() => {
-    fetch(`https://codetech.nworld.dev/codetech`)
+    fetch(`/codetech`)
       .then((res) => {
         if (!res.ok) {
           // error coming back from server
@@ -26,6 +27,7 @@ function App() {
         <p>{data}</p>
         <a></a>
       </header>
+      <Footer />
     </div>
   );
 }
