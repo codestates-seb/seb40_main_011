@@ -6,10 +6,14 @@ import Profile from '../components/MyPage/Profile';
 
 const MyPage = (): JSX.Element => {
   return (
-    <div>
+    <div className="flex flex-col ">
       <Profile />
       <MypageTab />
-      <button>회원 탈퇴</button>
+      <div className="flex justify-center">
+        <button className="px-12 py-2 bg-gray-100 rounded m-14">
+          회원 탈퇴
+        </button>
+      </div>
     </div>
   );
 };
