@@ -8,14 +8,14 @@ spring:
         format_sql: true
         show_sql: true
   profiles:
-    default: prod
+    default: dev
+  servlet:
+    multipart:
+      max-file-size: 30MB # 최대 파일 사이즈
+      max-request-size: 100MB # 보내는 파일의 전체 합의 크기
 
 logging:
   level:
     org.hibernate:
       type.descriptor.sql: trace
       org.hibernate.SQLQuery: debug
-
-#mail:
-#  address:
-#    admin: admin@gmail.com

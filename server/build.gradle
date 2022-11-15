@@ -37,6 +37,7 @@ dependencies { // 시큐리티의 경우는 시큐리티 전담자가 기본 설
     implementation 'org.mapstruct:mapstruct:1.5.3.Final'
     implementation 'com.google.code.gson:gson:2.10'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'

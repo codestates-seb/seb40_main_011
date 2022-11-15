@@ -17,7 +17,7 @@ public enum Type implements TypeValue {
 	LIGHTBAR("라이트바"),
 	WEBCAM("웹캠");
 
-	private String value;
+	private final String value;
 
 	Type(String value) {
 		this.value = value;
