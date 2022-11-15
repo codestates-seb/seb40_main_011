@@ -1,5 +1,5 @@
-// Snack Review List fetching & boxing comp
-const Main = () => {
+// Snack Review List fetching & boxing com
+const Main = (): JSX.Element => {
   return <></>;
 };
 
