@@ -54,19 +54,19 @@ public class SnackReview extends BaseTime {
 	private Product product;
 
 	public void setUser(User user) {
-		this.user = user;
-
-		if (!user.getSnackReviews().contains(this)) {
-			user.getSnackReviews().add(this);
+		if (this.user != null) {
+			user.getSnackReviews().remove(this);
 		}
+		this.user = user;
+		user.getSnackReviews().add(this);
 	}
 
 	public void setProduct(Product product) {
-		this.product = product;
-
-		if (!product.getSnackReviews().contains(this)) {
-			product.getSnackReviews().add(this);
+		if (this.product != null) {
+			product.getSnackReviews().remove(this);
 		}
+		this.product = product;
+		product.getSnackReviews().add(this);
 	}
 
 	@Getter
