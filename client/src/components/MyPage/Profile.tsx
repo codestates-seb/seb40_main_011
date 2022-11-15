@@ -1,7 +1,7 @@
 //유저정보
 //login state
 
-function Profile(): JSX.Element {
+const Profile = (): JSX.Element => {
   return (
     <div>
       <div className="flex items-center justify-center bg-slate-100">
@@ -33,6 +33,6 @@ function Profile(): JSX.Element {
       </div>
     </div>
   );
-}
+};
 
 export default Profile;

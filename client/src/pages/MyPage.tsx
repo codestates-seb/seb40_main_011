@@ -4,7 +4,7 @@
 import MypageTab from '../components/MyPage/MypageTab';
 import Profile from '../components/MyPage/Profile';
 
-function MyPage(): JSX.Element {
+const MyPage = (): JSX.Element => {
   return (
     <div>
       <Profile />
@@ -12,6 +12,6 @@ function MyPage(): JSX.Element {
       <button>회원 탈퇴</button>
     </div>
   );
-}
+};
 
 export default MyPage;
