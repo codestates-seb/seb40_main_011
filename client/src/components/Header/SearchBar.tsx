@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useState, KeyboardEvent } from 'react';
 import { BiSearch } from 'react-icons/bi';
 
 export default function SearchBar() {
   //   const navigate = useNavigate();
   const [keywords, setKeywords] = useState('');
-  const onKeyPress = (e: any): void => {
+  const onKeyPress = (e: KeyboardEvent) => {
     if (e.key == 'Enter') {
       e.preventDefault();
       console.log(`검색어: ${keywords}`);
