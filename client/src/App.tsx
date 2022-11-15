@@ -1,28 +1,21 @@
 import React, { useEffect, useState } from 'react';
+import useFetch from './util/useFetch';
 
 function App() {
-  const [data, setData] = useState(null);
+  const [review, setReview] = useState<unknown>(null);
+  const url = '/REVIEW';
+  const [data, isPending, error] = useFetch(url);
+
   useEffect(() => {
-    fetch(`/codetech`)
-      .then((res) => {
-        if (!res.ok) {
-          // error coming back from server
-          throw Error('could not fetch the data for that resource');
-        }
-        return res.json();
-      })
-      .then((data) => {
-        setData(data);
-      })
-      .catch((err) => {
-        console.error(err.message);
-      });
+    setReview(data);
   }, []);
+
+  console.log(typeof review);
 
   return (
     <div className="App">
       <header className="App-header">
-        <p>{data}</p>
+        <p>{isPending ? <div>loading...</div> : <div>hi</div>}</p>
         <a></a>
       </header>
     </div>
