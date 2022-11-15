@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import './App.css';
+import Footer from './components/Footer/Footer';
 
 function App() {
   const [data, setData] = useState(null);
@@ -25,6 +27,7 @@ function App() {
         <p>{data}</p>
         <a></a>
       </header>
+      <Footer />
     </div>
   );
 }
