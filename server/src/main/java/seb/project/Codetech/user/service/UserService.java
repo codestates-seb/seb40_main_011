@@ -1,9 +1,11 @@
 package seb.project.Codetech.user.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import seb.project.Codetech.global.auth.event.UserRegistrationApplicationEvent;
 import seb.project.Codetech.global.auth.utils.UserAuthorityUtils;
 import seb.project.Codetech.global.exception.BusinessLogicException;
 import seb.project.Codetech.global.exception.ExceptionCode;
@@ -20,11 +22,14 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserAuthorityUtils authorityUtils;
+    private final ApplicationEventPublisher publisher;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, UserAuthorityUtils authorityUtils){
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, UserAuthorityUtils authorityUtils,
+                       ApplicationEventPublisher publisher){
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityUtils = authorityUtils;
+        this.publisher = publisher;
     }
     public User registerUser(User user) {
         verifyExistsEmail(user.getEmail());
@@ -36,6 +41,8 @@ public class UserService {
         user.setRoles(roles);
 
         User savedUser = userRepository.save(user);
+
+        publisher.publishEvent(new UserRegistrationApplicationEvent(savedUser));
 
         return savedUser;
     }
