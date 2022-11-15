@@ -1,16 +1,19 @@
-import useFetch from './util/useFetch';
+import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Main from './pages/Main';
+import MyPage from './pages/MyPage';
+import './components/common.css';
 
 function App() {
-  const url = '/review';
-  const isPending = useFetch(url)[1];
-
   return (
-    <div className="App">
-      <header className="App-header">
-        {isPending ? <div>loading...</div> : <div>hi</div>}
-        <a></a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <main>
+        <Routes>
+          <Route path="/" element={<Main />} />
+          <Route path="/mypage/*" element={<MyPage />} />
+        </Routes>
+      </main>
+    </BrowserRouter>
   );
 }
 

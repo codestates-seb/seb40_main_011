@@ -1,7 +1,7 @@
 // [GET]
 
 const ProductList = () => {
-  return;
+  return <div>ProductList</div>;
 };
 
 export default ProductList;
