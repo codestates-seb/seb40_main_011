@@ -17,7 +17,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import seb.project.Codetech.global.auditing.BaseTime;
-import seb.project.Codetech.jpa.converter.ScoreJsonConverter;
+import seb.project.Codetech.global.converter.ScoreJsonConverter;
 import seb.project.Codetech.product.entity.Product;
 import seb.project.Codetech.product.entity.Type;
 import seb.project.Codetech.snackreview.validation.annotation.ValidScore;
