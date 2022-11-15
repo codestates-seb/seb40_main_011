@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,8 @@ import seb.project.Codetech.global.auditing.BaseTime;
 @Getter
 @Setter
 @NoArgsConstructor
-public class File extends BaseTime { // 파일은 업로드 이후 변경하지 않는다.
+@Table(name = "FILE")
+public class FileEntity extends BaseTime { // 파일은 업로드 이후 변경하지 않는다.
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 

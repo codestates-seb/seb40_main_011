@@ -1,19 +1,17 @@
 package seb.project.Codetech.file.controller;
 
 import java.io.IOException;
-
-import javax.validation.Valid;
+import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import seb.project.Codetech.file.dto.FileDto;
-import seb.project.Codetech.file.entity.File;
+import seb.project.Codetech.file.entity.FileEntity;
 import seb.project.Codetech.file.service.FileService;
 
 @Controller
@@ -32,10 +30,11 @@ public class FileController {
 	}
 
 	@PostMapping("/upload")
-	public ResponseEntity<File> uploadFile(@RequestBody @Valid FileDto.Upload fileDto) throws IOException {
-		fileService.saveFile(fileDto.getFile());
+	public ResponseEntity<FileEntity> uploadFile(@RequestParam("file") MultipartFile file,
+		                                   @RequestParam("files") List<MultipartFile> files) throws IOException {
+		fileService.saveFile(file);
 
-		for (MultipartFile multipartFile : fileDto.getFiles()) {
+		for (MultipartFile multipartFile : files) {
 			fileService.saveFile(multipartFile);
 		}
 

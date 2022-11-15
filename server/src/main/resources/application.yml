@@ -8,7 +8,7 @@ spring:
         format_sql: true
         show_sql: true
   profiles:
-    default: prod
+    default: dev
   servlet:
     multipart:
       max-file-size: 30MB # 최대 파일 사이즈
@@ -19,5 +19,3 @@ logging:
     org.hibernate:
       type.descriptor.sql: trace
       org.hibernate.SQLQuery: debug
-
-filePath: ./codeTech/files // 파일이 저장될 상대 경로를 지정한다.
