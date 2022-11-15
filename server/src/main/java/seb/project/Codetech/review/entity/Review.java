@@ -67,18 +67,18 @@ public class Review extends BaseTime {
 	private List<ReviewComment> reviewComments = new ArrayList<>();
 
 	public void setUser(User user) {
-		this.user = user;
-
-		if (!user.getReviews().contains(this)) {
-			user.getReviews().add(this);
+		if (this.user != null) {
+			user.getReviews().remove(this);
 		}
+		this.user = user;
+		user.getReviews().add(this);
 	}
 
 	public void setProduct(Product product) {
-		this.product = product;
-
-		if (!product.getReviews().contains(this)) {
-			product.getReviews().add(this);
+		if (this.product != null) {
+			product.getReviews().remove(this);
 		}
+		this.product = product;
+		product.getReviews().add(this);
 	}
 }
