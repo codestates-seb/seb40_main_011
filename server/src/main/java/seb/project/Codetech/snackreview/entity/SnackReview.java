@@ -1,6 +1,7 @@
 package seb.project.Codetech.snackreview.entity;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -14,6 +15,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import seb.project.Codetech.global.auditing.BaseTime;
+import seb.project.Codetech.jpa.converter.ScoreJsonConverter;
 import seb.project.Codetech.product.entity.Product;
 import seb.project.Codetech.product.entity.Type;
 import seb.project.Codetech.user.entity.User;
@@ -27,7 +29,11 @@ public class SnackReview extends BaseTime {
 	private Long id;
 
 	@Column(nullable = false)
-	private String score;
+	@Convert(converter = ScoreJsonConverter.class)
+	private Score score;
+
+	@Column(nullable = false)
+	private float grade;
 
 	@Column(nullable = false, columnDefinition = "MEDIUMTEXT")
 	private String content;
@@ -67,9 +73,9 @@ public class SnackReview extends BaseTime {
 		private int design;
 		private int performance;
 
-		public double getGrade() {
-			double totalScore = costEfficiency + quality + satisfaction + design + performance;
-			return totalScore / 5.0;
+		public float getGrade() {
+			float totalScore = costEfficiency + quality + satisfaction + design + performance;
+			return totalScore / 5.0f;
 		}
 	}
 }
