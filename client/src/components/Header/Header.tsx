@@ -1,5 +1,5 @@
-function Header(): JSX.Element {
-  return <div>header</div>;
-}
+const Header = () => {
+  return <div>Header</div>;
+};
 
 export default Header;

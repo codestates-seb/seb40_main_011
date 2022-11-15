@@ -1,10 +1,8 @@
-
 import Member from './Member';
 export interface team {
   devRole: string;
   name: string;
   github: string;
-
 }
 
 function Banner() {

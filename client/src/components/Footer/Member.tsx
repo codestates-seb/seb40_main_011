@@ -4,7 +4,6 @@ export interface propTeam {
 }
 export default function Member({ memberInfo }: propTeam) {
   const { devRole, name, github } = memberInfo;
-  console.log(memberInfo);
   return (
     <div className="text-center mx-4 w-24 inline-block">
       <img
