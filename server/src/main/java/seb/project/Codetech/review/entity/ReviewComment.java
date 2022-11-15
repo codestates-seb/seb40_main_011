@@ -46,26 +46,26 @@ public class ReviewComment extends BaseTime {
 	private User user;
 
 	public void setReview(Review review) {
-		this.review = review;
-
-		if (!review.getReviewComments().contains(this)) {
-			review.getReviewComments().add(this);
+		if (this.review != null) {
+			review.getReviewComments().remove(this);
 		}
+		this.review = review;
+		review.getReviewComments().add(this);
 	}
 
 	public void setUser(User user) {
-		this.user = user;
-
-		if (!user.getReviewComments().contains(this)) {
-			user.getReviewComments().add(this);
+		if (this.user != null) {
+			user.getReviewComments().remove(this);
 		}
+		this.user = user;
+		user.getReviewComments().add(this);
 	}
 
 	public void setParent(ReviewComment parent) {
-		this.parent = parent;
-
-		if (!parent.getChild().contains(this)) {
-			parent.getChild().add(this);
+		if (this.parent != null) {
+			parent.getChild().remove(this);
 		}
+		this.parent = parent;
+		parent.getChild().add(this);
 	}
 }
