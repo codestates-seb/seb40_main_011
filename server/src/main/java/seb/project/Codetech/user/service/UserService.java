@@ -1,13 +1,16 @@
 package seb.project.Codetech.user.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import seb.project.Codetech.global.auth.utils.UserAuthorityUtils;
 import seb.project.Codetech.global.exception.BusinessLogicException;
 import seb.project.Codetech.global.exception.ExceptionCode;
 import seb.project.Codetech.user.entity.User;
 import seb.project.Codetech.user.repository.UserRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -15,12 +18,22 @@ import java.util.Optional;
 @Slf4j
 public class UserService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final UserAuthorityUtils authorityUtils;
 
-    public UserService(UserRepository userRepository){
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, UserAuthorityUtils authorityUtils){
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.authorityUtils = authorityUtils;
     }
     public User registerUser(User user) {
         verifyExistsEmail(user.getEmail());
+
+        String encryptPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encryptPassword);
+
+        List<String> roles = authorityUtils.createRoles(user.getEmail());
+        user.setRoles(roles);
 
         User savedUser = userRepository.save(user);
 
@@ -37,8 +50,11 @@ public class UserService {
 
         Optional.ofNullable(user.getEmail()).ifPresent(findUser::setEmail);
         Optional.ofNullable(user.getNickname()).ifPresent(findUser::setNickname);
-        Optional.ofNullable(user.getPassword()).ifPresent(findUser::setPassword);
         Optional.ofNullable(user.getImage()).ifPresent(findUser::setImage);
+
+        if(user.getPassword()!=null){
+            findUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
 
         return userRepository.save(findUser);
     }
