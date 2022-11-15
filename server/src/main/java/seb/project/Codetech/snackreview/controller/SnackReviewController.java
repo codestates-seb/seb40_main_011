@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
+import seb.project.Codetech.snackreview.dto.SnackReviewPatchDto;
 import seb.project.Codetech.snackreview.dto.SnackReviewPostDto;
 
 @RestController
@@ -34,7 +35,8 @@ public class SnackReviewController {
 	}
 
 	@PatchMapping("/{snack_review_id}")
-	public ResponseEntity patchSnackReview(@Positive @PathVariable(name = "snack_review_id") Long snackReviewId) {
+	public ResponseEntity patchSnackReview(@Positive @PathVariable(name = "snack_review_id") Long snackReviewId,
+		@Valid @RequestBody SnackReviewPatchDto snackReviewPatchDto) {
 		return ResponseEntity.ok().build();
 	}
 

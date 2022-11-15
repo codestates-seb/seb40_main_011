@@ -11,7 +11,6 @@ import seb.project.Codetech.snackreview.validation.annotation.ValidScore;
 public class ScoreValidator implements ConstraintValidator<ValidScore, SnackReview.Score> {
 	@Override
 	public void initialize(ValidScore constraintAnnotation) {
-		System.out.println("ScoreValidator.initialize");
 		ConstraintValidator.super.initialize(constraintAnnotation);
 	}
 
