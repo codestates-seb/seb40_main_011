@@ -6,4 +6,13 @@
   .so-button-nomal {
     @apply;
   }
+  .signup-input {
+    @apply w-full p-1 mt-1 mb-2 border border-gray-500 rounded-md;
+  }
+  .signup-p-true {
+    @apply text-sm text-slate-300;
+  }
+  .signup-p-false {
+    @apply text-sm text-red-600;
+  }
 } ;
