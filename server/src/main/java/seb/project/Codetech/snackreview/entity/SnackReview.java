@@ -26,7 +26,7 @@ public class SnackReview extends BaseTime {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(nullable = false) // JSON 매핑하는 방법이 여러가지 있어서 공부해보고 완성하겠습니다
+	@Column(nullable = false)
 	private String score;
 
 	@Column(nullable = false, columnDefinition = "MEDIUMTEXT")
@@ -57,6 +57,19 @@ public class SnackReview extends BaseTime {
 
 		if (!product.getSnackReviews().contains(this)) {
 			product.getSnackReviews().add(this);
+		}
+	}
+
+	public class Score {
+		private int costEfficiency;
+		private int quality;
+		private int satisfaction;
+		private int design;
+		private int performance;
+
+		public double getGrade() {
+			double totalScore = costEfficiency + quality + satisfaction + design + performance;
+			return totalScore / 5.0;
 		}
 	}
 }
