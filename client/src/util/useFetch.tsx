@@ -1,8 +1,16 @@
 //fetch custom hook
 import { useState, useEffect } from 'react';
 
-const useFetch = (url: string) => {
-  const [data, setData] = useState<unknown[] | null>(null);
+type Fetch = {
+  (url: string): [
+    data: { id: number } | null,
+    isPending: boolean,
+    error: string | null
+  ];
+};
+
+const useFetch: Fetch = (url) => {
+  const [data, setData] = useState(null);
   const [isPending, setIsPending] = useState(true);
   const [error, setError] = useState(null);
 

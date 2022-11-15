@@ -1,5 +1,22 @@
 {
-  "PRODCUT": {
+  "signup": {
+    "email": "",
+    "password": "",
+    "displayName": ""
+  },
+
+  "login": {
+    "username": "",
+    "password": ""
+  },
+
+  "questions": {
+    "title": "",
+    "content": ""
+  },
+
+  "product": {
+    "id": 0,
     "name": "A 키보드",
     "TYPE": "KEYBOARD",
     "image": "url",
@@ -8,7 +25,7 @@
     "modifiedAt": "2022. 11. 10"
   },
 
-  "REVIEW": {
+  "review": {
     "id": 0,
     "nickname": "응애개발자",
     "productName": 1,
