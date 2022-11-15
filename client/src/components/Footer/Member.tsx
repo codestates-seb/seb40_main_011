@@ -5,15 +5,15 @@ export interface propTeam {
 export default function Member({ memberInfo }: propTeam) {
   const { devRole, name, github } = memberInfo;
   return (
-    <div className="text-center mx-4 w-24 inline-block">
+    <div className="inline-block w-24 mx-4 text-center">
       <img
         src={require('../../images/GitHub-Mark-Light-120px-plus.png')}
         alt=""
-        className="w-9 mb-1 mx-auto"
+        className="mx-auto mb-1 w-9"
       />
       <div className="flex flex-col items-center">
         <a
-          className="text-gray-300 hover:text-emerald-400 my-1"
+          className="my-1 text-gray-300 hover:text-emerald-400"
           href={github}
           target="_blank"
           rel="noreferrer"

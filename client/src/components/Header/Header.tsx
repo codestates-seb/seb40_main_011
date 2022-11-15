@@ -1,8 +1,13 @@
 import HeaderTextButton from '../Buttons/HeaderTextButton';
 import SearchBar from './SearchBar';
 import { BsFillSunFill } from 'react-icons/bs';
+import { useNavigate } from 'react-router-dom';
 
 export default function Header() {
+  const navigate = useNavigate();
+  const handleHomeClick = () => {
+    navigate('/');
+  };
   // const [login, setIsLogin] = useState(false);
   // const dispatch = useDispatch();
   // const logIn = useSelector((state) => state.isLogin);
@@ -64,7 +69,7 @@ export default function Header() {
   return (
     <div className="sticky top-0 z-50 shadow bg-white">
       <div className="max-xl:w-full xl:w-[80rem] mx-auto px-4 h-20 flex flex-row items-center justify-between">
-        <button className="flex-none">
+        <button className="flex-none" onClick={handleHomeClick}>
           <img
             src={require('../../images/logo.png')}
             alt=""
