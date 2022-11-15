@@ -9,15 +9,13 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-import org.hibernate.validator.internal.constraintvalidators.bv.NotNullValidator;
-
 import seb.project.Codetech.snackreview.validation.validator.ScoreValidator;
 
 @Target(TYPE_USE)
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = {NotNullValidator.class, ScoreValidator.class})
+@Constraint(validatedBy = ScoreValidator.class)
 public @interface ValidScore {
-	String message() default "The score is not valid"; // (2)
+	String message() default "Invalid score";
 
 	Class<?>[] groups() default {};
 

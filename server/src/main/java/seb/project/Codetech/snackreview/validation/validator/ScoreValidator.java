@@ -11,11 +11,15 @@ import seb.project.Codetech.snackreview.validation.annotation.ValidScore;
 public class ScoreValidator implements ConstraintValidator<ValidScore, SnackReview.Score> {
 	@Override
 	public void initialize(ValidScore constraintAnnotation) {
+		System.out.println("ScoreValidator.initialize");
 		ConstraintValidator.super.initialize(constraintAnnotation);
 	}
 
 	@Override
 	public boolean isValid(SnackReview.Score score, ConstraintValidatorContext context) {
+		final int lower = 1;
+		final int upper = 5;
+
 		for (Field field : score.getClass().getDeclaredFields()) {
 			if (field.getName().equals("this$0")) {
 				continue;
@@ -28,7 +32,7 @@ public class ScoreValidator implements ConstraintValidator<ValidScore, SnackRevi
 			} catch (IllegalAccessException e) {
 			}
 
-			if (value < 0 || value > 5) {
+			if (value < lower || value > upper) {
 				return false;
 			}
 		}
