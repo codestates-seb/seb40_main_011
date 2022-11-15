@@ -33,7 +33,7 @@ public class Recommend extends BaseTime {
 
 	public void setReview(Review review) {
 		if (this.review != null) {
-			review.getRecommends().remove(this);
+			this.review.getRecommends().remove(this);
 		}
 		this.review = review;
 		review.getRecommends().add(this);
@@ -41,7 +41,7 @@ public class Recommend extends BaseTime {
 
 	public void setUser(User user) {
 		if (this.user != null) {
-			user.getRecommends().remove(this);
+			this.user.getRecommends().remove(this);
 		}
 		this.user = user;
 		user.getRecommends().add(this);
