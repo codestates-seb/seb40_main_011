@@ -40,10 +40,10 @@ public class Question extends BaseTime {
 	private List<Answer> answers = new ArrayList<>();
 
 	public void setUser(User user) {
-		this.user = user;
-
-		if (!user.getQuestions().contains(this)) {
-			user.getQuestions().add(this);
+		if (this.user != null) {
+			this.user.getQuestions().remove(this);
 		}
+		this.user = user;
+		user.getQuestions().add(this);
 	}
 }

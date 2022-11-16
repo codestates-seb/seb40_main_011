@@ -56,12 +56,4 @@ public class Discount extends BaseTime {
 
     @OneToMany(mappedBy = "discount")
     private List<DiscountComment> discountComment = new ArrayList<>();
-
-    public void setUser(User user) {
-        this.user = user;
-
-        if (!user.getDiscounts().contains(this)) {
-            user.getDiscounts().add(this);
-        }
-    }
 }

@@ -1,0 +1,30 @@
+/* @tailwind base; */
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .so-button-nomal {
+    @apply box-border h-10 px-10 mb-12 rounded-md bg-neutral-500;
+  }
+  .signup-input {
+    @apply w-full p-1 mt-1 mb-2 border border-gray-500 rounded-md;
+  }
+  .signup-p-true {
+    @apply text-sm text-slate-300;
+  }
+  .signup-p-false {
+    @apply text-sm text-red-600;
+  }
+  .select {
+    @apply relative block w-full max-w-xs align-middle;
+  }
+  .select ul{
+    @apply hidden absolute truncate w-full bg-slate-800 top-full left-0 list-none mt-1 p-0 z-50;
+  }
+  .select ul li {
+    @apply block text-left px-2 py-4 cursor-pointer;
+  }
+  .select ul li:hover {
+    @apply bg-red-600;
+  }
+} ;
