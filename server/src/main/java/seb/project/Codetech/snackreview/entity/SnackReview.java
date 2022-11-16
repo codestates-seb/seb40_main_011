@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import seb.project.Codetech.global.auditing.BaseTime;
@@ -53,6 +54,12 @@ public class SnackReview extends BaseTime {
 	@JoinColumn(name = "product_id")
 	private Product product;
 
+	@Builder
+	public SnackReview(String content, Type type) {
+		this.content = content;
+		this.type = type;
+	}
+
 	public void setUser(User user) {
 		if (this.user != null) {
 			this.user.getSnackReviews().remove(this);
@@ -67,6 +74,15 @@ public class SnackReview extends BaseTime {
 		}
 		this.product = product;
 		product.getSnackReviews().add(this);
+	}
+
+	public void setScore(Score score) {
+		this.score = score;
+		this.grade = score.getGrade();
+	}
+
+	public void updateContent(String content) {
+		this.content = content;
 	}
 
 	@Getter
@@ -98,10 +114,5 @@ public class SnackReview extends BaseTime {
 
 			return totalScore / totalCount;
 		}
-	}
-
-	public void setScore(Score score) {
-		this.score = score;
-		this.grade = score.getGrade();
 	}
 }
