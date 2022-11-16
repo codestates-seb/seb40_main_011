@@ -4,7 +4,7 @@
 
 @layer components {
   .so-button-nomal {
-    @apply box-border h-10 px-10 mb-12 w-1/4 rounded-md bg-neutral-500;
+    @apply box-border h-10 px-10 mb-12 rounded-md bg-neutral-500;
   }
   .signup-input {
     @apply w-full p-1 mt-1 mb-2 border border-gray-500 rounded-md;
