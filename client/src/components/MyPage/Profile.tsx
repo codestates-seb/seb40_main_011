@@ -1,5 +1,9 @@
 //유저정보
 //login state
+import { useState } from 'react';
+import EditProfile from '../Modal/EditProfile';
+import EditProgileImg from '../Modal/EditProfileImg';
+import OptOut from '../Modal/OptOut';
 
 const Profile = (): JSX.Element => {
   return (
