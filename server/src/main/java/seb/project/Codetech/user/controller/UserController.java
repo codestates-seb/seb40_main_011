@@ -40,9 +40,9 @@ public class UserController {
         return ResponseEntity.ok(mapper.userToUserResponseDto(user));
     }
 
-    @GetMapping("/user/{id}")
-    public ResponseEntity getUser(@PathVariable("id") Long id){
-        User user = userService.findVerifiedUser(id);
+    @GetMapping("/user")
+    public ResponseEntity getUser(@AuthenticationPrincipal String email){
+        User user = userService.findUser(email);
         return ResponseEntity.ok(mapper.userToUserResponseDto(user));
     }
 }

@@ -76,4 +76,9 @@ public class UserService {
         Optional<User> optionalUser = userRepository.findById(id);
         return optionalUser.orElseThrow(() -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
     }
+
+    public User findUser(String email){
+        Long id = findUserId(email);
+        return findVerifiedUser(id);
+    }
 }
