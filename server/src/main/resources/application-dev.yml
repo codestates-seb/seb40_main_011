@@ -11,9 +11,9 @@ spring:
     username: ${DB_AUTH_ID}
     password: ${DB_AUTH_PASSWORD}
 
-#jwt:
-#  secret-key: ${JWT_SECRET_KEY}
-#  access-token-expiration-minutes: 30
-#  refresh-token-expiration-minutes: 420
+jwt:
+  secret-key: ${JWT_SECRET_KEY}
+  access-token-expiration-minutes: 30
+  refresh-token-expiration-minutes: 420
 
 filePath: /codeTechApp/images/
