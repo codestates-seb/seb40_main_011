@@ -81,6 +81,10 @@ public class SnackReview extends BaseTime {
 		this.grade = score.getGrade();
 	}
 
+	public void updateContent(String content) {
+		this.content = content;
+	}
+
 	@Getter
 	@ValidScore
 	public static class Score {
