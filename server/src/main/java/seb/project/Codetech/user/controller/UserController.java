@@ -7,6 +7,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import seb.project.Codetech.user.dto.UserPatchDto;
 import seb.project.Codetech.user.dto.UserPostDto;
+import seb.project.Codetech.user.dto.UserWithdrawDto;
 import seb.project.Codetech.user.entity.User;
 import seb.project.Codetech.user.mapper.UserMapper;
 import seb.project.Codetech.user.service.UserService;
@@ -43,6 +44,13 @@ public class UserController {
     @GetMapping("/user")
     public ResponseEntity getUser(@AuthenticationPrincipal String email){
         User user = userService.findUser(email);
+        return ResponseEntity.ok(mapper.userToUserResponseDto(user));
+    }
+
+    @PatchMapping("/withdraw")
+    public ResponseEntity withdrawUser(@AuthenticationPrincipal String email,
+                                       @Valid @RequestBody UserWithdrawDto withdraw){
+        User user = userService.withdrawUser(email,mapper.userWithdrawDtoToUser(withdraw));
         return ResponseEntity.ok(mapper.userToUserResponseDto(user));
     }
 }

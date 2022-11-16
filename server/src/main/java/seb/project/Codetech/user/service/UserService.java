@@ -55,7 +55,6 @@ public class UserService {
     public User updateUser( String email, User user){
         User findUser = findVerifiedUser(findUserId(email));
 
-        Optional.ofNullable(user.getEmail()).ifPresent(findUser::setEmail);
         Optional.ofNullable(user.getNickname()).ifPresent(findUser::setNickname);
         Optional.ofNullable(user.getImage()).ifPresent(findUser::setImage);
 
@@ -80,5 +79,13 @@ public class UserService {
     public User findUser(String email){
         Long id = findUserId(email);
         return findVerifiedUser(id);
+    }
+
+    public User withdrawUser( String email, User user) {
+        User findUser = findVerifiedUser(findUserId(email));
+
+        if(passwordEncoder.matches(user.getPassword(), findUser.getPassword())){findUser.setStatus(true);}
+
+        return userRepository.save(findUser);
     }
 }

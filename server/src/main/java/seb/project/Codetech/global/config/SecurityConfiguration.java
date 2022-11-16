@@ -59,7 +59,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(authorize -> authorize
                         .antMatchers(HttpMethod.POST,"api/register").permitAll()
                         .antMatchers(HttpMethod.PATCH,"/api/user/**").hasRole("USER")
-                        .antMatchers(HttpMethod.GET,"/api/user/{id}").permitAll()
+                        .antMatchers(HttpMethod.GET,"/api/user").hasRole("USER")
                         .anyRequest().permitAll());
         return http.build();
 
