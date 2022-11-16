@@ -2,16 +2,13 @@
 import Footer from '../components/Footer/Footer';
 import Header from '../components/Header/Header';
 import ProductList from '../components/List/ProductList';
-import useFetch from '../util/useFetch';
+import ReviewList from '../components/List/ReviewList';
 
 const Main = () => {
-  const url = '/review';
-  const isPending = useFetch(url)[1];
-
   return (
     <>
       <Header></Header>
-      {isPending ? <div>loading...</div> : <div>hi</div>}
+      <ReviewList></ReviewList>
       <ProductList></ProductList>
       <Footer></Footer>
     </>
