@@ -6,3 +6,9 @@
 * {
   font-family: 'Noto Sans KR', sans-serif;
 }
+/* 
+.input-ani:focus + .label-ani,
+.input-ani:valid + .label-ani {
+  transform: translateY(-12px);
+  font-size: 0.75rem;
+} */

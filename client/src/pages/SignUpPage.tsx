@@ -3,7 +3,6 @@
 import React, { ChangeEvent, useCallback, useState } from 'react';
 import SignUpButton from '../components/Buttons/SignUp';
 import '../components/common.css';
-// import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 

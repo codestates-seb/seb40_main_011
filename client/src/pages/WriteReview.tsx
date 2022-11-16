@@ -25,7 +25,7 @@ const WriteReview = () => {
             className="mb-5 signup-input"
           />
           <div>
-            <TextEditor></TextEditor>
+            <TextEditor />
           </div>
           <div className="flex justify-center mt-3">
             <AddPost>작성 완료</AddPost>

@@ -11,8 +11,8 @@ import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin
 import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
 
 // interface IEditor {
-//     htmlStr: string,
-//     setHtmlStr: React.Dispatch<React.SetStateAction<string>>;
+//   htmlStr: string;
+//   setHtmlStr: React.Dispatch<React.SetStateAction<string>>;
 // }
 
 export default function TextEditor() {
@@ -24,3 +24,5 @@ export default function TextEditor() {
     />
   );
 }
+
+export {};
