@@ -69,6 +69,11 @@ public class SnackReview extends BaseTime {
 		product.getSnackReviews().add(this);
 	}
 
+	public void setScore(Score score) {
+		this.score = score;
+		this.grade = score.getGrade();
+	}
+
 	@Getter
 	@ValidScore
 	public static class Score {
@@ -98,10 +103,5 @@ public class SnackReview extends BaseTime {
 
 			return totalScore / totalCount;
 		}
-	}
-
-	public void setScore(Score score) {
-		this.score = score;
-		this.grade = score.getGrade();
 	}
 }

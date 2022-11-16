@@ -11,7 +11,7 @@ import javax.validation.Payload;
 
 import seb.project.Codetech.snackreview.validation.validator.ScoreValidator;
 
-@Target(TYPE_USE)
+@Target({TYPE, TYPE_USE})
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = ScoreValidator.class)
 public @interface ValidScore {
