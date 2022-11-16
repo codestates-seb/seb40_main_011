@@ -15,27 +15,71 @@
     "content": ""
   },
 
-  "product": {
-    "id": 0,
-    "name": "A 키보드",
-    "TYPE": "KEYBOARD",
-    "image": "url",
-    "detail": "유저가 제품 추가하면서 넣은 텍스트",
-    "createdAt": "2022. 11. 10",
-    "modifiedAt": "2022. 11. 10"
-  },
+  "product": [
+    {
+      "id": 0,
+      "name": "A 키보드",
+      "type": "KEYBOARD",
+      "image": "https://img2.quasarzone.com/editor/2022/11/11/75f9d1f0e49980190d3967e19b0458e5.jpg",
+      "detail": "유저가 제품 추가하면서 넣은 텍스트",
+      "createdAt": "2022. 11. 10",
+      "modifiedAt": "2022. 11. 10"
+    },
+    {
+      "id": 1,
+      "name": "B 키보드",
+      "type": "KEYBOARD",
+      "image": "https://img2.quasarzone.com/editor/2022/11/11/75f9d1f0e49980190d3967e19b0458e5.jpg",
+      "detail": "유저가 제품 추가하면서 넣은 텍스트 하나 둘 삼 넷",
+      "createdAt": "2022. 11. 10",
+      "modifiedAt": "2022. 11. 10"
+    },
+    {
+      "id": 2,
+      "name": "C 키보드",
+      "type": "KEYBOARD",
+      "image": "https://img2.quasarzone.com/editor/2022/11/11/75f9d1f0e49980190d3967e19b0458e5.jpg",
+      "detail": "유저가 제품 추가하면서 넣은 텍스트 하나 둘 삼 넷",
+      "createdAt": "2022. 11. 10",
+      "modifiedAt": "2022. 11. 10"
+    },
+    {
+      "id": 3,
+      "name": "C 키보드",
+      "type": "KEYBOARD",
+      "image": "https://img2.quasarzone.com/editor/2022/11/11/75f9d1f0e49980190d3967e19b0458e5.jpg",
+      "detail": "유저가 제품 추가하면서 넣은 텍스트 하나 둘 삼 넷",
+      "createdAt": "2022. 11. 10",
+      "modifiedAt": "2022. 11. 10"
+    }
+  ],
 
-  "review": {
-    "id": 0,
-    "nickname": "응애개발자",
-    "productName": 1,
-    "TYPE": "KEYBOARD",
-    "TITLE": "글로리어스 GMMK2 96% Prebuilt 기계식 키보드",
-    "CONTENT": "인기 FPS, 오버워치에 등장하는 한국인 캐릭터 송하나의 대사입니다. 한국인들은 게임을 할 때 즐기기보다 이기려고 하는 성향을 잘 반영한 대사라고 생각합니다. 게임에서 이기기 위해서는 실력도 있어야겠지만 장비의 성능도 중요합니다.",
-    "VIEW": 10,
-    "THUMNAIL_IMG": "url",
-    "REVIEW_IMG": "url",
-    "CREATED_AT": "2022. 11. 10",
-    "MODIFIED_AT": "2022. 11. 15"
-  }
+  "review": [
+    {
+      "id": 0,
+      "nickname": "응애개발자",
+      "productName": 1,
+      "type": "KEYBOARD",
+      "title": "글로리어스 GMMK2 96% Prebuilt 기계식 키보드",
+      "content": "인기 FPS, 오버워치에 등장하는 한국인 캐릭터 송하나의 대사입니다. 한국인들은 게임을 할 때 즐기기보다 이기려고 하는 성향을 잘 반영한 대사라고 생각합니다. 게임에서 이기기 위해서는 실력도 있어야겠지만 장비의 성능도 중요합니다.",
+      "view": 10,
+      "thumbnail": "https://img2.quasarzone.com/editor/2022/11/15/74515ffd61655f726248755508bad500.jpg",
+      "reviewImg": "url",
+      "createdAt": "2022. 11. 10",
+      "modifedAt": "2022. 11. 15"
+    },
+    {
+      "id": 1,
+      "nickname": "야옹야옹",
+      "productName": 2,
+      "type": "MOUSE",
+      "title": "마이크로닉스 메카 ZM2 RGB - 게이밍 마우스",
+      "contest": "개발 비용을 아낀 만큼 가격을 저렴하게 책정하니 여러모로 소비자 이목을 끌기 쉽습니다. 개인적 철학 혹은 주머니 사정에 따라 응원하는 이들이 생겨나기도 합니다. 그렇다고 이 방법을 정당화할 순 없습니다. 비판을 피할 순 없으며 쌓이는 잔고만큼 브랜드 이미지는 깎여나가게 됩니다. 마치 표절을 일삼는 작곡가처럼 말이죠.",
+      "view": 19,
+      "thumbnail": "https://img2.quasarzone.com/editor/2022/10/18/30b78b21f9d36fea378cd1d00067336b.jpg",
+      "reviewImg": "url",
+      "createdAt": "2022. 11. 10",
+      "modifedAt": "2022. 11. 15"
+    }
+  ]
 }
