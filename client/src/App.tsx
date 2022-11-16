@@ -4,6 +4,7 @@ import Main from './pages/Main';
 import MyPage from './pages/MyPage';
 import SignUpPage from './pages/SignUpPage';
 import WriteReview from './pages/WriteReview';
+import Login from './pages/Login';
 import './components/common.css';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
@@ -14,10 +15,12 @@ function App() {
       <Header />
       <main>
         <Routes>
+          {/* <Route path="/" element={<Login />} /> */}
           <Route path="/" element={<Main />} />
           <Route path="/mypage/*" element={<MyPage />} />
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/categories/review/write" element={<WriteReview />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </main>
       <Footer />
