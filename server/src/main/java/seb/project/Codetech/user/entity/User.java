@@ -8,7 +8,6 @@ import javax.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import seb.project.Codetech.discount.entity.Discount;
 import seb.project.Codetech.discount.entity.DiscountComment;
 import seb.project.Codetech.global.auditing.BaseTime;
 import seb.project.Codetech.question.entity.Answer;
@@ -67,9 +66,6 @@ public class User extends BaseTime {
     @OneToMany(mappedBy = "user")
     private List<Answer> answers = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
-    private List<Discount> discounts = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user")
-    private List<DiscountComment> discountComments = new ArrayList<>();
+	@OneToMany(mappedBy = "user")
+	private List<DiscountComment> discountComments = new ArrayList<>();
 }
