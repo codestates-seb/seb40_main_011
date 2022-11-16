@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import seb.project.Codetech.global.auditing.BaseTime;
@@ -52,6 +53,12 @@ public class SnackReview extends BaseTime {
 	@ManyToOne
 	@JoinColumn(name = "product_id")
 	private Product product;
+
+	@Builder
+	public SnackReview(String content, Type type) {
+		this.content = content;
+		this.type = type;
+	}
 
 	public void setUser(User user) {
 		if (this.user != null) {
