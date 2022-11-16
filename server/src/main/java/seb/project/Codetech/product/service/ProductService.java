@@ -39,10 +39,16 @@ public class ProductService {
 	}
 
 	public Page<Product> findAllProduct(PageInfo.Request request) {
-		return productRepository.findAll(PageRequest.of(request.getPage(), request.getSize(), Sort.by("id").descending()));
+		return productRepository.findAll(
+			PageRequest.of(request.getPage(), request.getSize(), Sort.by("id").descending()));
 	}
 
 	public void removeProduct(Product product) {
 		productRepository.delete(product);
+	}
+
+	public Product findProduct(Long id) {
+		return productRepository.findById(id)
+			.orElseThrow(() -> new RuntimeException("제품 정보를 찾을 수 없습니다."));
 	}
 }
