@@ -70,7 +70,7 @@ export default function Login() {
   };
 
   return (
-    <div className="w-full min-h-screen bg-slate-300 pt-20 flex flex-col items-center">
+    <div className="w-full bg-slate-300 pt-20 pb-32 flex flex-col items-center">
       <div className="max-md:w-full md:w-[36rem] bg-white flex justify-center flex-col pt-8 pb-12 rounded-2xl">
         <div className="flex justify-center items-center hover:scale-105 duration-500">
           <h1 className="font-extrabold text-3xl tracking-tighter text-slate-400 mr-2">
