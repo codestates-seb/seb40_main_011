@@ -34,18 +34,18 @@ public class Answer extends BaseTime {
 	private User user;
 
 	public void setQuestion(Question question) {
-		this.question = question;
-
-		if (!question.getAnswers().contains(this)) {
-			question.getAnswers().add(this);
+		if (this.question != null) {
+			this.question.getAnswers().remove(this);
 		}
+		this.question = question;
+		question.getAnswers().add(this);
 	}
 
 	public void setUser(User user) {
-		this.user = user;
-
-		if (!user.getAnswers().contains(this)) {
-			user.getAnswers().add(this);
+		if (this.user != null) {
+			this.user.getAnswers().remove(this);
 		}
+		this.user = user;
+		user.getAnswers().add(this);
 	}
 }
