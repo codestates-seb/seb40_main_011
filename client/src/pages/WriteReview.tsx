@@ -1,7 +1,7 @@
 //리뷰 작성 페이지
 //안지은 작성
 
-import TextEditor from '../components/ToastUI/TextEditor';
+// import TextEditor from '../components/ToastUI/TextEditor';
 import '../components/common.css';
 import AddPost from '../components/Buttons/AddPost';
 import CategorieSelector from '../components/Selectors/CategorieSelector';
@@ -24,9 +24,7 @@ const WriteReview = () => {
             placeholder="제목을 입력하세요"
             className="mb-5 signup-input"
           />
-          <div>
-            <TextEditor></TextEditor>
-          </div>
+          <div>{/* <TextEditor></TextEditor> */}</div>
           <div className="flex justify-center mt-3">
             <AddPost>작성 완료</AddPost>
           </div>
