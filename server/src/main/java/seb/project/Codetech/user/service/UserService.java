@@ -52,8 +52,8 @@ public class UserService {
         if(user.isPresent()) throw new BusinessLogicException(ExceptionCode.USER_EXISTS);
     }
 
-    public User updateUser(User user, Long id){
-        User findUser = findVerifiedUser(user.getId());
+    public User updateUser( String email, User user){
+        User findUser = findVerifiedUser(findUserId(email));
 
         Optional.ofNullable(user.getEmail()).ifPresent(findUser::setEmail);
         Optional.ofNullable(user.getNickname()).ifPresent(findUser::setNickname);

@@ -27,7 +27,7 @@ public class User extends BaseTime {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true, updatable = false)
     private String email;
 
     @Column(nullable = false, length = 100)

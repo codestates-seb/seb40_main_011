@@ -72,10 +72,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     private String delegateRefreshToken(User user){
         String subject = user.getEmail();
-        Date experation = jwtTokenizer.getTokenExpiration(jwtTokenizer.getRefreshTokenExpirationMinutes());
+        Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getRefreshTokenExpirationMinutes());
         String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
 
-        String refreshToken = jwtTokenizer.generateRefreshToken(subject, experation, base64EncodedSecretKey);
+        String refreshToken = jwtTokenizer.generateRefreshToken(subject, expiration, base64EncodedSecretKey);
 
         return refreshToken;
     }

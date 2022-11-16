@@ -7,8 +7,9 @@ spring:
     url: jdbc:mariadb://${DB_HOST_NAME}/${DB_STORAGE_NAME}?characterEncoding=UTF-8&serverTimezone=UTC
     username: ${DB_AUTH_ID}
     password: ${DB_AUTH_PASSWORD}
+filePath: D:/codeTech/images/
 
-#jwt:
-#  secret-key: ${JWT_SECRET_KEY}
-#  access-token-expiration-minutes: 30
-#  refresh-token-expiration-minutes: 420
+jwt:
+  secret-key: ${JWT_SECRET_KEY}
+  access-token-expiration-minutes: 30
+  refresh-token-expiration-minutes: 420
