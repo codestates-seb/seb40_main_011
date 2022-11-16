@@ -1,20 +1,17 @@
 {
   "signup": {
-    "email": "",
-    "password": "",
-    "displayName": ""
+    "email": "caecus.regio@gmail.com",
+    "password": "!a123456",
+    "displayName": "안지은"
   },
-
   "login": {
     "username": "",
     "password": ""
   },
-
   "questions": {
     "title": "",
     "content": ""
   },
-
   "product": [
     {
       "id": 0,
@@ -53,7 +50,6 @@
       "modifiedAt": "2022. 11. 10"
     }
   ],
-
   "review": [
     {
       "id": 0,
