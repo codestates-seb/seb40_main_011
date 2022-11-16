@@ -5,29 +5,22 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import seb.project.Codetech.file.entity.FileEntity;
 import seb.project.Codetech.file.service.FileService;
 
-@Controller
-@RequestMapping("/api")
+@RestController
+@RequestMapping("/api/file")
 public class FileController {
 	private final FileService fileService;
 
 	public FileController(FileService fileService) {
 		this.fileService = fileService;
-	}
-
-	@GetMapping("/upload")
-	public String testUploadForm() {
-
-		return "upload";
 	}
 
 	@PostMapping("/upload")

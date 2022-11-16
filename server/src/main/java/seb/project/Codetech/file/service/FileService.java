@@ -80,7 +80,8 @@ public class FileService {
 
 	public boolean checkFile(MultipartFile file) throws IOException {
 		Tika tika = new Tika();
-		String fileType = tika.detect(file.getBytes());
+		String fileType = tika.detect(file.getInputStream());
+		// getByte로 돌리게 된다면 문제가 생긴다, getInputStream을 통해서 헤더만 보내서 검사한다.
 		return fileType.startsWith("image");
 	}
 }
