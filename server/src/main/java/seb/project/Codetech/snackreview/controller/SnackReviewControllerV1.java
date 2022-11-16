@@ -19,10 +19,10 @@ import lombok.RequiredArgsConstructor;
 import seb.project.Codetech.snackreview.dto.SnackReviewControllerDto;
 
 @RestController
-@RequestMapping("/api/categories/snackreviews")
+@RequestMapping("/api/v1/categories/snackreviews")
 @RequiredArgsConstructor
 @Validated
-public class SnackReviewController {
+public class SnackReviewControllerV1 {
 	@GetMapping
 	public ResponseEntity getSnackReview() {
 		return ResponseEntity.ok().build();
@@ -33,14 +33,14 @@ public class SnackReviewController {
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 
-	@PatchMapping("/{snack_review_id}")
-	public ResponseEntity patchSnackReview(@Positive @PathVariable(name = "snack_review_id") Long snackReviewId,
+	@PatchMapping("/{id}")
+	public ResponseEntity patchSnackReview(@Positive @PathVariable Long id,
 		@Valid @RequestBody SnackReviewControllerDto.Patch request) {
 		return ResponseEntity.ok().build();
 	}
 
-	@DeleteMapping("/{snack_review_id}")
-	public ResponseEntity deleteSnackReview(@Positive @PathVariable(name = "snack_review_id") Long snackReviewId) {
+	@DeleteMapping("/{id}")
+	public ResponseEntity deleteSnackReview(@Positive @PathVariable Long id) {
 		return ResponseEntity.noContent().build();
 	}
 }
