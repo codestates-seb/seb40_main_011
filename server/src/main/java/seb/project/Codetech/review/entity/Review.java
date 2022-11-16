@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import seb.project.Codetech.file.entity.FileEntity;
 import seb.project.Codetech.global.auditing.BaseTime;
 import seb.project.Codetech.product.entity.Product;
 import seb.project.Codetech.product.entity.Type;
@@ -59,6 +60,10 @@ public class Review extends BaseTime {
 	@ManyToOne
 	@JoinColumn(name = "product_id")
 	private Product product;
+
+	@ManyToOne
+	@JoinColumn(name = "file_id")
+	private FileEntity file;
 
 	@OneToMany(mappedBy = "review")
 	private List<Recommend> recommends = new ArrayList<>();
