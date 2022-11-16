@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
 
+import org.apache.tika.Tika;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,12 +32,14 @@ public class FileService {
 
 	public Long saveFile(MultipartFile uploadFile) throws IOException {
 
-		log.info("==================== 현재 프로젝트 경로 = {} ====================", rootPath);
+		if (!checkFile(uploadFile)) {
+			log.info("파일 타입이 아닙니다.");
+		}
 
 		checkDir(rootPath ,filePath); // 파일을 업로드 처리하기 전에 폴더가 있는지 검사한다.
 
 		FileEntity file = new FileEntity();
-		if(uploadFile.isEmpty()) return null;
+		if(uploadFile.isEmpty()) return null; // 파일이 비어있는 지 체크한다.
 
 		String orgName = uploadFile.getOriginalFilename();
 		String uuidName = UUID.randomUUID().toString();
@@ -45,13 +48,13 @@ public class FileService {
 		file.setOrgName(orgName);
 
 		// uuid 파일 이름을 설정한다.
-		file.setUuidName(uuidName + "-" + orgName);
+		file.setUuidName(uuidName);
 
 		// 설정한 저장경로(filePath)와 파일 이름을 통해 저장 경로를 데이터로 삽입한다.
-		file.setPath(filePath + uuidName + "-" + orgName);
+		file.setPath(filePath + uuidName);
 
 		// 로컬에 파일을 저장한다 파일 이름은 uuid로 저장.
-		uploadFile.transferTo(new File(rootPath + filePath + uuidName + "-" + orgName));
+		uploadFile.transferTo(new File(rootPath + filePath + uuidName));
 
 		// 데이터베이스에 파일 정보를 저장한다.
 		FileEntity saveFile = fileRepository.save(file);
@@ -70,5 +73,16 @@ public class FileService {
 			e.printStackTrace();
 		}
 
+	}
+
+	public boolean checkFile(MultipartFile file) throws IOException {
+		Tika tika = new Tika();
+
+		String fileType = tika.detect(file.getBytes());
+
+		if (fileType.startsWith("image")) {
+			return true;
+		}
+		else return false;
 	}
 }
