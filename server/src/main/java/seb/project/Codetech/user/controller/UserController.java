@@ -2,6 +2,7 @@ package seb.project.Codetech.user.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import seb.project.Codetech.user.dto.UserPatchDto;
@@ -33,15 +34,15 @@ public class UserController {
     }
 
     @PatchMapping("/user")
-    public ResponseEntity patchUser(@Valid @RequestBody UserPatchDto patch,
-                                    Long id){
-        User user = userService.updateUser(mapper.userPatchDtoToUser(patch),id);
+    public ResponseEntity patchUser(@AuthenticationPrincipal String email,
+                                    @Valid @RequestBody UserPatchDto patch){
+        User user = userService.updateUser(email,mapper.userPatchDtoToUser(patch));
         return ResponseEntity.ok(mapper.userToUserResponseDto(user));
     }
 
-    @GetMapping("/user/{id}")
-    public ResponseEntity getUser(@PathVariable("id") Long id){
-        User user = userService.findVerifiedUser(id);
+    @GetMapping("/user")
+    public ResponseEntity getUser(@AuthenticationPrincipal String email){
+        User user = userService.findUser(email);
         return ResponseEntity.ok(mapper.userToUserResponseDto(user));
     }
 }
