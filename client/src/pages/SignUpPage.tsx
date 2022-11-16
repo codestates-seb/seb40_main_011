@@ -17,8 +17,12 @@ import '../components/common.css';
 const SignUpPage = () => {
   return (
     <div className="flex items-center justify-center h-screen border-2 border-sky-500">
-      <div className="w-1/3 px-20 m-auto border-2 border-black rounded-xl">
-        <h1 className="m-10 text-3xl font-bold text-center">Codetech</h1>
+      <div className="px-20 py-12 m-auto border shadow-lg rounded-xl border-zinc-500">
+        <img
+          src={require('../images/logo.png')}
+          alt=""
+          className="pb-10 m-auto w-52"
+        />
         <form name="signup" method="POST" className="mb-3">
           <label className="font-medium">User Name</label>
           <br />
@@ -59,8 +63,10 @@ const SignUpPage = () => {
             className="signup-input"
           />
           <p className="hidden signup-p-false">비밀번호가 일치하지 않습니다</p>
+          <div className="flex items-center justify-center mt-10">
+            <SignUpButton />
+          </div>
         </form>
-        <SignUpButton />
       </div>
     </div>
   );
