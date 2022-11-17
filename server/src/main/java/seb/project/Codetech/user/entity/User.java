@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import seb.project.Codetech.discount.entity.DiscountComment;
+import seb.project.Codetech.file.entity.FileEntity;
 import seb.project.Codetech.global.auditing.BaseTime;
 import seb.project.Codetech.question.entity.Answer;
 import seb.project.Codetech.question.entity.Question;
@@ -68,4 +69,8 @@ public class User extends BaseTime {
 
 	@OneToMany(mappedBy = "user")
 	private List<DiscountComment> discountComments = new ArrayList<>();
+
+    @OneToOne
+    @JoinColumn(name = "file_id")
+    private FileEntity file;
 }
