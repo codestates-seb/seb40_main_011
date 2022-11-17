@@ -3,6 +3,8 @@ package seb.project.Codetech.snackreview.repository;
 import static seb.project.Codetech.snackreview.entity.QSnackReview.*;
 import static seb.project.Codetech.user.entity.QUser.*;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -10,6 +12,7 @@ import javax.persistence.EntityManager;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
@@ -40,6 +43,7 @@ public class CustomSnackReviewRepositoryImpl implements CustomSnackReviewReposit
 			.from(snackReview)
 			.join(snackReview.user, user).fetchJoin()
 			.where(snackReview.product.id.eq(cond.getProductId()))
+			.orderBy(buildOrderSpecifiers(cond.getSort(), cond.getOrder()))
 			.offset(cond.getOffset())
 			.limit(cond.getLimit() + 1)
 			.fetch();
@@ -65,7 +69,7 @@ public class CustomSnackReviewRepositoryImpl implements CustomSnackReviewReposit
 			)
 			.from(snackReview)
 			.where(snackReview.product.id.eq(cond.getProductId()))
-			.fetchOne();
+			.fetchFirst();
 
 		firstSlice.setSlice(searchSortedSliceByProductId(cond));
 
@@ -79,5 +83,26 @@ public class CustomSnackReviewRepositoryImpl implements CustomSnackReviewReposit
 		}
 
 		return false;
+	}
+
+	private OrderSpecifier<?>[] buildOrderSpecifiers(String sort, String order) {
+		List<OrderSpecifier<?>> orderSpecifiers = new ArrayList<>();
+		orderSpecifiers.add(snackReview.id.desc());
+
+		if (sort == null) {
+			return orderSpecifiers.toArray(new OrderSpecifier[0]);
+		}
+
+		if (order.equals("ASC")) {
+			orderSpecifiers.add(snackReview.grade.asc());
+			Collections.reverse(orderSpecifiers);
+
+			return orderSpecifiers.toArray(new OrderSpecifier[0]);
+		}
+
+		orderSpecifiers.add(snackReview.grade.desc());
+		Collections.reverse(orderSpecifiers);
+
+		return orderSpecifiers.toArray(new OrderSpecifier[0]);
 	}
 }
