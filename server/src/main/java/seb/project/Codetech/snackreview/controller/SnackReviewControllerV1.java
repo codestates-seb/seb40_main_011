@@ -9,6 +9,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,11 +32,16 @@ public class SnackReviewControllerV1 {
 	private final SnackReviewControllerMapper dtoMapper;
 
 	@GetMapping
-	public ResponseEntity getSnackReview() {
+	public ResponseEntity getFirst(@ModelAttribute SnackReviewControllerDto.GetFirst dto) {
 		return ResponseEntity.ok().build();
 	}
 
-	@PostMapping
+	@PostMapping("/more")
+	public ResponseEntity getMore(@RequestBody SnackReviewControllerDto.GetMore dto) {
+		return ResponseEntity.ok().build();
+	}
+
+	@PostMapping("/post")
 	public ResponseEntity postSnackReview(
 		@AuthenticationPrincipal String loginEmail,
 		@Valid @RequestBody SnackReviewControllerDto.Post request
