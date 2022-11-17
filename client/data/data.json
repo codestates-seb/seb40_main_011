@@ -24,8 +24,8 @@
     },
     {
       "id": 1,
-      "name": "B 키보드",
-      "type": "KEYBOARD",
+      "name": "B 모니터",
+      "type": "MONITOR",
       "image": "https://img2.quasarzone.com/editor/2022/11/11/75f9d1f0e49980190d3967e19b0458e5.jpg",
       "detail": "유저가 제품 추가하면서 넣은 텍스트 하나 둘 삼 넷",
       "createdAt": "2022. 11. 10",
@@ -33,6 +33,15 @@
     },
     {
       "id": 2,
+      "name": "C 마우스",
+      "type": "MOUSE",
+      "image": "https://img2.quasarzone.com/editor/2022/11/11/75f9d1f0e49980190d3967e19b0458e5.jpg",
+      "detail": "유저가 제품 추가하면서 넣은 텍스트 하나 둘 삼 넷",
+      "createdAt": "2022. 11. 10",
+      "modifiedAt": "2022. 11. 10"
+    },
+    {
+      "id": 3,
       "name": "C 키보드",
       "type": "KEYBOARD",
       "image": "https://img2.quasarzone.com/editor/2022/11/11/75f9d1f0e49980190d3967e19b0458e5.jpg",
@@ -41,7 +50,34 @@
       "modifiedAt": "2022. 11. 10"
     },
     {
-      "id": 3,
+      "id": 4,
+      "name": "C 키보드",
+      "type": "KEYBOARD",
+      "image": "https://img2.quasarzone.com/editor/2022/11/11/75f9d1f0e49980190d3967e19b0458e5.jpg",
+      "detail": "유저가 제품 추가하면서 넣은 텍스트 하나 둘 삼 넷",
+      "createdAt": "2022. 11. 10",
+      "modifiedAt": "2022. 11. 10"
+    },
+    {
+      "id": 5,
+      "name": "C 키보드",
+      "type": "KEYBOARD",
+      "image": "https://img2.quasarzone.com/editor/2022/11/11/75f9d1f0e49980190d3967e19b0458e5.jpg",
+      "detail": "유저가 제품 추가하면서 넣은 텍스트 하나 둘 삼 넷",
+      "createdAt": "2022. 11. 10",
+      "modifiedAt": "2022. 11. 10"
+    },
+    {
+      "id": 6,
+      "name": "C 키보드",
+      "type": "KEYBOARD",
+      "image": "https://img2.quasarzone.com/editor/2022/11/11/75f9d1f0e49980190d3967e19b0458e5.jpg",
+      "detail": "유저가 제품 추가하면서 넣은 텍스트 하나 둘 삼 넷",
+      "createdAt": "2022. 11. 10",
+      "modifiedAt": "2022. 11. 10"
+    },
+    {
+      "id": 7,
       "name": "C 키보드",
       "type": "KEYBOARD",
       "image": "https://img2.quasarzone.com/editor/2022/11/11/75f9d1f0e49980190d3967e19b0458e5.jpg",
@@ -62,7 +98,9 @@
       "thumbnail": "https://img2.quasarzone.com/editor/2022/11/15/74515ffd61655f726248755508bad500.jpg",
       "reviewImg": "url",
       "createdAt": "2022. 11. 10",
-      "modifedAt": "2022. 11. 15"
+      "modifedAt": "2022. 11. 15",
+      "likes": 13,
+      "profileImg": "https://images.unsplash.com/photo-1661910177389-298ba8bc93aa?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80"
     },
     {
       "id": 1,
@@ -70,12 +108,44 @@
       "productName": 2,
       "type": "MOUSE",
       "title": "마이크로닉스 메카 ZM2 RGB - 게이밍 마우스",
-      "contest": "개발 비용을 아낀 만큼 가격을 저렴하게 책정하니 여러모로 소비자 이목을 끌기 쉽습니다. 개인적 철학 혹은 주머니 사정에 따라 응원하는 이들이 생겨나기도 합니다. 그렇다고 이 방법을 정당화할 순 없습니다. 비판을 피할 순 없으며 쌓이는 잔고만큼 브랜드 이미지는 깎여나가게 됩니다. 마치 표절을 일삼는 작곡가처럼 말이죠.",
+      "content": "개발 비용을 아낀 만큼 가격을 저렴하게 책정하니 여러모로 소비자 이목을 끌기 쉽습니다. 개인적 철학 혹은 주머니 사정에 따라 응원하는 이들이 생겨나기도 합니다. 그렇다고 이 방법을 정당화할 순 없습니다. 비판을 피할 순 없으며 쌓이는 잔고만큼 브랜드 이미지는 깎여나가게 됩니다. 마치 표절을 일삼는 작곡가처럼 말이죠.",
       "view": 19,
       "thumbnail": "https://img2.quasarzone.com/editor/2022/10/18/30b78b21f9d36fea378cd1d00067336b.jpg",
       "reviewImg": "url",
       "createdAt": "2022. 11. 10",
-      "modifedAt": "2022. 11. 15"
+      "modifedAt": "2022. 11. 15",
+      "likes": 30,
+      "profileImg": "https://images.unsplash.com/photo-1657926053558-888db78e68ab?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80"
+    },
+    {
+      "id": 2,
+      "nickname": "멍멍멍멍",
+      "productName": 3,
+      "type": "MONITOR",
+      "title": "LG전자 울트라HD 27UQ850W",
+      "content": "LG전자 LCD 하면 역시 IPS 패널이 떠오르는데요. 넓은 시야각과 풍부한 색상 표현이 유리해 지금껏 많은 소비자에게 사랑받고 있습니다",
+      "view": 19,
+      "thumbnail": "https://img2.quasarzone.com/editor/2022/11/15/3d949d52b11f9655a68dfa6ce3c8bd41.jpg",
+      "reviewImg": "url",
+      "createdAt": "2022. 11. 10",
+      "modifedAt": "2022. 11. 15",
+      "likes": 22,
+      "profileImg": "https://images.unsplash.com/photo-1668441515735-39c4331a1fcb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80"
+    },
+    {
+      "id": 2,
+      "nickname": "우당탕탕우영우",
+      "productName": 4,
+      "type": "MONITOR",
+      "title": "삼성전자 오디세이 G6 S32BG650 동명에스앤디",
+      "content": "영화 <기생충>에서는 주인공 남매가 화장실 벽에 붙어 이웃집 와이파이 신호를 잡으려는 장면이 등장합니다. 이는 통신 요금조차 내지 못하는 가난한 배경을 표현하기 위한 연출로 여겨집니다.",
+      "view": 3,
+      "thumbnail": "https://img2.quasarzone.com/editor/2022/11/03/d0a098d6b50de497b0a32621b30a046e.jpg",
+      "reviewImg": "url",
+      "createdAt": "2022. 11. 10",
+      "modifedAt": "2022. 11. 15",
+      "likes": 7,
+      "profileImg": "https://images.unsplash.com/photo-1668210039927-82341df16e20?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80"
     }
   ]
 }
