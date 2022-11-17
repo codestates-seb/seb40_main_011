@@ -20,7 +20,7 @@ public class SnackReviewControllerMapper {
 			.content(dto.getContent())
 			.type(dto.getType())
 			.user(userService.findUser(email))
-			.product(productService.findProduct(dto.getProductId()))
+			.product(productService.findProductId(dto.getProductId()))
 			.build();
 	}
 

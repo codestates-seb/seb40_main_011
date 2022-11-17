@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -37,16 +38,18 @@ public class ProductController {
 	}
 
 	@PostMapping("/create") // 제품을 생성한다.
-	public ResponseEntity<Product> postProduct(@RequestBody @Valid ProductDto.Post postDto) {
+	public ResponseEntity<Product> postProduct(@AuthenticationPrincipal String email,
+											   @RequestBody @Valid ProductDto.Post postDto) {
 		Product dtoToProduct = mapper.productPostDtoToProduct(postDto);
-		Product serviceProduct = productService.createProduct(dtoToProduct);
+		Product serviceProduct = productService.createProduct(email, dtoToProduct);
 		return ResponseEntity.status(HttpStatus.CREATED).body(serviceProduct);
 	}
 
 	@PatchMapping("/modify") // 등록된 제품을 수정한다.
-	public ResponseEntity<Product> patchProduct(@RequestBody @Valid ProductDto.Patch patchDto) {
+	public ResponseEntity<Product> patchProduct(@AuthenticationPrincipal String email,
+												@RequestBody @Valid ProductDto.Patch patchDto) {
 		Product dtoToProduct = mapper.productPatchDtoToProduct(patchDto);
-		Product serviceProduct = productService.modifyProduct(dtoToProduct);
+		Product serviceProduct = productService.modifyProduct(email, dtoToProduct);
 		return ResponseEntity.ok(serviceProduct);
 	}
 
@@ -58,16 +61,17 @@ public class ProductController {
 	}
 
 	@GetMapping("/products") // 등록된 모든 제품을 조회한다.
-	public ResponseEntity<PageListDto> getProducts(@RequestBody @Valid PageInfo.Request request) {
+	public ResponseEntity<PageListDto<ProductDto.Response>> getProducts(@RequestBody @Valid PageInfo.Request request) {
 		Page<Product> pageProduct = productService.findAllProduct(request);
 		List<Product> products = pageProduct.getContent();
 		return ResponseEntity.ok(new PageListDto<>(mapper.productsToproductResponse(products), pageProduct));
 	}
 
 	@DeleteMapping("/remove") // 등록된 제품을 삭제한다.
-	public ResponseEntity<Product> deleteProduct(@RequestBody @Valid ProductDto.Get getDto) {
+	public ResponseEntity<Product> deleteProduct(@AuthenticationPrincipal String email,
+												 @RequestBody @Valid ProductDto.Get getDto) {
 		Product dtoToProduct = mapper.productGetDtoToProduct(getDto);
-		productService.removeProduct(dtoToProduct);
+		productService.removeProduct(email, dtoToProduct);
 		return ResponseEntity.ok().build();
 	}
 }

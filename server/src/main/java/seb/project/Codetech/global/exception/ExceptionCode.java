@@ -9,7 +9,11 @@ public enum ExceptionCode {
 
     // 파일 예외처리
     FILE_NOT_FOUND(404, "파일을 찾을 수 없습니다."),
-    FILE_NOT_ALLOW(415, "지원하지 않는 파일 형식입니다.");
+    FILE_NOT_ALLOW(415, "지원하지 않는 파일 형식입니다."),
+
+    // 제품 예외처리
+    PRODUCT_NOT_FOUND(404, "제품 정보를 찾을 수 없습니다."),
+    PRODUCT_NOT_DELETE(401, "작성된 제품 정보는 관리자만 삭제할 수 있습니다.");
 
     @Getter
     private final int code;

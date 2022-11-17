@@ -7,6 +7,8 @@ spring:
         show_sql: true
   profiles:
     default: dev
+  thymeleaf: # 기능 테스트를 위한 타임리프 사용
+    check-template-location: false # 타임리프 검사 비활성화
   servlet:
     multipart:
       max-file-size: 3MB # 최대 파일 사이즈
