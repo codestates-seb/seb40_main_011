@@ -9,6 +9,7 @@ import './components/common.css';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import ReviewDetail from './pages/ReviewDetail';
+import QuestionLists from './pages/QuestionLists';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/categories/review/write" element={<WriteReview />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/question-lists" element={<QuestionLists />} />
           <Route path="/review/:id" element={<ReviewDetail />} />
         </Routes>
       </main>
