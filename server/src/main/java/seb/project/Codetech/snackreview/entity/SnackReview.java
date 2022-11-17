@@ -7,6 +7,7 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -45,11 +46,11 @@ public class SnackReview extends BaseTime {
 	@Enumerated(EnumType.STRING)
 	private Type type;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
 	private User user;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "product_id")
 	private Product product;
 
@@ -86,6 +87,7 @@ public class SnackReview extends BaseTime {
 
 	@Getter
 	@ValidScore
+	@NoArgsConstructor
 	public static class Score {
 		private int costEfficiency;
 		private int quality;
