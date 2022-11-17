@@ -23,18 +23,16 @@ public class SnackReviewServiceMapper {
 	public SnackReviewServiceDto.Search firstParamsToSearch(SnackReviewControllerDto.GetFirst params) {
 		return SnackReviewServiceDto.Search.builder()
 			.productId(params.getProductId())
-			.firstSize(params.getFirstSize())
-			.page(0)
-			.size(params.getFirstSize())
+			.offset(0)
+			.limit(params.getFirstSize())
 			.build();
 	}
 
 	public SnackReviewServiceDto.Search moreParamsToSearch(SnackReviewControllerDto.GetMore params) {
 		return SnackReviewServiceDto.Search.builder()
 			.productId(params.getProductId())
-			.firstSize(params.getFirstSize())
-			.page(params.getPage())
-			.size(params.getSize())
+			.offset(params.getFirstSize() + params.getCount() * params.getSize())
+			.limit(params.getSize())
 			.sort(params.getSort())
 			.order(params.getOrder())
 			.build();

@@ -25,25 +25,25 @@ import seb.project.Codetech.snackreview.mapper.SnackReviewControllerMapper;
 import seb.project.Codetech.snackreview.service.SnackReviewService;
 
 @RestController
-@RequestMapping("/api/categories/snack-reviews")
+@RequestMapping("/api/snack-reviews")
 @RequiredArgsConstructor
 @Validated
-public class SnackReviewControllerV1 {
+public class SnackReviewController {
 	private final SnackReviewService snackReviewService;
 	private final SnackReviewControllerMapper dtoMapper;
 
 	@GetMapping
 	public ResponseEntity getFirst(@ModelAttribute SnackReviewControllerDto.GetFirst params) {
-		SnackReviewResponseDto.First response = snackReviewService.readFirst(params);
+		SnackReviewResponseDto.First firstSlice = snackReviewService.readFirst(params);
 
-		return ResponseEntity.ok().body(response);
+		return ResponseEntity.ok().body(firstSlice);
 	}
 
 	@GetMapping("/more")
 	public ResponseEntity getMore(@ModelAttribute SnackReviewControllerDto.GetMore params) {
-		SnackReviewResponseDto.More response = snackReviewService.readMore(params);
+		SnackReviewResponseDto.Slice slice = snackReviewService.readMore(params);
 
-		return ResponseEntity.ok().body(response);
+		return ResponseEntity.ok().body(slice);
 	}
 
 	@PostMapping("/post")

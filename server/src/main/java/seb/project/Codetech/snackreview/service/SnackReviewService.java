@@ -1,6 +1,5 @@
 package seb.project.Codetech.snackreview.service;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -24,17 +23,15 @@ public class SnackReviewService {
 	@Transactional(readOnly = true)
 	public SnackReviewResponseDto.First readFirst(SnackReviewControllerDto.GetFirst params) {
 		SnackReviewServiceDto.Search cond = dtoMapper.firstParamsToSearch(params);
-		List<SnackReviewResponseDto.Card> cards = snackReviewRepository.findCardsByProductIdAndSorted(cond);
 
-		return null;
+		return snackReviewRepository.searchFirstSliceByProductId(cond);
 	}
 
 	@Transactional(readOnly = true)
-	public SnackReviewResponseDto.More readMore(SnackReviewControllerDto.GetMore params) {
+	public SnackReviewResponseDto.Slice readMore(SnackReviewControllerDto.GetMore params) {
 		SnackReviewServiceDto.Search cond = dtoMapper.moreParamsToSearch(params);
-		List<SnackReviewResponseDto.Card> cards = snackReviewRepository.findCardsByProductIdAndSorted(cond);
 
-		return null;
+		return snackReviewRepository.searchSortedSliceByProductId(cond);
 	}
 
 	public Long createSnackReview(SnackReviewServiceDto.Create dto) {
