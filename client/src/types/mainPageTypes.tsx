@@ -19,4 +19,6 @@ export interface Review {
   reviewImg: string;
   createdAt: string;
   modifedAt: string;
+  likes: number;
+  profileImg: string;
 }
