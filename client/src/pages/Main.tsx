@@ -1,11 +1,11 @@
 // Snack Review List fetching & boxing comp
+import BestReviewList from '../components/List/BestReviewList';
 import ProductList from '../components/List/ProductList';
-import ReviewList from '../components/List/ReviewList';
 
 const Main = () => {
   return (
     <>
-      <ReviewList></ReviewList>
+      <BestReviewList></BestReviewList>
       <ProductList></ProductList>
     </>
   );
