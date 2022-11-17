@@ -9,19 +9,19 @@ import lombok.RequiredArgsConstructor;
 import seb.project.Codetech.snackreview.dto.SnackReviewServiceDto;
 import seb.project.Codetech.snackreview.entity.SnackReview;
 import seb.project.Codetech.snackreview.mapper.SnackReviewServiceMapper;
-import seb.project.Codetech.snackreview.repository.SnackReviewSimpleRepository;
+import seb.project.Codetech.snackreview.repository.SnackReviewRepository;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class SnackReviewService {
-	private final SnackReviewSimpleRepository simpleRepository;
+	private final SnackReviewRepository snackReviewRepository;
 	private final SnackReviewServiceMapper dtoMapper;
 
 	public Long createSnackReview(SnackReviewServiceDto.Create dto) {
 		SnackReview snackReview = dtoMapper.createDtoToEntity(dto);
 
-		return simpleRepository.save(snackReview).getId();
+		return snackReviewRepository.save(snackReview).getId();
 	}
 
 	public Long updateSnackReview(SnackReviewServiceDto.Update dto) {
@@ -34,12 +34,12 @@ public class SnackReviewService {
 
 	public void deleteSnackReview(Long id) {
 		SnackReview snackReview = findVerifiedOne(id);
-		simpleRepository.delete(snackReview);
+		snackReviewRepository.delete(snackReview);
 	}
 
 	@Transactional(readOnly = true)
 	public SnackReview findVerifiedOne(Long id) {
-		Optional<SnackReview> found = simpleRepository.findById(id);
+		Optional<SnackReview> found = snackReviewRepository.findById(id);
 
 		return found.orElseThrow(
 			() -> new RuntimeException("SNACK_REVIEW_NOT_FOUND")
