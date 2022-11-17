@@ -39,7 +39,7 @@ public class SnackReviewControllerDto {
 	public static class GetFirst {
 		@Positive
 		public Long productId;
-		public int fistSize;
+		public int firstSize;
 	}
 
 	@Getter

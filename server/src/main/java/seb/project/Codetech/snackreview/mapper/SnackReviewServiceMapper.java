@@ -2,6 +2,7 @@ package seb.project.Codetech.snackreview.mapper;
 
 import org.springframework.stereotype.Component;
 
+import seb.project.Codetech.snackreview.dto.SnackReviewControllerDto;
 import seb.project.Codetech.snackreview.dto.SnackReviewServiceDto;
 import seb.project.Codetech.snackreview.entity.SnackReview;
 
@@ -18,4 +19,25 @@ public class SnackReviewServiceMapper {
 
 		return snackReview;
 	}
+
+	public SnackReviewServiceDto.Search firstParamsToSearch(SnackReviewControllerDto.GetFirst params) {
+		return SnackReviewServiceDto.Search.builder()
+			.productId(params.getProductId())
+			.firstSize(params.getFirstSize())
+			.page(0)
+			.size(params.getFirstSize())
+			.build();
+	}
+
+	public SnackReviewServiceDto.Search moreParamsToSearch(SnackReviewControllerDto.GetMore params) {
+		return SnackReviewServiceDto.Search.builder()
+			.productId(params.getProductId())
+			.firstSize(params.getFirstSize())
+			.page(params.getPage())
+			.size(params.getSize())
+			.sort(params.getSort())
+			.order(params.getOrder())
+			.build();
+	}
+
 }
