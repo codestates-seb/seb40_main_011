@@ -1,9 +1,10 @@
 package seb.project.Codetech.snackreview.repository;
 
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
 
-@Repository
-@Transactional(readOnly = true)
+import seb.project.Codetech.snackreview.dto.SnackReviewResponseDto;
+import seb.project.Codetech.snackreview.dto.SnackReviewServiceDto;
+
 public interface CustomSnackReviewRepository {
+	List<SnackReviewResponseDto.Card> findCardsByProductIdAndSorted(SnackReviewServiceDto.Search cond);
 }
