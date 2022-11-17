@@ -25,7 +25,7 @@ import seb.project.Codetech.snackreview.mapper.SnackReviewControllerMapper;
 import seb.project.Codetech.snackreview.service.SnackReviewService;
 
 @RestController
-@RequestMapping("/api/categories/snackreviews")
+@RequestMapping("/api/categories/snack-reviews")
 @RequiredArgsConstructor
 @Validated
 public class SnackReviewControllerV1 {
