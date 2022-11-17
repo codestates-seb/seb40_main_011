@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
 import seb.project.Codetech.snackreview.dto.SnackReviewControllerDto;
+import seb.project.Codetech.snackreview.dto.SnackReviewResponseDto;
 import seb.project.Codetech.snackreview.dto.SnackReviewServiceDto;
 import seb.project.Codetech.snackreview.mapper.SnackReviewControllerMapper;
 import seb.project.Codetech.snackreview.service.SnackReviewService;
@@ -32,13 +33,17 @@ public class SnackReviewControllerV1 {
 	private final SnackReviewControllerMapper dtoMapper;
 
 	@GetMapping
-	public ResponseEntity getFirst(@ModelAttribute SnackReviewControllerDto.GetFirst dto) {
-		return ResponseEntity.ok().build();
+	public ResponseEntity getFirst(@ModelAttribute SnackReviewControllerDto.GetFirst params) {
+		SnackReviewResponseDto.First response = snackReviewService.readFirst(params);
+
+		return ResponseEntity.ok().body(response);
 	}
 
 	@PostMapping("/more")
-	public ResponseEntity getMore(@RequestBody SnackReviewControllerDto.GetMore dto) {
-		return ResponseEntity.ok().build();
+	public ResponseEntity getMore(@RequestBody SnackReviewControllerDto.GetMore params) {
+		SnackReviewResponseDto.More response = snackReviewService.readMore(params);
+
+		return ResponseEntity.ok().body(response);
 	}
 
 	@PostMapping("/post")

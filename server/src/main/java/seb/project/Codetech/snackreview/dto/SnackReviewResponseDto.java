@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 public class SnackReviewResponseDto {
 	@Getter
-	@NoArgsConstructor
 	public static class First {
 		private long total;
 		private float avgCe;
@@ -20,12 +19,13 @@ public class SnackReviewResponseDto {
 	}
 
 	@Getter
-	@NoArgsConstructor
 	public static class More {
 		private boolean hasNext;
 		private List<Card> cards;
 	}
 
+	@Getter
+	@NoArgsConstructor
 	public static class Card {
 		private String nickName;
 		private String image;
