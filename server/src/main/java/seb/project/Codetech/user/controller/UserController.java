@@ -1,6 +1,7 @@
 package seb.project.Codetech.user.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
@@ -12,6 +13,7 @@ import seb.project.Codetech.user.entity.User;
 import seb.project.Codetech.user.mapper.UserMapper;
 import seb.project.Codetech.user.service.UserService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @RestController
@@ -49,8 +51,16 @@ public class UserController {
 
     @PatchMapping("/withdraw")
     public ResponseEntity withdrawUser(@AuthenticationPrincipal String email,
-                                       @Valid @RequestBody UserWithdrawDto withdraw){
+                                       @Valid @RequestBody UserWithdrawDto withdraw,
+                                       HttpServletRequest request){
         User user = userService.withdrawUser(email,mapper.userWithdrawDtoToUser(withdraw));
-        return ResponseEntity.ok(mapper.userToUserResponseDto(user));
+        UserService.logout(request);
+        return ResponseEntity.ok(HttpStatus.ACCEPTED);
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity logoutUser(HttpServletRequest request){
+        UserService.logout(request);
+        return ResponseEntity.ok(HttpStatus.ACCEPTED);
     }
 }

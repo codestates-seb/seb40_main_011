@@ -2,6 +2,7 @@ package seb.project.Codetech.user.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,8 +13,10 @@ import seb.project.Codetech.global.exception.ExceptionCode;
 import seb.project.Codetech.user.entity.User;
 import seb.project.Codetech.user.repository.UserRepository;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @Transactional
@@ -23,14 +26,22 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserAuthorityUtils authorityUtils;
     private final ApplicationEventPublisher publisher;
+    private static RedisTemplate redisTemplate = new RedisTemplate<>();
 
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, UserAuthorityUtils authorityUtils,
-                       ApplicationEventPublisher publisher){
+                       ApplicationEventPublisher publisher, RedisTemplate redisTemplate){
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityUtils = authorityUtils;
         this.publisher = publisher;
+        UserService.redisTemplate = redisTemplate;
     }
+
+    public static void logout(HttpServletRequest request) {
+        redisTemplate.opsForValue()
+                .set(request.getHeader("Authorization"),"logout",30 * 60 * 1000L, TimeUnit.MILLISECONDS);
+    }
+
     public User registerUser(User user) {
         verifyExistsEmail(user.getEmail());
 
@@ -84,8 +95,11 @@ public class UserService {
     public User withdrawUser( String email, User user) {
         User findUser = findVerifiedUser(findUserId(email));
 
-        if(passwordEncoder.matches(user.getPassword(), findUser.getPassword())){findUser.setStatus(true);}
+        if(passwordEncoder.matches(user.getPassword(), findUser.getPassword())){
+            findUser.setStatus(true);
+            return userRepository.save(findUser);
+        }
 
-        return userRepository.save(findUser);
+        throw new BusinessLogicException(ExceptionCode.PASSWORD_NOT_MATCH);
     }
 }

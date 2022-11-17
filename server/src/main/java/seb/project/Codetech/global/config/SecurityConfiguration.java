@@ -2,6 +2,7 @@ package seb.project.Codetech.global.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -33,10 +34,13 @@ public class SecurityConfiguration {
 
     private final JwtTokenizer jwtTokenizer;
     private final UserAuthorityUtils authorityUtils;
+    private final RedisTemplate redisTemplate;
 
-    public SecurityConfiguration(JwtTokenizer jwtTokenizer, UserAuthorityUtils authorityUtils){
+    public SecurityConfiguration(JwtTokenizer jwtTokenizer, UserAuthorityUtils authorityUtils,
+                                 RedisTemplate redisTemplate){
         this.jwtTokenizer = jwtTokenizer;
         this.authorityUtils = authorityUtils;
+        this.redisTemplate = redisTemplate;
     }
 
     @Bean
@@ -57,7 +61,7 @@ public class SecurityConfiguration {
                 .apply(new CustomFilterConfigurer())
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
-                        .antMatchers(HttpMethod.POST,"api/register").permitAll()
+                        .antMatchers(HttpMethod.POST,"/api/register").permitAll()
                         .antMatchers(HttpMethod.PATCH,"/api/user/**").hasRole("USER")
                         .antMatchers(HttpMethod.GET,"/api/user").hasRole("USER")
                         .anyRequest().permitAll());
@@ -90,7 +94,7 @@ public class SecurityConfiguration {
             jwtAuthenticationFilter.setAuthenticationSuccessHandler(new UserAuthenticationSuccessHandler());
             jwtAuthenticationFilter.setAuthenticationFailureHandler(new UserAuthenticationFailureHandler());
 
-            JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtils);
+            JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtils, redisTemplate);
 
             builder
                     .addFilter(jwtAuthenticationFilter)
