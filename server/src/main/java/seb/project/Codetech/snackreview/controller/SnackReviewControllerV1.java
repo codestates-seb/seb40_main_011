@@ -25,7 +25,7 @@ import seb.project.Codetech.snackreview.mapper.SnackReviewControllerMapper;
 import seb.project.Codetech.snackreview.service.SnackReviewService;
 
 @RestController
-@RequestMapping("/api/v1/categories/snackreviews")
+@RequestMapping("/api/categories/snackreviews")
 @RequiredArgsConstructor
 @Validated
 public class SnackReviewControllerV1 {
@@ -39,8 +39,8 @@ public class SnackReviewControllerV1 {
 		return ResponseEntity.ok().body(response);
 	}
 
-	@PostMapping("/more")
-	public ResponseEntity getMore(@RequestBody SnackReviewControllerDto.GetMore params) {
+	@GetMapping("/more")
+	public ResponseEntity getMore(@ModelAttribute SnackReviewControllerDto.GetMore params) {
 		SnackReviewResponseDto.More response = snackReviewService.readMore(params);
 
 		return ResponseEntity.ok().body(response);

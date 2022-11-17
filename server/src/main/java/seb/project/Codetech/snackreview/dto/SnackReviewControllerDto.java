@@ -43,6 +43,7 @@ public class SnackReviewControllerDto {
 	}
 
 	@Getter
+	@Setter
 	@NoArgsConstructor
 	public static class GetMore {
 		@Positive

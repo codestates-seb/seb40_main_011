@@ -27,7 +27,8 @@ public class SnackReviewResponseDto {
 	@Getter
 	@NoArgsConstructor
 	public static class Card {
-		private String nickName;
+		private Long id;
+		private String nickname;
 		private String image;
 		private int costEfficiency;
 		private int quality;
