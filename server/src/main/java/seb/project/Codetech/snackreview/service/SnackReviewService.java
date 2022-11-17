@@ -21,12 +21,12 @@ public class SnackReviewService {
 	private final SnackReviewServiceMapper dtoMapper;
 
 	@Transactional(readOnly = true)
-	public SnackReviewResponseDto.First readFirst(SnackReviewControllerDto.GetFirst dto) {
+	public SnackReviewResponseDto.First readFirst(SnackReviewControllerDto.GetFirst params) {
 		return null;
 	}
 
 	@Transactional(readOnly = true)
-	public SnackReviewResponseDto.More readMore(SnackReviewControllerDto.GetMore dto) {
+	public SnackReviewResponseDto.More readMore(SnackReviewControllerDto.GetMore params) {
 		return null;
 	}
 

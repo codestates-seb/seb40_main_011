@@ -29,4 +29,16 @@ public class SnackReviewServiceDto {
 		private SnackReview.Score score;
 		private String content;
 	}
+
+	@Getter
+	@Builder
+	@AllArgsConstructor
+	public static class Search {
+		private Long productId;
+		private int firstSize;
+		private int page;
+		private int size;
+		private String sort;
+		private String order;
+	}
 }
