@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 import seb.project.Codetech.snackreview.entity.SnackReview;
 
 @Repository
-public interface SnackReviewSimpleRepository extends JpaRepository<SnackReview, Long> {
+public interface SnackReviewRepository extends JpaRepository<SnackReview, Long>, CustomSnackReviewRepository {
 }

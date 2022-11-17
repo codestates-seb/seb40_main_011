@@ -9,6 +9,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,24 +19,34 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
 import seb.project.Codetech.snackreview.dto.SnackReviewControllerDto;
+import seb.project.Codetech.snackreview.dto.SnackReviewResponseDto;
 import seb.project.Codetech.snackreview.dto.SnackReviewServiceDto;
 import seb.project.Codetech.snackreview.mapper.SnackReviewControllerMapper;
 import seb.project.Codetech.snackreview.service.SnackReviewService;
 
 @RestController
-@RequestMapping("/api/v1/categories/snackreviews")
+@RequestMapping("/api/snack-reviews")
 @RequiredArgsConstructor
 @Validated
-public class SnackReviewControllerV1 {
+public class SnackReviewController {
 	private final SnackReviewService snackReviewService;
 	private final SnackReviewControllerMapper dtoMapper;
 
 	@GetMapping
-	public ResponseEntity getSnackReview() {
-		return ResponseEntity.ok().build();
+	public ResponseEntity getFirst(@ModelAttribute SnackReviewControllerDto.GetFirst params) {
+		SnackReviewResponseDto.First firstSlice = snackReviewService.readFirst(params);
+
+		return ResponseEntity.ok().body(firstSlice);
 	}
 
-	@PostMapping
+	@GetMapping("/more")
+	public ResponseEntity getMore(@ModelAttribute SnackReviewControllerDto.GetMore params) {
+		SnackReviewResponseDto.Slice slice = snackReviewService.readMore(params);
+
+		return ResponseEntity.ok().body(slice);
+	}
+
+	@PostMapping("/post")
 	public ResponseEntity postSnackReview(
 		@AuthenticationPrincipal String loginEmail,
 		@Valid @RequestBody SnackReviewControllerDto.Post request
