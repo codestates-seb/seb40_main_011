@@ -1,8 +1,14 @@
 //프로필 이미지 변경
 import { useState } from 'react';
 import { BsXLg } from 'react-icons/bs';
+import { EditProfileImg } from '../MyPage/Profile';
 
-const EditProgileImg = () => {
+const EditProgileImg = ({
+  isEditProfileImg,
+  setIsEditProfileImg,
+}: EditProfileImg) => {
+  console.log(isEditProfileImg);
+
   return (
     <div className="modal-bg">
       <div className="modal-window h-[700px]">

@@ -12,4 +12,10 @@ const getProduct = async () =>
     .then((data) => data)
     .catch((err) => err.response);
 
-export { getReview, getProduct };
+const getUserProfile = async () =>
+  await instance
+    .get('/user')
+    .then((data) => data)
+    .catch((err) => err.response);
+
+export { getReview, getProduct, getUserProfile };
