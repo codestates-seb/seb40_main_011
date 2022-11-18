@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from 'react';
+
 export interface Product {
   id: number;
   name: string;
@@ -21,4 +23,9 @@ export interface Review {
   modifedAt: string;
   likes: number;
   profileImg: string;
+  comment?: string[];
+}
+
+export interface CategoryProps {
+  setCategory: Dispatch<SetStateAction<string>>;
 }
