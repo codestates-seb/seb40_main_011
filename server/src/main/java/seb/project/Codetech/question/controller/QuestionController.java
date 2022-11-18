@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Validated
 public class QuestionController {
 
-	@PostMapping("/post")
+	@PostMapping
 	public ResponseEntity postQuestion(@RequestBody String content,
 		@AuthenticationPrincipal String loginEmail) {
 		return ResponseEntity.status(HttpStatus.CREATED).build();

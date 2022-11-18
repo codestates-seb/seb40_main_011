@@ -34,21 +34,21 @@ public class SnackReviewController {
 	private final SnackReviewControllerMapper dtoMapper;
 
 	@GetMapping
-	public ResponseEntity getSlice(@ModelAttribute SnackReviewControllerDto.Get params) {
+	public ResponseEntity<SnackReviewResponseDto.Slice> getSlice(@ModelAttribute SnackReviewControllerDto.Get params) {
 		SnackReviewResponseDto.Slice slice = snackReviewService.readSlice(params);
 
 		return ResponseEntity.ok().body(slice);
 	}
 
 	@GetMapping("/stats")
-	public ResponseEntity getStats(@RequestParam Long productId) {
+	public ResponseEntity<SnackReviewResponseDto.Info> getStats(@RequestParam Long productId) {
 		SnackReviewResponseDto.Info info = snackReviewService.readStats(productId);
 
 		return ResponseEntity.ok().body(info);
 	}
 
 	@PostMapping
-	public ResponseEntity postSnackReview(
+	public ResponseEntity<Long> postSnackReview(
 		@AuthenticationPrincipal String loginEmail,
 		@Valid @RequestBody SnackReviewControllerDto.Post request
 	) {
@@ -59,7 +59,7 @@ public class SnackReviewController {
 	}
 
 	@PatchMapping("/{id}")
-	public ResponseEntity patchSnackReview(
+	public ResponseEntity<Long> patchSnackReview(
 		@Positive @PathVariable Long id,
 		@Valid @RequestBody SnackReviewControllerDto.Patch request
 	) {
