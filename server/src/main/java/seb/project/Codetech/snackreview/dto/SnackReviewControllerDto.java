@@ -36,22 +36,13 @@ public class SnackReviewControllerDto {
 	@Getter
 	@Setter
 	@NoArgsConstructor
-	public static class GetFirst {
-		@Positive
-		private Long productId;
-		private int firstSize;
-	}
-
-	@Getter
-	@Setter
-	@NoArgsConstructor
-	public static class GetMore {
+	public static class Get {
 		@Positive
 		private Long productId;
 		private int firstSize;
 		private int count;
 		private int size;
 		private String sort;
-		private String order;
+		private String asc;
 	}
 }

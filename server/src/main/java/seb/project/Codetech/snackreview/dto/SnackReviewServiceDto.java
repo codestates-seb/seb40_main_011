@@ -3,10 +3,8 @@ package seb.project.Codetech.snackreview.dto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import seb.project.Codetech.product.entity.Product;
 import seb.project.Codetech.product.entity.Type;
 import seb.project.Codetech.snackreview.entity.Score;
-import seb.project.Codetech.user.entity.User;
 
 public class SnackReviewServiceDto {
 	@Getter
@@ -16,8 +14,8 @@ public class SnackReviewServiceDto {
 		private Score score;
 		private String content;
 		private Type type;
-		private User user;
-		private Product product;
+		private String loginEmail;
+		private Long productId;
 
 	}
 
@@ -38,6 +36,6 @@ public class SnackReviewServiceDto {
 		private int offset;
 		private int limit;
 		private String sort;
-		private String order;
+		private String asc;
 	}
 }

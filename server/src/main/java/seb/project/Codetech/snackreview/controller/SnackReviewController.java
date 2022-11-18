@@ -33,14 +33,14 @@ public class SnackReviewController {
 	private final SnackReviewControllerMapper dtoMapper;
 
 	@GetMapping
-	public ResponseEntity getFirst(@ModelAttribute SnackReviewControllerDto.GetFirst params) {
+	public ResponseEntity getFirst(@ModelAttribute SnackReviewControllerDto.Get params) {
 		SnackReviewResponseDto.First firstSlice = snackReviewService.readFirst(params);
 
 		return ResponseEntity.ok().body(firstSlice);
 	}
 
 	@GetMapping("/more")
-	public ResponseEntity getMore(@ModelAttribute SnackReviewControllerDto.GetMore params) {
+	public ResponseEntity getMore(@ModelAttribute SnackReviewControllerDto.Get params) {
 		SnackReviewResponseDto.Slice slice = snackReviewService.readMore(params);
 
 		return ResponseEntity.ok().body(slice);

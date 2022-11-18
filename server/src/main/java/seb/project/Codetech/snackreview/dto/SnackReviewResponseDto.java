@@ -13,11 +13,11 @@ public class SnackReviewResponseDto {
 	@NoArgsConstructor
 	public static class First {
 		private long total;
-		private float avgCe;
-		private float avgQlt;
-		private float avgStf;
-		private float avgDsn;
-		private float avgPerf;
+		private double avgCe;
+		private double avgQlt;
+		private double avgStf;
+		private double avgDsn;
+		private double avgPerf;
 		private Slice slice;
 	}
 

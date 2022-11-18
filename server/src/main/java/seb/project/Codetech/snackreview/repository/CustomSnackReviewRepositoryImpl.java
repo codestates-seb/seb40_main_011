@@ -41,9 +41,9 @@ public class CustomSnackReviewRepositoryImpl implements CustomSnackReviewReposit
 				user.image)
 			)
 			.from(snackReview)
-			.join(snackReview.user, user).fetchJoin()
+			.leftJoin(snackReview.user, user)
 			.where(snackReview.product.id.eq(cond.getProductId()))
-			.orderBy(buildOrderSpecifiers(cond.getSort(), cond.getOrder()))
+			.orderBy(buildOrderSpecifiers(cond.getSort(), cond.getAsc()))
 			.offset(cond.getOffset())
 			.limit(cond.getLimit() + 1)
 			.fetch();
@@ -60,7 +60,7 @@ public class CustomSnackReviewRepositoryImpl implements CustomSnackReviewReposit
 		SnackReviewResponseDto.First firstSlice = queryFactory
 			.select(Projections.fields(
 				SnackReviewResponseDto.First.class,
-				snackReview.id.count(),
+				snackReview.count().as("total"),
 				snackReview.score.costEfficiency.avg().as("avgCe"),
 				snackReview.score.design.avg().as("avgDsn"),
 				snackReview.score.quality.avg().as("avgQlt"),
@@ -85,15 +85,17 @@ public class CustomSnackReviewRepositoryImpl implements CustomSnackReviewReposit
 		return false;
 	}
 
-	private OrderSpecifier<?>[] buildOrderSpecifiers(String sort, String order) {
+	private OrderSpecifier<?>[] buildOrderSpecifiers(String sort, String asc) {
 		List<OrderSpecifier<?>> orderSpecifiers = new ArrayList<>();
 		orderSpecifiers.add(snackReview.id.desc());
 
-		if (sort == null) {
+		if (sort.isBlank()) {
 			return orderSpecifiers.toArray(new OrderSpecifier[0]);
 		}
 
-		if (order.equals("ASC")) {
+		System.out.println("asc.isBlank() = " + asc.isBlank());
+
+		if (!asc.isBlank()) {
 			orderSpecifiers.add(snackReview.grade.asc());
 			Collections.reverse(orderSpecifiers);
 
