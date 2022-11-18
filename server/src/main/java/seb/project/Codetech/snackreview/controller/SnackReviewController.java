@@ -47,7 +47,7 @@ public class SnackReviewController {
 		return ResponseEntity.ok().body(info);
 	}
 
-	@PostMapping("/post")
+	@PostMapping
 	public ResponseEntity postSnackReview(
 		@AuthenticationPrincipal String loginEmail,
 		@Valid @RequestBody SnackReviewControllerDto.Post request
