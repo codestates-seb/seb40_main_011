@@ -49,7 +49,7 @@ public class UserController {
         return ResponseEntity.ok(mapper.userToUserResponseDto(user));
     }
 
-    @PatchMapping("/withdraw")
+    @GetMapping("/withdraw")
     public void withdrawUser(@AuthenticationPrincipal String email,
                                        @Valid @RequestBody UserWithdrawDto withdraw,
                                        HttpServletRequest request){
@@ -57,7 +57,7 @@ public class UserController {
         UserService.logout(request);
     }
 
-    @PostMapping("/logout")
+    @GetMapping("/logout")
     public void logoutUser(HttpServletRequest request){
         UserService.logout(request);
     }
