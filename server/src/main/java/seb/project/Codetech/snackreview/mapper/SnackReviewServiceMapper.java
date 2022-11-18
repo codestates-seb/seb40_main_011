@@ -16,10 +16,7 @@ public class SnackReviewServiceMapper {
 	private final ProductService productService;
 
 	public SnackReview createDtoToEntity(SnackReviewServiceDto.Create dto) {
-		SnackReview snackReview = SnackReview.builder()
-			.content(dto.getContent())
-			.type(dto.getType())
-			.build();
+		SnackReview snackReview = new SnackReview(dto.getContent());
 		snackReview.setScore(dto.getScore());
 		snackReview.setUser(userService.findUser(dto.getLoginEmail()));
 		snackReview.setProduct(productService.findProduct(dto.getProductId()));
@@ -30,10 +27,10 @@ public class SnackReviewServiceMapper {
 	public SnackReviewServiceDto.Search getParamsToSearchCond(SnackReviewControllerDto.Get params) {
 		return SnackReviewServiceDto.Search.builder()
 			.productId(params.getProductId())
-			.offset(params.getFirstSize() + params.getCount() * params.getSize())
-			.limit(params.getSize())
-			.sort(params.getSort())
-			.asc(params.getAsc())
+			.offset(params.getOffset())
+			.limit(params.getLimit())
+			.sortByGrade(params.isSortByGrade())
+			.asc(params.isAsc())
 			.build();
 	}
 }

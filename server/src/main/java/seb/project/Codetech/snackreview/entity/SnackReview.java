@@ -15,7 +15,6 @@ import javax.persistence.ManyToOne;
 import com.querydsl.core.annotations.QueryInit;
 
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import seb.project.Codetech.global.auditing.BaseTime;
@@ -55,10 +54,8 @@ public class SnackReview extends BaseTime {
 	@QueryInit("id")
 	private Product product;
 
-	@Builder
-	public SnackReview(String content, Type type) {
+	public SnackReview(String content) {
 		this.content = content;
-		this.type = type;
 	}
 
 	public void setUser(User user) {
@@ -74,6 +71,7 @@ public class SnackReview extends BaseTime {
 			this.product.getSnackReviews().remove(this);
 		}
 		this.product = product;
+		this.type = product.getType();
 		product.getSnackReviews().add(this);
 	}
 

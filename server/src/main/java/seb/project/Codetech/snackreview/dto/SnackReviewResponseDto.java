@@ -11,14 +11,13 @@ public class SnackReviewResponseDto {
 	@Getter
 	@Setter
 	@NoArgsConstructor
-	public static class First {
+	public static class Info {
 		private long total;
 		private double avgCe;
 		private double avgQlt;
 		private double avgStf;
 		private double avgDsn;
 		private double avgPerf;
-		private Slice slice;
 	}
 
 	@Getter

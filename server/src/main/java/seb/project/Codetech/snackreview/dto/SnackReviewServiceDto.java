@@ -33,9 +33,9 @@ public class SnackReviewServiceDto {
 	@AllArgsConstructor
 	public static class Search {
 		private Long productId;
-		private int offset;
+		private long offset;
 		private int limit;
-		private String sort;
-		private String asc;
+		private boolean sortByGrade;
+		private boolean asc;
 	}
 }
