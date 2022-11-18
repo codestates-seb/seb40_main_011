@@ -25,7 +25,7 @@ public class FileController {
 
 	@PostMapping("/upload")
 	public ResponseEntity<FileEntity> uploadFile(@RequestParam("file") MultipartFile file,
-		                                   @RequestParam("files") List<MultipartFile> files) throws IOException {
+		                                   		 @RequestParam("files") List<MultipartFile> files) throws IOException {
 		fileService.saveFile(file);
 
 		for (MultipartFile multipartFile : files) {

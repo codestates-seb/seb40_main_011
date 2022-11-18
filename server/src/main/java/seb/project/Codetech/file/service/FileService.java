@@ -10,6 +10,7 @@ import java.util.UUID;
 import org.apache.tika.Tika;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.extern.log4j.Log4j2;
@@ -32,13 +33,12 @@ public class FileService {
 	@Value("${filePath}")
 	private String filePath;
 
-	public void saveFile(MultipartFile uploadFile) throws IOException {
+	public FileEntity saveFile(MultipartFile uploadFile) throws IOException {
 
-		if (!uploadFile.isEmpty()) {
+		if (uploadFile.getSize() > 0) {
 
-			if (!checkFile(uploadFile)) {
+			if (!checkFile(uploadFile))
 				throw new BusinessLogicException(ExceptionCode.FILE_NOT_ALLOW);
-			}
 
 			checkDir(rootPath ,filePath); // 파일을 업로드 처리하기 전에 폴더가 있는지 검사한다.
 
@@ -60,9 +60,18 @@ public class FileService {
 			uploadFile.transferTo(new File(rootPath + filePath + uuidName));
 
 			// 데이터베이스에 파일 정보를 저장한다.
-			fileRepository.save(file);
+			return fileRepository.save(file);
 		}
+		throw  new BusinessLogicException(ExceptionCode.FILE_NOT_FOUND);
+	}
 
+	@Transactional
+	public void removeFiles(FileEntity file) throws IOException {
+
+		Path deleteFile = Paths.get(rootPath + file.getPath());
+
+		Files.deleteIfExists(deleteFile);
+		fileRepository.delete(file);
 	}
 
 	public void checkDir(String root, String path) {

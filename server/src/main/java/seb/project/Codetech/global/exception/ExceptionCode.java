@@ -13,6 +13,7 @@ public enum ExceptionCode {
 
     // 제품 예외처리
     PRODUCT_NOT_FOUND(404, "제품 정보를 찾을 수 없습니다."),
+    PRODUCT_NOT_USE(401, "제품 관련 기능은 회원만 사용할 수 있습니다."),
     PRODUCT_NOT_DELETE(401, "작성된 제품 정보는 관리자만 삭제할 수 있습니다.");
 
     @Getter

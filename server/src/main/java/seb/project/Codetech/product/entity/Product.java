@@ -45,9 +45,6 @@ public class Product extends BaseTime {
 	@Convert(converter = TypeConverter.class)
 	private Type type;
 
-	@Column(nullable = false)
-	private String image;
-
 	@Column(nullable = false, columnDefinition = "MEDIUMTEXT")
 	private String detail;
 
