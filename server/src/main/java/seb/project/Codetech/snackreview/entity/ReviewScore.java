@@ -10,11 +10,11 @@ import seb.project.Codetech.snackreview.validation.annotation.ValidScore;
 @ValidScore
 @NoArgsConstructor
 public class ReviewScore {
-	private int costEfficiency;
-	private int quality;
-	private int satisfaction;
-	private int design;
-	private int performance;
+	private float costEfficiency;
+	private float quality;
+	private float satisfaction;
+	private float design;
+	private float performance;
 
 	public float getGrade() {
 		float totalScore = 0;

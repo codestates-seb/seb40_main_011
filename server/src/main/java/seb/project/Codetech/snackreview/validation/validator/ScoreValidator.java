@@ -16,8 +16,8 @@ public class ScoreValidator implements ConstraintValidator<ValidScore, ReviewSco
 
 	@Override
 	public boolean isValid(ReviewScore score, ConstraintValidatorContext context) {
-		final int lower = 1;
-		final int upper = 5;
+		final float lower = 1.0f;
+		final float upper = 5.0f;
 
 		for (Field field : score.getClass().getDeclaredFields()) {
 			if (field.getName().equals("this$0")) {
