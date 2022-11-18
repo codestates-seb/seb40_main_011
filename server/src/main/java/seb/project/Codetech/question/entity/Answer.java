@@ -2,6 +2,7 @@ package seb.project.Codetech.question.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,11 +26,11 @@ public class Answer extends BaseTime {
 	@Column(columnDefinition = "MEDIUMTEXT", nullable = false)
 	private String content;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "question_id")
 	private Question question;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
 	private User user;
 
@@ -41,7 +42,7 @@ public class Answer extends BaseTime {
 		question.getAnswers().add(this);
 	}
 
-	public void setUser(User user) {
+	public void setAuthor(User user) {
 		if (this.user != null) {
 			this.user.getAnswers().remove(this);
 		}

@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,14 +33,14 @@ public class Question extends BaseTime {
 	@Column(nullable = false, columnDefinition = "MEDIUMTEXT")
 	private String content;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
 	private User user;
 
 	@OneToMany(mappedBy = "question")
 	private List<Answer> answers = new ArrayList<>();
 
-	public void setUser(User user) {
+	public void setAuthor(User user) {
 		if (this.user != null) {
 			this.user.getQuestions().remove(this);
 		}
