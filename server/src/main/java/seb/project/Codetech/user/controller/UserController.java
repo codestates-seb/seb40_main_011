@@ -50,17 +50,15 @@ public class UserController {
     }
 
     @PatchMapping("/withdraw")
-    public ResponseEntity withdrawUser(@AuthenticationPrincipal String email,
+    public void withdrawUser(@AuthenticationPrincipal String email,
                                        @Valid @RequestBody UserWithdrawDto withdraw,
                                        HttpServletRequest request){
         User user = userService.withdrawUser(email,mapper.userWithdrawDtoToUser(withdraw));
         UserService.logout(request);
-        return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @PostMapping("/logout")
-    public ResponseEntity logoutUser(HttpServletRequest request){
+    public void logoutUser(HttpServletRequest request){
         UserService.logout(request);
-        return ResponseEntity.ok(HttpStatus.OK);
     }
 }
