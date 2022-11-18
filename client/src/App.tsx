@@ -9,6 +9,7 @@ import Login from './pages/Login';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import QuestionLists from './pages/QuestionLists';
+import RvDetail from './components/Details/RvDetail';
 
 function App() {
   return (
@@ -20,11 +21,11 @@ function App() {
           <Route path="/" element={<Main />} />
           <Route path="/mypage/*" element={<MyPage />} />
           <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/categories/review" element={<ReviewDetail />} />
+          <Route path="/categories/review/:id" element={<ReviewDetail />} />
           <Route path="/categories/review/write" element={<WriteReview />} />
           <Route path="/login" element={<Login />} />
           <Route path="/question-lists" element={<QuestionLists />} />
-          <Route path="/review/:id" element={<ReviewDetail />} />
+          <Route path="/review/:id" element={<RvDetail />} />
         </Routes>
       </main>
       <Footer />
