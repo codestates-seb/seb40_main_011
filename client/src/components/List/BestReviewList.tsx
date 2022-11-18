@@ -1,6 +1,6 @@
 import { Review } from '../../types/mainPageTypes';
 import React, { useEffect, useState } from 'react';
-import { getReview } from '../../util/apiCollection';
+import { getReviewTest } from '../../util/testApiCollection';
 import { useNavigate } from 'react-router-dom';
 import { FaChevronRight } from 'react-icons/fa';
 
@@ -12,7 +12,7 @@ const BestReviewList = () => {
   // 리뷰 데이터 불어오기
   useEffect(() => {
     const getReviewData = async () => {
-      const { data } = await getReview();
+      const { data } = await getReviewTest();
       setSortedReviews(
         data.sort((a: Review, b: Review) => b.likes - a.likes).slice(0, 3)
       );
@@ -38,17 +38,17 @@ const BestReviewList = () => {
       {sortedReviews[selectedIdx] === undefined ? (
         <div>loading ... </div>
       ) : (
-        <div className="w-3/5 h-48 flex p-4 justify-evenly rounded-lg bg-white drop-shadow-bestReviews">
+        <div className="items-center w-3/5 h-48 flex p-4 justify-evenly rounded-lg bg-white drop-shadow-bestReviews">
           <div className="flex flex-col w-4/5">
             {/* <img
               className="w-2/5 h-full mx-2"
               src={sortedReviews[selectedIdx]?.thumbnail}
             ></img> */}
-            <div className="font-bold mb-4">
+            <div className="font-bold mb-2">
               {sortedReviews[selectedIdx]?.title}
             </div>
             <div
-              className="my-2 line-clamp-2 hover:bg-slate-300 hover:rounded-md p-1 text-slate-600 hover:text-cyan-900"
+              className=" line-clamp-2 hover:bg-slate-300 hover:rounded-md p-1 text-slate-600 hover:text-cyan-900"
               role="button"
               onClick={onContentClick}
               id={sortedReviews[selectedIdx].id.toString()}

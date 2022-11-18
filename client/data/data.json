@@ -84,6 +84,24 @@
       "detail": "유저가 제품 추가하면서 넣은 텍스트 하나 둘 삼 넷",
       "createdAt": "2022. 11. 10",
       "modifiedAt": "2022. 11. 10"
+    },
+    {
+      "id": 8,
+      "name": "C 키보드",
+      "type": "KEYBOARD",
+      "image": "https://img2.quasarzone.com/editor/2022/11/15/2ae8558ac9db6cd3ee3dd07604c496f4.jpg",
+      "detail": "유저가 제품 추가하면서 넣은 텍스트 하나 둘 삼 넷",
+      "createdAt": "2022. 11. 10",
+      "modifiedAt": "2022. 11. 10"
+    },
+    {
+      "id": 9,
+      "name": "C 키보드",
+      "type": "KEYBOARD",
+      "image": "https://img2.quasarzone.com/editor/2022/09/21/0fa856bd86bfbbb03b735a77bbde4975.jpg",
+      "detail": "유저가 제품 추가하면서 넣은 텍스트 하나 둘 삼 넷",
+      "createdAt": "2022. 11. 10",
+      "modifiedAt": "2022. 11. 10"
     }
   ],
   "review": [
@@ -146,6 +164,42 @@
       "modifedAt": "2022. 11. 15",
       "likes": 7,
       "profileImg": "https://images.unsplash.com/photo-1668210039927-82341df16e20?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80"
+    },
+    {
+      "id": 3,
+      "nickname": "QM깜냥",
+      "productName": 5,
+      "type": "MOUSE",
+      "title": "CORSAIR KATAR ELITE WIRELESS 게이밍 마우스",
+      "content": "    PMW3391 센서를 탑재한 KATAR PRO XT 유선 마우스를 선보였을 때는 드디어 그 시기에 도달했다고 생각했습니다. \n\n 하지만 예상과 다르게 CORSAIR는 잠잠했고, 2022년 11월이 된 후에야 비로소 KATAR ELITE Wireless를 출시했습니다. 다른 제조사는 일찌감치 무선과 초경량에 초점을 맞춘 상태였고, 더 나아가 버튼 내구성을 비약적으로 상승시킨 광학 스위치를 갈고닦는 중입니다. \n\n 이렇듯 주변을 둘러본다면 늦지 않았다고 말하기가 어렵다는 뜻이지요. 그래도 CORSAIR가 트렌드를 해석한 시선과 디테일을 경험할 수 있게 됐다는 점은 긍정적인 부분입니다. 다른 제조사가 놓쳤던 디테일 혹은 완성도를 선보일 만한 능력을 갖춘 기업이기 때문에 기대를 안고 상자를 개봉했습니다.    게이밍 마우스에 가장 흔하게 사용하는 OMRON CHINA 스위치는 크게 2천 만회와 5천 만회 클릭 보증으로 구분했습니다. 2천 만회는 흰색, 5천 만회는 파란색이었죠. \n\n KATAR ELITE Wireless에는 1천 만회를 추가한 6천 만회 보증 OMRON 스위치를 탑재했으며, 슬라이더는 주황색으로 되어 있습니다.",
+      "view": 10,
+      "thumbnail": "https://img2.quasarzone.com/editor/2022/11/14/0b9ae335dd7c12673dce7716d587e397.jpg",
+      "reviewImg": "url",
+      "createdAt": "2022. 11. 10",
+      "modifedAt": "2022. 11. 15",
+      "likes": 98,
+      "profileImg": "https://images.unsplash.com/photo-1666265972013-d538b0e27388?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80",
+      "comment": [
+        {
+          "nickname": "준일짱짱V",
+          "comment": "이거 생각보다 무게가 무겁습니다. 3대 500 이상 전용 마우스임"
+        }
+      ]
+    },
+    {
+      "nickname": "준일",
+      "productName": 6,
+      "type": "MOUSE",
+      "title": "한성컴퓨터 VM100 V2 OfficeMaster 듀얼무선 버티컬마우스",
+      "content": " 영국 통계청(ONS)은 2012년 영국에서 출생한 신생아 82만 명 가운데 29만 명이 100세 이상 살게 되어 본격적인 장수 시대에 돌입한다고 전망했습니다. 꿈처럼 여겨졌던 100세 인생을 이제는 3명 중 1명꼴로 누리게 되는 겁니다. 우리나라도 사정이 크게 다르지 않습니다. 우리나라는 2020년 최빈 사망 연령이 90세를 넘었습니다. '최빈 사망 연령(最頻死亡年齡)'이란 가장 많은 사람이 사망하는 나이를 뜻합니다. 전문가들은 2030년이 되면 100세 이상 인구가 1만 명이 넘는 시대가 온다고 예견합니다. 고령화를 넘어 초고령화 사회가 눈앞으로 다가왔습니다.",
+      "view": 10,
+      "thumbnail": "https://img2.quasarzone.com/editor/2022/10/19/648a3887e3896f3d9028855213c45611.jpg",
+      "reviewImg": "url",
+      "createdAt": "2022. 11. 10",
+      "modifedAt": "2022. 11. 15",
+      "likes": 77,
+      "profileImg": "https://images.unsplash.com/photo-1666265972013-d538b0e27388?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80",
+      "id": 4
     }
   ]
 }

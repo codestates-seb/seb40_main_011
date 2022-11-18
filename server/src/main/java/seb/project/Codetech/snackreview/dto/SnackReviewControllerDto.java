@@ -6,17 +6,15 @@ import javax.validation.constraints.Positive;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import seb.project.Codetech.product.entity.Type;
-import seb.project.Codetech.snackreview.entity.SnackReview;
+import lombok.Setter;
+import seb.project.Codetech.snackreview.entity.ReviewScore;
 
 public class SnackReviewControllerDto {
 	@Getter
 	@NoArgsConstructor
 	public static class Post {
 		@NotNull
-		private SnackReview.Score score;
-		@NotNull
-		private Type type;
+		private ReviewScore score;
 		@NotBlank
 		private String content;
 		@Positive
@@ -27,8 +25,20 @@ public class SnackReviewControllerDto {
 	@NoArgsConstructor
 	public static class Patch {
 		@NotNull
-		private SnackReview.Score score;
+		private ReviewScore score;
 		@NotBlank
 		private String content;
+	}
+
+	@Getter
+	@Setter
+	@NoArgsConstructor
+	public static class Get {
+		@Positive
+		private Long productId;
+		private long offset;
+		private int limit;
+		private boolean sortByGrade;
+		private boolean asc;
 	}
 }

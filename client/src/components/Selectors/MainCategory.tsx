@@ -2,11 +2,8 @@ import { GrCube } from 'react-icons/gr';
 import { FiMonitor } from 'react-icons/fi';
 import { BiMouseAlt } from 'react-icons/bi';
 import { BsKeyboard, BsLaptop, BsTablet, BsThreeDots } from 'react-icons/bs';
-
+import { CategoryProps } from '../../types/mainPageTypes';
 // 버튼을 누르면 해당 데이터를 필터링해서 props로 productList에 올려야함 ;;
-interface CategoryProps {
-  setCategory: any;
-}
 
 const MainCategory = ({ setCategory }: CategoryProps) => {
   const onClick = (e: React.MouseEvent<HTMLElement>) => {

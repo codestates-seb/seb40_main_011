@@ -5,7 +5,7 @@ import EditProfile from '../Modal/EditProfile';
 import EditPassword from '../Modal/EditPassword';
 import EditProfileImg from '../Modal/EditProfileImg';
 
-const Profile = (): JSX.Element => {
+const Profile = () => {
   const [isEditProfileImg, setIsEditProfileImg] = useState(false);
   const openEditProfileImgModalHandler = (
     event: React.MouseEvent<HTMLElement>

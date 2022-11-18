@@ -1,27 +1,25 @@
 package seb.project.Codetech.snackreview.entity;
 
-import java.lang.reflect.Field;
-
 import javax.persistence.Column;
-import javax.persistence.Convert;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.querydsl.core.annotations.QueryInit;
+
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import seb.project.Codetech.global.auditing.BaseTime;
-import seb.project.Codetech.global.converter.ScoreJsonConverter;
 import seb.project.Codetech.product.entity.Product;
 import seb.project.Codetech.product.entity.Type;
-import seb.project.Codetech.snackreview.validation.annotation.ValidScore;
 import seb.project.Codetech.user.entity.User;
 
 @Entity
@@ -33,8 +31,9 @@ public class SnackReview extends BaseTime {
 	private Long id;
 
 	@Column(nullable = false)
-	@Convert(converter = ScoreJsonConverter.class)
-	private Score score;
+	@Embedded
+	@QueryInit("*")
+	private ReviewScore score;
 
 	@Column(nullable = false)
 	private float grade;
@@ -46,21 +45,20 @@ public class SnackReview extends BaseTime {
 	@Enumerated(EnumType.STRING)
 	private Type type;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
 	private User user;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "product_id")
+	@QueryInit("id")
 	private Product product;
 
-	@Builder
-	public SnackReview(String content, Type type) {
+	public SnackReview(String content) {
 		this.content = content;
-		this.type = type;
 	}
 
-	public void setUser(User user) {
+	public void setWriter(User user) {
 		if (this.user != null) {
 			this.user.getSnackReviews().remove(this);
 		}
@@ -68,15 +66,16 @@ public class SnackReview extends BaseTime {
 		user.getSnackReviews().add(this);
 	}
 
-	public void setProduct(Product product) {
+	public void setSubject(Product product) {
 		if (this.product != null) {
 			this.product.getSnackReviews().remove(this);
 		}
 		this.product = product;
+		this.type = product.getType();
 		product.getSnackReviews().add(this);
 	}
 
-	public void setScore(Score score) {
+	public void setScore(ReviewScore score) {
 		this.score = score;
 		this.grade = score.getGrade();
 	}
@@ -85,34 +84,4 @@ public class SnackReview extends BaseTime {
 		this.content = content;
 	}
 
-	@Getter
-	@ValidScore
-	public static class Score {
-		private int costEfficiency;
-		private int quality;
-		private int satisfaction;
-		private int design;
-		private int performance;
-
-		public float getGrade() {
-			float totalScore = 0;
-			int totalCount = 0;
-
-			for (Field field : Score.class.getDeclaredFields()) {
-				if (field.getName().equals("this$0")) {
-					continue;
-				}
-
-				try {
-					totalScore += field.getInt(this);
-				} catch (IllegalAccessException e) {
-
-				} finally {
-					totalCount += 1;
-				}
-			}
-
-			return totalScore / totalCount;
-		}
-	}
 }
