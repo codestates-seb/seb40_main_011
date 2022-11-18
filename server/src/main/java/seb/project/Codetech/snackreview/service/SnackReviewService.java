@@ -31,12 +31,9 @@ public class SnackReviewService {
 		SnackReviewServiceDto.Search cond = dtoMapper.getParamsToSearchCond(params);
 
 		List<SnackReviewResponseDto.Card> cards = snackReviewRepository.searchSortedCardsByProductId(cond);
+		boolean hasNext = hasNext(cards, cond.getLimit());
 
-		SnackReviewResponseDto.Slice slice = new SnackReviewResponseDto.Slice();
-		slice.setHasNext(hasNext(cards, cond.getLimit()));
-		slice.setCards(cards);
-
-		return slice;
+		return new SnackReviewResponseDto.Slice(hasNext, cards);
 	}
 
 	public Long createSnackReview(SnackReviewServiceDto.Create dto) {
