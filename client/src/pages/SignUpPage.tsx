@@ -32,7 +32,7 @@ const SignUpPage = () => {
       e.preventDefault();
       try {
         await axios
-          .post('http://localhost:3001/signup', {
+          .post('https://codetech.nworld.dev/api/register', {
             email: email,
             password: password,
             displayName: name,
@@ -116,8 +116,9 @@ const SignUpPage = () => {
   );
 
   return (
-    <div className="flex items-center justify-center h-screen border-2 border-sky-500">
-      <div className="px-20 py-12 m-auto border shadow-lg rounded-xl border-zinc-500">
+    <div className="flex items-center justify-center w-full h-screen border-2 bg-slate-300 border-sky-500">
+      {/* <div className="px-20 py-12 m-auto bg-white border shadow-lg rounded-xl border-zinc-500"> */}
+      <div className="max-md:w-full md:w-[36rem] bg-white flex justify-center flex-col pt-8 pb-12 rounded-2xl">
         <img
           src={require('../images/logo.png')}
           alt=""
@@ -125,7 +126,7 @@ const SignUpPage = () => {
         />
         <form
           name="signup"
-          action="/signup"
+          action="https://codetech.nworld.dev/api/register"
           method="POST"
           className="mb-3"
           onSubmit={onSubmit}
