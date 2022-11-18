@@ -3,8 +3,8 @@ package seb.project.Codetech.snackreview.repository;
 import static seb.project.Codetech.snackreview.entity.QSnackReview.*;
 import static seb.project.Codetech.user.entity.QUser.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -69,7 +69,7 @@ public class CustomSnackReviewRepositoryImpl implements CustomSnackReviewReposit
 	}
 
 	private OrderSpecifier<?>[] buildOrderSpecifiers(boolean sortByGrade, boolean asc) {
-		List<OrderSpecifier<?>> orderSpecifiers = new ArrayList<>();
+		Deque<OrderSpecifier<?>> orderSpecifiers = new ArrayDeque<>();
 		orderSpecifiers.add(snackReview.id.desc());
 
 		if (sortByGrade == false) {
@@ -77,14 +77,12 @@ public class CustomSnackReviewRepositoryImpl implements CustomSnackReviewReposit
 		}
 
 		if (asc == true) {
-			orderSpecifiers.add(snackReview.grade.asc());
-			Collections.reverse(orderSpecifiers);
+			orderSpecifiers.addFirst(snackReview.grade.asc());
 
 			return orderSpecifiers.toArray(new OrderSpecifier[0]);
 		}
 
-		orderSpecifiers.add(snackReview.grade.desc());
-		Collections.reverse(orderSpecifiers);
+		orderSpecifiers.addFirst(snackReview.grade.desc());
 
 		return orderSpecifiers.toArray(new OrderSpecifier[0]);
 	}
