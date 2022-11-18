@@ -30,8 +30,6 @@ import seb.project.Codetech.global.auth.utils.UserAuthorityUtils;
 import seb.project.Codetech.user.repository.UserRepository;
 import seb.project.Codetech.user.service.UserService;
 
-import java.util.Arrays;
-
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
