@@ -10,6 +10,9 @@ spring:
     url: jdbc:mariadb://${DB_HOST_NAME}/${DB_STORAGE_NAME}?characterEncoding=UTF-8&serverTimezone=UTC
     username: ${DB_AUTH_ID}
     password: ${DB_AUTH_PASSWORD}
+  redis:
+    host: ${SPRING_REDIS_HOST}
+    port: ${SPRING_REDIS_PORT}
 
 jwt:
   secret-key: ${JWT_SECRET_KEY}

@@ -13,10 +13,6 @@ public class UserAuthorityUtils {
     private final List<GrantedAuthority> USER_ROLES = AuthorityUtils.createAuthorityList("ROLE_USER");
     private final List<String> USER_ROLES_STRING = List.of("USER");
 
-    public List<GrantedAuthority> createAuthorities(String email){
-        return USER_ROLES;
-    }
-
     public List<GrantedAuthority> createAuthorities(List<String> roles){
         List<GrantedAuthority> authorities = roles.stream()
                 .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
