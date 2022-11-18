@@ -25,19 +25,9 @@ public class ProductDto {
 		private String detail;
 	}
 
-
 	@Getter @Setter
 	@NoArgsConstructor
 	public static class Get {
 		private Long id;
-	}
-
-	@Getter @Setter
-	@NoArgsConstructor
-	public static class Response {
-		private String name;
-		private Type type;
-		private String image;
-		private String detail;
 	}
 }
