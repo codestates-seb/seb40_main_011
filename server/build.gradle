@@ -36,7 +36,8 @@ ext {
 
 dependencies { // 시큐리티의 경우는 시큐리티 전담자가 기본 설정을 완료하기 전까지는 커밋시 주석처리를 합시다.
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    //implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'//로그아웃을 위한 레디스 추가
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
     implementation 'org.springframework.boot:spring-boot-starter-validation'

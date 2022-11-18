@@ -9,33 +9,45 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
 import seb.project.Codetech.snackreview.dto.SnackReviewControllerDto;
+import seb.project.Codetech.snackreview.dto.SnackReviewResponseDto;
 import seb.project.Codetech.snackreview.dto.SnackReviewServiceDto;
 import seb.project.Codetech.snackreview.mapper.SnackReviewControllerMapper;
 import seb.project.Codetech.snackreview.service.SnackReviewService;
 
 @RestController
-@RequestMapping("/api/v1/categories/snackreviews")
+@RequestMapping("/api/snack-reviews")
 @RequiredArgsConstructor
 @Validated
-public class SnackReviewControllerV1 {
+public class SnackReviewController {
 	private final SnackReviewService snackReviewService;
 	private final SnackReviewControllerMapper dtoMapper;
 
 	@GetMapping
-	public ResponseEntity getSnackReview() {
-		return ResponseEntity.ok().build();
+	public ResponseEntity getSlice(@ModelAttribute SnackReviewControllerDto.Get params) {
+		SnackReviewResponseDto.Slice slice = snackReviewService.readSlice(params);
+
+		return ResponseEntity.ok().body(slice);
 	}
 
-	@PostMapping
+	@GetMapping("/stats")
+	public ResponseEntity getStats(@RequestParam Long productId) {
+		SnackReviewResponseDto.Info info = snackReviewService.readStats(productId);
+
+		return ResponseEntity.ok().body(info);
+	}
+
+	@PostMapping("/post")
 	public ResponseEntity postSnackReview(
 		@AuthenticationPrincipal String loginEmail,
 		@Valid @RequestBody SnackReviewControllerDto.Post request

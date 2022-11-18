@@ -46,6 +46,16 @@ public class User extends BaseTime {
     @Column(nullable = false)
     private Boolean status = false;
 
+    public void updatePoint(int diff) {
+        this.point += diff;
+    }
+
+    public User(String nickname, String email, String password) {
+        this.email = email;
+        this.nickname = nickname;
+        this.password = password;
+    }
+
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
 
