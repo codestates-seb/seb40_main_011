@@ -55,12 +55,12 @@ public class UserController {
                                        HttpServletRequest request){
         User user = userService.withdrawUser(email,mapper.userWithdrawDtoToUser(withdraw));
         UserService.logout(request);
-        return ResponseEntity.ok(HttpStatus.ACCEPTED);
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @PostMapping("/logout")
     public ResponseEntity logoutUser(HttpServletRequest request){
         UserService.logout(request);
-        return ResponseEntity.ok(HttpStatus.ACCEPTED);
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 }
