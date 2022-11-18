@@ -26,7 +26,7 @@ public class ReviewScore {
 			}
 
 			try {
-				totalScore += field.getInt(this);
+				totalScore += field.getFloat(this);
 			} catch (IllegalAccessException e) {
 
 			} finally {
