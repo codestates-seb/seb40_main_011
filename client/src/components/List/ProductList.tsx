@@ -11,7 +11,7 @@ const ProductList = () => {
   const [products, setProducts] = useState<Product[]>();
   const [category, setCategory] = useState('all');
   const [totalPage, setTotalPage] = useState(0);
-
+  const [currentPage, setCurrentPage] = useState(1);
   useEffect(() => {
     const getProductData = async () => {
       //인스턴스 데이터
@@ -45,6 +45,10 @@ const ProductList = () => {
 
   const onProductClick = (e: React.MouseEvent<HTMLElement>) => {
     navigate(`/categories/review/${e.currentTarget.id}`);
+  };
+
+  const onPageClick = (e: React.MouseEvent<HTMLElement>) => {
+    console.log(e.currentTarget.nodeValue);
   };
 
   return (
@@ -93,7 +97,17 @@ const ProductList = () => {
                   </div>
                 );
               })}
-              <div>{totalPage > 1 ? <button>hi</button> : null}</div>
+              <div className="w-full">
+                {totalPage > 1 ? (
+                  <div className="flex p-4 justify-center">
+                    <button onClick={onPageClick}>⬅️</button>
+                    <div>
+                      {currentPage}/{totalPage}
+                    </div>
+                    <button onClick={onPageClick}>➡️</button>
+                  </div>
+                ) : null}
+              </div>
             </div>
           </div>
         </div>

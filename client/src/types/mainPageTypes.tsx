@@ -23,7 +23,18 @@ export interface Review {
   modifedAt: string;
   likes: number;
   profileImg: string;
-  comment?: string[];
+  comments?: ReviewComments[] | undefined;
+}
+export interface ReviewComments {
+  id: number;
+  nickname: string;
+  createdAt: string;
+  profileImg: string;
+  comment: string;
+}
+
+export interface CommentProps {
+  comments: ReviewComments[] | undefined;
 }
 
 export interface CategoryProps {

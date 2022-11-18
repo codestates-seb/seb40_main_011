@@ -1,21 +1,23 @@
 // Review List fetching & boxing comp
 import { getReviewDetailTest } from '../../util/testApiCollection';
 import { useEffect, useState } from 'react';
-import { Review } from '../../types/mainPageTypes';
+import { Review, ReviewComments } from '../../types/mainPageTypes';
 import { useNavigate, useParams } from 'react-router-dom';
 import { AiOutlineLike } from 'react-icons/ai';
-import Question from '../QuestionList/Question';
 import CommentInput from './CommentInput';
+import Comment from './Comment';
 
 const RvDetail = () => {
   const navigate = useNavigate();
   const params = useParams();
   const [review, setReview] = useState<Review>();
+  const [comments, setComments] = useState<ReviewComments[]>();
 
   useEffect(() => {
     const getReviewData = async () => {
       const { data } = await getReviewDetailTest(params.id);
       setReview(data);
+      setComments(data?.comments);
     };
     getReviewData();
   }, []);
@@ -23,7 +25,7 @@ const RvDetail = () => {
   const onTypeClick = () => {
     navigate(`/categories/review/${params.id}`);
   };
-  console.log(review);
+
   return (
     <div className="flex justify-center">
       <div className="w-3/5 flex flex-col items-center">
@@ -67,7 +69,7 @@ const RvDetail = () => {
           <div className="flex w-full p-4 mb-4 justify-start font-bold text-2xl ">
             Comment
           </div>
-          <Question />
+          <Comment comments={comments} />
           <CommentInput />
         </div>
       </div>

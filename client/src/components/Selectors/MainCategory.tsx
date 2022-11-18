@@ -9,6 +9,7 @@ const MainCategory = ({ setCategory }: CategoryProps) => {
   const onClick = (e: React.MouseEvent<HTMLElement>) => {
     setCategory(e.currentTarget.id);
   };
+
   return (
     <div className="flex space-x-20 my-4 w-4/5 justify-center">
       <button
