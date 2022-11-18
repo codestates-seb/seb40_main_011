@@ -89,11 +89,9 @@ public class CustomSnackReviewRepositoryImpl implements CustomSnackReviewReposit
 		List<OrderSpecifier<?>> orderSpecifiers = new ArrayList<>();
 		orderSpecifiers.add(snackReview.id.desc());
 
-		if (sort.isBlank()) {
+		if (sort.equals("grade")) {
 			return orderSpecifiers.toArray(new OrderSpecifier[0]);
 		}
-
-		System.out.println("asc.isBlank() = " + asc.isBlank());
 
 		if (!asc.isBlank()) {
 			orderSpecifiers.add(snackReview.grade.asc());
