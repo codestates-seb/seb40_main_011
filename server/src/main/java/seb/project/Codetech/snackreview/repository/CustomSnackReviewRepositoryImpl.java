@@ -30,8 +30,9 @@ public class CustomSnackReviewRepositoryImpl implements CustomSnackReviewReposit
 	}
 
 	@Override
-	public SnackReviewResponseDto.Slice searchSortedSliceByProductId(SnackReviewServiceDto.Search cond) {
-		List<SnackReviewResponseDto.Card> cards = queryFactory
+	public List<SnackReviewResponseDto.Card> searchSortedCardsByProductId(SnackReviewServiceDto.Search cond) {
+
+		return queryFactory
 			.select(Projections.fields(
 				SnackReviewResponseDto.Card.class,
 				snackReview.id,
@@ -47,12 +48,6 @@ public class CustomSnackReviewRepositoryImpl implements CustomSnackReviewReposit
 			.offset(cond.getOffset())
 			.limit(cond.getLimit() + 1)
 			.fetch();
-
-		SnackReviewResponseDto.Slice slice = new SnackReviewResponseDto.Slice();
-		slice.setHasNext(hasNext(cards, cond.getLimit()));
-		slice.setCards(cards);
-
-		return slice;
 	}
 
 	@Override
@@ -71,15 +66,6 @@ public class CustomSnackReviewRepositoryImpl implements CustomSnackReviewReposit
 			.from(snackReview)
 			.where(snackReview.product.id.eq(productId))
 			.fetchFirst();
-	}
-
-	private boolean hasNext(List<SnackReviewResponseDto.Card> cards, int limit) {
-		if (cards.size() > limit) {
-			cards.remove(limit);
-			return true;
-		}
-
-		return false;
 	}
 
 	private OrderSpecifier<?>[] buildOrderSpecifiers(boolean sortByGrade, boolean asc) {

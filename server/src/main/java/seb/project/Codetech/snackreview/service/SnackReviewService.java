@@ -1,5 +1,6 @@
 package seb.project.Codetech.snackreview.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -29,7 +30,13 @@ public class SnackReviewService {
 	public SnackReviewResponseDto.Slice readSlice(SnackReviewControllerDto.Get params) {
 		SnackReviewServiceDto.Search cond = dtoMapper.getParamsToSearchCond(params);
 
-		return snackReviewRepository.searchSortedSliceByProductId(cond);
+		List<SnackReviewResponseDto.Card> cards = snackReviewRepository.searchSortedCardsByProductId(cond);
+
+		SnackReviewResponseDto.Slice slice = new SnackReviewResponseDto.Slice();
+		slice.setHasNext(hasNext(cards, cond.getLimit()));
+		slice.setCards(cards);
+
+		return slice;
 	}
 
 	public Long createSnackReview(SnackReviewServiceDto.Create dto) {
@@ -58,5 +65,14 @@ public class SnackReviewService {
 		return found.orElseThrow(
 			() -> new RuntimeException("SNACK_REVIEW_NOT_FOUND")
 		);
+	}
+
+	private boolean hasNext(List<SnackReviewResponseDto.Card> cards, int limit) {
+		if (cards.size() > limit) {
+			cards.remove(limit);
+			return true;
+		}
+
+		return false;
 	}
 }
