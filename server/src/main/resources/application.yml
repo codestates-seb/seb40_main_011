@@ -1,21 +1,21 @@
 spring:
   jpa:
     open-in-view: false
-    hibernate:
-      ddl-auto: create # 경고 절대 다른 것으로 수정하지 마세요!!
     properties:
       hibernate:
         format_sql: true
         show_sql: true
   profiles:
-    default: prod
+    default: dev
+  thymeleaf: # 기능 테스트를 위한 타임리프 사용
+    check-template-location: false # 타임리프 검사 비활성화
+  servlet:
+    multipart:
+      max-file-size: 3MB # 최대 파일 사이즈
+      max-request-size: 10MB # 보내는 파일의 전체 합의 크기
 
 logging:
   level:
     org.hibernate:
       type.descriptor.sql: trace
       org.hibernate.SQLQuery: debug
-
-#mail:
-#  address:
-#    admin: admin@gmail.com

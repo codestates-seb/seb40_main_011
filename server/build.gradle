@@ -1,8 +1,15 @@
+buildscript {
+    ext {
+        queryDslVersion = "5.0.0"
+    }
+}
+
 plugins {
     id 'org.springframework.boot' version '2.7.5'
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
     id 'org.asciidoctor.convert' version '1.5.8'
     id 'java'
+    id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 }
 
 jar {
@@ -10,7 +17,7 @@ jar {
 }
 
 group = 'seb.project'
-version = '0.0.5-SNAPSHOT' // 버전 관리는 큰 패치의 경우는 0.1.0 작은 리비전의 경우는 0.0.1 정식 빌드의 경우 1.0.0 으로 관리한다.
+version = '0.0.6-SNAPSHOT' // 버전 관리는 큰 패치의 경우는 0.1.0 작은 리비전의 경우는 0.0.1 정식 빌드의 경우 1.0.0 으로 관리한다.
 sourceCompatibility = '11'
 
 configurations {
@@ -29,13 +36,22 @@ ext {
 
 dependencies { // 시큐리티의 경우는 시큐리티 전담자가 기본 설정을 완료하기 전까지는 커밋시 주석처리를 합시다.
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    //implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
-    //implementation 'org.springframework.boot:spring-boot-starter-security'
-    //implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'//로그아웃을 위한 레디스 추가
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.mapstruct:mapstruct:1.5.3.Final'
     implementation 'com.google.code.gson:gson:2.10'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.apache.tika:tika-core:2.6.0'
+    implementation 'org.apache.tika:tika-parsers:2.6.0'
+//    querydsl 의존성
+    implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
+    annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}"
+
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
@@ -66,4 +82,20 @@ bootJar {
 bootRun {
     String activeProfile = System.properties['spring.profiles.prod']
     systemProperty "spring.profiles.prod", activeProfile
+}
+
+def querydslDir = "$buildDir/generated/querydsl"
+
+querydsl {
+    jpa = true
+    querydslSourcesDir = querydslDir
+}
+sourceSets {
+    main.java.srcDir querydslDir
+}
+configurations {
+    querydsl.extendsFrom compileClasspath
+}
+compileQuerydsl {
+    options.annotationProcessorPath = configurations.querydsl
 }
