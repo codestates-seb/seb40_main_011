@@ -21,15 +21,13 @@ public class SnackReviewService {
 	private final SnackReviewServiceMapper dtoMapper;
 
 	@Transactional(readOnly = true)
-	public SnackReviewResponseDto.First readFirst(SnackReviewControllerDto.GetFirst params) {
-		SnackReviewServiceDto.Search cond = dtoMapper.firstParamsToSearch(params);
-
-		return snackReviewRepository.searchFirstSliceByProductId(cond);
+	public SnackReviewResponseDto.Info readStats(Long productId) {
+		return snackReviewRepository.searchInfoGroupByProductId(productId);
 	}
 
 	@Transactional(readOnly = true)
-	public SnackReviewResponseDto.Slice readMore(SnackReviewControllerDto.GetMore params) {
-		SnackReviewServiceDto.Search cond = dtoMapper.moreParamsToSearch(params);
+	public SnackReviewResponseDto.Slice readSlice(SnackReviewControllerDto.Get params) {
+		SnackReviewServiceDto.Search cond = dtoMapper.getParamsToSearchCond(params);
 
 		return snackReviewRepository.searchSortedSliceByProductId(cond);
 	}

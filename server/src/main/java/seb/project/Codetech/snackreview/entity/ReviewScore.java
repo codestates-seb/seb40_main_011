@@ -9,24 +9,24 @@ import seb.project.Codetech.snackreview.validation.annotation.ValidScore;
 @Getter
 @ValidScore
 @NoArgsConstructor
-public class Score {
-	private int costEfficiency;
-	private int quality;
-	private int satisfaction;
-	private int design;
-	private int performance;
+public class ReviewScore {
+	private float costEfficiency;
+	private float quality;
+	private float satisfaction;
+	private float design;
+	private float performance;
 
 	public float getGrade() {
 		float totalScore = 0;
 		int totalCount = 0;
 
-		for (Field field : Score.class.getDeclaredFields()) {
+		for (Field field : ReviewScore.class.getDeclaredFields()) {
 			if (field.getName().equals("this$0")) {
 				continue;
 			}
 
 			try {
-				totalScore += field.getInt(this);
+				totalScore += field.getFloat(this);
 			} catch (IllegalAccessException e) {
 
 			} finally {

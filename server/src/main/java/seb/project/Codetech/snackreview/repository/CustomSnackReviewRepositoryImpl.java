@@ -41,9 +41,9 @@ public class CustomSnackReviewRepositoryImpl implements CustomSnackReviewReposit
 				user.image)
 			)
 			.from(snackReview)
-			.join(snackReview.user, user).fetchJoin()
+			.leftJoin(snackReview.user, user)
 			.where(snackReview.product.id.eq(cond.getProductId()))
-			.orderBy(buildOrderSpecifiers(cond.getSort(), cond.getOrder()))
+			.orderBy(buildOrderSpecifiers(cond.isSortByGrade(), cond.isAsc()))
 			.offset(cond.getOffset())
 			.limit(cond.getLimit() + 1)
 			.fetch();
@@ -56,11 +56,12 @@ public class CustomSnackReviewRepositoryImpl implements CustomSnackReviewReposit
 	}
 
 	@Override
-	public SnackReviewResponseDto.First searchFirstSliceByProductId(SnackReviewServiceDto.Search cond) {
-		SnackReviewResponseDto.First firstSlice = queryFactory
+	public SnackReviewResponseDto.Info searchInfoGroupByProductId(Long productId) {
+
+		return queryFactory
 			.select(Projections.fields(
-				SnackReviewResponseDto.First.class,
-				snackReview.id.count(),
+				SnackReviewResponseDto.Info.class,
+				snackReview.count().as("total"),
 				snackReview.score.costEfficiency.avg().as("avgCe"),
 				snackReview.score.design.avg().as("avgDsn"),
 				snackReview.score.quality.avg().as("avgQlt"),
@@ -68,12 +69,8 @@ public class CustomSnackReviewRepositoryImpl implements CustomSnackReviewReposit
 				snackReview.score.satisfaction.avg().as("avgStf"))
 			)
 			.from(snackReview)
-			.where(snackReview.product.id.eq(cond.getProductId()))
+			.where(snackReview.product.id.eq(productId))
 			.fetchFirst();
-
-		firstSlice.setSlice(searchSortedSliceByProductId(cond));
-
-		return firstSlice;
 	}
 
 	private boolean hasNext(List<SnackReviewResponseDto.Card> cards, int limit) {
@@ -85,15 +82,15 @@ public class CustomSnackReviewRepositoryImpl implements CustomSnackReviewReposit
 		return false;
 	}
 
-	private OrderSpecifier<?>[] buildOrderSpecifiers(String sort, String order) {
+	private OrderSpecifier<?>[] buildOrderSpecifiers(boolean sortByGrade, boolean asc) {
 		List<OrderSpecifier<?>> orderSpecifiers = new ArrayList<>();
 		orderSpecifiers.add(snackReview.id.desc());
 
-		if (sort == null) {
+		if (sortByGrade == false) {
 			return orderSpecifiers.toArray(new OrderSpecifier[0]);
 		}
 
-		if (order.equals("ASC")) {
+		if (asc == true) {
 			orderSpecifiers.add(snackReview.grade.asc());
 			Collections.reverse(orderSpecifiers);
 

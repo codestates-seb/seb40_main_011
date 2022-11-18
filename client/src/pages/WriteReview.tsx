@@ -1,13 +1,45 @@
 //리뷰 작성 페이지
 //안지은 작성
 
-import TextEditor from '../components/ToastUI/TextEditor';
+import React, { ChangeEvent, useCallback } from 'react';
 import '../components/common.css';
-import AddPost from '../components/Buttons/AddPost';
+// import AddPost from '../components/Buttons/AddPost';
 import CategorieSelector from '../components/Selectors/CategorieSelector';
 import ProductSelector from '../components/Selectors/ProductSelector';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import TextEditor from '../components/ToastUI/TextEditor';
+import useReview from '../store/review';
 
 const WriteReview = () => {
+  const { productName, type, title, content, reviewImg, setTitle, setContent } =
+    useReview();
+  const navigate = useNavigate();
+  const onSubmit = () => {
+    axios({
+      url: 'https://codetech.nworld.dev/api/review',
+      method: 'post',
+      data: {
+        productName: productName,
+        type: type,
+        title: title,
+        content: content,
+        thumbnail: [reviewImg],
+      },
+    })
+      .then(() => {
+        navigate('/');
+        setTitle('');
+        setContent('');
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const onChangeTitle = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    const titleUpdate = e.target.value;
+    setTitle(titleUpdate);
+  }, []);
+
   return (
     <div className="flex border border-zinc-500">
       <div className="w-1/2 h-screen m-auto mt-8 border border-orange-600">
@@ -18,17 +50,26 @@ const WriteReview = () => {
           </div>
           <button className="so-button-nomal">제품 추가하기</button>
         </div>
-        <form>
+        <form
+          name="reviewWrite"
+          // action="https://codetech.nworld.dev/api/"
+          method="POST"
+          onSubmit={onSubmit}
+        >
+          <label>
+            제목
+            <span></span>
+          </label>
           <input
             type="text"
+            id="title"
+            value={title}
+            onChange={onChangeTitle}
             placeholder="제목을 입력하세요"
             className="mb-5 signup-input"
           />
           <div>
             <TextEditor />
-          </div>
-          <div className="flex justify-center mt-3">
-            <AddPost>작성 완료</AddPost>
           </div>
         </form>
       </div>
@@ -37,3 +78,39 @@ const WriteReview = () => {
 };
 
 export default WriteReview;
+// const [title, updateTitle] = useStore((state) => [
+//   state.title,
+//   state.updateTitle,
+// ]);
+// const [content, updateContent] = useStore((state) => [
+//   state.content,
+//   state.updateContent,
+// ]);
+// const setTitle = useStore((state) => state.setTitle);
+
+// const [title, setTitle] = useState('');
+// const [content, setContent] = useState();
+
+// const handleSubmit = useCallback(
+//   async (e: React.FormEvent<HTMLFormElement>) => {
+//     e.preventDefault();
+//     try {
+//       await axios
+//         .post('http://localhost:3001/categories/review/write', {
+//           title: title,
+//           content: content,
+//         })
+//         .then((res) => {
+//           console.log('보내졌냐!', res.data);
+//         });
+//     } catch (err) {
+//       console.log('error', err);
+//     }
+//   },
+//   []
+// );
+
+// const onChangeContent = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+//   const contentUpdate = e.target.value;
+//   setTitle(contentUpdate);
+// }, []);

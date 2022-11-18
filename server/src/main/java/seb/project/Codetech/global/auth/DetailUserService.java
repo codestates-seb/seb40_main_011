@@ -28,6 +28,7 @@ public class DetailUserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
         Optional<User> optionalUser = userRepository.findByEmail(username);
         User findUser = optionalUser.orElseThrow(() -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
+        if(findUser.getStatus()){throw new BusinessLogicException(ExceptionCode.USER_NOT_FOUND);}
 
         return new DetailUser(findUser);
     }

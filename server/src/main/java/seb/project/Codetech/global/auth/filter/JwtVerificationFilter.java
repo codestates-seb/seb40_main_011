@@ -2,6 +2,7 @@ package seb.project.Codetech.global.auth.filter;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.security.SignatureException;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -9,6 +10,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 import seb.project.Codetech.global.auth.jwt.JwtTokenizer;
 import seb.project.Codetech.global.auth.utils.UserAuthorityUtils;
+import seb.project.Codetech.global.exception.BusinessLogicException;
+import seb.project.Codetech.global.exception.ExceptionCode;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -21,15 +24,19 @@ import java.util.Map;
 public class JwtVerificationFilter extends OncePerRequestFilter {
     private final JwtTokenizer jwtTokenizer;
     private final UserAuthorityUtils authorityUtils;
+    private final RedisTemplate redisTemplate;
 
-    public JwtVerificationFilter(JwtTokenizer jwtTokenizer, UserAuthorityUtils authorityUtils){
+    public JwtVerificationFilter(JwtTokenizer jwtTokenizer, UserAuthorityUtils authorityUtils,
+                                 RedisTemplate redisTemplate){
         this.jwtTokenizer = jwtTokenizer;
         this.authorityUtils =authorityUtils;
+        this.redisTemplate = redisTemplate;
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
         throws ServletException, IOException{
+
         try {
             Map<String, Object> claims = verifyJws(request);
             setAuthenticationToConText(claims);
@@ -39,6 +46,11 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
             request.setAttribute("exception", ee);
         }catch (Exception e){
             request.setAttribute("exception", e);
+        }
+
+        String logoutToken = request.getHeader("Authorization");
+        if(null != redisTemplate.opsForValue().get(logoutToken)){
+            throw new BusinessLogicException(ExceptionCode.USER_NOT_FOUND);
         }
 
         filterChain.doFilter(request, response);
