@@ -1,7 +1,8 @@
 //프로필 이미지 변경
-import { useState } from 'react';
+import { useState, SetStateAction } from 'react';
 import { BsXLg } from 'react-icons/bs';
 import { EditProfileImg } from '../MyPage/Profile';
+import { AxiosPromise } from 'axios';
 
 const EditProgileImg = ({
   isEditProfileImg,

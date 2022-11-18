@@ -1,15 +1,16 @@
 //유저정보
 //login state
-import { useEffect, useState } from 'react';
+import { useEffect, useState, SetStateAction } from 'react';
 import EditProfile from '../Modal/EditProfile';
 import EditPassword from '../Modal/EditPassword';
 import EditProfileImg from '../Modal/EditProfileImg';
 import { getUserProfile } from '../../util/apiCollection';
+import { AxiosPromise } from 'axios';
 
 export interface UserProfile {
   email: string;
   nickname: string;
-  image: null;
+  image: string;
   point: number;
 }
 
