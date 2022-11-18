@@ -19,7 +19,7 @@ public class SnackReviewServiceMapper {
 		SnackReview snackReview = new SnackReview(dto.getContent());
 		snackReview.setScore(dto.getScore());
 		snackReview.setWriter(userService.findUser(dto.getLoginEmail()));
-		snackReview.setSubject(productService.findProduct(dto.getProductId()));
+		snackReview.setSubject(productService.findProductId(dto.getProductId()));
 
 		return snackReview;
 	}
