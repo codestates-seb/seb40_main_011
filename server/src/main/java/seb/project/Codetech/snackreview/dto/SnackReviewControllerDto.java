@@ -7,14 +7,14 @@ import javax.validation.constraints.Positive;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import seb.project.Codetech.snackreview.entity.Score;
+import seb.project.Codetech.snackreview.entity.ReviewScore;
 
 public class SnackReviewControllerDto {
 	@Getter
 	@NoArgsConstructor
 	public static class Post {
 		@NotNull
-		private Score score;
+		private ReviewScore score;
 		@NotBlank
 		private String content;
 		@Positive
@@ -25,7 +25,7 @@ public class SnackReviewControllerDto {
 	@NoArgsConstructor
 	public static class Patch {
 		@NotNull
-		private Score score;
+		private ReviewScore score;
 		@NotBlank
 		private String content;
 	}

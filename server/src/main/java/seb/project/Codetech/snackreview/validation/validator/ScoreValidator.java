@@ -5,17 +5,17 @@ import java.lang.reflect.Field;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-import seb.project.Codetech.snackreview.entity.Score;
+import seb.project.Codetech.snackreview.entity.ReviewScore;
 import seb.project.Codetech.snackreview.validation.annotation.ValidScore;
 
-public class ScoreValidator implements ConstraintValidator<ValidScore, Score> {
+public class ScoreValidator implements ConstraintValidator<ValidScore, ReviewScore> {
 	@Override
 	public void initialize(ValidScore constraintAnnotation) {
 		ConstraintValidator.super.initialize(constraintAnnotation);
 	}
 
 	@Override
-	public boolean isValid(Score score, ConstraintValidatorContext context) {
+	public boolean isValid(ReviewScore score, ConstraintValidatorContext context) {
 		final int lower = 1;
 		final int upper = 5;
 

@@ -5,7 +5,7 @@ import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import seb.project.Codetech.snackreview.entity.Score;
+import seb.project.Codetech.snackreview.entity.ReviewScore;
 
 public class SnackReviewResponseDto {
 	@Getter
@@ -34,7 +34,7 @@ public class SnackReviewResponseDto {
 		private Long id;
 		private String nickname;
 		private String image;
-		private Score score;
+		private ReviewScore score;
 		private String content;
 	}
 }

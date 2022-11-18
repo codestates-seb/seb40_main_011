@@ -18,8 +18,8 @@ public class SnackReviewServiceMapper {
 	public SnackReview createDtoToEntity(SnackReviewServiceDto.Create dto) {
 		SnackReview snackReview = new SnackReview(dto.getContent());
 		snackReview.setScore(dto.getScore());
-		snackReview.setUser(userService.findUser(dto.getLoginEmail()));
-		snackReview.setProduct(productService.findProduct(dto.getProductId()));
+		snackReview.setWriter(userService.findUser(dto.getLoginEmail()));
+		snackReview.setSubject(productService.findProduct(dto.getProductId()));
 
 		return snackReview;
 	}

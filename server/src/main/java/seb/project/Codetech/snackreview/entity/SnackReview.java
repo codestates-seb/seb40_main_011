@@ -33,7 +33,7 @@ public class SnackReview extends BaseTime {
 	@Column(nullable = false)
 	@Embedded
 	@QueryInit("*")
-	private Score score;
+	private ReviewScore score;
 
 	@Column(nullable = false)
 	private float grade;
@@ -58,7 +58,7 @@ public class SnackReview extends BaseTime {
 		this.content = content;
 	}
 
-	public void setUser(User user) {
+	public void setWriter(User user) {
 		if (this.user != null) {
 			this.user.getSnackReviews().remove(this);
 		}
@@ -66,7 +66,7 @@ public class SnackReview extends BaseTime {
 		user.getSnackReviews().add(this);
 	}
 
-	public void setProduct(Product product) {
+	public void setSubject(Product product) {
 		if (this.product != null) {
 			this.product.getSnackReviews().remove(this);
 		}
@@ -75,7 +75,7 @@ public class SnackReview extends BaseTime {
 		product.getSnackReviews().add(this);
 	}
 
-	public void setScore(Score score) {
+	public void setScore(ReviewScore score) {
 		this.score = score;
 		this.grade = score.getGrade();
 	}
