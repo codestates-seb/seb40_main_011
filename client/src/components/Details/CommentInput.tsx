@@ -6,7 +6,7 @@ export default function CommentInput() {
   const handleTextarea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setQuestion(e.target.value);
   };
-  console.log(question);
+
   return (
     <>
       <div className="w-full bg-white flex justify-center border-t border-gray-200 m-4">
@@ -14,14 +14,14 @@ export default function CommentInput() {
           <TextareaAutosize
             minRows={3}
             maxRows={6}
-            className={`focus:border-sky-500 focus:ring-1 focus:ring-sky-500 focus:border focus:rounded-md w-full outline-none text-gray-300 font-medium resize-none focus:text-gray-700 text-lg ${
+            className={`p-4 focus:ring-sky-500 ring-1 ring-gray-200 rounded-xl w-full outline-none text-gray-300 font-medium resize-none focus:text-gray-700 text-lg ${
               question.length !== 0 && `text-gray-700`
             }`}
             placeholder="Enter your question..."
             onChange={handleTextarea}
             value={question}
           />
-          <div className="flex justify-between items-center">
+          <div className="mt-4 flex justify-between items-center">
             <span className="text-gray-400 text-sm">
               현재 글자수 {question.length} / 최대 글자수 100자
             </span>
