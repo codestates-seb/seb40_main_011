@@ -1,4 +1,4 @@
-import { Review, Login } from '../types/mainPageTypes';
+import { Review } from '../types/mainPageTypes';
 import { testInstance } from './axiosInstance';
 
 const getReviewTest = async () =>
