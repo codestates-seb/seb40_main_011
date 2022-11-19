@@ -1,5 +1,9 @@
 package seb.project.Codetech.global.config;
 
+import static org.springframework.security.config.Customizer.*;
+
+import java.util.Arrays;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -15,6 +19,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
 import seb.project.Codetech.global.auth.filter.JwtAuthenticationFilter;
 import seb.project.Codetech.global.auth.filter.JwtVerificationFilter;
 import seb.project.Codetech.global.auth.handler.UserAccessDeniedHandler;
@@ -24,81 +29,80 @@ import seb.project.Codetech.global.auth.handler.UserAuthenticationSuccessHandler
 import seb.project.Codetech.global.auth.jwt.JwtTokenizer;
 import seb.project.Codetech.global.auth.utils.UserAuthorityUtils;
 
-import java.util.Arrays;
-
-import static org.springframework.security.config.Customizer.withDefaults;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
 
-    private final JwtTokenizer jwtTokenizer;
-    private final UserAuthorityUtils authorityUtils;
-    private final RedisTemplate redisTemplate;
+	private final JwtTokenizer jwtTokenizer;
+	private final UserAuthorityUtils authorityUtils;
+	private final RedisTemplate redisTemplate;
 
-    public SecurityConfiguration(JwtTokenizer jwtTokenizer, UserAuthorityUtils authorityUtils,
-                                 RedisTemplate redisTemplate){
-        this.jwtTokenizer = jwtTokenizer;
-        this.authorityUtils = authorityUtils;
-        this.redisTemplate = redisTemplate;
-    }
+	public SecurityConfiguration(JwtTokenizer jwtTokenizer, UserAuthorityUtils authorityUtils,
+		RedisTemplate redisTemplate) {
+		this.jwtTokenizer = jwtTokenizer;
+		this.authorityUtils = authorityUtils;
+		this.redisTemplate = redisTemplate;
+	}
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-        http
-                .headers().frameOptions().sameOrigin()
-                .and()
-                .csrf().disable()
-                .cors(withDefaults())
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .formLogin().disable()
-                .httpBasic().disable()
-                .exceptionHandling()
-                .authenticationEntryPoint(new UserAuthenticationEntryPoint())
-                .accessDeniedHandler(new UserAccessDeniedHandler())
-                .and()
-                .apply(new CustomFilterConfigurer())
-                .and()
-                .authorizeHttpRequests(authorize -> authorize
-                        .antMatchers(HttpMethod.POST,"/api/register").permitAll()
-                        .antMatchers(HttpMethod.PATCH,"/api/user/**").hasRole("USER")
-                        .antMatchers(HttpMethod.GET,"/api/user").hasRole("USER")
-                        .anyRequest().permitAll());
-        return http.build();
+	@Bean
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+		http
+			.headers().frameOptions().sameOrigin()
+			.and()
+			.csrf().disable()
+			.cors(withDefaults())
+			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+			.and()
+			.formLogin().disable()
+			.httpBasic().disable()
+			.exceptionHandling()
+			.authenticationEntryPoint(new UserAuthenticationEntryPoint())
+			.accessDeniedHandler(new UserAccessDeniedHandler())
+			.and()
+			.apply(new CustomFilterConfigurer())
+			.and()
+			.authorizeHttpRequests(authorize -> authorize
+				.antMatchers(HttpMethod.POST, "/api/register").permitAll()
+				.antMatchers(HttpMethod.PATCH, "/api/user/**").hasRole("USER")
+				.antMatchers(HttpMethod.GET, "/api/user").hasRole("USER")
+				.anyRequest().permitAll());
+		return http.build();
 
-    }
+	}
 
-    @Bean
-    public PasswordEncoder passwordEncoder(){return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-    }
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+	}
 
-    @Bean
-    CorsConfigurationSource corsConfigurationSource(){
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("*"));
-        configuration.setAllowedMethods(Arrays.asList("GET","POST","PATCH","DELETE"));
+	@Bean
+	CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration configuration = new CorsConfiguration();
+		configuration.setAllowedOrigins(Arrays.asList("*"));
+		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE"));
 
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", configuration);
+		return source;
+	}
 
-    public class CustomFilterConfigurer extends AbstractHttpConfigurer<CustomFilterConfigurer, HttpSecurity>{
-        @Override
-        public void configure(HttpSecurity builder) throws Exception {
-            AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
+	public class CustomFilterConfigurer extends AbstractHttpConfigurer<CustomFilterConfigurer, HttpSecurity> {
+		@Override
+		public void configure(HttpSecurity builder) throws Exception {
+			AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
 
-            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer);
-            jwtAuthenticationFilter.setFilterProcessesUrl("/api/login");
-            jwtAuthenticationFilter.setAuthenticationSuccessHandler(new UserAuthenticationSuccessHandler());
-            jwtAuthenticationFilter.setAuthenticationFailureHandler(new UserAuthenticationFailureHandler());
+			JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager,
+				jwtTokenizer);
+			jwtAuthenticationFilter.setFilterProcessesUrl("/api/login");
+			jwtAuthenticationFilter.setAuthenticationSuccessHandler(new UserAuthenticationSuccessHandler());
+			jwtAuthenticationFilter.setAuthenticationFailureHandler(new UserAuthenticationFailureHandler());
 
-            JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtils, redisTemplate);
+			JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtils,
+				redisTemplate);
 
-            builder
-                    .addFilter(jwtAuthenticationFilter)
-                    .addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class);
-        }
-    }
+			builder
+				.addFilter(jwtAuthenticationFilter)
+				.addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class);
+		}
+	}
 }

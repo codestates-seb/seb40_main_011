@@ -14,31 +14,39 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.RequiredArgsConstructor;
+import seb.project.Codetech.question.service.QuestionService;
+
 @RestController
 @RequestMapping("/api/questions")
+@RequiredArgsConstructor
 @Validated
 public class QuestionController {
+	private final QuestionService questionService;
 
 	@PostMapping
-	public ResponseEntity postQuestion(@RequestBody String content,
-		@AuthenticationPrincipal String loginEmail) {
-		return ResponseEntity.status(HttpStatus.CREATED).build();
+	public ResponseEntity<Long> postQuestion(@AuthenticationPrincipal String loginEmail, @RequestBody String content) {
+		Long createdId = questionService.createQuestion(loginEmail, content);
+
+		return ResponseEntity.status(HttpStatus.CREATED).body(createdId);
 	}
 
 	@PatchMapping("/{id}")
-	public ResponseEntity patchQuestion(@Positive @PathVariable Long id,
-		@RequestBody String content,
-		@AuthenticationPrincipal String loginEmail) {
-		return ResponseEntity.ok().build();
+	public ResponseEntity<Long> patchQuestion(@Positive @PathVariable Long id, @RequestBody String content) {
+		Long updatedId = questionService.updateQuestion(id, content);
+
+		return ResponseEntity.ok().body(updatedId);
 	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity deleteMapping(@Positive @PathVariable Long id) {
+		questionService.deleteQuestion(id);
+
 		return ResponseEntity.noContent().build();
 	}
 
 	@PostMapping("/{id}/adopt")
-	public ResponseEntity adoptAnswer(@Positive @PathVariable Long id, @RequestBody Long answerId) {
+	public ResponseEntity<Long> adoptAnswer(@Positive @PathVariable Long id, @RequestBody Long answerId) {
 		return ResponseEntity.ok().build();
 	}
 }
