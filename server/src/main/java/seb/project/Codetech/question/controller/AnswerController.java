@@ -1,6 +1,5 @@
 package seb.project.Codetech.question.controller;
 
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Positive;
 
 import org.springframework.http.HttpStatus;
@@ -16,39 +15,40 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
-import seb.project.Codetech.question.service.QuestionService;
+import seb.project.Codetech.question.dto.AnswerRequestDto;
+import seb.project.Codetech.question.dto.AnswerServiceDto;
+import seb.project.Codetech.question.mapper.AnswerControllerMapper;
+import seb.project.Codetech.question.service.AnswerService;
 
 @RestController
-@RequestMapping("/api/questions")
+@RequestMapping("/api/answers")
 @RequiredArgsConstructor
 @Validated
-public class QuestionController {
-	private final QuestionService questionService;
+public class AnswerController {
+	private final AnswerService answerService;
+
+	private final AnswerControllerMapper dtoMapper;
 
 	@PostMapping
-	public ResponseEntity<Long> postQuestion(
-		@AuthenticationPrincipal String loginEmail, @NotEmpty @RequestBody String content) {
-		Long createdId = questionService.createQuestion(loginEmail, content);
+	public ResponseEntity<Long> postAnswer(
+		@AuthenticationPrincipal String loginEmail, @RequestBody AnswerRequestDto.Post request) {
+		AnswerServiceDto.Create dto = dtoMapper.requestToCreateDto(loginEmail, request);
+		Long createdId = answerService.createdAnswer(dto);
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(createdId);
 	}
 
 	@PatchMapping("/{id}")
-	public ResponseEntity<Long> patchQuestion(@Positive @PathVariable Long id, @NotEmpty @RequestBody String content) {
-		Long updatedId = questionService.updateQuestion(id, content);
+	public ResponseEntity<Long> patchAnswer(@Positive @PathVariable Long id, @RequestBody String content) {
+		Long updatedId = answerService.updatedAnswer(id, content);
 
 		return ResponseEntity.ok().body(updatedId);
 	}
 
-	@DeleteMapping("/{id}")
-	public ResponseEntity deleteMapping(@Positive @PathVariable Long id) {
-		questionService.deleteQuestion(id);
+	@DeleteMapping("{id}")
+	public ResponseEntity deletedAnswer(@Positive @PathVariable Long id) {
+		answerService.deletedAnswer(id);
 
 		return ResponseEntity.noContent().build();
-	}
-
-	@PostMapping("/{id}/adopt")
-	public ResponseEntity<Long> adoptAnswer(@Positive @PathVariable Long id, @Positive @RequestBody Long answerId) {
-		return ResponseEntity.ok().build();
 	}
 }

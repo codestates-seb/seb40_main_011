@@ -43,12 +43,11 @@ public class Question extends BaseTime {
 	@OneToMany(mappedBy = "question")
 	private List<Answer> answers = new ArrayList<>();
 
-	private Question(String content) {
-		this.content = content;
-	}
-
 	public static Question from(String content) {
-		return new Question(content);
+		Question question = new Question();
+		question.updateContent(content);
+
+		return question;
 	}
 
 	public void setWriter(User user) {
@@ -72,7 +71,7 @@ public class Question extends BaseTime {
 		if (this.answers.isEmpty()) {
 			return;
 		}
-		
+
 		throw new RuntimeException("UPDATE_NOT_ALLOWED");
 	}
 

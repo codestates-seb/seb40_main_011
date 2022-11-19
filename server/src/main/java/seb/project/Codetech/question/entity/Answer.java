@@ -31,8 +31,15 @@ public class Answer extends BaseTime {
 	private Question question;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id")
-	private User user;
+	@JoinColumn(name = "writer_id")
+	private User writer;
+
+	public static Answer from(String content) {
+		Answer answer = new Answer();
+		answer.updateContent(content);
+
+		return answer;
+	}
 
 	public void setQuestion(Question question) {
 		if (this.question != null) {
@@ -42,11 +49,15 @@ public class Answer extends BaseTime {
 		question.getAnswers().add(this);
 	}
 
-	public void setAuthor(User user) {
-		if (this.user != null) {
-			this.user.getAnswers().remove(this);
+	public void setWriter(User user) {
+		if (this.writer != null) {
+			this.writer.getAnswers().remove(this);
 		}
-		this.user = user;
+		this.writer = user;
 		user.getAnswers().add(this);
+	}
+
+	public void updateContent(String content) {
+		this.content = content;
 	}
 }

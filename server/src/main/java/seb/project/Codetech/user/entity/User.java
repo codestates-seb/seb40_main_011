@@ -77,7 +77,7 @@ public class User extends BaseTime {
 	@OneToMany(mappedBy = "writer")
 	private List<Question> questions = new ArrayList<>();
 
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "writer")
 	private List<Answer> answers = new ArrayList<>();
 
 	@OneToMany(mappedBy = "user")

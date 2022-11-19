@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import seb.project.Codetech.global.exception.BusinessLogicException;
 import seb.project.Codetech.global.exception.ExceptionCode;
-import seb.project.Codetech.snackreview.dto.SnackReviewControllerDto;
+import seb.project.Codetech.snackreview.dto.SnackReviewRequestDto;
 import seb.project.Codetech.snackreview.dto.SnackReviewResponseDto;
 import seb.project.Codetech.snackreview.dto.SnackReviewServiceDto;
 import seb.project.Codetech.snackreview.entity.SnackReview;
@@ -29,7 +29,7 @@ public class SnackReviewService {
 	}
 
 	@Transactional(readOnly = true)
-	public SnackReviewResponseDto.Slice readSlice(SnackReviewControllerDto.Get params) {
+	public SnackReviewResponseDto.Slice readSlice(SnackReviewRequestDto.Get params) {
 		SnackReviewServiceDto.Search cond = dtoMapper.getParamsToSearchCond(params);
 
 		List<SnackReviewResponseDto.Card> cards = snackReviewRepository.searchSortedCardsByProductId(cond);
