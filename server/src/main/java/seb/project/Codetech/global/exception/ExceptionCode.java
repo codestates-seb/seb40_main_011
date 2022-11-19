@@ -3,6 +3,7 @@ package seb.project.Codetech.global.exception;
 import lombok.Getter;
 
 public enum ExceptionCode {
+  
     // 회원 예외처리
     USER_NOT_FOUND(404, "회원을 찾을 수 없습니다."),
     USER_EXISTS(409, "회원이 이미 존재합니다."),
