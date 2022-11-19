@@ -59,8 +59,14 @@ public class User extends BaseTime {
 		this.point += diff;
 	}
 
-	@ElementCollection(fetch = FetchType.EAGER)
-	private List<String> roles = new ArrayList<>();
+public User(String nickname, String email, String password) {
+        this.email = email;
+        this.nickname = nickname;
+        this.password = password;
+    }
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles = new ArrayList<>();
 
 	@OneToMany(mappedBy = "user")
 	private List<Review> reviews = new ArrayList<>();

@@ -42,7 +42,7 @@ const EditPassword = () => {
             <input
               type="password"
               value={password}
-              placeholder="현재 비빌번호를 확인해주세요"
+              placeholder="새 비빌번호를 확인해주세요"
               className="flex w-full p-1.5 mt-4"
             />
           </div>

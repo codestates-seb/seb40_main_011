@@ -27,6 +27,7 @@ import seb.project.Codetech.snackreview.entity.SnackReview;
 @Setter
 @NoArgsConstructor
 public class Product extends BaseTime {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -34,12 +35,15 @@ public class Product extends BaseTime {
 	@Column(nullable = false)
 	private String name;
 
+	@Column(nullable = false, updatable = false)
+	private String writer; // 제품 정보 생성자
+
+	@Column(nullable = false)
+	private String modifier; // 제품 정보 수정자
+
 	@Column(nullable = false)
 	@Convert(converter = TypeConverter.class)
 	private Type type;
-
-	@Column(nullable = false)
-	private String image;
 
 	@Column(nullable = false, columnDefinition = "MEDIUMTEXT")
 	private String detail;
