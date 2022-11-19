@@ -26,7 +26,6 @@ const ProductList = () => {
         setTotalPage(Math.ceil(data.length / 9));
         //data.length / 9 round up 해서 정수만큼 페이지네이션 구현 2페이지로 갈땐 (start + 9, end + 9) > 버튼 눌렀을때도
         //< 버튼누르면 반대로 뺴주기
-        console.log(totalPage);
       }
       //데이터에서 해당 카테고리에 맞는 친구 찾기
       else {

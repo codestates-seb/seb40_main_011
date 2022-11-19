@@ -11,7 +11,6 @@ public class SnackReviewControllerMapper {
 		return SnackReviewServiceDto.Create.builder()
 			.score(dto.getScore())
 			.content(dto.getContent())
-			.type(dto.getType())
 			.loginEmail(email)
 			.productId(dto.getProductId())
 			.build();

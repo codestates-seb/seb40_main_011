@@ -19,10 +19,10 @@ const getReviewDetailTest = async (params: string | undefined) =>
     .then((data) => data)
     .catch((err) => err.response);
 
-const postReviewTest = async (data: Review) =>
+const getUserProfile = async () =>
   await testInstance
-    .post('/review', data)
+    .get('/user')
     .then((data) => data)
     .catch((err) => err.response);
 
-export { getReviewTest, getProductTest, getReviewDetailTest, postReviewTest };
+export { getReviewTest, getProductTest, getReviewDetailTest, getUserProfile };

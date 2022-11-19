@@ -21,4 +21,9 @@ const postLogin = async (data: Login) =>
     .then((data) => data)
     .catch((err) => err.response);
 
-export { getReview, getProduct, getUserProfile, postLogin };
+const getReviewDetail = async (params: string | undefined) =>
+  await InstanceV1.get(`/review/${params}`)
+    .then((data) => data)
+    .catch((err) => err.response);
+
+export { getReview, getProduct, getUserProfile, postLogin, getReviewDetail };

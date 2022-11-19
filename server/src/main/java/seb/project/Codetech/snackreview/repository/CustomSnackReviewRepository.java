@@ -6,5 +6,5 @@ import seb.project.Codetech.snackreview.dto.SnackReviewServiceDto;
 public interface CustomSnackReviewRepository {
 	SnackReviewResponseDto.Slice searchSortedSliceByProductId(SnackReviewServiceDto.Search cond);
 
-	SnackReviewResponseDto.First searchFirstSliceByProductId(SnackReviewServiceDto.Search cond);
+	SnackReviewResponseDto.Info searchInfoGroupByProductId(Long productId);
 }
