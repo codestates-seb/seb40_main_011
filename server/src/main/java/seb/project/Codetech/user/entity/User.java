@@ -3,7 +3,16 @@ package seb.project.Codetech.user.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,57 +33,57 @@ import seb.project.Codetech.snackreview.entity.SnackReview;
 @NoArgsConstructor
 public class User extends BaseTime {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Column(nullable = false, unique = true, updatable = false)
-    private String email;
+	@Column(nullable = false, unique = true, updatable = false)
+	private String email;
 
-    @Column(nullable = false, length = 100)
-    private String password;
+	@Column(nullable = false, length = 100)
+	private String password;
 
-    @Column(nullable = false)
-    private String nickname;
+	@Column(nullable = false)
+	private String nickname;
 
-    @Column
-    private String image;
+	@Column
+	private String image;
 
-    @Column(nullable = false)
-    private Long point = 0L;
+	@Column(nullable = false)
+	private Long point = 0L;
 
-    @Column(nullable = false)
-    private Boolean status = false;
+	@Column(nullable = false)
+	private Boolean status = false;
 
-    public void updatePoint(int diff) {
-        this.point += diff;
-    }
+	public void updatePoint(int diff) {
+		this.point += diff;
+	}
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> roles = new ArrayList<>();
+	@ElementCollection(fetch = FetchType.EAGER)
+	private List<String> roles = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
-    private List<Review> reviews = new ArrayList<>();
+	@OneToMany(mappedBy = "user")
+	private List<Review> reviews = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
-    private List<Recommend> recommends = new ArrayList<>();
+	@OneToMany(mappedBy = "user")
+	private List<Recommend> recommends = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
-    private List<ReviewComment> reviewComments = new ArrayList<>();
+	@OneToMany(mappedBy = "user")
+	private List<ReviewComment> reviewComments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
-    private List<SnackReview> snackReviews = new ArrayList<>();
+	@OneToMany(mappedBy = "writer")
+	private List<SnackReview> snackReviews = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
-    private List<Question> questions = new ArrayList<>();
+	@OneToMany(mappedBy = "user")
+	private List<Question> questions = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
-    private List<Answer> answers = new ArrayList<>();
+	@OneToMany(mappedBy = "user")
+	private List<Answer> answers = new ArrayList<>();
 
 	@OneToMany(mappedBy = "user")
 	private List<DiscountComment> discountComments = new ArrayList<>();
 
-    @OneToOne
-    @JoinColumn(name = "file_id")
-    private FileEntity file;
+	@OneToOne
+	@JoinColumn(name = "file_id")
+	private FileEntity file;
 }

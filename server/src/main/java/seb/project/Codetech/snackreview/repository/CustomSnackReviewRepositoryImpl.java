@@ -38,11 +38,11 @@ public class CustomSnackReviewRepositoryImpl implements CustomSnackReviewReposit
 				snackReview.id,
 				snackReview.score,
 				snackReview.content,
-				user.nickname.as("authorNickname"),
-				user.image.as("authorProfile"))
+				user.nickname,
+				user.image)
 			)
 			.from(snackReview)
-			.leftJoin(snackReview.user, user)
+			.leftJoin(snackReview.writer, user)
 			.where(snackReview.product.id.eq(cond.getProductId()))
 			.orderBy(buildOrderSpecifiers(cond.isSortByGrade(), cond.isAsc()))
 			.offset(cond.getOffset())
