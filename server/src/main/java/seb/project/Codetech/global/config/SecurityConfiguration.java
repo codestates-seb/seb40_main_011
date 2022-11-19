@@ -1,6 +1,7 @@
 package seb.project.Codetech.global.config;
 
 import org.springframework.beans.factory.annotation.Value;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
@@ -22,11 +23,13 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
 import seb.project.Codetech.global.auth.filter.JwtAuthenticationFilter;
 import seb.project.Codetech.global.auth.filter.JwtVerificationFilter;
 import seb.project.Codetech.global.auth.handler.*;
 import seb.project.Codetech.global.auth.jwt.JwtTokenizer;
 import seb.project.Codetech.global.auth.utils.UserAuthorityUtils;
+
 import seb.project.Codetech.user.repository.UserRepository;
 import seb.project.Codetech.user.service.UserService;
 
@@ -35,7 +38,6 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
-
     @Value("${spring.security.oauth2.client.registration.google.clientId}")  // (1)
     private String clientId;
 
