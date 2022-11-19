@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
+import seb.project.Codetech.global.exception.BusinessLogicException;
+import seb.project.Codetech.global.exception.ExceptionCode;
 import seb.project.Codetech.snackreview.dto.SnackReviewControllerDto;
 import seb.project.Codetech.snackreview.dto.SnackReviewResponseDto;
 import seb.project.Codetech.snackreview.dto.SnackReviewServiceDto;
@@ -60,7 +62,7 @@ public class SnackReviewService {
 		Optional<SnackReview> found = snackReviewRepository.findById(id);
 
 		return found.orElseThrow(
-			() -> new RuntimeException("SNACK_REVIEW_NOT_FOUND")
+			() -> new BusinessLogicException(ExceptionCode.SNACK_REVIEW_NOT_FOUND)
 		);
 	}
 

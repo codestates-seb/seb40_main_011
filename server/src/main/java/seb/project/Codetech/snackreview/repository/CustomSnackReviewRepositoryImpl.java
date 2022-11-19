@@ -38,8 +38,8 @@ public class CustomSnackReviewRepositoryImpl implements CustomSnackReviewReposit
 				snackReview.id,
 				snackReview.score,
 				snackReview.content,
-				user.nickname,
-				user.image)
+				user.nickname.as("authorNickname"),
+				user.image.as("authorProfile"))
 			)
 			.from(snackReview)
 			.leftJoin(snackReview.user, user)
