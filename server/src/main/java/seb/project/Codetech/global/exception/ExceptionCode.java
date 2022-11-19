@@ -11,6 +11,7 @@ public enum ExceptionCode {
     // 파일 예외처리
     FILE_NOT_FOUND(404, "파일을 찾을 수 없습니다."),
     FILE_NOT_ALLOW(415, "지원하지 않는 파일 형식입니다."),
+    FILE_NOT_LOAD(415, "원인을 알 수 없는 접근입니다 관리자에게 문의하세요!"),
 
     // 제품 예외처리
     PRODUCT_NOT_FOUND(404, "제품 정보를 찾을 수 없습니다."),
