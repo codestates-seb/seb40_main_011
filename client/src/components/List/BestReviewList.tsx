@@ -71,7 +71,7 @@ const BestReviewList = () => {
           </div>
           <div className="flex items-center">
             <button
-              className="ease-in-out duration-150 flex items-center justify-center h-12 w-12 rounded-full hover:bg-slate-300"
+              className=" flex items-center justify-center h-12 w-12 rounded-full hover:bg-slate-300 ease-in-out duration-150"
               onClick={onClick}
             >
               <FaChevronRight />

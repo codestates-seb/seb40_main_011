@@ -19,14 +19,14 @@ const MainCategory = ({ setCategory }: CategoryProps) => {
   ];
 
   return (
-    <div className="flex space-x-20 my-4 w-4/5 justify-between items-center px-14">
+    <div className="max-lg:flex-wrap flex my-4 w-2/3 justify-between items-center">
       {categoryList.map((el, idx) => {
         return (
           <button
             key={idx}
             onClick={onClick}
             id={el.id.toLowerCase()}
-            className="flex flex-col items-center justify-center w-1/2 ease-in-out duration-300 hover:bg-slate-300 hover:rounded-full p-4 "
+            className="flex flex-col items-center justify-center w-24 p-4 ease-in-out duration-300 hover:bg-slate-300 hover:rounded-full"
           >
             <div>{el.icon}</div>
             <div>{el.id}</div>

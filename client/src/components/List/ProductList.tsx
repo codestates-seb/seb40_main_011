@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import { Product } from '../../types/mainPageTypes';
 import MainCategory from '../Selectors/MainCategory';
 import { useNavigate, useParams } from 'react-router-dom';
+import { FaChevronRight } from 'react-icons/fa';
+import { FaChevronLeft } from 'react-icons/fa';
 
 const ProductList = () => {
   const navigate = useNavigate();
@@ -12,6 +14,7 @@ const ProductList = () => {
   const [category, setCategory] = useState('all');
   const [totalPage, setTotalPage] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
+
   useEffect(() => {
     const getProductData = async () => {
       //인스턴스 데이터
@@ -47,8 +50,14 @@ const ProductList = () => {
     navigate(`/categories/review/${e.currentTarget.id}`);
   };
 
+  //페이지네이션
   const onPageClick = (e: React.MouseEvent<HTMLElement>) => {
-    console.log(e.currentTarget.nodeValue);
+    if (e.currentTarget.id === 'down' && currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+    if (e.currentTarget.id === 'up' && currentPage < totalPage) {
+      setCurrentPage(currentPage + 1);
+    }
   };
 
   return (
@@ -57,19 +66,21 @@ const ProductList = () => {
         <div>loading</div>
       ) : (
         <div className="flex flex-col">
-          <div className="flex flex-row flex-start justify-evenly my-4">
-            <h1 className="font-bold text-xl items-center flex">
-              제품 카테고리
-            </h1>
-            <button
-              onClick={onReviewClick}
-              className="font-medium text-white pb-0.5 px-5 h-10 rounded-full bg-blue-500 hover:bg-blue-400"
-            >
-              리뷰쓰기
-            </button>
-          </div>
-          <div className="flex justify-center items-center">
-            <MainCategory setCategory={setCategory} />
+          <div className="flex flex-col w-full justify-center items-center">
+            <div className="flex flex-row w-2/3 justify-between items-center px-8 my-4 ">
+              <h1 className="font-bold text-xl items-center flex ">
+                제품 카테고리
+              </h1>
+              <button
+                onClick={onReviewClick}
+                className="font-medium text-white pb-0.5 px-5 h-10 rounded-full bg-blue-500 hover:bg-blue-400"
+              >
+                리뷰쓰기
+              </button>
+            </div>
+            <div className="w-full flex justify-center items-center">
+              <MainCategory setCategory={setCategory} />
+            </div>
           </div>
           <div className="flex items-center justify-center">
             <div className="m-16 flex flex-wrap w-4/5">
@@ -77,7 +88,7 @@ const ProductList = () => {
                 return (
                   <div
                     key={idx}
-                    className="flex w-1/3 justify-center drop-shadow-productList p-4 hover:-translate-y-1 transition ease-in-out hover:scale-110"
+                    className="mb-12 flex lg:w-1/3 justify-center drop-shadow-productList p-4 hover:-translate-y-1 transition ease-in-out hover:scale-110"
                   >
                     <div
                       role="button"
@@ -102,11 +113,25 @@ const ProductList = () => {
               <div className="w-full">
                 {totalPage > 1 ? (
                   <div className="flex p-4 justify-center">
-                    <button onClick={onPageClick}>⬅️</button>
-                    <div>
-                      {currentPage}/{totalPage}
+                    <button
+                      onClick={onPageClick}
+                      id="down"
+                      className="p-4 rounded-full hover:bg-slate-300 ease-in-out duration-150"
+                    >
+                      <FaChevronLeft size="30" />
+                    </button>
+                    <div className="mx-16 font-bold text-xl flex items-center">
+                      <div className="p-2">{currentPage}</div>
+                      <div className="p-2">/</div>
+                      <div className="text-gray-500 p-2">{totalPage}</div>
                     </div>
-                    <button onClick={onPageClick}>➡️</button>
+                    <button
+                      onClick={onPageClick}
+                      id="up"
+                      className="p-4 rounded-full hover:bg-slate-300 ease-in-out duration-150"
+                    >
+                      <FaChevronRight size="30" />
+                    </button>
                   </div>
                 ) : null}
               </div>
