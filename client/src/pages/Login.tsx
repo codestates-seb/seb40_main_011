@@ -7,7 +7,7 @@ import { AiOutlineGoogle } from 'react-icons/ai';
 import { AiFillEye } from 'react-icons/ai';
 import { RiKakaoTalkFill } from 'react-icons/ri';
 import { RiLockPasswordLine } from 'react-icons/ri';
-
+import { postLogin } from '../util/apiCollection';
 export default function Login() {
   interface inputs {
     email: string;
@@ -24,7 +24,7 @@ export default function Login() {
     email: false,
     password: false,
   });
-
+  console.log(inputs);
   const handlePasswordType = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     if (passwordType === 'password') return setPasswordType('text');
@@ -67,6 +67,11 @@ export default function Login() {
 
   const handleSubmit = () => {
     return;
+  };
+
+  const onLoginClick = (e: any) => {
+    e.preventDefault();
+    postLogin(inputs).then((el) => console.log(el));
   };
 
   return (
@@ -141,6 +146,7 @@ export default function Login() {
               )}
             </div>
             <button
+              onClick={onLoginClick}
               type="submit"
               className="w-full bg-blue-600 h-16 rounded-md text-xl font-bold pb-1 text-white hover:bg-blue-500"
             >

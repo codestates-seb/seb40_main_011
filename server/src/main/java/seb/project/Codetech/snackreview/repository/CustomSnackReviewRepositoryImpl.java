@@ -3,8 +3,8 @@ package seb.project.Codetech.snackreview.repository;
 import static seb.project.Codetech.snackreview.entity.QSnackReview.*;
 import static seb.project.Codetech.user.entity.QUser.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -30,8 +30,9 @@ public class CustomSnackReviewRepositoryImpl implements CustomSnackReviewReposit
 	}
 
 	@Override
-	public SnackReviewResponseDto.Slice searchSortedSliceByProductId(SnackReviewServiceDto.Search cond) {
-		List<SnackReviewResponseDto.Card> cards = queryFactory
+	public List<SnackReviewResponseDto.Card> searchSortedCardsByProductId(SnackReviewServiceDto.Search cond) {
+
+		return queryFactory
 			.select(Projections.fields(
 				SnackReviewResponseDto.Card.class,
 				snackReview.id,
@@ -41,18 +42,12 @@ public class CustomSnackReviewRepositoryImpl implements CustomSnackReviewReposit
 				user.image)
 			)
 			.from(snackReview)
-			.leftJoin(snackReview.user, user)
+			.leftJoin(snackReview.writer, user)
 			.where(snackReview.product.id.eq(cond.getProductId()))
 			.orderBy(buildOrderSpecifiers(cond.isSortByGrade(), cond.isAsc()))
 			.offset(cond.getOffset())
 			.limit(cond.getLimit() + 1)
 			.fetch();
-
-		SnackReviewResponseDto.Slice slice = new SnackReviewResponseDto.Slice();
-		slice.setHasNext(hasNext(cards, cond.getLimit()));
-		slice.setCards(cards);
-
-		return slice;
 	}
 
 	@Override
@@ -73,17 +68,8 @@ public class CustomSnackReviewRepositoryImpl implements CustomSnackReviewReposit
 			.fetchFirst();
 	}
 
-	private boolean hasNext(List<SnackReviewResponseDto.Card> cards, int limit) {
-		if (cards.size() > limit) {
-			cards.remove(limit);
-			return true;
-		}
-
-		return false;
-	}
-
 	private OrderSpecifier<?>[] buildOrderSpecifiers(boolean sortByGrade, boolean asc) {
-		List<OrderSpecifier<?>> orderSpecifiers = new ArrayList<>();
+		Deque<OrderSpecifier<?>> orderSpecifiers = new ArrayDeque<>();
 		orderSpecifiers.add(snackReview.id.desc());
 
 		if (sortByGrade == false) {
@@ -91,14 +77,12 @@ public class CustomSnackReviewRepositoryImpl implements CustomSnackReviewReposit
 		}
 
 		if (asc == true) {
-			orderSpecifiers.add(snackReview.grade.asc());
-			Collections.reverse(orderSpecifiers);
+			orderSpecifiers.addFirst(snackReview.grade.asc());
 
 			return orderSpecifiers.toArray(new OrderSpecifier[0]);
 		}
 
-		orderSpecifiers.add(snackReview.grade.desc());
-		Collections.reverse(orderSpecifiers);
+		orderSpecifiers.addFirst(snackReview.grade.desc());
 
 		return orderSpecifiers.toArray(new OrderSpecifier[0]);
 	}

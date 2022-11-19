@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import seb.project.Codetech.snackreview.entity.ReviewScore;
 
-public class SnackReviewControllerDto {
+public class SnackReviewRequestDto {
 	@Getter
 	@NoArgsConstructor
 	public static class Post {
