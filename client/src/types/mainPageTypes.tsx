@@ -1,5 +1,8 @@
 import { Dispatch, SetStateAction } from 'react';
-
+export interface Login {
+  email: string;
+  password: string;
+}
 export interface Product {
   id: number;
   name: string;

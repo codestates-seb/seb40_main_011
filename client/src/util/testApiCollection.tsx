@@ -1,3 +1,4 @@
+import { Review, Login } from '../types/mainPageTypes';
 import { testInstance } from './axiosInstance';
 
 const getReviewTest = async () =>
@@ -18,4 +19,10 @@ const getReviewDetailTest = async (params: string | undefined) =>
     .then((data) => data)
     .catch((err) => err.response);
 
-export { getReviewTest, getProductTest, getReviewDetailTest };
+const postReviewTest = async (data: Review) =>
+  await testInstance
+    .post('/review', data)
+    .then((data) => data)
+    .catch((err) => err.response);
+
+export { getReviewTest, getProductTest, getReviewDetailTest, postReviewTest };

@@ -40,7 +40,7 @@ const ProductList = () => {
 
   //베스트 리뷰 클릭시 해당 리뷰로 가짐
   const onReviewClick = () => {
-    navigate('/reviews');
+    navigate('/categories/review/write');
   };
 
   const onProductClick = (e: React.MouseEvent<HTMLElement>) => {

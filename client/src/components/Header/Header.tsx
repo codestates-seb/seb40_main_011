@@ -8,6 +8,7 @@ export default function Header() {
   const handleHomeClick = () => {
     navigate('/');
   };
+
   // const [login, setIsLogin] = useState(false);
   // const dispatch = useDispatch();
   // const logIn = useSelector((state) => state.isLogin);
@@ -83,8 +84,10 @@ export default function Header() {
               <BsFillSunFill />
             </span>
           </button>
-          <HeaderTextButton name="Login" />
-          <HeaderTextButton name="Register" />
+          <div>
+            <HeaderTextButton name="login" />
+            <HeaderTextButton name="signup" />
+          </div>
         </div>
       </div>
     </div>

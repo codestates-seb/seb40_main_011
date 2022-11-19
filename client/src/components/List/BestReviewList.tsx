@@ -48,7 +48,7 @@ const BestReviewList = () => {
               {sortedReviews[selectedIdx]?.title}
             </div>
             <div
-              className=" line-clamp-2 hover:bg-slate-300 hover:rounded-md p-1 text-slate-600 hover:text-cyan-900"
+              className=" ease-in-out duration-150 line-clamp-2 hover:bg-slate-300 hover:rounded-md p-1 text-slate-600 hover:text-cyan-900"
               role="button"
               onClick={onContentClick}
               id={sortedReviews[selectedIdx].id.toString()}
@@ -71,7 +71,7 @@ const BestReviewList = () => {
           </div>
           <div className="flex items-center">
             <button
-              className="flex items-center justify-center h-12 w-12 rounded-full hover:bg-slate-300"
+              className="ease-in-out duration-150 flex items-center justify-center h-12 w-12 rounded-full hover:bg-slate-300"
               onClick={onClick}
             >
               <FaChevronRight />
