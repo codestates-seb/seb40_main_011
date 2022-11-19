@@ -72,17 +72,19 @@ const ProductList = () => {
             <MainCategory setCategory={setCategory} />
           </div>
           <div className="flex items-center justify-center">
-            <div className="m-16 flex flex-wrap w-4/5 ">
+            <div className="m-16 flex flex-wrap w-4/5">
               {products.map((el, idx) => {
                 return (
                   <div
                     key={idx}
-                    className="flex w-1/3 justify-center  drop-shadow-productList p-4"
-                    role="button"
-                    onClick={onProductClick}
-                    id={el.id.toString()}
+                    className="flex w-1/3 justify-center drop-shadow-productList p-4 hover:-translate-y-1 transition ease-in-out hover:scale-110"
                   >
-                    <div className=" flex flex-col w-4/5 bg-white rounded-b-lg ">
+                    <div
+                      role="button"
+                      onClick={onProductClick}
+                      id={el.id.toString()}
+                      className=" flex flex-col w-4/7 bg-white rounded-b-lg"
+                    >
                       <img className="rounded-t-lg h-48" src={el.image} />
                       <div>
                         <div className="p-2 border-t-2">{el.name}</div>
