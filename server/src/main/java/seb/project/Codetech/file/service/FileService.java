@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import org.apache.tika.Tika;
@@ -18,8 +20,10 @@ import seb.project.Codetech.file.entity.FileEntity;
 import seb.project.Codetech.file.repository.FileRepository;
 import seb.project.Codetech.global.exception.BusinessLogicException;
 import seb.project.Codetech.global.exception.ExceptionCode;
+import seb.project.Codetech.product.entity.Product;
 
 @Service
+@Transactional
 @Log4j2
 public class FileService {
 	private final FileRepository fileRepository;
@@ -29,18 +33,29 @@ public class FileService {
 	}
 
 	private final String rootPath = System.getProperty("user.dir"); // 현재 실행되고 있는 서버의 경로를 가져온다.
-
 	@Value("${filePath}")
 	private String filePath;
 
+	public List<FileEntity> insertFiles(List<MultipartFile> files) throws IOException {
+
+		List<FileEntity> fileEntities = new ArrayList<>();
+
+		for (MultipartFile file : files) {
+			FileEntity saved = saveFile(file);
+			fileEntities.add(saved);
+		}
+
+		return fileEntities;
+	}
+
 	public FileEntity saveFile(MultipartFile uploadFile) throws IOException {
 
-		if (uploadFile.getSize() > 0) {
+		if (uploadFile.getSize() > 0) { // 너 파일이 실존해 ?
 
 			if (!checkFile(uploadFile))
 				throw new BusinessLogicException(ExceptionCode.FILE_NOT_ALLOW);
 
-			checkDir(rootPath ,filePath); // 파일을 업로드 처리하기 전에 폴더가 있는지 검사한다.
+			checkDir(rootPath, filePath); // 파일을 업로드 처리하기 전에 폴더가 있는지 검사한다.
 
 			FileEntity file = new FileEntity();
 
@@ -62,16 +77,14 @@ public class FileService {
 			// 데이터베이스에 파일 정보를 저장한다.
 			return fileRepository.save(file);
 		}
-		throw  new BusinessLogicException(ExceptionCode.FILE_NOT_FOUND);
+		throw new BusinessLogicException(ExceptionCode.FILE_NOT_FOUND);
 	}
 
-	@Transactional
-	public void removeFiles(FileEntity file) throws IOException {
-
-		Path deleteFile = Paths.get(rootPath + file.getPath());
-
-		Files.deleteIfExists(deleteFile);
-		fileRepository.delete(file);
+	public void setUploadProduct(Product product, List<FileEntity> fileEntities) {
+		for (FileEntity file : fileEntities) {
+			file.setProduct(product);
+			fileRepository.save(file);
+		}
 	}
 
 	public void checkDir(String root, String path) {
@@ -81,18 +94,18 @@ public class FileService {
 		try {
 			// 디렉토리 생성
 			Files.createDirectories(dir); // 폴더가 없으면 생성한다 폴더나 부모 폴더도 없으면 같이 생성해준다 다만 예외를 주지는 않는다.
-		}catch (IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
 	}
 
 	public boolean checkFile(MultipartFile file) throws IOException {
-    
-		Tika tika = new Tika();
+
+		Tika tika = new Tika(); // 이미지 파일 인지 아닌지
 		String fileType = tika.detect(file.getInputStream());
 		// getByte로 돌리게 된다면 문제가 생긴다, getInputStream을 통해서 헤더만 보내서 검사한다.
-    
+
 		return fileType.startsWith("image");
 	}
 }
