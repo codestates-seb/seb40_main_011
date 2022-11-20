@@ -1,5 +1,7 @@
 package seb.project.Codetech.question.entity;
 
+import static seb.project.Codetech.global.exception.ExceptionCode.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +19,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import seb.project.Codetech.global.auditing.BaseTime;
+import seb.project.Codetech.global.exception.BusinessLogicException;
 import seb.project.Codetech.user.entity.User;
 
 @Entity
@@ -45,7 +48,7 @@ public class Question extends BaseTime {
 
 	public static Question from(String content) {
 		Question question = new Question();
-		question.updateContent(content);
+		question.content = content;
 
 		return question;
 	}
@@ -62,24 +65,28 @@ public class Question extends BaseTime {
 		this.content = content;
 	}
 
+	public void adopt(Long answerId) {
+		this.pickId = answerId;
+	}
+
 	public void updateToDeleted() {
 		this.content = "삭제됨";
 		this.deleted = true;
 	}
 
 	public void checkUpdatable() {
-		if (this.answers.isEmpty()) {
-			return;
+		if (!this.answers.isEmpty()) {
+			throw new BusinessLogicException(QUESTION_UPDATE_NOT_ALLOWED);
 		}
-
-		throw new RuntimeException("UPDATE_NOT_ALLOWED");
 	}
 
 	public boolean isDeletable() {
-		if (this.pickId == null) {
-			return true;
-		}
+		return this.pickId == null;
+	}
 
-		return false;
+	public void checkAdoptable() {
+		if (this.pickId != null) {
+			throw new BusinessLogicException(ADOPTED_ANSWER_EXIST);
+		}
 	}
 }
