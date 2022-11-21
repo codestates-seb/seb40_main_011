@@ -30,10 +30,8 @@ public class SnackReviewService {
 
 	@Transactional(readOnly = true)
 	public SnackReviewResponseDto.Slice readSlice(SnackReviewRequestDto.Get params) {
-		SnackReviewServiceDto.Search cond = dtoMapper.getParamsToSearchCond(params);
-
-		List<SnackReviewResponseDto.Card> cards = snackReviewRepository.searchSortedCardsByProductId(cond);
-		boolean hasNext = hasNext(cards, cond.getLimit());
+		List<SnackReviewResponseDto.Card> cards = snackReviewRepository.searchSortedCardsByProductId(params);
+		boolean hasNext = snackReviewRepository.hasNext(cards, params.getLimit());
 
 		return new SnackReviewResponseDto.Slice(hasNext, cards);
 	}
@@ -64,14 +62,5 @@ public class SnackReviewService {
 		return found.orElseThrow(
 			() -> new BusinessLogicException(ExceptionCode.SNACK_REVIEW_NOT_FOUND)
 		);
-	}
-
-	private boolean hasNext(List<SnackReviewResponseDto.Card> cards, int limit) {
-		if (cards.size() > limit) {
-			cards.remove(limit);
-			return true;
-		}
-
-		return false;
 	}
 }

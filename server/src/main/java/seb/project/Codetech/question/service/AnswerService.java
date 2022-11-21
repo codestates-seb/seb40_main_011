@@ -1,11 +1,14 @@
 package seb.project.Codetech.question.service;
 
+import static seb.project.Codetech.global.exception.ExceptionCode.*;
+
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
+import seb.project.Codetech.global.exception.BusinessLogicException;
 import seb.project.Codetech.question.dto.AnswerServiceDto;
 import seb.project.Codetech.question.entity.Answer;
 import seb.project.Codetech.question.mapper.AnswerServiceMapper;
@@ -41,7 +44,7 @@ public class AnswerService {
 		Optional<Answer> found = answerRepository.findById(id);
 
 		return found.orElseThrow(
-			() -> new RuntimeException("ANSWER_NOT_FOUND")
+			() -> new BusinessLogicException(ANSWER_NOT_FOUND)
 		);
 	}
 }
