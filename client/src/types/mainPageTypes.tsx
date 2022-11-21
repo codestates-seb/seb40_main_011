@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
-export interface Login {
+export interface LoginInputs {
   email: string;
   password: string;
 }
@@ -26,7 +26,15 @@ export interface Review {
   modifedAt: string;
   likes: number;
   profileImg: string;
-  comments?: ReviewComments[] | undefined;
+  comments: ReviewComments[];
+}
+
+export interface SubComments {
+  id: number;
+  nickname: string;
+  createdAt: string;
+  profileImg: string;
+  subComment: string;
 }
 export interface ReviewComments {
   id: number;
@@ -34,6 +42,7 @@ export interface ReviewComments {
   createdAt: string;
   profileImg: string;
   comment: string;
+  subComments: SubComments[];
 }
 
 export interface CommentProps {
@@ -42,4 +51,10 @@ export interface CommentProps {
 
 export interface CategoryProps {
   setCategory: Dispatch<SetStateAction<string>>;
+}
+
+export interface SubCommentProps {
+  setMoreComment: Dispatch<SetStateAction<boolean>>;
+  subComments: SubComments[];
+  moreComment: boolean;
 }

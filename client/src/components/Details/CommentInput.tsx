@@ -9,7 +9,7 @@ export default function CommentInput() {
 
   return (
     <>
-      <div className="w-full bg-white flex justify-center border-t border-gray-200 m-4">
+      <div className="w-full bg-white flex justify-center  m-4">
         <div className="py-10 w-full">
           <TextareaAutosize
             minRows={3}

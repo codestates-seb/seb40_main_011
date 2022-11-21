@@ -6,11 +6,12 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { AiOutlineLike } from 'react-icons/ai';
 import CommentInput from './CommentInput';
 import Comment from './Comment';
+import { isForOfStatement } from 'typescript';
 
 const RvDetail = () => {
   const navigate = useNavigate();
   const params = useParams();
-  const [review, setReview] = useState<Review>();
+  const [review, setReview] = useState<Review | undefined>();
   const [comments, setComments] = useState<ReviewComments[]>();
 
   useEffect(() => {
@@ -65,13 +66,17 @@ const RvDetail = () => {
             </button>
           </div>
         </section>
-        <div className="flex flex-col items-center w-full my-8">
-          <div className="flex justify-start w-full p-4 mb-4 text-2xl font-bold ">
-            Comment
+        {review !== undefined && review?.comments?.length > 0 ? (
+          <div className="flex flex-col items-center w-full my-8">
+            <div className="flex justify-start w-full p-4 mb-4 text-2xl font-bold ">
+              Comment
+            </div>
+            <Comment comments={comments} />
+            <CommentInput />
           </div>
-          <Comment comments={comments} />
+        ) : (
           <CommentInput />
-        </div>
+        )}
       </div>
     </div>
   );
