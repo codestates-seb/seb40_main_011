@@ -3,13 +3,12 @@ import { getProductTest } from '../../util/testApiCollection';
 import { useEffect, useState } from 'react';
 import { Product } from '../../types/mainPageTypes';
 import MainCategory from '../Selectors/MainCategory';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { FaChevronRight } from 'react-icons/fa';
 import { FaChevronLeft } from 'react-icons/fa';
 
 const ProductList = () => {
   const navigate = useNavigate();
-  const params = useParams();
   const [products, setProducts] = useState<Product[]>();
   const [category, setCategory] = useState('all');
   const [totalPage, setTotalPage] = useState(0);
@@ -42,7 +41,7 @@ const ProductList = () => {
 
   //베스트 리뷰 클릭시 해당 리뷰로 가짐
   const onReviewClick = () => {
-    navigate('/categories/review/write');
+    navigate('/review/create');
   };
 
   const onProductClick = (e: React.MouseEvent<HTMLElement>) => {

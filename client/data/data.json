@@ -191,7 +191,16 @@
           "nickname": "준일짱짱V",
           "comment": "이거 생각보다 무게가 무겁습니다. 3대 500 이상 전용 마우스임",
           "createdAt": "2022. 11. 15",
-          "profileImg": "https://images.unsplash.com/photo-1666265972013-d538b0e27388?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80"
+          "profileImg": "https://images.unsplash.com/photo-1666265972013-d538b0e27388?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80",
+          "subComments": [
+            {
+              "id": 13,
+              "nickname": "광민짱짱V",
+              "subComment": "3대 500인데 무거움 700은 쳐야 할 듯",
+              "profileImg": "https://images.unsplash.com/photo-1668260933046-e7a5420c5c99?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2340&q=80",
+              "createdAt": "2022. 11. 17"
+            }
+          ]
         }
       ]
     },
