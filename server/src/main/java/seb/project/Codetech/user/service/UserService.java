@@ -26,7 +26,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserAuthorityUtils authorityUtils;
     private final ApplicationEventPublisher publisher;
-    private static RedisTemplate redisTemplate = new RedisTemplate<>();
+    private final RedisTemplate redisTemplate;
 
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, UserAuthorityUtils authorityUtils,
                        ApplicationEventPublisher publisher, RedisTemplate redisTemplate){
@@ -34,10 +34,10 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
         this.authorityUtils = authorityUtils;
         this.publisher = publisher;
-        UserService.redisTemplate = redisTemplate;
+        this.redisTemplate = redisTemplate;
     }
 
-    public static void logout(HttpServletRequest request) {
+    public void logout(HttpServletRequest request) {
         redisTemplate.opsForValue()
                 .set(request.getHeader("Authorization"),"logout",30 * 60 * 1000L, TimeUnit.MILLISECONDS);
     }
