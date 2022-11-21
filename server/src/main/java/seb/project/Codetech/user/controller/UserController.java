@@ -19,7 +19,6 @@ import seb.project.Codetech.user.service.UserService;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.List;
 
 @RestController
 @Validated
@@ -47,11 +46,12 @@ public class UserController {
     @PatchMapping("/user")
     public ResponseEntity<UserResponseDto> patchUser(@AuthenticationPrincipal String email,
                                                      @RequestPart @Valid UserPatchDto patch,
-                                                     @RequestPart List<MultipartFile> file) throws IOException {
+                                                     @RequestPart MultipartFile file) throws IOException {
         User user = mapper.userPatchDtoToUser(patch);
         User serviceUser = userService.updateUser(email,user);
-        List<FileEntity> fileEntities = fileService.insertFiles(file);
-        fileService.setUploadUser(serviceUser,fileEntities);
+        FileEntity saveFile = fileService.saveFile(file);
+        FileEntity serviceFile = fileService.setUploadUser(serviceUser,saveFile);
+        serviceUser.setImage(serviceFile.getPath());
         return ResponseEntity.ok(mapper.userToUserResponseDto(serviceUser));
     }
 
@@ -74,4 +74,5 @@ public class UserController {
     public void logoutUser(HttpServletRequest request){
         userService.logout(request);
     }
+
 }
