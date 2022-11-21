@@ -53,7 +53,7 @@ public class UserController {
     public void withdrawUser(@AuthenticationPrincipal String email,
                                        @Valid @RequestBody UserWithdrawDto withdraw,
                                        HttpServletRequest request){
-        User user = userService.withdrawUser(email,mapper.userWithdrawDtoToUser(withdraw));
+        userService.withdrawUser(email,mapper.userWithdrawDtoToUser(withdraw));
         userService.logout(request);
     }
 

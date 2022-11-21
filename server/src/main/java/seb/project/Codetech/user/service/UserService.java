@@ -26,10 +26,10 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserAuthorityUtils authorityUtils;
     private final ApplicationEventPublisher publisher;
-    private final RedisTemplate redisTemplate;
+    private final RedisTemplate<String,String> redisTemplate;
 
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, UserAuthorityUtils authorityUtils,
-                       ApplicationEventPublisher publisher, RedisTemplate redisTemplate){
+                       ApplicationEventPublisher publisher, RedisTemplate<String,String> redisTemplate){
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityUtils = authorityUtils;
@@ -92,12 +92,12 @@ public class UserService {
         return findVerifiedUser(id);
     }
 
-    public User withdrawUser( String email, User user) {
+    public void withdrawUser(String email, User user) {
         User findUser = findVerifiedUser(findUserId(email));
 
         if(passwordEncoder.matches(user.getPassword(), findUser.getPassword())){
             findUser.setStatus(true);
-            return userRepository.save(findUser);
+            userRepository.save(findUser);
         }
 
         throw new BusinessLogicException(ExceptionCode.PASSWORD_NOT_MATCH);
