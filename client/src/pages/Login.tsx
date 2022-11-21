@@ -8,12 +8,8 @@ import { AiFillEye } from 'react-icons/ai';
 import { RiKakaoTalkFill } from 'react-icons/ri';
 import { RiLockPasswordLine } from 'react-icons/ri';
 import { postLogin } from '../util/apiCollection';
-export default function Login() {
-  interface inputs {
-    email: string;
-    password: string;
-  }
 
+export default function Login() {
   const navigate = useNavigate();
   const [passwordType, setPasswordType] = useState('password');
   const [inputs, setInputs] = useState({
@@ -69,9 +65,9 @@ export default function Login() {
     return;
   };
 
-  const onLoginClick = (e: any) => {
+  const onLoginClick = async (e: React.MouseEvent<HTMLFormElement>) => {
     e.preventDefault();
-    postLogin(inputs).then((el) => console.log(el));
+    await postLogin(inputs).then((el) => console.log(el));
   };
 
   return (
@@ -146,7 +142,7 @@ export default function Login() {
               )}
             </div>
             <button
-              onClick={onLoginClick}
+              onClick={() => onLoginClick}
               type="submit"
               className="w-full bg-blue-600 h-16 rounded-md text-xl font-bold pb-1 text-white hover:bg-blue-500"
             >

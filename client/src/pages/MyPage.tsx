@@ -5,6 +5,10 @@ import MypageTab from '../components/MyPage/MypageTab';
 import Profile from '../components/MyPage/Profile';
 import OptOut from '../components/Modal/OptOut';
 
+export interface OptOutModalHandler {
+  openOptOutModalHandler: React.MouseEventHandler<HTMLButtonElement>;
+}
+
 const MyPage = (): JSX.Element => {
   const [isOptOut, setIsOptOut] = useState(false);
   const openOptOutModalHandler = (event: React.MouseEvent<HTMLElement>) => {
@@ -13,7 +17,9 @@ const MyPage = (): JSX.Element => {
 
   return (
     <div className="flex flex-col ">
-      {isOptOut === false ? null : <OptOut />}
+      {isOptOut === false ? null : (
+        <OptOut openOptOutModalHandler={openOptOutModalHandler} />
+      )}
       <Profile />
       <MypageTab />
       <div className="flex justify-center">

@@ -19,6 +19,16 @@ export interface EditProfileImg {
   setIsEditProfileImg: React.Dispatch<SetStateAction<boolean>>;
 }
 
+export interface EditProfileImgModalHandler {
+  openEditProfileImgModalHandler: React.MouseEventHandler<HTMLButtonElement>;
+}
+export interface EditProfileModalHandler {
+  openEditProfileModalHandler: React.MouseEventHandler<HTMLButtonElement>;
+}
+export interface EditPasswordModalHandler {
+  openEditPasswordModalHandler: React.MouseEventHandler<HTMLButtonElement>;
+}
+
 const Profile = () => {
   const [userProfileData, setUserProfileData] = useState<UserProfile>();
 
@@ -40,7 +50,7 @@ const Profile = () => {
 
   const [isEditProfile, setIsEditProfile] = useState(false);
   const openEditProfileModalHandler = (
-    event: React.MouseEvent<HTMLElement>
+    event: React.MouseEvent<HTMLElement, MouseEvent>
   ) => {
     setIsEditProfile(!isEditProfile);
   };
@@ -56,12 +66,22 @@ const Profile = () => {
     <div>
       {isEditProfileImg === false ? null : (
         <EditProfileImg
-          isEditProfileImg={isEditProfileImg}
-          setIsEditProfileImg={setIsEditProfileImg}
+          openEditProfileImgModalHandler={openEditProfileImgModalHandler}
+
+          // isEditProfileImg={isEditProfileImg}
+          // setIsEditProfileImg={setIsEditProfileImg}
         />
       )}
-      {isEditProfile === false ? null : <EditProfile />}
-      {isEditPassword === false ? null : <EditPassword />}
+      {isEditProfile === false ? null : (
+        <EditProfile
+          openEditProfileModalHandler={openEditProfileModalHandler}
+        />
+      )}
+      {isEditPassword === false ? null : (
+        <EditPassword
+          openEditPasswordModalHandler={openEditPasswordModalHandler}
+        />
+      )}
 
       <div className="flex items-center justify-center bg-slate-100">
         <div className="mx-10">

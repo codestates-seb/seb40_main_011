@@ -1,5 +1,5 @@
 import { InstanceV1 } from './axiosInstance';
-import { Login } from '../types/mainPageTypes';
+import { LoginInputs } from '../types/mainPageTypes';
 
 const getReview = async () =>
   await InstanceV1.get('/api/review')
@@ -26,7 +26,7 @@ const getReviewDetail = async (params: string | undefined) =>
     .then((data) => data)
     .catch((err) => err.response);
 
-const postLogin = async (data: Login) =>
+const postLogin = async (data: LoginInputs) =>
   await InstanceV1.post('/api/login', data)
     .then((data) => data)
     .catch((err) => err.response);
