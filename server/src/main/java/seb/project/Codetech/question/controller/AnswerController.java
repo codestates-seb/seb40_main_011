@@ -1,5 +1,6 @@
 package seb.project.Codetech.question.controller;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 
 import org.springframework.http.HttpStatus;
@@ -39,14 +40,15 @@ public class AnswerController {
 	}
 
 	@PatchMapping("/{id}")
-	public ResponseEntity<Long> patchAnswer(@Positive @PathVariable Long id, @RequestBody String content) {
-		Long updatedId = answerService.updatedAnswer(id, content);
+	public ResponseEntity<Long> patchAnswer(
+		@Positive @PathVariable Long id, @Valid @RequestBody AnswerRequestDto.Patch request) {
+		Long updatedId = answerService.updatedAnswer(id, request.getContent());
 
 		return ResponseEntity.ok().body(updatedId);
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity deletedAnswer(@Positive @PathVariable Long id) {
+	public ResponseEntity<?> deletedAnswer(@Positive @PathVariable Long id) {
 		answerService.deletedAnswer(id);
 
 		return ResponseEntity.noContent().build();

@@ -42,4 +42,11 @@ public class QuestionResponseDto {
 		private LocalDateTime createdAt;
 		private LocalDateTime modifiedAt;
 	}
+
+	@Getter
+	@AllArgsConstructor
+	public static class Adopt {
+		private Long id;
+		private Long adoptedId;
+	}
 }

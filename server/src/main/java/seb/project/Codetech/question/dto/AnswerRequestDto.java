@@ -1,6 +1,6 @@
 package seb.project.Codetech.question.dto;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Positive;
 
 import lombok.Getter;
@@ -12,7 +12,14 @@ public class AnswerRequestDto {
 	public static class Post {
 		@Positive
 		private Long questionId;
-		@NotBlank
+		@NotEmpty
+		private String content;
+	}
+
+	@Getter
+	@NoArgsConstructor
+	public static class Patch {
+		@NotEmpty
 		private String content;
 	}
 }

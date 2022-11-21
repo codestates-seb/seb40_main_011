@@ -86,7 +86,7 @@ public class Question extends BaseTime {
 
 	public void checkAdoptable() {
 		if (this.adoptedId != null) {
-			throw new BusinessLogicException(ADOPTED_ANSWER_EXIST);
+			throw new BusinessLogicException(THIS_QUESTION_ADOPTED_ANSWER_ALREADY_EXIST);
 		}
 	}
 }
