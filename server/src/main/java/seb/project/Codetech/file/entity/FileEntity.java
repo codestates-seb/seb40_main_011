@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -45,8 +44,18 @@ public class FileEntity extends BaseTime { // 파일은 업로드 이후 변경�
 	@Column(nullable = false)
 	private String path;
 
-	@OneToOne(mappedBy = "file")
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@JsonIdentityReference(alwaysAsId = true)
 	private User user;
+
+	public void setUser(User user) {
+		if(this.user != null)
+			this.user.getFileEntities().remove(this);
+		this.user = user;
+		this.user.getFileEntities().add(this);
+	}
 
 	@OneToMany(mappedBy = "file")
 	private List<Review> reviews = new ArrayList<>();

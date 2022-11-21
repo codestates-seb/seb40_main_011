@@ -3,16 +3,7 @@ package seb.project.Codetech.user.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -45,9 +36,6 @@ public class User extends BaseTime {
 
 	@Column(nullable = false)
 	private String nickname;
-
-	@Column
-	private String image;
 
 	@Column(nullable = false)
 	private Long point = 0L;
@@ -89,7 +77,6 @@ public User(String nickname, String email, String password) {
 	@OneToMany(mappedBy = "user")
 	private List<DiscountComment> discountComments = new ArrayList<>();
 
-	@OneToOne
-	@JoinColumn(name = "file_id")
-	private FileEntity file;
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<FileEntity> fileEntities = new ArrayList<>();
 }
