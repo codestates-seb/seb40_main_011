@@ -74,4 +74,5 @@ public class UserController {
     public void logoutUser(HttpServletRequest request){
         userService.logout(request);
     }
+
 }
