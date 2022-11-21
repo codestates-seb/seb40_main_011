@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
+import seb.project.Codetech.question.dto.QuestionRequestDto;
+import seb.project.Codetech.question.dto.QuestionResponseDto;
 import seb.project.Codetech.question.service.QuestionService;
 
 @RestController
@@ -24,6 +28,13 @@ import seb.project.Codetech.question.service.QuestionService;
 @Validated
 public class QuestionController {
 	private final QuestionService questionService;
+
+	@GetMapping
+	public ResponseEntity<QuestionResponseDto.Slice> getQuestions(@ModelAttribute QuestionRequestDto.Get params) {
+		QuestionResponseDto.Slice slice = questionService.readQuestion(params);
+
+		return ResponseEntity.ok().body(slice);
+	}
 
 	@PostMapping
 	public ResponseEntity<Long> postQuestion(
@@ -41,7 +52,7 @@ public class QuestionController {
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity deleteMapping(@Positive @PathVariable Long id) {
+	public ResponseEntity<?> deleteQuestion(@Positive @PathVariable Long id) {
 		questionService.deleteQuestion(id);
 
 		return ResponseEntity.noContent().build();
@@ -49,6 +60,8 @@ public class QuestionController {
 
 	@PostMapping("/{id}/adopt")
 	public ResponseEntity<Long> adoptAnswer(@Positive @PathVariable Long id, @Positive @RequestBody Long answerId) {
-		return ResponseEntity.ok().build();
+		Long pickId = questionService.adoptAnswer(id, answerId);
+
+		return ResponseEntity.ok().body(pickId);
 	}
 }

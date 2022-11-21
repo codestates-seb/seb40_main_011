@@ -16,8 +16,8 @@ import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
+import seb.project.Codetech.snackreview.dto.SnackReviewRequestDto;
 import seb.project.Codetech.snackreview.dto.SnackReviewResponseDto;
-import seb.project.Codetech.snackreview.dto.SnackReviewServiceDto;
 
 @Repository
 @Transactional(readOnly = true)
@@ -30,23 +30,23 @@ public class CustomSnackReviewRepositoryImpl implements CustomSnackReviewReposit
 	}
 
 	@Override
-	public List<SnackReviewResponseDto.Card> searchSortedCardsByProductId(SnackReviewServiceDto.Search cond) {
+	public List<SnackReviewResponseDto.Card> searchSortedCardsByProductId(SnackReviewRequestDto.Get params) {
 
 		return queryFactory
-			.select(Projections.fields(
-				SnackReviewResponseDto.Card.class,
+			.select(Projections.fields(SnackReviewResponseDto.Card.class,
 				snackReview.id,
 				snackReview.score,
 				snackReview.content,
+				snackReview.createdAt,
 				user.nickname,
 				user.image)
 			)
 			.from(snackReview)
 			.leftJoin(snackReview.writer, user)
-			.where(snackReview.product.id.eq(cond.getProductId()))
-			.orderBy(buildOrderSpecifiers(cond.isSortByGrade(), cond.isAsc()))
-			.offset(cond.getOffset())
-			.limit(cond.getLimit() + 1)
+			.where(snackReview.product.id.eq(params.getProductId()))
+			.orderBy(buildOrderSpecifiers(params.isSortByGrade(), params.isAsc()))
+			.offset(params.getOffset())
+			.limit(params.getLimit() + 1)
 			.fetch();
 	}
 
@@ -54,8 +54,7 @@ public class CustomSnackReviewRepositoryImpl implements CustomSnackReviewReposit
 	public SnackReviewResponseDto.Info searchInfoGroupByProductId(Long productId) {
 
 		return queryFactory
-			.select(Projections.fields(
-				SnackReviewResponseDto.Info.class,
+			.select(Projections.fields(SnackReviewResponseDto.Info.class,
 				snackReview.count().as("total"),
 				snackReview.score.costEfficiency.avg().as("avgCe"),
 				snackReview.score.design.avg().as("avgDsn"),
@@ -85,5 +84,14 @@ public class CustomSnackReviewRepositoryImpl implements CustomSnackReviewReposit
 		orderSpecifiers.addFirst(snackReview.grade.desc());
 
 		return orderSpecifiers.toArray(new OrderSpecifier[0]);
+	}
+
+	public boolean hasNext(List<SnackReviewResponseDto.Card> cards, int limit) {
+		if (cards.size() > limit) {
+			cards.remove(limit);
+			return true;
+		}
+
+		return false;
 	}
 }

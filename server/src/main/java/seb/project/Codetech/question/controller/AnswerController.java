@@ -45,7 +45,7 @@ public class AnswerController {
 		return ResponseEntity.ok().body(updatedId);
 	}
 
-	@DeleteMapping("{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity deletedAnswer(@Positive @PathVariable Long id) {
 		answerService.deletedAnswer(id);
 

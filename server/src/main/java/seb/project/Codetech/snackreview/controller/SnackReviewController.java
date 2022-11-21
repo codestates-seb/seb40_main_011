@@ -70,7 +70,7 @@ public class SnackReviewController {
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity deleteSnackReview(@Positive @PathVariable Long id) {
+	public ResponseEntity<?> deleteSnackReview(@Positive @PathVariable Long id) {
 		snackReviewService.deleteSnackReview(id);
 
 		return ResponseEntity.noContent().build();

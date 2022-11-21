@@ -2,11 +2,13 @@ package seb.project.Codetech.snackreview.repository;
 
 import java.util.List;
 
+import seb.project.Codetech.snackreview.dto.SnackReviewRequestDto;
 import seb.project.Codetech.snackreview.dto.SnackReviewResponseDto;
-import seb.project.Codetech.snackreview.dto.SnackReviewServiceDto;
 
 public interface CustomSnackReviewRepository {
-	List<SnackReviewResponseDto.Card> searchSortedCardsByProductId(SnackReviewServiceDto.Search cond);
+	List<SnackReviewResponseDto.Card> searchSortedCardsByProductId(SnackReviewRequestDto.Get cond);
 
 	SnackReviewResponseDto.Info searchInfoGroupByProductId(Long productId);
+
+	boolean hasNext(List<SnackReviewResponseDto.Card> cards, int limit);
 }
