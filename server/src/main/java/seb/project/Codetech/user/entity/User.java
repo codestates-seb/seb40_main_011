@@ -37,6 +37,9 @@ public class User extends BaseTime {
 	@Column(nullable = false)
 	private String nickname;
 
+	@Column
+	private String image;
+
 	@Column(nullable = false)
 	private Long point = 0L;
 
@@ -77,6 +80,11 @@ public User(String nickname, String email, String password) {
 	@OneToMany(mappedBy = "user")
 	private List<DiscountComment> discountComments = new ArrayList<>();
 
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<FileEntity> fileEntities = new ArrayList<>();
+	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private FileEntity file;
+
+	public void setFile(FileEntity file){
+		this.file = file;
+		file.setUser(this);
+	}
 }

@@ -110,10 +110,8 @@ public class FileService {
 		return fileType.startsWith("image");
 	}
 
-	public void setUploadUser(User user, List<FileEntity> fileEntities) {
-		for (FileEntity file : fileEntities){
+	public FileEntity setUploadUser(User user, FileEntity file) {
 			file.setUser(user);
-			fileRepository.save(file);
-		}
+			return fileRepository.save(file);
 	}
 }

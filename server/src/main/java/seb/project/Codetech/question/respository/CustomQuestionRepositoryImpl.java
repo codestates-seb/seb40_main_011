@@ -37,6 +37,7 @@ public class CustomQuestionRepositoryImpl implements CustomQuestionRepository {
 				question.id,
 				question.content,
 				user.nickname,
+				user.image,
 				question.adoptedId,
 				question.deleted,
 				question.createdAt,
@@ -59,6 +60,7 @@ public class CustomQuestionRepositoryImpl implements CustomQuestionRepository {
 				answer.question.id.as("questionId"),
 				answer.content,
 				user.nickname,
+				user.image,
 				answer.createdAt,
 				answer.modifiedAt
 			))
