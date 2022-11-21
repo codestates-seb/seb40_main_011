@@ -6,7 +6,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { AiOutlineLike } from 'react-icons/ai';
 import CommentInput from './CommentInput';
 import Comment from './Comment';
-import { isForOfStatement } from 'typescript';
 
 const RvDetail = () => {
   const navigate = useNavigate();

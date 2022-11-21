@@ -1,20 +1,31 @@
 import { SubCommentProps } from '../../types/mainPageTypes';
 import { SubComments } from '../../types/mainPageTypes';
+import EditComment from './EditComment';
+import { useState } from 'react';
 
 const SubComment = ({
   subComments,
   setMoreComment,
   moreComment,
+  isEditSub,
+  setIsEditSub,
 }: SubCommentProps) => {
-  console.log(subComments);
-
-  const onEditClick = (e: any) => {
-    console.log(subComments);
+  const [editedComment, setEditedComment] = useState('');
+  const onEnterPress = () => {
+    setIsEditSub(!isEditSub);
+    if (isEditSub === true && editedComment !== undefined) {
+      console.log(editedComment);
+      //여기에 댓글 api POST 메서드 관련 함수
+    }
   };
 
   const onSubCommentHide = () => {
     setMoreComment(!moreComment);
     console.log(moreComment);
+  };
+
+  const onCommentEdit = (e: { target: HTMLInputElement }) => {
+    setEditedComment(e.target.value);
   };
 
   return (
@@ -35,31 +46,36 @@ const SubComment = ({
                 </span>
               </span>
               <div>
-                <button
-                  onClick={onEditClick}
-                  className="text-xs border border-gray-200 font-medium px-3 bg-white rounded-full mx-0.5 py-0.5 text-gray-400 hover:text-gray-500 hover:font-bold hover:bg-gray-200"
-                >
-                  수정
-                </button>
-                <button className="text-xs border border-gray-200 font-medium px-3 bg-white rounded-full mx-0.5 py-0.5 text-gray-400 hover:text-gray-500 hover:font-bold hover:bg-gray-200">
-                  삭제
-                </button>
+                <EditComment
+                  isEditMode={isEditSub}
+                  setIsEditMode={setIsEditSub}
+                  editedComment={editedComment}
+                />
               </div>
             </div>
-            <div className="ring-1 ring-gray-200 rounded-xl overflow-hidden bg-white">
-              <div className="px-6 pt-3 pb-4 border-b border-gray-200">
-                {el.subComment}
+            {isEditSub ? (
+              <input
+                autoFocus
+                defaultValue={el.subComment}
+                className="w-full px-6 pt-3 pb-4 rounded-xl border-b border-gray-200"
+                onChange={onCommentEdit}
+                onKeyUp={(comment) =>
+                  comment.key === 'Enter' ? onEnterPress() : null
+                }
+              ></input>
+            ) : (
+              <div className="ring-1 ring-gray-200 rounded-xl overflow-hidden bg-white">
+                <div className="px-6 pt-3 pb-4 border-b border-gray-200">
+                  {el.subComment}
+                </div>
               </div>
-              <form
-                action=""
-                className="flex flex-row items-center hover:bg-slate-50 peer-invalid:bg-slate-50 "
-              ></form>
-            </div>
+            )}
+
             <button
               onClick={onSubCommentHide}
               className="mt-1.5 text-gray-400 font-medium text-sm px-2 pb-0.5 rounded hover:bg-slate-200 hover:text-gray-500 group"
             >
-              <div className="font-bold text-gray-500 pr-0.5 text-base group-hover:text-gray-800">
+              <div className="pr-0.5 text-base group-hover:text-gray-800">
                 접기
               </div>
             </button>

@@ -57,4 +57,12 @@ export interface SubCommentProps {
   setMoreComment: Dispatch<SetStateAction<boolean>>;
   subComments: SubComments[];
   moreComment: boolean;
+  isEditSub: boolean;
+  setIsEditSub: Dispatch<SetStateAction<boolean>>;
+}
+
+export interface EditModeProps {
+  isEditMode: boolean;
+  setIsEditMode: Dispatch<SetStateAction<boolean>>;
+  editedComment: string | undefined;
 }

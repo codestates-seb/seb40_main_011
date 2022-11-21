@@ -8,7 +8,6 @@ import { AiFillEye } from 'react-icons/ai';
 import { RiKakaoTalkFill } from 'react-icons/ri';
 import { RiLockPasswordLine } from 'react-icons/ri';
 import { postLogin } from '../util/apiCollection';
-import { LoginInputs } from '../types/mainPageTypes';
 
 export default function Login() {
   const navigate = useNavigate();

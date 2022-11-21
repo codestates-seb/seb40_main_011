@@ -3,6 +3,7 @@ import { FiSend } from 'react-icons/fi';
 import TextareaAutosize from 'react-textarea-autosize';
 import { useState } from 'react';
 import SubComment from './SubComment';
+import EditComment from './EditComment';
 
 export interface count {
   count: number;
@@ -10,13 +11,25 @@ export interface count {
 
 export default function Comment({ comments }: CommentProps) {
   const [moreComment, setMoreComment] = useState(false);
-  const onEditClick = (e: any) => {
-    console.log(e.currentTarget);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [editedComment, setEditedComment] = useState('');
+  const [isEditSub, setIsEditSub] = useState(false);
+
+  const onEnterPress = () => {
+    setIsEditMode(!isEditMode);
+    if (isEditMode === true && editedComment !== undefined) {
+      console.log(editedComment);
+      //여기에 댓글 api POST 메서드 관련 함수
+    }
   };
 
   const onMoreCommentClicked = () => {
     setMoreComment(!moreComment);
     console.log(moreComment);
+  };
+
+  const onCommentEdit = (e: { target: HTMLInputElement }) => {
+    setEditedComment(e.target.value);
   };
 
   return (
@@ -37,36 +50,60 @@ export default function Comment({ comments }: CommentProps) {
                 </span>
               </span>
               <div>
-                <button
-                  onClick={onEditClick}
-                  className="text-xs border border-gray-200 font-medium px-3 bg-white rounded-full mx-0.5 py-0.5 text-gray-400 hover:text-gray-500 hover:font-bold hover:bg-gray-200"
-                >
-                  수정
-                </button>
-                <button className="text-xs border border-gray-200 font-medium px-3 bg-white rounded-full mx-0.5 py-0.5 text-gray-400 hover:text-gray-500 hover:font-bold hover:bg-gray-200">
-                  삭제
-                </button>
-              </div>
-            </div>
-            <div className="ring-1 ring-gray-200 rounded-xl overflow-hidden bg-white">
-              <div className="px-6 pt-3 pb-4 border-b border-gray-200">
-                {el.comment}
-              </div>
-              <form
-                action=""
-                className="flex flex-row items-center hover:bg-slate-50 peer-invalid:bg-slate-50 "
-              >
-                <TextareaAutosize
-                  placeholder="댓글 달기..."
-                  className="peer w-full resize-none pl-6 mt-2 mb-3 outline-none font-medium bg-transparent"
+                <EditComment
+                  isEditMode={isEditMode}
+                  setIsEditMode={setIsEditMode}
+                  editedComment={editedComment}
                 />
-                <button className="w-12 flex-none flex justify-center items-center">
-                  <FiSend className="text-3xl text-gray-400 hover:text-blue-500 mr-2 hover:text-blue-500  hover:bg-blue-100 p-1 rounded-lg w-10 h-8 pr-1.5" />
-                </button>
-              </form>
+              </div>
             </div>
+            {isEditMode ? (
+              <div className="ring-1 ring-gray-200 rounded-xl overflow-hidden bg-white">
+                <input
+                  autoFocus
+                  defaultValue={el.comment}
+                  className="w-full px-6 pt-3 pb-4 rounded-t-xl border-b border-gray-200"
+                  onChange={onCommentEdit}
+                  onKeyUp={(comment) =>
+                    comment.key === 'Enter' ? onEnterPress() : null
+                  }
+                ></input>
+                <form
+                  action=""
+                  className="flex flex-row items-center hover:bg-slate-50 peer-invalid:bg-slate-50 "
+                >
+                  <TextareaAutosize
+                    placeholder="댓글 달기..."
+                    className="peer w-full resize-none pl-6 mt-2 mb-3 outline-none font-medium bg-transparent"
+                  />
+                  <button className="w-12 flex-none flex justify-center items-center">
+                    <FiSend className="text-3xl text-gray-400 hover:text-blue-500 mr-2 hover:text-blue-500  hover:bg-blue-100 p-1 rounded-lg w-10 h-8 pr-1.5" />
+                  </button>
+                </form>
+              </div>
+            ) : (
+              <div className="ring-1 ring-gray-200 rounded-xl overflow-hidden bg-white">
+                <div className="px-6 pt-3 pb-4 border-b border-gray-200">
+                  {el.comment}
+                </div>
+                <form
+                  action=""
+                  className="flex flex-row items-center hover:bg-slate-50 peer-invalid:bg-slate-50 "
+                >
+                  <TextareaAutosize
+                    placeholder="댓글 달기..."
+                    className="peer w-full resize-none pl-6 mt-2 mb-3 outline-none font-medium bg-transparent"
+                  />
+                  <button className="w-12 flex-none flex justify-center items-center">
+                    <FiSend className="text-3xl text-gray-400 hover:text-blue-500 mr-2 hover:text-blue-500  hover:bg-blue-100 p-1 rounded-lg w-10 h-8 pr-1.5" />
+                  </button>
+                </form>
+              </div>
+            )}
             {moreComment && el.comment.length > 0 ? (
               <SubComment
+                isEditSub={isEditSub}
+                setIsEditSub={setIsEditSub}
                 moreComment={moreComment}
                 subComments={el.subComments}
                 setMoreComment={setMoreComment}

@@ -7,6 +7,11 @@ export default function CommentInput() {
     setQuestion(e.target.value);
   };
 
+  const onCommentClick = () => {
+    //api 문서 준비되면 여기에 POST 요청
+    console.log(question);
+  };
+
   return (
     <>
       <div className="w-full bg-white flex justify-center  m-4">
@@ -25,7 +30,10 @@ export default function CommentInput() {
             <span className="text-gray-400 text-sm">
               현재 글자수 {question.length} / 최대 글자수 100자
             </span>
-            <button className="font-medium text-white pb-0.5 px-5 h-10 rounded-full bg-blue-500 hover:bg-blue-400">
+            <button
+              onClick={onCommentClick}
+              className="font-medium text-white pb-0.5 px-5 h-10 rounded-full bg-blue-500 hover:bg-blue-400"
+            >
               댓글달기
             </button>
           </div>
