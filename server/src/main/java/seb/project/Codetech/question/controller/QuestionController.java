@@ -1,6 +1,6 @@
 package seb.project.Codetech.question.controller;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 
 import org.springframework.http.HttpStatus;
@@ -38,15 +38,16 @@ public class QuestionController {
 
 	@PostMapping
 	public ResponseEntity<Long> postQuestion(
-		@AuthenticationPrincipal String loginEmail, @NotEmpty @RequestBody String content) {
-		Long createdId = questionService.createQuestion(loginEmail, content);
+		@AuthenticationPrincipal String loginEmail, @Valid @RequestBody QuestionRequestDto.Post request) {
+		Long createdId = questionService.createQuestion(loginEmail, request.getContent());
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(createdId);
 	}
 
 	@PatchMapping("/{id}")
-	public ResponseEntity<Long> patchQuestion(@Positive @PathVariable Long id, @NotEmpty @RequestBody String content) {
-		Long updatedId = questionService.updateQuestion(id, content);
+	public ResponseEntity<Long> patchQuestion(
+		@Positive @PathVariable Long id, @Valid @RequestBody QuestionRequestDto.Patch request) {
+		Long updatedId = questionService.updateQuestion(id, request.getContent());
 
 		return ResponseEntity.ok().body(updatedId);
 	}
@@ -59,9 +60,11 @@ public class QuestionController {
 	}
 
 	@PostMapping("/{id}/adopt")
-	public ResponseEntity<Long> adoptAnswer(@Positive @PathVariable Long id, @Positive @RequestBody Long answerId) {
-		Long pickId = questionService.adoptAnswer(id, answerId);
+	public ResponseEntity<QuestionResponseDto.Adopt> adoptAnswer(@Positive @PathVariable Long id,
+		@Valid @RequestBody QuestionRequestDto.Adopt request) {
+		Long adoptedId = questionService.adoptAnswer(id, request.getAnswerId());
+		QuestionResponseDto.Adopt response = new QuestionResponseDto.Adopt(id, adoptedId);
 
-		return ResponseEntity.ok().body(pickId);
+		return ResponseEntity.ok().body(response);
 	}
 }
