@@ -31,7 +31,7 @@ public class Question extends BaseTime {
 	private Long id;
 
 	@Column
-	private Long pickId;
+	private Long adoptedId;
 
 	@Column(nullable = false, columnDefinition = "MEDIUMTEXT")
 	private String content;
@@ -66,7 +66,7 @@ public class Question extends BaseTime {
 	}
 
 	public void adopt(Long answerId) {
-		this.pickId = answerId;
+		this.adoptedId = answerId;
 	}
 
 	public void updateToDeleted() {
@@ -81,11 +81,11 @@ public class Question extends BaseTime {
 	}
 
 	public boolean isDeletable() {
-		return this.pickId == null;
+		return this.adoptedId == null;
 	}
 
 	public void checkAdoptable() {
-		if (this.pickId != null) {
+		if (this.adoptedId != null) {
 			throw new BusinessLogicException(ADOPTED_ANSWER_EXIST);
 		}
 	}

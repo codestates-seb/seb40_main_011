@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.querydsl.core.annotations.QueryInit;
+
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,6 +30,7 @@ public class Answer extends BaseTime {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "question_id")
+	@QueryInit("id")
 	private Question question;
 
 	@ManyToOne(fetch = FetchType.LAZY)
