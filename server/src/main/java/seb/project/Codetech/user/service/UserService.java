@@ -67,7 +67,6 @@ public class UserService {
         User findUser = findVerifiedUser(findUserId(email));
 
         Optional.ofNullable(user.getNickname()).ifPresent(findUser::setNickname);
-        Optional.ofNullable(user.getImage()).ifPresent(findUser::setImage);
 
         if(user.getPassword()!=null){
             findUser.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -92,14 +91,16 @@ public class UserService {
         return findVerifiedUser(id);
     }
 
-    public void withdrawUser(String email, User user) {
+    public void withdrawUser(String email, String password) {
         User findUser = findVerifiedUser(findUserId(email));
-
-        if(passwordEncoder.matches(user.getPassword(), findUser.getPassword())){
-            findUser.setStatus(true);
-            userRepository.save(findUser);
+        log.info(password);
+        log.info(findUser.getPassword());
+        if(!passwordEncoder.matches(password, findUser.getPassword())){
+            throw new BusinessLogicException(ExceptionCode.PASSWORD_NOT_MATCH);
         }
+        findUser.setStatus(true);
+        userRepository.save(findUser);
 
-        throw new BusinessLogicException(ExceptionCode.PASSWORD_NOT_MATCH);
+
     }
 }

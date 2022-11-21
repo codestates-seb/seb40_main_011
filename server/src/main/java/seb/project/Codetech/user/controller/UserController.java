@@ -3,18 +3,23 @@ package seb.project.Codetech.user.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import seb.project.Codetech.file.entity.FileEntity;
+import seb.project.Codetech.file.service.FileService;
 import seb.project.Codetech.user.dto.UserPatchDto;
 import seb.project.Codetech.user.dto.UserPostDto;
 import seb.project.Codetech.user.dto.UserResponseDto;
-import seb.project.Codetech.user.dto.UserWithdrawDto;
 import seb.project.Codetech.user.entity.User;
 import seb.project.Codetech.user.mapper.UserMapper;
 import seb.project.Codetech.user.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.IOException;
+import java.util.List;
 
 @RestController
 @Validated
@@ -23,10 +28,12 @@ import javax.validation.Valid;
 public class UserController {
     private final UserService userService;
     private final UserMapper mapper;
+    private final FileService fileService;
 
-    public UserController(UserService userService, UserMapper mapper){
+    public UserController(UserService userService, UserMapper mapper, FileService fileService){
         this.userService = userService;
         this.mapper = mapper;
+        this.fileService = fileService;
     }
 
     @PostMapping("/register")
@@ -36,13 +43,19 @@ public class UserController {
         return ResponseEntity.ok(registerUser);
     }
 
+    @Transactional
     @PatchMapping("/user")
     public ResponseEntity<UserResponseDto> patchUser(@AuthenticationPrincipal String email,
-                                                     @Valid @RequestBody UserPatchDto patch){
-        User user = userService.updateUser(email,mapper.userPatchDtoToUser(patch));
-        return ResponseEntity.ok(mapper.userToUserResponseDto(user));
+                                                     @RequestPart @Valid UserPatchDto patch,
+                                                     @RequestPart List<MultipartFile> file) throws IOException {
+        User user = mapper.userPatchDtoToUser(patch);
+        User serviceUser = userService.updateUser(email,user);
+        List<FileEntity> fileEntities = fileService.insertFiles(file);
+        fileService.setUploadUser(serviceUser,fileEntities);
+        return ResponseEntity.ok(mapper.userToUserResponseDto(serviceUser));
     }
 
+    @Transactional
     @GetMapping("/user")
     public ResponseEntity<UserResponseDto> getUser(@AuthenticationPrincipal String email){
         User user = userService.findUser(email);
@@ -51,9 +64,9 @@ public class UserController {
 
     @GetMapping("/withdraw")
     public void withdrawUser(@AuthenticationPrincipal String email,
-                                       @Valid @RequestBody UserWithdrawDto withdraw,
+                                       @Valid @RequestParam("password") String password,
                                        HttpServletRequest request){
-        userService.withdrawUser(email,mapper.userWithdrawDtoToUser(withdraw));
+        userService.withdrawUser(email,password);
         userService.logout(request);
     }
 
