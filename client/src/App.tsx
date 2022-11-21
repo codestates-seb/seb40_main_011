@@ -4,7 +4,7 @@ import Main from './pages/Main';
 import MyPage from './pages/MyPage';
 import SignUpPage from './pages/SignUpPage';
 import WriteReview from './pages/WriteReview';
-import ReviewDetail from './pages/ReviewLists';
+import ReviewLists from './pages/ReviewLists';
 import Login from './pages/Login';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
@@ -20,9 +20,9 @@ function App() {
           {/* <Route path="/" element={<Login />} /> */}
           <Route path="/" element={<Main />} />
           <Route path="/mypage/*" element={<MyPage />} />
-          <Route path="/register" element={<SignUpPage />} />
-          <Route path="/categories/review/:id" element={<ReviewDetail />} />
-          <Route path="/review/create" element={<WriteReview />} />
+          <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/categories/review" element={<ReviewLists />} />
+          <Route path="/categories/review/write" element={<WriteReview />} />
           <Route path="/login" element={<Login />} />
           <Route path="/question-lists" element={<QuestionLists />} />
           <Route path="/review/:id" element={<RvDetail />} />

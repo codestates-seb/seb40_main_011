@@ -3,8 +3,8 @@ package seb.project.Codetech.snackreview.repository;
 import static seb.project.Codetech.snackreview.entity.QSnackReview.*;
 import static seb.project.Codetech.user.entity.QUser.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -16,8 +16,8 @@ import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
+import seb.project.Codetech.snackreview.dto.SnackReviewRequestDto;
 import seb.project.Codetech.snackreview.dto.SnackReviewResponseDto;
-import seb.project.Codetech.snackreview.dto.SnackReviewServiceDto;
 
 @Repository
 @Transactional(readOnly = true)
@@ -30,37 +30,31 @@ public class CustomSnackReviewRepositoryImpl implements CustomSnackReviewReposit
 	}
 
 	@Override
-	public SnackReviewResponseDto.Slice searchSortedSliceByProductId(SnackReviewServiceDto.Search cond) {
-		List<SnackReviewResponseDto.Card> cards = queryFactory
-			.select(Projections.fields(
-				SnackReviewResponseDto.Card.class,
+	public List<SnackReviewResponseDto.Card> searchSortedCardsByProductId(SnackReviewRequestDto.Get params) {
+
+		return queryFactory
+			.select(Projections.fields(SnackReviewResponseDto.Card.class,
 				snackReview.id,
 				snackReview.score,
 				snackReview.content,
+				snackReview.createdAt,
 				user.nickname,
 				user.image)
 			)
 			.from(snackReview)
-			.leftJoin(snackReview.user, user)
-			.where(snackReview.product.id.eq(cond.getProductId()))
-			.orderBy(buildOrderSpecifiers(cond.isSortByGrade(), cond.isAsc()))
-			.offset(cond.getOffset())
-			.limit(cond.getLimit() + 1)
+			.leftJoin(snackReview.writer, user)
+			.where(snackReview.product.id.eq(params.getProductId()))
+			.orderBy(buildOrderSpecifiers(params.isSortByGrade(), params.isAsc()))
+			.offset(params.getOffset())
+			.limit(params.getLimit() + 1)
 			.fetch();
-
-		SnackReviewResponseDto.Slice slice = new SnackReviewResponseDto.Slice();
-		slice.setHasNext(hasNext(cards, cond.getLimit()));
-		slice.setCards(cards);
-
-		return slice;
 	}
 
 	@Override
 	public SnackReviewResponseDto.Info searchInfoGroupByProductId(Long productId) {
 
 		return queryFactory
-			.select(Projections.fields(
-				SnackReviewResponseDto.Info.class,
+			.select(Projections.fields(SnackReviewResponseDto.Info.class,
 				snackReview.count().as("total"),
 				snackReview.score.costEfficiency.avg().as("avgCe"),
 				snackReview.score.design.avg().as("avgDsn"),
@@ -73,17 +67,8 @@ public class CustomSnackReviewRepositoryImpl implements CustomSnackReviewReposit
 			.fetchFirst();
 	}
 
-	private boolean hasNext(List<SnackReviewResponseDto.Card> cards, int limit) {
-		if (cards.size() > limit) {
-			cards.remove(limit);
-			return true;
-		}
-
-		return false;
-	}
-
 	private OrderSpecifier<?>[] buildOrderSpecifiers(boolean sortByGrade, boolean asc) {
-		List<OrderSpecifier<?>> orderSpecifiers = new ArrayList<>();
+		Deque<OrderSpecifier<?>> orderSpecifiers = new ArrayDeque<>();
 		orderSpecifiers.add(snackReview.id.desc());
 
 		if (sortByGrade == false) {
@@ -91,15 +76,22 @@ public class CustomSnackReviewRepositoryImpl implements CustomSnackReviewReposit
 		}
 
 		if (asc == true) {
-			orderSpecifiers.add(snackReview.grade.asc());
-			Collections.reverse(orderSpecifiers);
+			orderSpecifiers.addFirst(snackReview.grade.asc());
 
 			return orderSpecifiers.toArray(new OrderSpecifier[0]);
 		}
 
-		orderSpecifiers.add(snackReview.grade.desc());
-		Collections.reverse(orderSpecifiers);
+		orderSpecifiers.addFirst(snackReview.grade.desc());
 
 		return orderSpecifiers.toArray(new OrderSpecifier[0]);
+	}
+
+	public boolean hasNext(List<SnackReviewResponseDto.Card> cards, int limit) {
+		if (cards.size() > limit) {
+			cards.remove(limit);
+			return true;
+		}
+
+		return false;
 	}
 }

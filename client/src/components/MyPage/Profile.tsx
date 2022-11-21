@@ -1,11 +1,46 @@
 //유저정보
 //login state
-import { useState } from 'react';
+import { useEffect, useState, SetStateAction } from 'react';
 import EditProfile from '../Modal/EditProfile';
 import EditPassword from '../Modal/EditPassword';
 import EditProfileImg from '../Modal/EditProfileImg';
+import { getUserProfile } from '../../util/testApiCollection';
+import { AxiosPromise } from 'axios';
+
+export interface UserProfile {
+  email: string;
+  nickname: string;
+  image: string;
+  point: number;
+}
+
+export interface EditProfileImg {
+  isEditProfileImg: boolean;
+  setIsEditProfileImg: React.Dispatch<SetStateAction<boolean>>;
+}
+
+export interface EditProfileImgModalHandler {
+  openEditProfileImgModalHandler: React.MouseEventHandler<HTMLButtonElement>;
+}
+export interface EditProfileModalHandler {
+  openEditProfileModalHandler: React.MouseEventHandler<HTMLButtonElement>;
+}
+export interface EditPasswordModalHandler {
+  openEditPasswordModalHandler: React.MouseEventHandler<HTMLButtonElement>;
+}
 
 const Profile = () => {
+  const [userProfileData, setUserProfileData] = useState<UserProfile>();
+
+  useEffect(() => {
+    const getUserProfileData = async () => {
+      const { data } = await getUserProfile();
+      setUserProfileData(data);
+    };
+    getUserProfileData();
+  }, []);
+
+  // Modal
   const [isEditProfileImg, setIsEditProfileImg] = useState(false);
   const openEditProfileImgModalHandler = (
     event: React.MouseEvent<HTMLElement>
@@ -15,7 +50,7 @@ const Profile = () => {
 
   const [isEditProfile, setIsEditProfile] = useState(false);
   const openEditProfileModalHandler = (
-    event: React.MouseEvent<HTMLElement>
+    event: React.MouseEvent<HTMLElement, MouseEvent>
   ) => {
     setIsEditProfile(!isEditProfile);
   };
@@ -29,9 +64,24 @@ const Profile = () => {
 
   return (
     <div>
-      {isEditProfile === false ? null : <EditProfile />}
-      {isEditProfileImg === false ? null : <EditProfileImg />}
-      {isEditPassword === false ? null : <EditPassword />}
+      {isEditProfileImg === false ? null : (
+        <EditProfileImg
+          openEditProfileImgModalHandler={openEditProfileImgModalHandler}
+
+          // isEditProfileImg={isEditProfileImg}
+          // setIsEditProfileImg={setIsEditProfileImg}
+        />
+      )}
+      {isEditProfile === false ? null : (
+        <EditProfile
+          openEditProfileModalHandler={openEditProfileModalHandler}
+        />
+      )}
+      {isEditPassword === false ? null : (
+        <EditPassword
+          openEditPasswordModalHandler={openEditPasswordModalHandler}
+        />
+      )}
 
       <div className="flex items-center justify-center bg-slate-100">
         <div className="mx-10">
@@ -50,9 +100,15 @@ const Profile = () => {
           </div>
         </div>
         <div className="">
-          <div className="m-3 mt-0 text-4xl font-bold">UserName</div>
-          <div className="m-2 text-sm font-semibold">email@eamil.com</div>
-          <div className="m-2 text-sm font-semibold">num 위 / num point</div>
+          <div className="m-3 mt-0 text-4xl font-bold">
+            {userProfileData?.nickname}
+          </div>
+          <div className="m-2 text-sm font-semibold">
+            {userProfileData?.email}
+          </div>
+          <div className="m-2 text-sm font-semibold">
+            {userProfileData?.point} point
+          </div>
           <div className="flex mt-3 mb-10">
             <button
               className="py-2 m-4 ml-0 bg-white rounded px-14"

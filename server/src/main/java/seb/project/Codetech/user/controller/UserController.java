@@ -49,18 +49,16 @@ public class UserController {
         return ResponseEntity.ok(mapper.userToUserResponseDto(user));
     }
 
-    @PatchMapping("/withdraw")
-    public ResponseEntity withdrawUser(@AuthenticationPrincipal String email,
+    @GetMapping("/withdraw")
+    public void withdrawUser(@AuthenticationPrincipal String email,
                                        @Valid @RequestBody UserWithdrawDto withdraw,
                                        HttpServletRequest request){
         User user = userService.withdrawUser(email,mapper.userWithdrawDtoToUser(withdraw));
         UserService.logout(request);
-        return ResponseEntity.ok(HttpStatus.ACCEPTED);
     }
 
-    @PostMapping("/logout")
-    public ResponseEntity logoutUser(HttpServletRequest request){
+    @GetMapping("/logout")
+    public void logoutUser(HttpServletRequest request){
         UserService.logout(request);
-        return ResponseEntity.ok(HttpStatus.ACCEPTED);
     }
 }

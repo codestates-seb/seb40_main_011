@@ -15,4 +15,9 @@ const getReviewDetail = async (params: string | undefined) =>
     .then((data) => data)
     .catch((err) => err.response);
 
-export { getReview, getProduct, getReviewDetail };
+const getUserReview = async () =>
+  await InstanceV1.get('/user/reviews')
+    .then((data) => data)
+    .catch((err) => err.response);
+
+export { getReview, getProduct, getReviewDetail, getUserReview };

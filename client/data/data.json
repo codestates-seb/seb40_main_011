@@ -8,6 +8,12 @@
     "username": "",
     "password": ""
   },
+  "user": {
+    "email": "111@111.com",
+    "nickname": "leeee",
+    "image": "/",
+    "point": 0
+  },
   "questions": {
     "title": "",
     "content": ""
@@ -179,10 +185,13 @@
       "modifedAt": "2022. 11. 15",
       "likes": 98,
       "profileImg": "https://images.unsplash.com/photo-1666265972013-d538b0e27388?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80",
-      "comment": [
+      "comments": [
         {
+          "id": 0,
           "nickname": "준일짱짱V",
-          "comment": "이거 생각보다 무게가 무겁습니다. 3대 500 이상 전용 마우스임"
+          "comment": "이거 생각보다 무게가 무겁습니다. 3대 500 이상 전용 마우스임",
+          "createdAt": "2022. 11. 15",
+          "profileImg": "https://images.unsplash.com/photo-1666265972013-d538b0e27388?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80"
         }
       ]
     },

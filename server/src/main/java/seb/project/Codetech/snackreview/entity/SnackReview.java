@@ -46,23 +46,26 @@ public class SnackReview extends BaseTime {
 	private Type type;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id")
-	private User user;
+	@JoinColumn(name = "writer_id")
+	private User writer;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "product_id")
 	@QueryInit("id")
 	private Product product;
 
-	public SnackReview(String content) {
-		this.content = content;
+	public static SnackReview from(String content) {
+		SnackReview snackReview = new SnackReview();
+		snackReview.content = content;
+
+		return snackReview;
 	}
 
 	public void setWriter(User user) {
-		if (this.user != null) {
-			this.user.getSnackReviews().remove(this);
+		if (this.writer != null) {
+			this.writer.getSnackReviews().remove(this);
 		}
-		this.user = user;
+		this.writer = user;
 		user.getSnackReviews().add(this);
 	}
 

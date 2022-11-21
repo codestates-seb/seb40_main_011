@@ -1,6 +1,7 @@
 package seb.project.Codetech.product.dto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,6 +21,5 @@ public class ProductResponseDto {
 	private String modifier;
 	private LocalDateTime createdAt;
 	private LocalDateTime modifiedAt;
-
-	private FileEntity file;
+	private List<FileEntity> fileEntities;
 }

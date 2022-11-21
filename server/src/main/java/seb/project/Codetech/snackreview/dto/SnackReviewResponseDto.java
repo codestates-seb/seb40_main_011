@@ -1,15 +1,15 @@
 package seb.project.Codetech.snackreview.dto;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import seb.project.Codetech.snackreview.entity.ReviewScore;
 
 public class SnackReviewResponseDto {
 	@Getter
-	@Setter
 	@NoArgsConstructor
 	public static class Info {
 		private long total;
@@ -21,8 +21,8 @@ public class SnackReviewResponseDto {
 	}
 
 	@Getter
-	@Setter
 	@NoArgsConstructor
+	@AllArgsConstructor
 	public static class Slice {
 		private boolean hasNext;
 		private List<Card> cards;
@@ -33,8 +33,9 @@ public class SnackReviewResponseDto {
 	public static class Card {
 		private Long id;
 		private String nickname;
-		private String image;
+		private String profile;
 		private ReviewScore score;
 		private String content;
+		private LocalDateTime createdAt;
 	}
 }
