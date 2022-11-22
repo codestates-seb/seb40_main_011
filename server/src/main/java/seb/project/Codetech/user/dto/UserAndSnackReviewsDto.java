@@ -18,15 +18,23 @@ public class UserAndSnackReviewsDto {
     private String nickname;
     private Long point;
     private String image;
-    private List<MyPageCard> snackReviews;
+    private List<MySnackReviewCard> snackReviews;
 
 
     @Getter
     @NoArgsConstructor
-    public static class MyPageCard {
+    public static class MySnackReviewCard {
         private Long id;
+        private ReviewScore score;
+        private String content;
+        private Type type;
+        private LocalDateTime createdAt;
+        private LocalDateTime modifiedAt;
 
-        public MyPageCard(SnackReview snackReview) {
+        private Long productId;
+        private String productName;
+
+        public MySnackReviewCard(SnackReview snackReview) {
             this.id = snackReview.getId();
             this.score = snackReview.getScore();
             this.content = snackReview.getContent();
@@ -36,14 +44,5 @@ public class UserAndSnackReviewsDto {
             this.productId = snackReview.getProduct().getId();
             this.productName = snackReview.getProduct().getName();
         }
-
-        private ReviewScore score;
-        private String content;
-        private Type type;
-        private LocalDateTime createdAt;
-        private LocalDateTime modifiedAt;
-
-        private Long productId;
-        private String productName;
     }
 }

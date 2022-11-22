@@ -10,7 +10,9 @@ import seb.project.Codetech.global.auth.event.UserRegistrationApplicationEvent;
 import seb.project.Codetech.global.auth.utils.UserAuthorityUtils;
 import seb.project.Codetech.global.exception.BusinessLogicException;
 import seb.project.Codetech.global.exception.ExceptionCode;
+import seb.project.Codetech.question.entity.Question;
 import seb.project.Codetech.snackreview.entity.SnackReview;
+import seb.project.Codetech.user.dto.UserAndQuestionsDto;
 import seb.project.Codetech.user.dto.UserAndSnackReviewsDto;
 import seb.project.Codetech.user.entity.User;
 import seb.project.Codetech.user.repository.UserRepository;
@@ -111,9 +113,9 @@ public class UserService {
         User user = findUser(email);
         UserAndSnackReviewsDto userAndSnackReviewsDto = new UserAndSnackReviewsDto();
         List<SnackReview> snackReviews = user.getSnackReviews();
-        List<UserAndSnackReviewsDto.MyPageCard> cards = new ArrayList<>();
+        List<UserAndSnackReviewsDto.MySnackReviewCard> cards = new ArrayList<>();
         for(SnackReview snackReview : snackReviews){
-            cards.add(new UserAndSnackReviewsDto.MyPageCard(snackReview));
+            cards.add(new UserAndSnackReviewsDto.MySnackReviewCard(snackReview));
         }
         userAndSnackReviewsDto.setEmail(user.getEmail());
         userAndSnackReviewsDto.setNickname(user.getNickname());
@@ -121,5 +123,21 @@ public class UserService {
         userAndSnackReviewsDto.setImage(user.getImage());
         userAndSnackReviewsDto.setSnackReviews(cards);
         return userAndSnackReviewsDto;
+    }
+
+    public UserAndQuestionsDto userAndQuestionsDto(String email) {
+        User user = findUser(email);
+        UserAndQuestionsDto userAndQuestionsDto = new UserAndQuestionsDto();
+        List<Question> questions = user.getQuestions();
+        List<UserAndQuestionsDto.MyQuestionCard> cards = new ArrayList<>();
+        for (Question question : questions){
+            cards.add(new UserAndQuestionsDto.MyQuestionCard(question));
+        }
+        userAndQuestionsDto.setEmail(user.getEmail());
+        userAndQuestionsDto.setNickname(user.getNickname());
+        userAndQuestionsDto.setPoint(user.getPoint());
+        userAndQuestionsDto.setImage(user.getImage());
+        userAndQuestionsDto.setQuestions(cards);
+        return userAndQuestionsDto;
     }
 }

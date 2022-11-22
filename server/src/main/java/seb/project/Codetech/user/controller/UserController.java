@@ -9,10 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import seb.project.Codetech.file.entity.FileEntity;
 import seb.project.Codetech.file.service.FileService;
-import seb.project.Codetech.user.dto.UserAndSnackReviewsDto;
-import seb.project.Codetech.user.dto.UserPatchDto;
-import seb.project.Codetech.user.dto.UserPostDto;
-import seb.project.Codetech.user.dto.UserResponseDto;
+import seb.project.Codetech.user.dto.*;
 import seb.project.Codetech.user.entity.User;
 import seb.project.Codetech.user.mapper.UserMapper;
 import seb.project.Codetech.user.service.UserService;
@@ -76,10 +73,18 @@ public class UserController {
         userService.logout(request);
     }
 
+    @Transactional(readOnly = true)
     @GetMapping("/user/snack-reviews")
     public ResponseEntity<UserAndSnackReviewsDto> getSnackReviews(@AuthenticationPrincipal String email){
         UserAndSnackReviewsDto userAndSnackReviewsDto = userService.userAndSnackReviewsDto(email);
         return ResponseEntity.ok(userAndSnackReviewsDto);
+    }
+
+    @Transactional(readOnly = true)
+    @GetMapping("/user/questions")
+    public ResponseEntity<UserAndQuestionsDto> getQuestions(@AuthenticationPrincipal String email){
+        UserAndQuestionsDto userAndQuestionsDto = userService.userAndQuestionsDto(email);
+        return ResponseEntity.ok(userAndQuestionsDto);
     }
 
 }
