@@ -26,18 +26,18 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserAuthorityUtils authorityUtils;
     private final ApplicationEventPublisher publisher;
-    private static RedisTemplate redisTemplate = new RedisTemplate<>();
+    private final RedisTemplate<String,String> redisTemplate;
 
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, UserAuthorityUtils authorityUtils,
-                       ApplicationEventPublisher publisher, RedisTemplate redisTemplate){
+                       ApplicationEventPublisher publisher, RedisTemplate<String,String> redisTemplate){
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityUtils = authorityUtils;
         this.publisher = publisher;
-        UserService.redisTemplate = redisTemplate;
+        this.redisTemplate = redisTemplate;
     }
 
-    public static void logout(HttpServletRequest request) {
+    public void logout(HttpServletRequest request) {
         redisTemplate.opsForValue()
                 .set(request.getHeader("Authorization"),"logout",30 * 60 * 1000L, TimeUnit.MILLISECONDS);
     }
@@ -67,7 +67,6 @@ public class UserService {
         User findUser = findVerifiedUser(findUserId(email));
 
         Optional.ofNullable(user.getNickname()).ifPresent(findUser::setNickname);
-        Optional.ofNullable(user.getImage()).ifPresent(findUser::setImage);
 
         if(user.getPassword()!=null){
             findUser.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -92,14 +91,16 @@ public class UserService {
         return findVerifiedUser(id);
     }
 
-    public User withdrawUser( String email, User user) {
+    public void withdrawUser(String email, String password) {
         User findUser = findVerifiedUser(findUserId(email));
-
-        if(passwordEncoder.matches(user.getPassword(), findUser.getPassword())){
-            findUser.setStatus(true);
-            return userRepository.save(findUser);
+        log.info(password);
+        log.info(findUser.getPassword());
+        if(!passwordEncoder.matches(password, findUser.getPassword())){
+            throw new BusinessLogicException(ExceptionCode.PASSWORD_NOT_MATCH);
         }
+        findUser.setStatus(true);
+        userRepository.save(findUser);
 
-        throw new BusinessLogicException(ExceptionCode.PASSWORD_NOT_MATCH);
+
     }
 }

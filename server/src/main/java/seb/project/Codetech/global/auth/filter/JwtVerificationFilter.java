@@ -24,10 +24,10 @@ import java.util.Map;
 public class JwtVerificationFilter extends OncePerRequestFilter {
     private final JwtTokenizer jwtTokenizer;
     private final UserAuthorityUtils authorityUtils;
-    private final RedisTemplate redisTemplate;
+    private final RedisTemplate<String,String> redisTemplate;
 
     public JwtVerificationFilter(JwtTokenizer jwtTokenizer, UserAuthorityUtils authorityUtils,
-                                 RedisTemplate redisTemplate){
+                                 RedisTemplate<String,String> redisTemplate){
         this.jwtTokenizer = jwtTokenizer;
         this.authorityUtils =authorityUtils;
         this.redisTemplate = redisTemplate;

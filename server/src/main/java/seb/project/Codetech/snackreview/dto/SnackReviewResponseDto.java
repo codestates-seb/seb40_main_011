@@ -33,7 +33,7 @@ public class SnackReviewResponseDto {
 	public static class Card {
 		private Long id;
 		private String nickname;
-		private String profile;
+		private String image;
 		private ReviewScore score;
 		private String content;
 		private LocalDateTime createdAt;

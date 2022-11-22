@@ -4,7 +4,6 @@ import org.mapstruct.Mapper;
 import seb.project.Codetech.user.dto.UserPatchDto;
 import seb.project.Codetech.user.dto.UserPostDto;
 import seb.project.Codetech.user.dto.UserResponseDto;
-import seb.project.Codetech.user.dto.UserWithdrawDto;
 import seb.project.Codetech.user.entity.User;
 
 @Mapper(componentModel = "spring")
@@ -15,5 +14,5 @@ public interface UserMapper {
 
     UserResponseDto userToUserResponseDto(User user);
 
-    User userWithdrawDtoToUser(UserWithdrawDto userWithdrawDto);
+    User userWithdrawDtoToUser(String password);
 }

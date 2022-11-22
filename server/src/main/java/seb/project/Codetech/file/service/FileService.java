@@ -21,6 +21,7 @@ import seb.project.Codetech.file.repository.FileRepository;
 import seb.project.Codetech.global.exception.BusinessLogicException;
 import seb.project.Codetech.global.exception.ExceptionCode;
 import seb.project.Codetech.product.entity.Product;
+import seb.project.Codetech.user.entity.User;
 
 @Service
 @Transactional
@@ -107,5 +108,10 @@ public class FileService {
 		// getByte로 돌리게 된다면 문제가 생긴다, getInputStream을 통해서 헤더만 보내서 검사한다.
 
 		return fileType.startsWith("image");
+	}
+
+	public FileEntity setUploadUser(User user, FileEntity file) {
+			file.setUser(user);
+			return fileRepository.save(file);
 	}
 }
