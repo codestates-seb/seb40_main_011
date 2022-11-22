@@ -32,7 +32,7 @@ const SignUpPage = () => {
       e.preventDefault();
       try {
         await axios
-          .post('https://codetech.nworld.dev/api/register', {
+          .post('/api/register', {
             email: email,
             password: password,
             displayName: name,

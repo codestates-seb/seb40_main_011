@@ -1,19 +1,30 @@
 import { useNavigate } from 'react-router-dom';
+import { useIsLogin } from '../../store/login';
 
 export default function HeaderTextButton({ name }: { name: string }) {
   const navigate = useNavigate();
-  const onLoginClick = () => {
-    navigate('/login');
+  const { Logout } = useIsLogin();
+  const onClick = () => {
+    switch (name) {
+      case 'login':
+        navigate('/login');
+        break;
+      case 'signup':
+        navigate('/signup');
+        break;
+      case 'mypage':
+        navigate('/mypage');
+        break;
+      case 'logout':
+        Logout();
+        navigate('/');
+    }
   };
-  const onSignUpClick = () => {
-    navigate('/signup');
-  };
+
   return (
     <>
       <button
-        onClick={
-          name === 'login' ? () => onLoginClick() : () => onSignUpClick()
-        }
+        onClick={onClick}
         className="h-full w-28 font-medium text-lg hover:bg-slate-100 hover:border-b-4 hover:border-slate-500 box-content"
       >
         {name}
