@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import seb.project.Codetech.file.entity.FileEntity;
 import seb.project.Codetech.file.service.FileService;
+import seb.project.Codetech.user.dto.UserAndSnackReviewsDto;
 import seb.project.Codetech.user.dto.UserPatchDto;
 import seb.project.Codetech.user.dto.UserPostDto;
 import seb.project.Codetech.user.dto.UserResponseDto;
@@ -73,6 +74,12 @@ public class UserController {
     @GetMapping("/logout")
     public void logoutUser(HttpServletRequest request){
         userService.logout(request);
+    }
+
+    @GetMapping("/user/snack-reviews")
+    public ResponseEntity<UserAndSnackReviewsDto> getSnackReviews(@AuthenticationPrincipal String email){
+        UserAndSnackReviewsDto userAndSnackReviewsDto = userService.userAndSnackReviewsDto(email);
+        return ResponseEntity.ok(userAndSnackReviewsDto);
     }
 
 }

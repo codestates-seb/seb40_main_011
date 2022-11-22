@@ -10,10 +10,13 @@ import seb.project.Codetech.global.auth.event.UserRegistrationApplicationEvent;
 import seb.project.Codetech.global.auth.utils.UserAuthorityUtils;
 import seb.project.Codetech.global.exception.BusinessLogicException;
 import seb.project.Codetech.global.exception.ExceptionCode;
+import seb.project.Codetech.snackreview.entity.SnackReview;
+import seb.project.Codetech.user.dto.UserAndSnackReviewsDto;
 import seb.project.Codetech.user.entity.User;
 import seb.project.Codetech.user.repository.UserRepository;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
@@ -102,5 +105,21 @@ public class UserService {
         userRepository.save(findUser);
 
 
+    }
+
+    public UserAndSnackReviewsDto userAndSnackReviewsDto(String email){
+        User user = findUser(email);
+        UserAndSnackReviewsDto userAndSnackReviewsDto = new UserAndSnackReviewsDto();
+        List<SnackReview> snackReviews = user.getSnackReviews();
+        List<UserAndSnackReviewsDto.MyPageCard> cards = new ArrayList<>();
+        for(SnackReview snackReview : snackReviews){
+            cards.add(new UserAndSnackReviewsDto.MyPageCard(snackReview));
+        }
+        userAndSnackReviewsDto.setEmail(user.getEmail());
+        userAndSnackReviewsDto.setNickname(user.getNickname());
+        userAndSnackReviewsDto.setPoint(user.getPoint());
+        userAndSnackReviewsDto.setImage(user.getImage());
+        userAndSnackReviewsDto.setSnackReviews(cards);
+        return userAndSnackReviewsDto;
     }
 }
