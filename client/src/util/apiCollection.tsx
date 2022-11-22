@@ -1,6 +1,5 @@
 import axios from 'axios';
-import React from 'react';
-import { Login } from '../types/mainPageTypes';
+import { LoginInputs } from '../types/mainPageTypes';
 
 export const getReview = async () =>
   await axios
@@ -32,7 +31,7 @@ export const getReviewDetail = async (params: string | undefined) =>
     .then((data) => data)
     .catch((err) => err.response);
 
-export const postLogin = async (data: Login) => {
+export const postLogin = async (data: LoginInputs) => {
   try {
     const loginResponse = await axios.post('/api/login', data);
     return loginResponse;

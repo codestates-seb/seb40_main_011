@@ -2,6 +2,7 @@ import HeaderTextButton from '../Buttons/HeaderTextButton';
 import SearchBar from './SearchBar';
 import { BsFillSunFill } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
+import { useIsLogin } from '../../store/login';
 
 export default function Header() {
   const navigate = useNavigate();
@@ -9,63 +10,7 @@ export default function Header() {
     navigate('/');
   };
 
-  // const [login, setIsLogin] = useState(false);
-  // const dispatch = useDispatch();
-  // const logIn = useSelector((state) => state.isLogin);
-  // const token = useSelector((state) => state.authorization);
-  // const navigate = useNavigate();
-
-  // const openModalHandler = (el) => {
-  //   let temp = el.target.id;
-  //   let change = !modalOpen[temp];
-  //   if (!logIn) {
-  //     setModalOpen({ ...modalOpen, [temp]: change });
-  //   } else {
-  //     if (temp === 'logout') {
-  //       dispatch(loginActions.logout());
-  //       localStorage.removeItem('refresh');
-  //       localStorage.removeItem('authorization');
-  //       navigate('/');
-  //     } else if (temp === 'myprofile') {
-  //       bringmydata();
-  //     }
-  //   }
-  // };
-
-  // const userMenu = useRef(null);
-
-  // const modalCloseHandler = ({ target }) => {
-  //   if (typeof userMenu.current === 'undefined' || userMenu.current === null) {
-  //     return;
-  //   } else if (!userMenu.current.contains(target))
-  //     setModalOpen({ login: false, signup: false });
-  // };
-
-  // useEffect(() => {
-  //   window.addEventListener('mousedown', modalCloseHandler);
-  //   return () => {
-  //     window.removeEventListener('mousedown', modalCloseHandler);
-  //   };
-  // });
-
-  // const bringmydata = async () => {
-  //   //prettier-ignore
-  //   const response = await fetch("/api/auth/member", {
-  //     method: "GET",
-  //     headers: { "Content-Type": "application/json", authorization: token },
-  //   });
-
-  //   let res = response;
-  //   if (!res.ok) {
-  //     return alert('에러가 발생하였습니다');
-  //   } else {
-  //     await res.json().then((data) => navigate('/myprofile', { state: data }));
-  //   }
-  // };
-
-  // const handleHomeClick = () => {
-  //   navigate('/');
-  // };
+  const { isLogin } = useIsLogin();
 
   return (
     <div className="sticky top-0 z-50 shadow bg-white">
@@ -84,10 +29,17 @@ export default function Header() {
               <BsFillSunFill />
             </span>
           </button>
-          <div>
-            <HeaderTextButton name="login" />
-            <HeaderTextButton name="signup" />
-          </div>
+          {!isLogin ? (
+            <div>
+              <HeaderTextButton name="login" />
+              <HeaderTextButton name="signup" />
+            </div>
+          ) : (
+            <div>
+              <HeaderTextButton name="myprofile" />
+              <HeaderTextButton name="logout" />
+            </div>
+          )}
         </div>
       </div>
     </div>
