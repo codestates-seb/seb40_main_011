@@ -1,5 +1,6 @@
 // [GET]
 import { getProductTest } from '../../util/testApiCollection';
+import { sampleTest } from '../../util/testApiCollection';
 import { useEffect, useState } from 'react';
 import { Product } from '../../types/mainPageTypes';
 import MainCategory from '../Selectors/MainCategory';
@@ -13,6 +14,11 @@ const ProductList = () => {
   const [category, setCategory] = useState('all');
   const [totalPage, setTotalPage] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
+
+  const pageAmount = {
+    page: '0',
+    size: '9',
+  };
 
   useEffect(() => {
     const getProductData = async () => {

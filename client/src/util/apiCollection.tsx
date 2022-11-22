@@ -6,8 +6,8 @@ const getReview = async () =>
     .then((data) => data)
     .catch((err) => err.response);
 
-const getProduct = async () =>
-  await InstanceV1.get('/api/product')
+const getProduct = async (dataAmount: any) =>
+  await InstanceV1.get('/api/products', dataAmount)
     .then((data) => data)
     .catch((err) => err.response);
 

@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 
-export default function CommentInput() {
+export const CommentInput = () => {
   const [question, setQuestion] = useState('');
   const handleTextarea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setQuestion(e.target.value);
   };
-
   const onCommentClick = () => {
     //api 문서 준비되면 여기에 POST 요청
     console.log(question);
@@ -41,4 +40,8 @@ export default function CommentInput() {
       </div>
     </>
   );
-}
+};
+
+export const SubCommentInput = () => {
+  return;
+};

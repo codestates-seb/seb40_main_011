@@ -10,6 +10,7 @@ import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import QuestionLists from './pages/QuestionLists';
 import RvDetail from './components/Details/RvDetail';
+import SearchResult from './components/Search/SearchResult';
 
 function App() {
   return (
@@ -21,11 +22,12 @@ function App() {
           <Route path="/" element={<Main />} />
           <Route path="/mypage/*" element={<MyPage />} />
           <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/categories/review" element={<ReviewLists />} />
+          <Route path="/categories/review/:id" element={<ReviewLists />} />
           <Route path="/categories/review/write" element={<WriteReview />} />
           <Route path="/login" element={<Login />} />
           <Route path="/question-lists" element={<QuestionLists />} />
           <Route path="/review/:id" element={<RvDetail />} />
+          <Route path="/search" element={<SearchResult />} />
         </Routes>
       </main>
       <Footer />

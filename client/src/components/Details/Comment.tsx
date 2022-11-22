@@ -35,7 +35,7 @@ export default function Comment({ comments }: CommentProps) {
   return (
     <>
       {comments?.map((el: ReviewComments, idx: number) => (
-        <div className="w-full flex my-6 mr-16" key={idx}>
+        <div className="w-full flex my-6 " key={idx}>
           <img
             src={el.profileImg}
             alt=""

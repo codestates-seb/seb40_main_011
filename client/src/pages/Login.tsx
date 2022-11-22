@@ -65,9 +65,9 @@ export default function Login() {
     return;
   };
 
-  const onLoginClick = async (e: React.MouseEvent<HTMLFormElement>) => {
+  const onLoginClick = (e: React.MouseEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await postLogin(inputs).then((el) => console.log(el));
+    postLogin(inputs).then((el) => console.log(el));
   };
 
   return (
