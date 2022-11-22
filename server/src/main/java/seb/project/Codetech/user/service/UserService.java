@@ -11,8 +11,10 @@ import seb.project.Codetech.global.auth.utils.UserAuthorityUtils;
 import seb.project.Codetech.global.exception.BusinessLogicException;
 import seb.project.Codetech.global.exception.ExceptionCode;
 import seb.project.Codetech.question.entity.Question;
+import seb.project.Codetech.review.entity.Review;
 import seb.project.Codetech.snackreview.entity.SnackReview;
 import seb.project.Codetech.user.dto.UserAndQuestionsDto;
+import seb.project.Codetech.user.dto.UserAndReviewsDto;
 import seb.project.Codetech.user.dto.UserAndSnackReviewsDto;
 import seb.project.Codetech.user.entity.User;
 import seb.project.Codetech.user.repository.UserRepository;
@@ -139,5 +141,21 @@ public class UserService {
         userAndQuestionsDto.setImage(user.getImage());
         userAndQuestionsDto.setQuestions(cards);
         return userAndQuestionsDto;
+    }
+
+    public UserAndReviewsDto userAndReviewsDto(String email){
+        User user = findUser(email);
+        UserAndReviewsDto userAndReviewsDto = new UserAndReviewsDto();
+        List<Review> reviews = user.getReviews();
+        List<UserAndReviewsDto.MyReviewCard> cards = new ArrayList<>();
+        for (Review review : reviews){
+            cards.add(new UserAndReviewsDto.MyReviewCard(review));
+        }
+        userAndReviewsDto.setEmail(user.getEmail());
+        userAndReviewsDto.setNickname(user.getNickname());
+        userAndReviewsDto.setPoint(user.getPoint());
+        userAndReviewsDto.setImage(user.getImage());
+        userAndReviewsDto.setReviews(cards);
+        return userAndReviewsDto;
     }
 }

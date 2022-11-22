@@ -87,4 +87,11 @@ public class UserController {
         return ResponseEntity.ok(userAndQuestionsDto);
     }
 
+    @Transactional(readOnly = true)
+    @GetMapping("/user/reviews")
+    public ResponseEntity<UserAndReviewsDto> getReviews(@AuthenticationPrincipal String email){
+        UserAndReviewsDto userAndReviewsDto = userService.userAndReviewsDto(email);
+        return ResponseEntity.ok(userAndReviewsDto);
+    }
+
 }
