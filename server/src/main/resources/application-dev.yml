@@ -11,15 +11,15 @@ spring:
     username: ${DB_AUTH_ID}
     password: ${DB_AUTH_PASSWORD}
   redis:
-    host: localhost
-    port: 6379
+    host: ${SPRING_REDIS_HOST}
+    port: ${SPRING_REDIS_PORT}
   security:
     oauth2:
       client:
         registration:
           google:
-            clientId: 441372306958-ape9d8nhhj8gp1sdh7emn8kvhfv98kb7.apps.googleusercontent.com
-            clientSecret: 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
+            clientId: ${OAUTH2_CLIENT_ID}
+            clientSecret: ${OAUTH2_SECRET}
             scope:
               - email
               - profile

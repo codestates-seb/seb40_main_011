@@ -22,4 +22,10 @@ public class ProductResponseDto {
 	private LocalDateTime createdAt;
 	private LocalDateTime modifiedAt;
 	private List<FileEntity> fileEntities;
+
+	@Getter
+	@NoArgsConstructor
+	public static class selectProduct {
+		private String name;
+	}
 }
