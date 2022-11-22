@@ -16,6 +16,7 @@ import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
+import seb.project.Codetech.redis.entity.ProductStat;
 import seb.project.Codetech.snackreview.dto.SnackReviewRequestDto;
 import seb.project.Codetech.snackreview.dto.SnackReviewResponseDto;
 
@@ -50,10 +51,9 @@ public class CustomSnackReviewRepositoryImpl implements CustomSnackReviewReposit
 	}
 
 	@Override
-	public SnackReviewResponseDto.Info searchInfoGroupByProductId(Long productId) {
-
-		return queryFactory
-			.select(Projections.fields(SnackReviewResponseDto.Info.class,
+	public ProductStat searchInfoGroupByProductId(Long productId) {
+		ProductStat productStat = queryFactory
+			.select(Projections.fields(ProductStat.class,
 				snackReview.count().as("total"),
 				snackReview.score.costEfficiency.avg().as("avgCe"),
 				snackReview.score.design.avg().as("avgDsn"),
@@ -64,6 +64,10 @@ public class CustomSnackReviewRepositoryImpl implements CustomSnackReviewReposit
 			.from(snackReview)
 			.where(snackReview.product.id.eq(productId))
 			.fetchFirst();
+
+		productStat.setId(productId);
+
+		return productStat;
 	}
 
 	private OrderSpecifier<?>[] buildOrderSpecifiers(boolean sortByGrade, boolean asc) {

@@ -1,5 +1,6 @@
 package seb.project.Codetech.product.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -8,18 +9,17 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import lombok.extern.log4j.Log4j2;
 import seb.project.Codetech.global.exception.BusinessLogicException;
 import seb.project.Codetech.global.exception.ExceptionCode;
 import seb.project.Codetech.global.page.PageInfo;
+import seb.project.Codetech.product.dto.ProductResponseDto;
 import seb.project.Codetech.product.entity.Product;
 import seb.project.Codetech.product.repository.ProductRepository;
 import seb.project.Codetech.user.entity.User;
 import seb.project.Codetech.user.repository.UserRepository;
 
 @Service
-@Transactional
-@Log4j2
+@Transactional(readOnly = true)
 public class ProductService {
 
 	private final ProductRepository productRepository;
@@ -30,6 +30,7 @@ public class ProductService {
 		this.userRepository = userRepository;
 	}
 
+	@Transactional
 	public Product createProduct(String email, Product product) {
 
 		if (!findUser(email).getRoles().contains("USER")) // 회원만 제품을 등록 할 수 있다.
@@ -40,6 +41,7 @@ public class ProductService {
 		return productRepository.save(product);
 	}
 
+	@Transactional
 	public Product modifyProduct(String email, Long id, Product product) {
 
 		if (!findUser(email).getRoles().contains("USER")) // 회원만 제품을 수정 할 수 있다.
@@ -64,6 +66,7 @@ public class ProductService {
 			PageRequest.of(request.getPage(), request.getSize(), Sort.by("id").descending()));
 	}
 
+	@Transactional
 	public void removeProduct(String email, Long id) {
 
 		if (!findUser(email).getRoles().contains("ADMIN")) { // 작성된 제품 정보는 관리자만 삭제할 수 있다.
@@ -72,6 +75,10 @@ public class ProductService {
 
 		Product findProduct = findProductId(id);
 		productRepository.delete(findProduct);
+	}
+
+	public List<ProductResponseDto.selectProduct> searchTypeProduct(String type) {
+		return productRepository.searchTypePrduct(type);
 	}
 
 	public Product findProductId(Long id) { // 제품 정보를 가져오기 위한 메소드

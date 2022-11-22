@@ -3,16 +3,7 @@ package seb.project.Codetech.file.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
@@ -33,7 +24,8 @@ import seb.project.Codetech.user.entity.User;
 @Table(name = "FILE")
 public class FileEntity extends BaseTime { // 파일은 업로드 이후 변경하지 않는다.
 
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@Column(nullable = false)
@@ -56,9 +48,6 @@ public class FileEntity extends BaseTime { // 파일은 업로드 이후 변경�
 
 	}
 
-	@OneToMany(mappedBy = "file")
-	private List<Review> reviews = new ArrayList<>();
-
 	@ManyToOne
 	@JoinColumn(name = "product_id")
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
@@ -72,7 +61,7 @@ public class FileEntity extends BaseTime { // 파일은 업로드 이후 변경�
 	private Review review;
 
 	public void setProduct(Product product) {
-		if (this.product != null)
+		if(this.product != null)
 			this.product.getFileEntities().remove(this);
 		this.product = product;
 		this.product.getFileEntities().add(this);

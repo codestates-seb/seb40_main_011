@@ -21,4 +21,8 @@ public class ProductDto {
 		private String name;
 		private String detail;
 	}
+
+	public static class Search {
+		private String name;
+	}
 }
