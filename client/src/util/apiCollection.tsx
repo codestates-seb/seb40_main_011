@@ -31,6 +31,12 @@ const postLogin = async (data: LoginInputs) =>
     .then((data) => data)
     .catch((err) => err.response);
 
+const getSearchResult = async () => {
+  await InstanceV1.get('/api/products/1')
+    .then((data) => data)
+    .catch((err) => err.response);
+};
+
 export {
   getReview,
   getProduct,
@@ -38,4 +44,5 @@ export {
   postLogin,
   getReviewDetail,
   postProduct,
+  getSearchResult,
 };

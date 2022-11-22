@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import { getReviewTest } from '../../util/testApiCollection';
+import { getSearchResult } from '../../util/apiCollection';
 
 const SearchReview = () => {
   const [review, setReview] = useState();
 
   useEffect(() => {
     const getReviewData = async () => {
-      const { data } = await getReviewTest();
+      const { data }: any = await getSearchResult();
       setReview(data);
     };
     getReviewData();

@@ -20,7 +20,7 @@ export default function Login() {
     email: false,
     password: false,
   });
-  console.log(inputs);
+
   const handlePasswordType = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     if (passwordType === 'password') return setPasswordType('text');
@@ -61,11 +61,15 @@ export default function Login() {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e: any) => {
+    console.log('hi');
+    e.preventDefault();
+    postLogin(inputs).then((el) => console.log(el));
     return;
   };
 
   const onLoginClick = (e: React.MouseEvent<HTMLFormElement>) => {
+    console.log('hi');
     e.preventDefault();
     postLogin(inputs).then((el) => console.log(el));
   };
@@ -126,6 +130,7 @@ export default function Login() {
               <RiLockPasswordLine className="absolute text-3xl text-gray-300 top-3.5 left-4" />
               <button
                 onClick={handlePasswordType}
+                type="submit"
                 className="absolute text-3xl text-gray-300 top-3.5 right-4 hover:text-gray-600"
               >
                 {passwordType === 'password' ? (
@@ -142,8 +147,7 @@ export default function Login() {
               )}
             </div>
             <button
-              onClick={() => onLoginClick}
-              type="submit"
+              onClick={(e) => onLoginClick}
               className="w-full bg-blue-600 h-16 rounded-md text-xl font-bold pb-1 text-white hover:bg-blue-500"
             >
               Log in
