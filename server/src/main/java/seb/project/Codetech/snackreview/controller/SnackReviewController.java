@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
+import seb.project.Codetech.redis.service.ProductStatService;
 import seb.project.Codetech.snackreview.dto.SnackReviewRequestDto;
 import seb.project.Codetech.snackreview.dto.SnackReviewResponseDto;
 import seb.project.Codetech.snackreview.dto.SnackReviewServiceDto;
+import seb.project.Codetech.snackreview.entity.SnackReview;
 import seb.project.Codetech.snackreview.mapper.SnackReviewControllerMapper;
 import seb.project.Codetech.snackreview.service.SnackReviewService;
 
@@ -32,6 +34,7 @@ import seb.project.Codetech.snackreview.service.SnackReviewService;
 public class SnackReviewController {
 	private final SnackReviewService snackReviewService;
 	private final SnackReviewControllerMapper dtoMapper;
+	private final ProductStatService productStatService;
 
 	@GetMapping
 	public ResponseEntity<SnackReviewResponseDto.Slice> getSlice(@ModelAttribute SnackReviewRequestDto.Get params) {
@@ -42,7 +45,8 @@ public class SnackReviewController {
 
 	@GetMapping("/stats")
 	public ResponseEntity<SnackReviewResponseDto.Info> getStats(@RequestParam Long productId) {
-		SnackReviewResponseDto.Info info = snackReviewService.readStats(productId);
+		SnackReviewResponseDto.Info info =
+			new SnackReviewResponseDto.Info(productStatService.findVerifiedOne(productId));
 
 		return ResponseEntity.ok().body(info);
 	}
@@ -53,7 +57,10 @@ public class SnackReviewController {
 		@Valid @RequestBody SnackReviewRequestDto.Post request
 	) {
 		SnackReviewServiceDto.Create createDto = dtoMapper.postDtoToCreateDto(loginEmail, request);
-		Long createdId = snackReviewService.createSnackReview(createDto);
+		SnackReview created = snackReviewService.createSnackReview(createDto);
+		Long createdId = created.getId();
+
+		productStatService.updateProductStat(created.getProduct().getId());
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(createdId);
 	}
@@ -64,14 +71,19 @@ public class SnackReviewController {
 		@Valid @RequestBody SnackReviewRequestDto.Patch request
 	) {
 		SnackReviewServiceDto.Update updateDto = dtoMapper.patchDtoToUpdateDto(id, request);
-		Long updatedId = snackReviewService.updateSnackReview(updateDto);
+		SnackReview updated = snackReviewService.updateSnackReview(updateDto);
+		Long updatedId = updated.getId();
+
+		productStatService.updateProductStat(updated.getProduct().getId());
 
 		return ResponseEntity.ok().body(updatedId);
 	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteSnackReview(@Positive @PathVariable Long id) {
-		snackReviewService.deleteSnackReview(id);
+		SnackReview deleted = snackReviewService.deleteSnackReview(id);
+
+		productStatService.updateProductStat(deleted.getProduct().getId());
 
 		return ResponseEntity.noContent().build();
 	}
