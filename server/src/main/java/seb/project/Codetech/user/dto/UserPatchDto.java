@@ -21,5 +21,4 @@ public class UserPatchDto {
 
     @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@!%*#?&])[A-Za-z\\d$@!%*#?&]{8,16}$", message = "비밀번호는 8자 이상 16자 이하 특수문자와 대소문자 영어 및 숫자만 허용됩니다.")
     private String password;
-    private String image;
 }

@@ -1,5 +1,6 @@
 package seb.project.Codetech.snackreview.dto;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -32,8 +33,9 @@ public class SnackReviewResponseDto {
 	public static class Card {
 		private Long id;
 		private String nickname;
-		private String profile;
+		private String image;
 		private ReviewScore score;
 		private String content;
+		private LocalDateTime createdAt;
 	}
 }

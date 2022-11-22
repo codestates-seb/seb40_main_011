@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   BsFileRichtext,
   BsChatSquareText,
@@ -6,10 +6,11 @@ import {
   BsPatchQuestion,
   BsLightbulb,
 } from 'react-icons/bs';
+import { getUserReview } from '../../util/ServerApiCollection';
 
 const MypageTab = (): JSX.Element => {
-  const [data, setData] = useState();
   const [currentTab, setCurrentTab] = useState(0);
+  const [detailReviewList, setDetailReviewList] = useState();
 
   const menuArr = [
     {
@@ -30,6 +31,14 @@ const MypageTab = (): JSX.Element => {
   const selectMenuHandler = (index: number) => {
     setCurrentTab(index);
   };
+
+  useEffect(() => {
+    const getDetailReviewList = async () => {
+      const { data } = await getUserReview();
+      setDetailReviewList(data);
+    };
+    getDetailReviewList();
+  }, []);
 
   return (
     <div className="">

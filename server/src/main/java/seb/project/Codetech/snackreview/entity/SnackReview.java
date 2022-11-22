@@ -54,8 +54,11 @@ public class SnackReview extends BaseTime {
 	@QueryInit("id")
 	private Product product;
 
-	public SnackReview(String content) {
-		this.content = content;
+	public static SnackReview from(String content) {
+		SnackReview snackReview = new SnackReview();
+		snackReview.content = content;
+
+		return snackReview;
 	}
 
 	public void setWriter(User user) {

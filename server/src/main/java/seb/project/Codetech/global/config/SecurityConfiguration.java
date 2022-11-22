@@ -46,12 +46,12 @@ public class SecurityConfiguration {
 
     private final JwtTokenizer jwtTokenizer;
     private final UserAuthorityUtils authorityUtils;
-    private final RedisTemplate redisTemplate;
+    private final RedisTemplate<String,String> redisTemplate;
     private final UserService userService;
     private final UserRepository userRepository;
 
     public SecurityConfiguration(JwtTokenizer jwtTokenizer, UserAuthorityUtils authorityUtils,
-                                 RedisTemplate redisTemplate, @Lazy UserService userService,
+                                 RedisTemplate<String,String> redisTemplate, @Lazy UserService userService,
                                  UserRepository userRepository){
         this.jwtTokenizer = jwtTokenizer;
         this.authorityUtils = authorityUtils;

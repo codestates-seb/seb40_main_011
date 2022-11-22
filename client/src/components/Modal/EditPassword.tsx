@@ -1,14 +1,16 @@
 //회원 탈퇴
 import { useState } from 'react';
 import { BsXLg, BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
-
-const EditPassword = () => {
+import { EditPasswordModalHandler } from '../MyPage/Profile';
+const EditPassword = ({
+  openEditPasswordModalHandler,
+}: EditPasswordModalHandler) => {
   const [password, setPassword] = useState();
 
   return (
     <div className="modal-bg">
       <div className="modal-window">
-        <button className="mt-3 ml-auto mr-3">
+        <button className="p-3 ml-auto" onClick={openEditPasswordModalHandler}>
           <BsXLg />
         </button>
         <div className="px-24 py-16">
@@ -22,9 +24,8 @@ const EditPassword = () => {
               className="flex w-full p-1.5 mt-4"
             />
           </div>
-          <div className="text-sm text-slate-500">
-            123
-            {/* {true ? '비밀번호를 입력해주시요' : '비밀번호가 일치하지 않습니다.'} */}
+          <div className="invisible text-sm text-slate-500">
+            비밀번호가 일치하지 않습니다
           </div>
           <div className="flex items-end border-b">
             <input
@@ -34,9 +35,8 @@ const EditPassword = () => {
               className="flex w-full p-1.5 mt-4"
             />
           </div>
-          <div className="text-sm text-slate-500">
-            123
-            {/* {true ? '비밀번호를 입력해주시요' : '비밀번호가 일치하지 않습니다.'} */}
+          <div className="invisible text-sm text-slate-500 ">
+            숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요
           </div>
           <div className="flex items-end border-b">
             <input
@@ -46,13 +46,17 @@ const EditPassword = () => {
               className="flex w-full p-1.5 mt-4"
             />
           </div>
-          <div className="text-sm text-slate-500">
-            123
-            {/* {true ? '비밀번호를 입력해주시요' : '비밀번호가 일치하지 않습니다.'} */}
+          <div className="invisible text-sm text-slate-500">
+            비밀번호가 일치하지 않습니다
           </div>
         </div>
         <div className="flex justify-center pt-4">
-          <button className="w-1/3 py-3 mx-5 border rounded-3xl">취소</button>
+          <button
+            className="w-1/3 py-3 mx-5 border rounded-3xl"
+            onClick={openEditPasswordModalHandler}
+          >
+            취소
+          </button>
           <button className="w-1/3 py-3 mx-5 border rounded-3xl bg-slate-300">
             확인
           </button>
