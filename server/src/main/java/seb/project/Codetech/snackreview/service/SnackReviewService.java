@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import seb.project.Codetech.global.exception.BusinessLogicException;
 import seb.project.Codetech.global.exception.ExceptionCode;
+import seb.project.Codetech.redis.entity.ProductStat;
 import seb.project.Codetech.snackreview.dto.SnackReviewRequestDto;
 import seb.project.Codetech.snackreview.dto.SnackReviewResponseDto;
 import seb.project.Codetech.snackreview.dto.SnackReviewServiceDto;
@@ -24,7 +25,7 @@ public class SnackReviewService {
 	private final SnackReviewServiceMapper dtoMapper;
 
 	@Transactional(readOnly = true)
-	public SnackReviewResponseDto.Info readStats(Long productId) {
+	public ProductStat getProductStat(Long productId) {
 		return snackReviewRepository.searchInfoGroupByProductId(productId);
 	}
 
@@ -36,23 +37,25 @@ public class SnackReviewService {
 		return new SnackReviewResponseDto.Slice(hasNext, cards);
 	}
 
-	public Long createSnackReview(SnackReviewServiceDto.Create dto) {
+	public SnackReview createSnackReview(SnackReviewServiceDto.Create dto) {
 		SnackReview snackReview = dtoMapper.createDtoToEntity(dto);
 
-		return snackReviewRepository.save(snackReview).getId();
+		return snackReviewRepository.save(snackReview);
 	}
 
-	public Long updateSnackReview(SnackReviewServiceDto.Update dto) {
+	public SnackReview updateSnackReview(SnackReviewServiceDto.Update dto) {
 		SnackReview snackReview = findVerifiedOne(dto.getId());
 		snackReview.updateContent(dto.getContent());
 		snackReview.setScore(dto.getScore());
 
-		return snackReview.getId();
+		return snackReview;
 	}
 
-	public void deleteSnackReview(Long id) {
+	public SnackReview deleteSnackReview(Long id) {
 		SnackReview snackReview = findVerifiedOne(id);
 		snackReviewRepository.delete(snackReview);
+
+		return snackReview;
 	}
 
 	@Transactional(readOnly = true)
