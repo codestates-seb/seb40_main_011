@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import lombok.extern.log4j.Log4j2;
 import seb.project.Codetech.file.entity.FileEntity;
 import seb.project.Codetech.file.service.FileService;
 import seb.project.Codetech.global.page.PageInfo;
@@ -35,7 +35,6 @@ import seb.project.Codetech.product.service.ProductService;
 
 @RestController
 @RequestMapping("/api/products")
-@Log4j2
 public class ProductController {
 
 	private final ProductMapper mapper;
@@ -52,6 +51,7 @@ public class ProductController {
 	public ResponseEntity<ProductResponseDto> postProduct(@AuthenticationPrincipal String email,
 		@RequestPart @Valid ProductDto.Post request,
 		@RequestPart List<MultipartFile> file) throws IOException {
+
 		Product dtoToProduct = mapper.productPostDtoToProduct(request);
 		Product serviceProduct = productService.createProduct(email, dtoToProduct); // 제품 정보를 등록한다.
 		List<FileEntity> fileEntities = fileService.insertFiles(file); // 파일 정보를 등록하고 파일을 로컬에 저장한다.
@@ -65,6 +65,7 @@ public class ProductController {
 		@PathVariable @Positive Long id,
 		@RequestPart @Valid ProductDto.Patch request,
 		@RequestPart List<MultipartFile> file) throws IOException {
+
 		Product dtoToProduct = mapper.productPatchDtoToProduct(id, request);
 		Product serviceProduct = productService.modifyProduct(email, id, dtoToProduct);
 		List<FileEntity> fileEntities = fileService.insertFiles(file);
@@ -73,26 +74,36 @@ public class ProductController {
 		return ResponseEntity.ok(mapper.productDtoToProductResponse(serviceProduct));
 	}
 
+	@DeleteMapping("/{id}") // 등록된 제품을 삭제한다.
+	public ResponseEntity<Product> deleteProduct(@AuthenticationPrincipal String email,
+		@PathVariable Long id) {
+
+		productService.removeProduct(email, id);
+
+		return ResponseEntity.ok().build();
+	}
+
 	@GetMapping("/{id}") // 등록된 제품을 조회한다.
 	public ResponseEntity<Product> getProduct(@PathVariable @Positive Long id) {
+
 		Product serviceProduct = productService.findProduct(id);
 
 		return ResponseEntity.ok(serviceProduct);
 	}
 
-	@GetMapping // 등록된 모든 제품을 조회한다.
+	@GetMapping("/category") // 등록된 모든 제품을 조회한다.
 	public ResponseEntity<PageListDto<ProductListResponse>> getProducts(@RequestBody @Valid PageInfo.Request request) {
+
 		Page<Product> pageProduct = productService.findAllProduct(request);
 		List<Product> products = pageProduct.getContent();
 
 		return ResponseEntity.ok(new PageListDto<>(mapper.productsDtoToProductResponse(products), pageProduct));
 	}
 
-	@DeleteMapping("/{id}") // 등록된 제품을 삭제한다.
-	public ResponseEntity<Product> deleteProduct(@AuthenticationPrincipal String email,
-		@PathVariable Long id) {
-		productService.removeProduct(email, id);
+	@GetMapping("/review-search") // 타입을 입력해서 타입의 모든 제품들의 이름을 가져온다.
+	public ResponseEntity<List<ProductResponseDto.selectProduct>> getTypeProduct(@RequestParam String type) {
+		List<ProductResponseDto.selectProduct> searchTypeProduct = productService.searchTypeProduct(type);
 
-		return ResponseEntity.ok().build();
+		return ResponseEntity.ok(searchTypeProduct);
 	}
 }

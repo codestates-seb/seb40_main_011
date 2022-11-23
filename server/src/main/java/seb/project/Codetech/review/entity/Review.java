@@ -3,10 +3,11 @@ package seb.project.Codetech.review.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,6 +20,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import seb.project.Codetech.file.entity.FileEntity;
 import seb.project.Codetech.global.auditing.BaseTime;
+import seb.project.Codetech.global.converter.TypeConverter;
 import seb.project.Codetech.product.entity.Product;
 import seb.project.Codetech.product.entity.Type;
 import seb.project.Codetech.recommend.entity.Recommend;
@@ -38,7 +40,7 @@ public class Review extends BaseTime {
 	// 제품 식별자
 
 	@Column(nullable = false)
-	@Enumerated(EnumType.STRING)
+	@Convert(converter = TypeConverter.class)
 	private Type type;
 
 	@Column(nullable = false)
@@ -48,10 +50,10 @@ public class Review extends BaseTime {
 	private String content;
 
 	@Column(nullable = false)
-	private Long view = 0L;
+	private String writer;
 
-	private String thumbnailImg;
-	private String reviewImg;
+	@Column(nullable = false)
+	private Long view;
 
 	@ManyToOne
 	@JoinColumn(name = "user_id")
@@ -61,15 +63,14 @@ public class Review extends BaseTime {
 	@JoinColumn(name = "product_id")
 	private Product product;
 
-	@ManyToOne
-	@JoinColumn(name = "file_id")
-	private FileEntity file;
-
 	@OneToMany(mappedBy = "review")
 	private List<Recommend> recommends = new ArrayList<>();
 
 	@OneToMany(mappedBy = "review")
 	private List<ReviewComment> reviewComments = new ArrayList<>();
+
+	@OneToMany(mappedBy = "review", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<FileEntity> fileEntities = new ArrayList<>();
 
 	public void setUser(User user) {
 		if (this.user != null) {

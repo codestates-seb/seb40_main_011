@@ -1,28 +1,25 @@
-package seb.project.Codetech.product.dto;
+package seb.project.Codetech.review.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import seb.project.Codetech.product.entity.Type;
 
-public class ProductDto {
+public class ReviewRequestDto {
 
 	@Getter
 	@NoArgsConstructor
 	public static class Post {
-		private String name;
+		private String title;
+		private String content;
 		private Type type;
-		private String detail;
 	}
 
 	@Getter
 	@NoArgsConstructor
 	public static class Patch {
 		private Long id;
-		private String name;
-		private String detail;
-	}
-
-	public static class Search {
-		private String name;
+		private String title;
+		private String content;
+		private Type type;
 	}
 }

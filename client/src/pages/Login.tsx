@@ -8,13 +8,14 @@ import { AiFillEye } from 'react-icons/ai';
 import { RiKakaoTalkFill } from 'react-icons/ri';
 import { RiLockPasswordLine } from 'react-icons/ri';
 import { postLogin } from '../util/apiCollection';
+import { useIsLogin } from '../store/login';
 
 export default function Login() {
   // 홈으로 이동
   const navigate = useNavigate();
-  const handleHomeClick = () => {
-    navigate('/');
-  };
+  // const handleHomeClick = () => {
+  //   navigate('/');
+  // };
 
   // 비밀번호 보이기
   const [passwordType, setPasswordType] = useState('password');
@@ -58,11 +59,13 @@ export default function Login() {
     }
   };
 
+  // login status
+  const { Login, Logout } = useIsLogin();
+
   // submit
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const loginResult = await postLogin({ email, password });
-    console.log(loginResult);
     switch (loginResult.status) {
       case 200:
         localStorage.setItem('refresh', loginResult.headers.get('refresh'));
@@ -70,12 +73,15 @@ export default function Login() {
           'authorization',
           loginResult.headers.get('authorization')
         );
+        Login();
         navigate('/');
         break;
       case 401:
+        Logout();
         alert('이메일과 비밀번호가 일치하지 않습니다.');
         console.error(loginResult.status + ' Error');
         break;
+      default:
     }
   };
 

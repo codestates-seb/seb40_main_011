@@ -9,15 +9,14 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import seb.project.Codetech.file.entity.FileEntity;
 import seb.project.Codetech.file.service.FileService;
-import seb.project.Codetech.user.dto.UserPatchDto;
-import seb.project.Codetech.user.dto.UserPostDto;
-import seb.project.Codetech.user.dto.UserResponseDto;
+import seb.project.Codetech.user.dto.*;
 import seb.project.Codetech.user.entity.User;
 import seb.project.Codetech.user.mapper.UserMapper;
 import seb.project.Codetech.user.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import javax.validation.constraints.Positive;
 import java.io.IOException;
 
 @RestController
@@ -62,17 +61,48 @@ public class UserController {
         return ResponseEntity.ok(mapper.userToUserResponseDto(user));
     }
 
-    @GetMapping("/withdraw")
+    @PatchMapping("/withdraw")
     public void withdrawUser(@AuthenticationPrincipal String email,
-                                       @Valid @RequestParam("password") String password,
+                             @Valid @RequestBody UserWithdrawDto withdraw,
                                        HttpServletRequest request){
-        userService.withdrawUser(email,password);
+        userService.withdrawUser(email,withdraw);
         userService.logout(request);
     }
 
-    @GetMapping("/logout")
+    @PostMapping("/logout")
     public void logoutUser(HttpServletRequest request){
         userService.logout(request);
     }
+
+    @Transactional(readOnly = true)
+    @GetMapping("/user/snack-reviews")
+    public ResponseEntity<UserAndSnackReviewsDto> getSnackReviews(@AuthenticationPrincipal String email,
+                                                                  @Positive @RequestParam(value = "page", defaultValue = "1") int page,
+                                                                  @Positive @RequestParam(value = "size",defaultValue = "5") int size,
+                                                                  @RequestParam(value = "sort",defaultValue = "createAt") String sort){
+        UserAndSnackReviewsDto userAndSnackReviewsDto = userService.userAndSnackReviewsDto(email,page-1,size,sort);
+        return ResponseEntity.ok(userAndSnackReviewsDto);
+    }
+
+    @Transactional(readOnly = true)
+    @GetMapping("/user/questions")
+    public ResponseEntity<UserAndQuestionsDto> getQuestions(@AuthenticationPrincipal String email,
+                                                            @Positive @RequestParam(value = "page", defaultValue = "1") int page,
+                                                            @Positive @RequestParam(value = "size",defaultValue = "5") int size,
+                                                            @RequestParam(value = "sort",defaultValue = "createAt") String sort){
+        UserAndQuestionsDto userAndQuestionsDto = userService.userAndQuestionsDto(email,page-1,size,sort);
+        return ResponseEntity.ok(userAndQuestionsDto);
+    }
+
+    @Transactional(readOnly = true)
+    @GetMapping("/user/reviews")
+    public ResponseEntity<UserAndReviewsDto> getReviews(@AuthenticationPrincipal String email,
+                                                        @Positive @RequestParam(value = "page", defaultValue = "1") int page,
+                                                        @Positive @RequestParam(value = "size",defaultValue = "5") int size,
+                                                        @RequestParam(value = "sort",defaultValue = "createAt") String sort){
+        UserAndReviewsDto userAndReviewsDto = userService.userAndReviewsDto(email,page-1,size,sort);
+        return ResponseEntity.ok(userAndReviewsDto);
+    }
+
 
 }

@@ -21,16 +21,20 @@ const SearchReview = ({ keyword }: any) => {
     return console.log('hi');
   };
 
+  const onMoreClick = () => {
+    return console.log('bye');
+  };
+
   return (
     <>
       <div className="flex flex-col items-center">
         <div className="mt-16 mb-4 mx-16 justify-start w-2/3 text-xl font-bold">
           # {keyword} 에 대한 리뷰 검색 결과
         </div>
-        <div className="w-2/3 mb-16 mx-16 border border-slate-900 flex items-center">
+        <div className="w-2/3 mb-8 mx-16 rounded-lg border border-slate-900 flex items-center">
           <div className="w-1/3 border-r border-black">
             <img
-              className="flex"
+              className="rounded-l-lg flex"
               src="https://img2.quasarzone.com/editor/2022/11/11/75f9d1f0e49980190d3967e19b0458e5.jpg"
             ></img>
           </div>
@@ -61,6 +65,7 @@ const SearchReview = ({ keyword }: any) => {
             </div>
           </div>
         </div>
+        <button onClick={onMoreClick}>더보기</button>
       </div>
     </>
   );

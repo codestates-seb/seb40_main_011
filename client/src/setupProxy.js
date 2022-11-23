@@ -6,6 +6,7 @@ module.exports = function (app) {
     createProxyMiddleware({
       target: 'https://codetech.nworld.dev',
       changeOrigin: true,
+      ws: true,
     })
   );
 };

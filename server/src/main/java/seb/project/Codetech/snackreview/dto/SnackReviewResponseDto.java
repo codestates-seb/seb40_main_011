@@ -6,6 +6,7 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import seb.project.Codetech.redis.entity.ProductStat;
 import seb.project.Codetech.snackreview.entity.ReviewScore;
 
 public class SnackReviewResponseDto {
@@ -18,6 +19,15 @@ public class SnackReviewResponseDto {
 		private double avgStf;
 		private double avgDsn;
 		private double avgPerf;
+
+		public Info(ProductStat productStat) {
+			this.total = productStat.getTotal();
+			this.avgCe = productStat.getAvgCe();
+			this.avgQlt = productStat.getAvgQlt();
+			this.avgStf = productStat.getAvgStf();
+			this.avgDsn = productStat.getAvgDsn();
+			this.avgPerf = productStat.getAvgPerf();
+		}
 	}
 
 	@Getter

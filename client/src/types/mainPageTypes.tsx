@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
+
 export interface LoginInputs {
   email: string;
   password: string;

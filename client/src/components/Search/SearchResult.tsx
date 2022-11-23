@@ -10,7 +10,7 @@ const SearchResult = () => {
   return (
     <div className="flex flex-col justify-center">
       <SearchReview keyword={keyword} />
-      <SearchProduct />
+      <SearchProduct keyword={keyword} />
     </div>
   );
 };

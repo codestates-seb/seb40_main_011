@@ -8,7 +8,7 @@ public enum Type implements TypeValue {
 	MICE("마이크"),
 	KEYBOARD("키보드"),
 	SPEAKER("스피커"),
-	LAPTOP("랩탑"),
+	NOTEBOOK("노트북"),
 	GAMEPAD("게임패드"),
 	TABLET("타플랫"),
 	MODEM("모뎀"),

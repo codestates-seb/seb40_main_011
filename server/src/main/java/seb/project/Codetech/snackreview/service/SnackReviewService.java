@@ -24,11 +24,6 @@ public class SnackReviewService {
 	private final SnackReviewServiceMapper dtoMapper;
 
 	@Transactional(readOnly = true)
-	public SnackReviewResponseDto.Info readStats(Long productId) {
-		return snackReviewRepository.searchInfoGroupByProductId(productId);
-	}
-
-	@Transactional(readOnly = true)
 	public SnackReviewResponseDto.Slice readSlice(SnackReviewRequestDto.Get params) {
 		List<SnackReviewResponseDto.Card> cards = snackReviewRepository.searchSortedCardsByProductId(params);
 		boolean hasNext = snackReviewRepository.hasNext(cards, params.getLimit());
@@ -36,23 +31,25 @@ public class SnackReviewService {
 		return new SnackReviewResponseDto.Slice(hasNext, cards);
 	}
 
-	public Long createSnackReview(SnackReviewServiceDto.Create dto) {
+	public SnackReview createSnackReview(SnackReviewServiceDto.Create dto) {
 		SnackReview snackReview = dtoMapper.createDtoToEntity(dto);
 
-		return snackReviewRepository.save(snackReview).getId();
+		return snackReviewRepository.save(snackReview);
 	}
 
-	public Long updateSnackReview(SnackReviewServiceDto.Update dto) {
+	public SnackReview updateSnackReview(SnackReviewServiceDto.Update dto) {
 		SnackReview snackReview = findVerifiedOne(dto.getId());
 		snackReview.updateContent(dto.getContent());
 		snackReview.setScore(dto.getScore());
 
-		return snackReview.getId();
+		return snackReview;
 	}
 
-	public void deleteSnackReview(Long id) {
+	public SnackReview deleteSnackReview(Long id) {
 		SnackReview snackReview = findVerifiedOne(id);
 		snackReviewRepository.delete(snackReview);
+
+		return snackReview;
 	}
 
 	@Transactional(readOnly = true)

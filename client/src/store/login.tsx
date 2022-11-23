@@ -1,38 +1,20 @@
-// import create from 'zustand';
+import create from 'zustand';
 
-// const initialToken = localStorage.getItem('authorization');
+interface LoginState {
+  isLogin: boolean;
+  // authorization: null | string;
+  Login: () => void;
+  Logout: () => void;
+}
 
-// export const useLogin = create(() => ({
-//   name: 'isLogin',
-//   isLogin: initialToken ? true : false,
-//   authorization: initialToken,
-//   setLogin: () => set(() => ({})),
-//   setLogout: () => set(() => ({})),
-// }));
+export const initialToken = localStorage.getItem('authorization');
 
-// type State = {
-//   productName: number;
-//   type: string;
-//   title: string;
-//   content: string;
-//   reviewImg: string;
-// };
-
-// type Action = {
-//   setTitle: (title: State['title']) => void;
-//   setContent: (content: State['content']) => void;
-// };
-
-// export const useLogind = create<State & Action>((set) => ({
-//   authorization: initialToken
-//   refresh: '',
-//   title: '',
-//   content: '',
-//   reviewImg: '',
-//   setTitle: (input) => set(() => ({ title: input })),
-//   setContent: (input) => set(() => ({ content: input })),
-// }));
-
-export const hi = () => {
-  return <div>hi</div>;
-};
+export const useIsLogin = create<LoginState>((set) => ({
+  isLogin: false,
+  Login() {
+    set({
+      isLogin: true,
+    });
+  },
+  Logout: () => set({ isLogin: false }),
+}));

@@ -16,7 +16,7 @@ public class UserPostDto {
     private String email;
 
     @NotBlank
-    @Pattern(regexp = "^(?=.*[A-Za-z0-9가-힣])[A-Za-z0-9가-힣]{2,10}$", message = "닉네임은 2자 이상 10자 이하 대소문자 영어와 한글 숫자로 구성할 수 있습니다.")
+    @Pattern(regexp = "^(?=.*[A-Za-z0-9가-힣])[A-Za-z0-9가-힣]{2,16}$", message = "닉네임은 2자 이상 16자 이하 대소문자 영어와 한글 숫자로 구성할 수 있습니다.")
     private String nickname;
 
     @NotBlank
