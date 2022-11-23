@@ -17,7 +17,9 @@ import seb.project.Codetech.global.exception.ExceptionCode;
 import seb.project.Codetech.question.entity.Answer;
 import seb.project.Codetech.question.entity.Question;
 import seb.project.Codetech.question.respository.QuestionRepository;
+import seb.project.Codetech.recommend.entity.Recommend;
 import seb.project.Codetech.review.entity.Review;
+import seb.project.Codetech.review.repository.ReviewRepository;
 import seb.project.Codetech.snackreview.entity.SnackReview;
 import seb.project.Codetech.user.dto.UserAndQuestionsDto;
 import seb.project.Codetech.user.dto.UserAndReviewsDto;
@@ -42,16 +44,18 @@ public class UserService {
     private final ApplicationEventPublisher publisher;
     private final RedisTemplate<String,String> redisTemplate;
     private final QuestionRepository questionRepository;
+    private final ReviewRepository reviewRepository;
 
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, UserAuthorityUtils authorityUtils,
                        ApplicationEventPublisher publisher, RedisTemplate<String,String> redisTemplate,
-                       QuestionRepository questionRepository){
+                       QuestionRepository questionRepository, ReviewRepository reviewRepository){
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityUtils = authorityUtils;
         this.publisher = publisher;
         this.redisTemplate = redisTemplate;
         this.questionRepository = questionRepository;
+        this.reviewRepository = reviewRepository;
     }
 
     public void logout(HttpServletRequest request) {
@@ -181,7 +185,7 @@ public class UserService {
         return userAndReviewsDto;
     }
 
-    public UserAndQuestionsDto userAndAnswerDto(String email,int page, int size, String sort){
+    public UserAndQuestionsDto userAndAnswersDto(String email,int page, int size, String sort){
         User user = findUser(email);
         UserAndQuestionsDto userAndAnswersDto = new UserAndQuestionsDto();
         List<Answer> answers = user.getAnswers();
@@ -202,4 +206,25 @@ public class UserService {
         return userAndAnswersDto;
 
     }
+
+//    public UserAndReviewsDto userAndRecommendsDto(String email, int page, int size, String sort) {
+//        User user = findUser(email);
+//        UserAndReviewsDto userAndRecommendsDto = new UserAndReviewsDto();
+//        List<Recommend> recommends = user.getRecommends();
+//        List<Review> reviewList = reviewRepository.findAllByRecommensIn(recommends);
+//        List<UserAndReviewsDto.MyReviewCard> cards = new ArrayList<>();
+//        for (Review review : reviewList){
+//            cards.add(new UserAndReviewsDto.MyReviewCard(review));
+//        }
+//        PageRequest pageRequest = PageRequest.of(page,size, Sort.by(sort).descending());
+//        int start = (int)pageRequest.getOffset();
+//        int end = Math.min((start+pageRequest.getPageSize()),cards.size());
+//        Page<UserAndReviewsDto.MyReviewCard> cardPage = new PageImpl<>(cards.subList(start,end),pageRequest,cards.size());
+//        userAndRecommendsDto.setEmail(user.getEmail());
+//        userAndRecommendsDto.setNickname(user.getNickname());
+//        userAndRecommendsDto.setPoint(user.getPoint());
+//        userAndRecommendsDto.setImage(user.getImage());
+//        userAndRecommendsDto.setReviews(cardPage);
+//        return userAndRecommendsDto;
+//    }
 }
