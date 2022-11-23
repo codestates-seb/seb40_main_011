@@ -42,7 +42,7 @@ public class UserController {
     }
 
     @Transactional
-    @PatchMapping("/user")
+    @PatchMapping("/user/image")
     public ResponseEntity<UserResponseDto> patchUser(@AuthenticationPrincipal String email,
                                                      @RequestPart @Valid UserPatchDto patch,
                                                      @RequestPart MultipartFile file) throws IOException {
@@ -51,6 +51,15 @@ public class UserController {
         FileEntity saveFile = fileService.saveFile(file);
         FileEntity serviceFile = fileService.setUploadUser(serviceUser,saveFile);
         serviceUser.setImage(serviceFile.getPath());
+        return ResponseEntity.ok(mapper.userToUserResponseDto(serviceUser));
+    }
+
+    @Transactional
+    @PatchMapping("/user")
+    public ResponseEntity<UserResponseDto> patchUserImage(@AuthenticationPrincipal String email,
+                                                          @RequestBody @Valid UserPatchDto patch){
+        User user = mapper.userPatchDtoToUser(patch);
+        User serviceUser = userService.updateUser(email,user);
         return ResponseEntity.ok(mapper.userToUserResponseDto(serviceUser));
     }
 

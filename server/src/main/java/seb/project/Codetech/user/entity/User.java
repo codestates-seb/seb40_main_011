@@ -84,7 +84,7 @@ public User(String nickname, String email, String password) {
 	@OneToMany(mappedBy = "user")
 	private List<DiscountComment> discountComments = new ArrayList<>();
 
-	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
 	private FileEntity file;
 
 	public void setFile(FileEntity file){
