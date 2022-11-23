@@ -85,3 +85,17 @@ export const editAccount = async () => {
     return err.response;
   }
 };
+
+export const postSnack = async (req: any) => {
+  try {
+    const searchResponse = await axios.post('/api/snack-reviews', req, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: localStorage.getItem('authorization'),
+      },
+    });
+    return searchResponse;
+  } catch (err: any) {
+    return err.response;
+  }
+};

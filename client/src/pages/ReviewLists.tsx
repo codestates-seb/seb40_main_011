@@ -1,11 +1,11 @@
 // 리뷰 디테일 fetching & boxing component
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
 import { Rating } from 'react-simple-star-rating';
 import DetailReview from '../components/Review/DetailReview';
 import SnackReview from '../components/Review/SnackReview';
-import CreatSnackReview from '../components/Review/CreatSnackReview';
+import CreateSnackReview from '../components/Review/CreateSnackReview';
 
 export interface RatingCategory {
   ratingCategory: string[];
@@ -43,8 +43,6 @@ const ReviewLists = () => {
 
   const productId = useParams<string>();
 
-  console.log(productId.id);
-
   useEffect(() => {
     const getSnackReviewStats = async () => {
       try {
@@ -60,8 +58,6 @@ const ReviewLists = () => {
     getSnackReviewStats();
   }, []);
 
-  console.log(setSnackReviewStats);
-
   useEffect(() => {
     const getSnackReviewData = async () => {
       try {
@@ -76,8 +72,6 @@ const ReviewLists = () => {
 
     getSnackReviewData();
   }, []);
-
-  console.log(snackReviewData);
 
   return (
     <div className="flex flex-col items-center justify-center ">
@@ -160,7 +154,7 @@ const ReviewLists = () => {
         </div>
         {/* 한줄 리뷰 직성 */}
         <div className="my-16">
-          <CreatSnackReview ratingCategory={ratingCategory} />
+          <CreateSnackReview ratingCategory={ratingCategory} />
         </div>
       </div>
     </div>
