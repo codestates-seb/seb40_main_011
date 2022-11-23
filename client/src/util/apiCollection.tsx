@@ -1,48 +1,50 @@
-import { InstanceV1 } from './axiosInstance';
+import axios from 'axios';
 import { LoginInputs } from '../types/mainPageTypes';
 
-const getReview = async () =>
-  await InstanceV1.get('/api/review')
+export const getReview = async () =>
+  await axios
+    .get('/api/review')
     .then((data) => data)
     .catch((err) => err.response);
 
-const getProduct = async (dataAmount: any) =>
-  await InstanceV1.get('/api/products', dataAmount)
+export const getProduct = async () =>
+  await axios
+    .get('/api/product')
     .then((data) => data)
     .catch((err) => err.response);
 
-const postProduct = async (data: any) =>
-  await InstanceV1.post('/api/product', data)
+export const postProduct = async (data: any) =>
+  await axios
+    .post('/api/product', data)
     .then((data) => data)
     .catch((err) => err.response);
 
-const getUserProfile = async () =>
-  await InstanceV1.get('/api/user')
+export const getUserProfile = async () =>
+  await axios
+    .get('/api/user')
     .then((data) => data)
     .catch((err) => err.response);
 
-const getReviewDetail = async (params: string | undefined) =>
-  await InstanceV1.get(`/api/review/${params}`)
+export const getReviewDetail = async (params: string | undefined) =>
+  await axios
+    .get(`/api/review/${params}`)
     .then((data) => data)
     .catch((err) => err.response);
 
-const postLogin = async (data: LoginInputs) =>
-  await InstanceV1.post('/api/login', data)
-    .then((data) => data)
-    .catch((err) => err.response);
-
-const getSearchResult = async () => {
-  await InstanceV1.get('/api/products/1')
-    .then((data) => data)
-    .catch((err) => err.response);
+export const postLogin = async (data: LoginInputs) => {
+  try {
+    const loginResponse = await axios.post('/api/login', data);
+    return loginResponse;
+  } catch (err: any) {
+    return err.response;
+  }
 };
 
-export {
-  getReview,
-  getProduct,
-  getUserProfile,
-  postLogin,
-  getReviewDetail,
-  postProduct,
-  getSearchResult,
+export const getSearchResult = async () => {
+  try {
+    const searchResponse = await axios.get('/api/products/1');
+    return searchResponse;
+  } catch (err: any) {
+    return err.response;
+  }
 };

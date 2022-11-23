@@ -18,16 +18,15 @@ function App() {
       <Header />
       <main>
         <Routes>
-          {/* <Route path="/" element={<Login />} /> */}
           <Route path="/" element={<Main />} />
           <Route path="/mypage/*" element={<MyPage />} />
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/categories/review/:id" element={<ReviewLists />} />
           <Route path="/categories/review/write" element={<WriteReview />} />
-          <Route path="/login" element={<Login />} />
           <Route path="/question-lists" element={<QuestionLists />} />
           <Route path="/review/:id" element={<RvDetail />} />
           <Route path="/search" element={<SearchResult />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </main>
       <Footer />

@@ -8,10 +8,10 @@ const SearchResult = () => {
   const keyword = decodeURI(location.search).slice(idx + 1);
 
   return (
-    <>
-      <SearchReview />
+    <div className="flex flex-col justify-center">
+      <SearchReview keyword={keyword} />
       <SearchProduct />
-    </>
+    </div>
   );
 };
 
