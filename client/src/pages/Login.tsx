@@ -98,8 +98,8 @@ export default function Login() {
   };
 
   return (
-    <div className="w-full h-screen bg-slate-300 pt-20 pb-32 flex flex-col items-center">
-      <div className="max-md:w-full md:w-[32rem] bg-white flex justify-center flex-col p-16 rounded-3xl shadow-2xl/30">
+    <div className="w-full h-screen bg-slate-300 pt-20 max-md:pt-0 pb-32 flex flex-col items-center">
+      <div className="max-md:w-full md:w-[32rem] bg-white flex justify-center flex-col p-16 rounded-3xl max-md:rounded-none shadow-2xl/30">
         <img
           src={require('../images/logo.png')}
           alt=""
@@ -204,9 +204,9 @@ export default function Login() {
         </div>
       </div>
       <div className="my-4 pt-1.5 pb-2 px-8 hover:bg-white/30 rounded-full">
-        <span className="text-gray-500 font-medium">
+        <label className="text-gray-500 font-medium" htmlFor="goSignup">
           회원가입이 안되어있으시다구요?
-        </span>
+        </label>
         <button
           className="font-bold text-gray-700 hover:text-blue-600 ml-4"
           onClick={goSignup}
