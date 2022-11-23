@@ -1,9 +1,14 @@
 package seb.project.Codetech.file.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
@@ -61,7 +66,7 @@ public class FileEntity extends BaseTime { // 파일은 업로드 이후 변경�
 	private Review review;
 
 	public void setProduct(Product product) {
-		if(this.product != null)
+		if (this.product != null)
 			this.product.getFileEntities().remove(this);
 		this.product = product;
 		this.product.getFileEntities().add(this);
