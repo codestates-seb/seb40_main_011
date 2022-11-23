@@ -1,7 +1,13 @@
 import { Dispatch, SetStateAction } from 'react';
+
 export interface LoginInputs {
   email: string;
   password: string;
+}
+export interface SignupInputs {
+  email: string;
+  password: string;
+  nickname: string;
 }
 export interface Product {
   id: number;
