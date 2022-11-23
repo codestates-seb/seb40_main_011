@@ -42,7 +42,7 @@ public class UserController {
     }
 
     @Transactional
-    @PatchMapping("/user")
+    @PatchMapping("/user/image")
     public ResponseEntity<UserResponseDto> patchUser(@AuthenticationPrincipal String email,
                                                      @RequestPart @Valid UserPatchDto patch,
                                                      @RequestPart MultipartFile file) throws IOException {
@@ -51,6 +51,15 @@ public class UserController {
         FileEntity saveFile = fileService.saveFile(file);
         FileEntity serviceFile = fileService.setUploadUser(serviceUser,saveFile);
         serviceUser.setImage(serviceFile.getPath());
+        return ResponseEntity.ok(mapper.userToUserResponseDto(serviceUser));
+    }
+
+    @Transactional
+    @PatchMapping("/user")
+    public ResponseEntity<UserResponseDto> patchUserImage(@AuthenticationPrincipal String email,
+                                                          @RequestBody @Valid UserPatchDto patch){
+        User user = mapper.userPatchDtoToUser(patch);
+        User serviceUser = userService.updateUser(email,user);
         return ResponseEntity.ok(mapper.userToUserResponseDto(serviceUser));
     }
 
@@ -104,5 +113,23 @@ public class UserController {
         return ResponseEntity.ok(userAndReviewsDto);
     }
 
+    @Transactional(readOnly = true)
+    @GetMapping("/user/answers")
+    public ResponseEntity<UserAndQuestionsDto> getAnswers(@AuthenticationPrincipal String email,
+                                                          @Positive @RequestParam(value = "page", defaultValue = "1") int page,
+                                                          @Positive @RequestParam(value = "size",defaultValue = "5") int size,
+                                                          @RequestParam(value = "sort",defaultValue = "createAt") String sort){
+        UserAndQuestionsDto userAndAnswersDto = userService.userAndAnswersDto(email,page-1,size,sort);
+        return ResponseEntity.ok(userAndAnswersDto);
+    }
 
+//    @Transactional(readOnly = true)
+//    @GetMapping("/user/recommends")
+//    public ResponseEntity<UserAndReviewsDto> getRecommends(@AuthenticationPrincipal String email,
+//                                                           @Positive @RequestParam(value = "page", defaultValue = "1") int page,
+//                                                           @Positive @RequestParam(value = "size",defaultValue = "5") int size,
+//                                                           @RequestParam(value = "sort",defaultValue = "createAt") String sort){
+//        UserAndReviewsDto userAndRecommendsDto = userService.userAndRecommendsDto(email,page-1,size,sort);
+//        return ResponseEntity.ok(userAndRecommendsDto);
+//    }
 }
