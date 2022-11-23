@@ -74,9 +74,11 @@ public User(String nickname, String email, String password) {
 	private List<SnackReview> snackReviews = new ArrayList<>();
 
 	@OneToMany(mappedBy = "writer")
+	@BatchSize(size = 100)
 	private List<Question> questions = new ArrayList<>();
 
 	@OneToMany(mappedBy = "writer")
+	@BatchSize(size = 100)
 	private List<Answer> answers = new ArrayList<>();
 
 	@OneToMany(mappedBy = "user")
