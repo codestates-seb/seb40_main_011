@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import lombok.extern.log4j.Log4j2;
 import seb.project.Codetech.file.entity.FileEntity;
 import seb.project.Codetech.file.service.FileService;
 import seb.project.Codetech.global.page.PageInfo;
@@ -35,6 +36,7 @@ import seb.project.Codetech.product.service.ProductService;
 
 @RestController
 @RequestMapping("/api/products")
+@Log4j2
 public class ProductController {
 
 	private final ProductMapper mapper;
