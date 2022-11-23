@@ -4,8 +4,8 @@ import { useEffect, useState, SetStateAction } from 'react';
 import EditProfile from '../Modal/EditProfile';
 import EditPassword from '../Modal/EditPassword';
 import EditProfileImg from '../Modal/EditProfileImg';
-import { getUserProfile } from '../../util/testApiCollection';
-import { AxiosPromise } from 'axios';
+import { getUserProfile } from '../../util/apiCollection';
+import { initialToken } from '../../store/login';
 
 export interface UserProfile {
   email: string;
@@ -14,9 +14,11 @@ export interface UserProfile {
   point: number;
 }
 
-export interface EditProfileImg {
-  isEditProfileImg: boolean;
-  setIsEditProfileImg: React.Dispatch<SetStateAction<boolean>>;
+export interface Token {
+  headers: Auth;
+}
+interface Auth {
+  Authorization: string | null;
 }
 
 export interface EditProfileImgModalHandler {
@@ -32,6 +34,7 @@ export interface EditPasswordModalHandler {
 const Profile = () => {
   const [userProfileData, setUserProfileData] = useState<UserProfile>();
 
+  console.log(initialToken);
   useEffect(() => {
     const getUserProfileData = async () => {
       const { data } = await getUserProfile();
@@ -40,6 +43,7 @@ const Profile = () => {
     getUserProfileData();
   }, []);
 
+  console.log(userProfileData);
   // Modal
   const [isEditProfileImg, setIsEditProfileImg] = useState(false);
   const openEditProfileImgModalHandler = (
@@ -64,20 +68,17 @@ const Profile = () => {
 
   return (
     <div>
-      {isEditProfileImg === false ? null : (
+      {!isEditProfileImg ? null : (
         <EditProfileImg
           openEditProfileImgModalHandler={openEditProfileImgModalHandler}
-
-          // isEditProfileImg={isEditProfileImg}
-          // setIsEditProfileImg={setIsEditProfileImg}
         />
       )}
-      {isEditProfile === false ? null : (
+      {!isEditProfile ? null : (
         <EditProfile
           openEditProfileModalHandler={openEditProfileModalHandler}
         />
       )}
-      {isEditPassword === false ? null : (
+      {!isEditPassword ? null : (
         <EditPassword
           openEditPasswordModalHandler={openEditPasswordModalHandler}
         />

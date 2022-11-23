@@ -9,6 +9,23 @@ const CreatSnackReview = ({ ratingCategory }: RatingCategory) => {
     setQuestion(e.target.value);
   };
 
+  // useEffect(() => {
+  //   const postSnackReview = async () => {
+  //     try {
+  //       const response = await axios.post(`api/snack-reviews`);
+  //       setSnackReviewData(response.data);
+  //     } catch (err: any) {
+  //       return err.response;
+  //     }
+  //   };
+
+  //   postSnackReview();
+  // }, []);
+
+  // console.log(snackReviewData);
+
+  // const handleRating1 = (rate: number) => setRating1(rate);
+
   return (
     <>
       <div className="flex items-center justify-between">
