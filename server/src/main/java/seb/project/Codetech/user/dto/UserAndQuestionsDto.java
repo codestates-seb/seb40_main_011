@@ -3,10 +3,10 @@ package seb.project.Codetech.user.dto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.domain.Page;
 import seb.project.Codetech.question.entity.Question;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @NoArgsConstructor
 @Getter
@@ -16,7 +16,7 @@ public class UserAndQuestionsDto {
     private String nickname;
     private Long point;
     private String image;
-    private List<MyQuestionCard> questions;
+    private Page<MyQuestionCard> questions;
 
     @NoArgsConstructor
     @Getter

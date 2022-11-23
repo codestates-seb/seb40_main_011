@@ -3,10 +3,9 @@ package seb.project.Codetech.user.dto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.domain.Page;
 import seb.project.Codetech.product.entity.Type;
 import seb.project.Codetech.review.entity.Review;
-
-import java.util.List;
 
 @NoArgsConstructor
 @Getter
@@ -16,7 +15,7 @@ public class UserAndReviewsDto {
     private String nickname;
     private Long point;
     private String image;
-    private List<MyReviewCard> reviews;
+    private Page<MyReviewCard> reviews;
 
 
     @Getter

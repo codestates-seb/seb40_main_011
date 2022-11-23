@@ -3,12 +3,12 @@ package seb.project.Codetech.user.dto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.domain.Page;
 import seb.project.Codetech.product.entity.Type;
 import seb.project.Codetech.snackreview.entity.ReviewScore;
 import seb.project.Codetech.snackreview.entity.SnackReview;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @NoArgsConstructor
 @Getter
@@ -18,7 +18,7 @@ public class UserAndSnackReviewsDto {
     private String nickname;
     private Long point;
     private String image;
-    private List<MySnackReviewCard> snackReviews;
+    private Page<MySnackReviewCard> snackReviews;
 
 
     @Getter
