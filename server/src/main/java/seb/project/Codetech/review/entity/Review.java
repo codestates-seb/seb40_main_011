@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -15,14 +14,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import seb.project.Codetech.file.entity.FileEntity;
 import seb.project.Codetech.global.auditing.BaseTime;
-import seb.project.Codetech.global.converter.TypeConverter;
 import seb.project.Codetech.product.entity.Product;
-import seb.project.Codetech.product.entity.Type;
 import seb.project.Codetech.recommend.entity.Recommend;
 import seb.project.Codetech.user.entity.User;
 
@@ -35,13 +35,6 @@ public class Review extends BaseTime {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
-	// 작성자 식별자
-	// 제품 식별자
-
-	@Column(nullable = false)
-	@Convert(converter = TypeConverter.class)
-	private Type type;
 
 	@Column(nullable = false)
 	private String title;
@@ -61,6 +54,7 @@ public class Review extends BaseTime {
 
 	@ManyToOne
 	@JoinColumn(name = "product_id")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 	private Product product;
 
 	@OneToMany(mappedBy = "review")

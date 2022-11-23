@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { LoginInputs } from '../types/mainPageTypes';
+import { LoginInputs, SignupInputs } from '../types/mainPageTypes';
 
 export const getReview = async () =>
   await axios
@@ -44,6 +44,15 @@ export const getSearchResult = async () => {
   try {
     const searchResponse = await axios.get('/api/products/1');
     return searchResponse;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
+export const postSignup = async (data: SignupInputs) => {
+  try {
+    const signupResponse = await axios.post('/api/register', data);
+    return signupResponse;
   } catch (err: any) {
     return err.response;
   }
