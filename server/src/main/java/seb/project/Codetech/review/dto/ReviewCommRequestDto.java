@@ -3,21 +3,18 @@ package seb.project.Codetech.review.dto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-public class ReviewRequestDto {
-
+public class ReviewCommRequestDto {
 	@Getter
 	@NoArgsConstructor
 	public static class Post {
-		private Long productId;
-		private String title;
+		private Long reviewId;
+		private Long parentId;
 		private String content;
 	}
 
 	@Getter
 	@NoArgsConstructor
 	public static class Patch {
-		private Long productId;
-		private String title;
 		private String content;
 	}
 }

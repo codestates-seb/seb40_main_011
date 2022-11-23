@@ -1,14 +1,15 @@
 import { useState, KeyboardEvent } from 'react';
 import { BiSearch } from 'react-icons/bi';
+import { useNavigate } from 'react-router-dom';
 
 export default function SearchBar() {
-  //   const navigate = useNavigate();
+  const navigate = useNavigate();
   const [keywords, setKeywords] = useState('');
   const onKeyPress = (e: KeyboardEvent) => {
     if (e.key == 'Enter') {
       e.preventDefault();
       console.log(`검색어: ${keywords}`);
-      // navigate(`/search?search=${keywords}`);
+      navigate({ pathname: `/search`, search: `?search=${keywords}` });
     }
   };
   return (
