@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
+import { useIsLogin } from '../../store/login';
 
 export const CommentInput = () => {
+  const { isLogin } = useIsLogin();
   const [question, setQuestion] = useState('');
   const handleTextarea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setQuestion(e.target.value);
@@ -21,7 +23,9 @@ export const CommentInput = () => {
             className={`p-4 focus:ring-sky-500 ring-1 ring-gray-200 rounded-xl w-full outline-none text-gray-300 font-medium resize-none focus:text-gray-700 text-lg ${
               question.length !== 0 && `text-gray-700`
             }`}
-            placeholder="Enter your question..."
+            placeholder={
+              isLogin ? '댓글 달기...' : '댓글을 달기위해 로그인하세요...'
+            }
             onChange={handleTextarea}
             value={question}
           />
