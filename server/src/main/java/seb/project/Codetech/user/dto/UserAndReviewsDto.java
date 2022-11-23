@@ -31,8 +31,8 @@ public class UserAndReviewsDto {
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
 
-//        private Long productId;
-//        private String productName;
+        private Long productId;
+        private String productName;
 
         public MyReviewCard(Review review){
             this.id = review.getId();
@@ -42,8 +42,8 @@ public class UserAndReviewsDto {
             this.view = review.getView();
             this.createdAt = review.getCreatedAt();
             this.modifiedAt = review.getModifiedAt();
-//            this.productId = review.getProduct().getId();
-//            this.productName = review.getProduct().getName();
+            this.productId = review.getProduct().getId();
+            this.productName = review.getProduct().getName();
         }
 
     }
