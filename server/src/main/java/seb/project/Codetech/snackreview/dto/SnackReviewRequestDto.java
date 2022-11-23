@@ -1,5 +1,6 @@
 package seb.project.Codetech.snackreview.dto;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -11,6 +12,7 @@ import seb.project.Codetech.snackreview.entity.ReviewScore;
 
 public class SnackReviewRequestDto {
 	@Getter
+	@Valid
 	@NoArgsConstructor
 	public static class Post {
 		@NotNull
@@ -22,6 +24,7 @@ public class SnackReviewRequestDto {
 	}
 
 	@Getter
+	@Valid
 	@NoArgsConstructor
 	public static class Patch {
 		@NotNull
