@@ -40,6 +40,15 @@ export const postLogin = async (data: LoginInputs) => {
   }
 };
 
+export const getSearchResult = async () => {
+  try {
+    const searchResponse = await axios.get('/api/products/1');
+    return searchResponse;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
 export const postSignup = async (data: SignupInputs) => {
   try {
     const signupResponse = await axios.post('/api/register', data);
