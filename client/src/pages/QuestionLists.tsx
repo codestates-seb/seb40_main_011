@@ -4,9 +4,13 @@ import Answer from '../components/QuestionList/Answer';
 import PendingAnswer from '../components/QuestionList/PendingAnswer';
 import PendingQuestion from '../components/QuestionList/PendingQuestion';
 import SelectBox from '../components/SelectBox/SelectBox';
+import { useEffect } from 'react';
 // import Confirm from '../components/Modal/Confirm';
 
 export default function QuestionLists() {
+  useEffect(async () => {
+    const QuestionData = await getQuestionData();
+  });
   return (
     <>
       <QuestionInput />

@@ -4,8 +4,6 @@ import {
   SignupInputs,
   QuestionContent,
 } from '../types/mainPageTypes';
-// import { OptOutInputs } from '../components/Modal/OptOut';
-// import { Token } from '../components/MyPage/Profile';
 
 export const getReview = async () =>
   await axios
@@ -98,3 +96,5 @@ export const postQuestion = async (data: QuestionContent) => {
     return err.response;
   }
 };
+
+export const getQuestionData; = async () => {}
