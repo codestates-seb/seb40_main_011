@@ -12,7 +12,7 @@ import {
 import RvDetail from './components/Details/RvDetail';
 import SearchResult from './components/Search/SearchResult';
 import Layout from './layout/Layout';
-import Header from './components/Header/Header';
+// import Header from './components/Header/Header';
 
 function App() {
   return (
@@ -25,7 +25,7 @@ function App() {
           <Route path="mypage/*" element={<MyPage />} />
           <Route path="/search" element={<SearchResult />} />
           <Route path="categories/review/:id" element={<ReviewLists />} />
-          <Route path="categories/review/write" element={<WriteReview />} />
+          <Route path="reviews" element={<WriteReview />} />
           <Route path="question-lists" element={<QuestionLists />} />
           <Route path="review/:id" element={<RvDetail />} />
         </Route>
