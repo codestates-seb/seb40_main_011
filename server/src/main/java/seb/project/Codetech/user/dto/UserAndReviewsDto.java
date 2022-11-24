@@ -28,6 +28,7 @@ public class UserAndReviewsDto {
         private String title;
         private String content;
         private Long view;
+        private Long recommendNumber;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
 
@@ -40,6 +41,7 @@ public class UserAndReviewsDto {
             this.title = review.getTitle();
             this.content = review.getContent();
             this.view = review.getView();
+            this.recommendNumber = review.getRecommendNumber();
             this.createdAt = review.getCreatedAt();
             this.modifiedAt = review.getModifiedAt();
             this.productId = review.getProduct().getId();
