@@ -36,6 +36,6 @@ public class ProductResponseDto {
 	@Getter
 	@NoArgsConstructor
 	public static class selectProduct {
-		private Type type;
+		private String name;
 	}
 }
