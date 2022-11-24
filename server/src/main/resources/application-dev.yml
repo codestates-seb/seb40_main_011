@@ -16,6 +16,12 @@ spring:
   security:
     oauth2:
       client:
+        provider:
+          kakao:
+            authorizationUri: https://kauth.kakao.com/oauth/authorize
+            tokenUri: https://kauth.kakao.com/oauth/token
+            userInfoUri: https://kapi.kakao.com/v2/user/me
+            userNameAttribute: id
         registration:
           google:
             clientId: ${OAUTH2_CLIENT_ID}
