@@ -37,6 +37,7 @@ const Profile = () => {
     const getUserProfileData = async () => {
       const { data } = await getUserProfile();
       setUserProfileData(data);
+      console.log(userProfileData);
     };
     getUserProfileData();
   }, []);

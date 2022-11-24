@@ -88,6 +88,66 @@ export const editAccount = async () => {
   }
 };
 
+export const postSnack = async (req: any) => {
+  try {
+    const searchResponse = await axios.post('/api/snack-reviews', req, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: localStorage.getItem('authorization'),
+      },
+    });
+    return searchResponse;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
+export const getSnack = async (productId: any, limit: number) => {
+  try {
+    const response = await axios.get(
+      `/api/snack-reviews?productId=${productId}&offset=0&limit=${limit}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    return response;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
+export const getSnackStats = async (productId: number) => {
+  try {
+    const response = await axios.get(
+      `/api/snack-reviews/stats?productId=${productId}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    return response;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
+export const deleteSnack = async (snackId: number) => {
+  try {
+    const response = await axios.delete(`/api/snack-reviews/${snackId}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: localStorage.getItem('authorization'),
+      },
+    });
+    return response;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
 export const postQuestion = async (data: QuestionContent) => {
   try {
     const response = await axios.post('/api/questions', data, {

@@ -68,6 +68,7 @@ const EditProgileImg = ({
               onChange={handleChangeImg}
             />
             <label
+              role="button"
               htmlFor="imgUpload"
               className="px-6 py-2 m-5 rounded-2xl bg-slate-300"
             >
