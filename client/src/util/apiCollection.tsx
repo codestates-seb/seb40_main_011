@@ -99,3 +99,35 @@ export const postSnack = async (req: any) => {
     return err.response;
   }
 };
+
+export const getSnack = async (productId: any) => {
+  try {
+    const response = await axios.get(
+      `/api/snack-reviews?productId=${productId}&offset=0&limit=6`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    return response;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
+export const getSnackStats = async (productId: any) => {
+  try {
+    const response = await axios.get(
+      `/api/snack-reviews/stats?productId=${productId}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    return response;
+  } catch (err: any) {
+    return err.response;
+  }
+};

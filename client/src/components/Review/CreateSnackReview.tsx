@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Rating } from 'react-simple-star-rating';
 import TextareaAutosize from 'react-textarea-autosize';
-import { RatingCategory } from '../../pages/ReviewLists';
+import { RatingCategory } from '../../types/mainPageTypes';
 import { postSnack } from '../../util/apiCollection';
 import { useParams } from 'react-router-dom';
 
@@ -37,7 +37,7 @@ const CreateSnackReview = ({ ratingCategory }: RatingCategory) => {
   return (
     <>
       <div className="flex items-center justify-between">
-        {ratingCategory.map((el, index) => {
+        {ratingCategory.map((el: any, index: any) => {
           return (
             <div className="flex items-center" key={index}>
               <p className={`${el} pr-1.5 text-lg`}>{el}</p>
