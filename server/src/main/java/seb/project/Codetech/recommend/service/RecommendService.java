@@ -65,7 +65,7 @@ public class RecommendService {
         Review review = findVerificationReview(post.getReviewId());
         Recommend recommend = new Recommend();
 
-        if(user.getId().equals(post.getUserId())){
+        if(user.getId().equals(findVerificationReview(post.getReviewId()).getUser().getId())){
             throw new BusinessLogicException(ExceptionCode.RECOMMEND_NOT_ALLOW);
         }
         if(repository.findByUserAndReview(user.getId(), post.getReviewId())!=null){
@@ -81,10 +81,5 @@ public class RecommendService {
         recommend.setUser(findUser(email));
         return repository.save(recommend);
 
-    }
-
-    private Recommend findVerifiedRecommend(Long id) {
-        return repository.findById(id).orElseThrow(() ->
-                new BusinessLogicException(ExceptionCode.RECOMMEND_NOT_FOUND));
     }
 }

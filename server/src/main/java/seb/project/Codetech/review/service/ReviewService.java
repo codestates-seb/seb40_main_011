@@ -64,7 +64,7 @@ public class ReviewService {
 		Optional.ofNullable(review.getContent()).ifPresent(findReview::setContent);
 		Optional.ofNullable(product).ifPresent(findReview::setProduct); // 회원이 제품을 변경하면 변경되도록 설정
 		Optional.ofNullable(review.getFileEntities()).ifPresent(findReview::setFileEntities);
-		findUser.updatePoint(10);
+		findUser.updatePoint(1);
 		userRepository.save(findUser);
 
 		return reviewRepository.save(findReview);
