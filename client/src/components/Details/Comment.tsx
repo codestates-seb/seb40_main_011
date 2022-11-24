@@ -4,12 +4,14 @@ import TextareaAutosize from 'react-textarea-autosize';
 import { useState } from 'react';
 import SubComment from './SubComment';
 import EditComment from './EditComment';
-
+import { useIsLogin } from '../../store/login';
 export interface count {
   count: number;
 }
 
 export default function Comment({ comments }: CommentProps) {
+  const { isLogin } = useIsLogin();
+  console.log(isLogin);
   const [moreComment, setMoreComment] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
   const [editedComment, setEditedComment] = useState('');
@@ -35,7 +37,7 @@ export default function Comment({ comments }: CommentProps) {
   return (
     <>
       {comments?.map((el: ReviewComments, idx: number) => (
-        <div className="w-full flex my-6 mr-16" key={idx}>
+        <div className="w-full flex my-6 " key={idx}>
           <img
             src={el.profileImg}
             alt=""
@@ -73,7 +75,9 @@ export default function Comment({ comments }: CommentProps) {
                   className="flex flex-row items-center hover:bg-slate-50 peer-invalid:bg-slate-50 "
                 >
                   <TextareaAutosize
-                    placeholder="댓글 달기..."
+                    placeholder={
+                      isLogin ? '댓글 달기...' : '댓글을 달기위해 로그인 하세요'
+                    }
                     className="peer w-full resize-none pl-6 mt-2 mb-3 outline-none font-medium bg-transparent"
                   />
                   <button className="w-12 flex-none flex justify-center items-center">
@@ -91,7 +95,11 @@ export default function Comment({ comments }: CommentProps) {
                   className="flex flex-row items-center hover:bg-slate-50 peer-invalid:bg-slate-50 "
                 >
                   <TextareaAutosize
-                    placeholder="댓글 달기..."
+                    placeholder={
+                      isLogin
+                        ? '댓글 달기...'
+                        : '댓글을 달기위해 로그인하세요...'
+                    }
                     className="peer w-full resize-none pl-6 mt-2 mb-3 outline-none font-medium bg-transparent"
                   />
                   <button className="w-12 flex-none flex justify-center items-center">

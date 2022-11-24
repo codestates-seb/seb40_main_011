@@ -8,9 +8,6 @@ interface LoginState {
   Logout: () => void;
 }
 
-// export const initialToken = localStorage.getItem('authorization');
-// export const [token, setToken] = useState<string|null>(null);
-
 export const useIsLogin = create<LoginState>()(
   persist((set) => ({
     isLogin: false,

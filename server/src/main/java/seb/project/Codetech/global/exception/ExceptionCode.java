@@ -33,7 +33,10 @@ public enum ExceptionCode {
 	QUESTION_UPDATE_NOT_ALLOWED(400, "답변이 작성된 질문은 수정할 수 없습니다."),
 	THIS_QUESTION_ADOPTED_ANSWER_ALREADY_EXIST(400, "채택된 답변이 이미 존재합니다."),
 
-	ANSWER_NOT_FOUND(404, "답변을 찾을 수 없습니다.");
+	ANSWER_NOT_FOUND(404, "답변을 찾을 수 없습니다."),
+
+	RECOMMEND_NOT_FOUND(404,"추천을 찾을 수 없습니다."),
+	RECOMMEND_NOT_ALLOW(404,"글쓴이는 추천할 수 없습니다.");
 
 	@Getter
 	private final int code;

@@ -4,8 +4,7 @@ import { useEffect, useState } from 'react';
 import { Product } from '../../types/mainPageTypes';
 import MainCategory from '../Selectors/MainCategory';
 import { useNavigate } from 'react-router-dom';
-import { FaChevronRight } from 'react-icons/fa';
-import { FaChevronLeft } from 'react-icons/fa';
+import { FaChevronRight, FaChevronLeft } from 'react-icons/fa';
 
 const ProductList = () => {
   const navigate = useNavigate();
@@ -13,6 +12,11 @@ const ProductList = () => {
   const [category, setCategory] = useState('all');
   const [totalPage, setTotalPage] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
+
+  const pageAmount = {
+    page: '0',
+    size: '9',
+  };
 
   useEffect(() => {
     const getProductData = async () => {
@@ -86,20 +90,22 @@ const ProductList = () => {
                 return (
                   <div
                     key={idx}
-                    className="mb-12 flex lg:w-1/3 justify-center drop-shadow-productList p-4 hover:-translate-y-1 transition ease-in-out hover:scale-110"
+                    className="mb-12 flex lg:w-1/3 justify-center drop-shadow-productList p-4 px-20 hover:-translate-y-1 transition ease-in-out hover:scale-110"
                   >
                     <div
                       role="button"
                       onClick={onProductClick}
                       id={el.id.toString()}
-                      className=" flex flex-col w-4/7 bg-white rounded-b-lg"
+                      className=" flex flex-col w-full bg-white rounded-b-lg"
                     >
                       <img className="rounded-t-lg h-48" src={el.image} />
                       <div>
-                        <div className="p-2 border-t-2">{el.name}</div>
+                        <div className="p-2 border-t-2 border-slate-300">
+                          {el.name}
+                        </div>
                         <div className="flex p-2 justify-between">
                           <div>{el.type.toLowerCase()}</div>
-                          <div className="이거 조회수로 바꿀거임">
+                          <div className="이거 평점으로 바꿀거임">
                             {el.createdAt}
                           </div>
                         </div>

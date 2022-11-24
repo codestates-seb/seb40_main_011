@@ -10,7 +10,9 @@ import {
   Login,
 } from './pages';
 import RvDetail from './components/Details/RvDetail';
+import SearchResult from './components/Search/SearchResult';
 import Layout from './layout/Layout';
+import Header from './components/Header/Header';
 
 function App() {
   return (
@@ -22,6 +24,7 @@ function App() {
           <Route path="" element={<QuestionLists />} />
           {/* <Route path="" element={<Main />} /> */}
           <Route path="mypage/*" element={<MyPage />} />
+          <Route path="/search" element={<SearchResult />} />
           <Route path="categories/review" element={<ReviewLists />} />
           <Route path="categories/review/write" element={<WriteReview />} />
           <Route path="question-lists" element={<Main />} />

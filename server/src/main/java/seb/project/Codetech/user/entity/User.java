@@ -74,15 +74,17 @@ public User(String nickname, String email, String password) {
 	private List<SnackReview> snackReviews = new ArrayList<>();
 
 	@OneToMany(mappedBy = "writer")
+	@BatchSize(size = 100)
 	private List<Question> questions = new ArrayList<>();
 
 	@OneToMany(mappedBy = "writer")
+	@BatchSize(size = 100)
 	private List<Answer> answers = new ArrayList<>();
 
 	@OneToMany(mappedBy = "user")
 	private List<DiscountComment> discountComments = new ArrayList<>();
 
-	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
 	private FileEntity file;
 
 	public void setFile(FileEntity file){

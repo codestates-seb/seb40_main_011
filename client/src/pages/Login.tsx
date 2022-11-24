@@ -107,7 +107,7 @@ export default function Login() {
         <img
           src={require('../images/logo.png')}
           alt=""
-          className="pb-10 m-auto w-56 cursor-pointer"
+          className="w-56 pb-10 m-auto cursor-pointer"
           onClick={handleHomeClick}
         />
         <form onSubmit={handleSubmit} className="flex flex-col justify-center">
@@ -120,7 +120,7 @@ export default function Login() {
           >
             <input
               type="text"
-              className="peer/email input-ani outline-none bg-transparent text-base absolute w-full pt-3 px-14 top-0 h-full font-medium"
+              className="absolute top-0 w-full h-full pt-3 text-base font-medium bg-transparent outline-none peer/email input-ani px-14"
               value={email}
               name="email"
               onChange={handleInputs}
@@ -135,13 +135,13 @@ export default function Login() {
             </label>
             <MdOutlineEmail className="absolute text-3xl text-gray-300 top-3.5 left-4" />
             {email.length > 5 && !isValidEmail && (
-              <span className="relative pointer-events-none top-16 text-sm text-red-600 flex items-center">
+              <span className="relative flex items-center text-sm text-red-600 pointer-events-none top-16">
                 <BsFillPatchExclamationFill className="inline mr-1 text-base mt-0.5" />
                 유효한 이메일 주소가 아닙니다.
               </span>
             )}
           </div>
-          {/* <div className="relative bg-gray-50 rounded h-14 mb-4 ring-inset ring-1 ring-slate-200"> */}
+          {/* <div className="relative mb-4 rounded bg-gray-50 h-14 ring-inset ring-1 ring-slate-200"> */}
           <div
             className={`relative bg-gray-50 rounded h-14 ring-inset ring-1 ring-slate-200 hover:ring-slate-400 hover:ring-2 ${
               password.length > 5 && !isValidPassword
@@ -151,7 +151,7 @@ export default function Login() {
           >
             <input
               type={passwordType}
-              className="peer/password input-ani outline-none bg-transparent text-base absolute pt-3 px-14 top-0 w-full h-full font-medium"
+              className="absolute top-0 w-full h-full pt-3 text-base font-medium bg-transparent outline-none peer/password input-ani px-14"
               value={password}
               name="password"
               onChange={handleInputs}
@@ -177,7 +177,7 @@ export default function Login() {
             </div>
             <RiLockPasswordLine className="absolute text-3xl text-gray-300 top-3.5 left-4" />
             {password.length > 5 && !isValidPassword && (
-              <span className="relative pointer-events-none top-16 text-sm text-red-600 flex items-center">
+              <span className="relative flex items-center text-sm text-red-600 pointer-events-none top-16">
                 <BsFillPatchExclamationFill className="inline mr-1 text-base mt-0.5" />
                 유효한 비밀번호가 아닙니다..
               </span>
@@ -186,21 +186,21 @@ export default function Login() {
           <button
             onClick={handleSubmit}
             type="submit"
-            className="w-full bg-blue-600 h-16 rounded-md text-xl font-bold pb-1 text-white hover:bg-blue-500"
+            className="w-full h-16 pb-1 text-xl font-bold text-white bg-blue-600 rounded-md hover:bg-blue-500"
           >
             로그인
           </button>
         </form>
 
-        {/* <span className="text-center text-gray-400 font-medium py-10">
+        {/* <span className="py-10 font-medium text-center text-gray-400">
           or use your sns account
         </span> */}
         <div className="flex flex-row justify-center pt-12">
           <button className="mx-8">
-            <RiKakaoTalkFill className="hover:p-2 p-3 w-16 h-16 rounded-full bg-white border hover:border-0 overflow-hidden text-gray-400 hover:text-black hover:bg-yellow-300 bg-border-0 duration-300" />
+            <RiKakaoTalkFill className="w-16 h-16 p-3 overflow-hidden text-gray-400 duration-300 bg-white border rounded-full hover:p-2 hover:border-0 hover:text-black hover:bg-yellow-300 bg-border-0" />
           </button>
           <button className="mx-8">
-            <AiOutlineGoogle className="hover:p-2 p-3 w-16 h-16 rounded-full bg-white border hover:border-0 overflow-hidden text-gray-400 hover:text-white hover:bg-red-500 bg-border-0 duration-300" />
+            <AiOutlineGoogle className="w-16 h-16 p-3 overflow-hidden text-gray-400 duration-300 bg-white border rounded-full hover:p-2 hover:border-0 hover:text-white hover:bg-red-500 bg-border-0" />
           </button>
           <button className="flex justify-center items-center text-[34px] hover:text-[40px] font-black pb-1 w-16 h-16 rounded-full bg-white border hover:border-0 overflow-hidden text-gray-400 hover:text-white hover:bg-green-500 mx-8 duration-300">
             <div className="pointer-events-none">N</div>
@@ -208,11 +208,11 @@ export default function Login() {
         </div>
       </div>
       <div className="my-4 pt-1.5 pb-2 px-8 hover:bg-white/20 rounded-full">
-        <label className="text-gray-500 font-medium" htmlFor="goSignup">
+        <label className="font-medium text-gray-500" htmlFor="goSignup">
           회원가입이 안되어있으시다구요?
         </label>
         <button
-          className="font-bold text-gray-700 hover:text-blue-600 ml-4"
+          className="ml-4 font-bold text-gray-700 hover:text-blue-600"
           onClick={goSignup}
           id="goSignup"
         >
