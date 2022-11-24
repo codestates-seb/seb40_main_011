@@ -8,7 +8,7 @@ import { useParams } from 'react-router-dom';
 const CreateSnackReview = ({ ratingCategory }: RatingCategory) => {
   const params = useParams();
   const [content, setContent] = useState('');
-  const [score, setScore] = useState({
+  const [score, setScore] = useState<any>({
     costEfficiency: 0,
     quality: 0,
     satisfaction: 0,
@@ -22,7 +22,7 @@ const CreateSnackReview = ({ ratingCategory }: RatingCategory) => {
 
   const handleRating = (value: number, index: number, event: any) => {
     const key = event.currentTarget.className.split(' ')[1];
-    setScore((current) => {
+    setScore((current: any) => {
       const newScore = { ...current };
       key === '가성비' ? (newScore.costEfficiency = value) : null;
       key === '품질' ? (newScore.quality = value) : null;
@@ -35,7 +35,17 @@ const CreateSnackReview = ({ ratingCategory }: RatingCategory) => {
   };
 
   const onCreateClick = async () => {
-    await postSnack({ score, content, productId: params.id });
+    const arr = Object.keys(score).map((el) => (score[el] === 0 ? 0 : 1));
+    const ratingValidation = arr.reduce(
+      (acc: number, cur: number) => acc * cur,
+      1
+    );
+    if (ratingValidation === 1) {
+      await postSnack({ score, content, productId: params.id });
+      window.location.reload();
+    } else {
+      window.alert('별점을 매겨주세요!');
+    }
   };
   return (
     <>
