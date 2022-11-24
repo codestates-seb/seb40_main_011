@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { BsXLg, BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
 import { OptOutModalHandler } from '../../pages/MyPage';
 import { delAccount } from '../../util/apiCollection';
-import { initialToken } from '../../store/login';
+// import { initialToken } from '../../store/login';
+import { useIsLogin } from '../../store/login';
 
 export interface OptOutInputs {
   headers: Header;
@@ -16,6 +17,7 @@ interface Header {
 }
 
 const OptOut = ({ openOptOutModalHandler }: OptOutModalHandler) => {
+  const { initialToken } = useIsLogin();
   const navigate = useNavigate();
 
   const [password, setPassword] = useState();

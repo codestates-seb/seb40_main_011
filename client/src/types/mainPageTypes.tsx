@@ -1,14 +1,20 @@
 import { Dispatch, SetStateAction } from 'react';
 
+export interface QuestionContent {
+  content: string;
+}
+
 export interface LoginInputs {
   email: string;
   password: string;
 }
+
 export interface SignupInputs {
   email: string;
   password: string;
   nickname: string;
 }
+
 export interface Product {
   id: number;
   name: string;
@@ -74,8 +80,7 @@ export interface EditModeProps {
 }
 
 export interface SnackReviewProps {
-  snackReviewData: any;
-  ratingCategory: string[];
+  snackReviewData: SnackReviews | undefined;
 }
 
 export interface RatingCategory {

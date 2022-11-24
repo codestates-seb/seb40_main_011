@@ -1,9 +1,11 @@
 import axios from 'axios';
-
-import { OptOutInputs } from '../components/Modal/OptOut';
-import { Token } from '../components/MyPage/Profile';
-import { LoginInputs, SignupInputs } from '../types/mainPageTypes';
-import { initialToken } from '../store/login';
+import {
+  LoginInputs,
+  SignupInputs,
+  QuestionContent,
+} from '../types/mainPageTypes';
+// import { OptOutInputs } from '../components/Modal/OptOut';
+// import { Token } from '../components/MyPage/Profile';
 
 export const getReview = async () =>
   await axios
@@ -59,7 +61,7 @@ export const getUserProfile = async () => {
   try {
     const optOut = await axios.get('/api/user', {
       headers: {
-        Authorization: initialToken,
+        Authorization: localStorage.getItem('authorization'),
       },
     });
     return optOut;
@@ -100,10 +102,10 @@ export const postSnack = async (req: any) => {
   }
 };
 
-export const getSnack = async (productId: any) => {
+export const getSnack = async (productId: any, limit: number) => {
   try {
     const response = await axios.get(
-      `/api/snack-reviews?productId=${productId}&offset=0&limit=6`,
+      `/api/snack-reviews?productId=${productId}&offset=0&limit=${limit}`,
       {
         headers: {
           'Content-Type': 'application/json',
@@ -116,7 +118,7 @@ export const getSnack = async (productId: any) => {
   }
 };
 
-export const getSnackStats = async (productId: any) => {
+export const getSnackStats = async (productId: number) => {
   try {
     const response = await axios.get(
       `/api/snack-reviews/stats?productId=${productId}`,
@@ -126,6 +128,31 @@ export const getSnackStats = async (productId: any) => {
         },
       }
     );
+    return response;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
+export const deleteSnack = async (snackId: number) => {
+  try {
+    const response = await axios.delete(`/api/snack-reviews/${snackId}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: localStorage.getItem('authorization'),
+      },
+    });
+    return response;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
+export const postQuestion = async (data: QuestionContent) => {
+  try {
+    const response = await axios.post('/api/questions', data, {
+      headers: { Authorization: localStorage.getItem('authorization') },
+    });
     return response;
   } catch (err: any) {
     return err.response;

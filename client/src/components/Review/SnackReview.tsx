@@ -1,13 +1,19 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import { Rating } from 'react-simple-star-rating';
 import { SnackReviewProps, SnackReviewCards } from '../../types/mainPageTypes';
+import { deleteSnack } from '../../util/apiCollection';
 
-const SnackReview = ({ snackReviewData, ratingCategory }: SnackReviewProps) => {
+const SnackReview = ({ snackReviewData }: SnackReviewProps) => {
   const getParsedDate = (createdAt: string) => {
     return new Date(createdAt).toLocaleDateString('ko-KR');
   };
-  console.log(snackReviewData);
+
+  const onEditClick = (e: any) => {
+    console.log(e.currentTarget.id);
+  };
+
+  const onDeleteClick = (e: any) => {
+    deleteSnack(e.currentTarget.id);
+  };
 
   return (
     <>
@@ -24,7 +30,7 @@ const SnackReview = ({ snackReviewData, ratingCategory }: SnackReviewProps) => {
                 className="w-16 h-16 rounded-full bg-slate-200"
               />
               <div className="flex w-full">
-                <div>{el.id}</div>
+                <div>{el.nickname}</div>
                 <div className="ml-auto">{getParsedDate(el.createdAt)}</div>
               </div>
             </div>
@@ -77,8 +83,20 @@ const SnackReview = ({ snackReviewData, ratingCategory }: SnackReviewProps) => {
             </div>
             <div className="text-justify h-[95px]">{el.content}</div>
             <div className="flex items-end justify-end text-sm">
-              <button className="border m-0.5 p-0.5 rounded-lg">수정</button>
-              <button className="border m-0.5 p-0.5 rounded-lg">삭제</button>
+              <button
+                onClick={onEditClick}
+                id={el.id.toString()}
+                className="border m-0.5 p-0.5 rounded-lg"
+              >
+                수정
+              </button>
+              <button
+                onClick={onDeleteClick}
+                id={el.id.toString()}
+                className="border m-0.5 p-0.5 rounded-lg"
+              >
+                삭제
+              </button>
             </div>
           </div>
         );

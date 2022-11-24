@@ -10,12 +10,16 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import seb.project.Codetech.global.auth.event.UserRegistrationApplicationEvent;
-import seb.project.Codetech.global.auth.utils.UserAuthorityUtils;
 import seb.project.Codetech.global.exception.BusinessLogicException;
 import seb.project.Codetech.global.exception.ExceptionCode;
+import seb.project.Codetech.question.entity.Answer;
 import seb.project.Codetech.question.entity.Question;
+import seb.project.Codetech.question.respository.QuestionRepository;
+import seb.project.Codetech.recommend.entity.Recommend;
 import seb.project.Codetech.review.entity.Review;
+import seb.project.Codetech.review.repository.ReviewRepository;
+import seb.project.Codetech.security.auth.event.UserRegistrationApplicationEvent;
+import seb.project.Codetech.security.auth.utils.UserAuthorityUtils;
 import seb.project.Codetech.snackreview.entity.SnackReview;
 import seb.project.Codetech.user.dto.UserAndQuestionsDto;
 import seb.project.Codetech.user.dto.UserAndReviewsDto;
@@ -39,14 +43,19 @@ public class UserService {
     private final UserAuthorityUtils authorityUtils;
     private final ApplicationEventPublisher publisher;
     private final RedisTemplate<String,String> redisTemplate;
+    private final QuestionRepository questionRepository;
+    private final ReviewRepository reviewRepository;
 
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, UserAuthorityUtils authorityUtils,
-                       ApplicationEventPublisher publisher, RedisTemplate<String,String> redisTemplate){
+                       ApplicationEventPublisher publisher, RedisTemplate<String,String> redisTemplate,
+                       QuestionRepository questionRepository, ReviewRepository reviewRepository){
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityUtils = authorityUtils;
         this.publisher = publisher;
         this.redisTemplate = redisTemplate;
+        this.questionRepository = questionRepository;
+        this.reviewRepository = reviewRepository;
     }
 
     public void logout(HttpServletRequest request) {
@@ -83,6 +92,7 @@ public class UserService {
         if(user.getPassword()!=null){
             findUser.setPassword(passwordEncoder.encode(user.getPassword()));
         }
+        findUser.updatePoint(1);
 
         return userRepository.save(findUser);
     }
@@ -176,4 +186,46 @@ public class UserService {
         return userAndReviewsDto;
     }
 
+    public UserAndQuestionsDto userAndAnswersDto(String email,int page, int size, String sort){
+        User user = findUser(email);
+        UserAndQuestionsDto userAndAnswersDto = new UserAndQuestionsDto();
+        List<Answer> answers = user.getAnswers();
+        List<Question> questionList = questionRepository.findAllByAnswersIn(answers);
+        List<UserAndQuestionsDto.MyQuestionCard> cards = new ArrayList<>();
+        for (Question question : questionList){
+            cards.add(new UserAndQuestionsDto.MyQuestionCard(question));
+        }
+        PageRequest pageRequest = PageRequest.of(page,size, Sort.by(sort).descending());
+        int start = (int)pageRequest.getOffset();
+        int end = Math.min((start+pageRequest.getPageSize()),cards.size());
+        Page<UserAndQuestionsDto.MyQuestionCard> cardPage = new PageImpl<>(cards.subList(start,end),pageRequest,cards.size());
+        userAndAnswersDto.setEmail(user.getEmail());
+        userAndAnswersDto.setNickname(user.getNickname());
+        userAndAnswersDto.setPoint(user.getPoint());
+        userAndAnswersDto.setImage(user.getImage());
+        userAndAnswersDto.setQuestions(cardPage);
+        return userAndAnswersDto;
+
+    }
+
+    public UserAndReviewsDto userAndRecommendsDto(String email, int page, int size, String sort) {
+        User user = findUser(email);
+        UserAndReviewsDto userAndRecommendsDto = new UserAndReviewsDto();
+        List<Recommend> recommends = user.getRecommends();
+        List<Review> reviewList = reviewRepository.findAllByRecommendsIn(recommends);
+        List<UserAndReviewsDto.MyReviewCard> cards = new ArrayList<>();
+        for (Review review : reviewList){
+            cards.add(new UserAndReviewsDto.MyReviewCard(review));
+        }
+        PageRequest pageRequest = PageRequest.of(page,size, Sort.by(sort).descending());
+        int start = (int)pageRequest.getOffset();
+        int end = Math.min((start+pageRequest.getPageSize()),cards.size());
+        Page<UserAndReviewsDto.MyReviewCard> cardPage = new PageImpl<>(cards.subList(start,end),pageRequest,cards.size());
+        userAndRecommendsDto.setEmail(user.getEmail());
+        userAndRecommendsDto.setNickname(user.getNickname());
+        userAndRecommendsDto.setPoint(user.getPoint());
+        userAndRecommendsDto.setImage(user.getImage());
+        userAndRecommendsDto.setReviews(cardPage);
+        return userAndRecommendsDto;
+    }
 }

@@ -8,36 +8,39 @@ import { useParams } from 'react-router-dom';
 const CreateSnackReview = ({ ratingCategory }: RatingCategory) => {
   const params = useParams();
   const [content, setContent] = useState('');
-  const [rating, setRating] = useState(0);
-  const score = {
+  const [score, setScore] = useState({
     costEfficiency: 0,
     quality: 0,
     satisfaction: 0,
     performance: 0,
     design: 0,
-  };
+  });
 
   const handleTextarea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
   };
 
-  const handleRating = (value: any, index: any, event: any) => {
+  const handleRating = (value: number, index: number, event: any) => {
     const key = event.currentTarget.className.split(' ')[1];
-    key === '가성비' ? (score.costEfficiency = value) : null;
-    key === '품질' ? (score.quality = value) : null;
-    key === '만족감' ? (score.satisfaction = value) : null;
-    key === '성능' ? (score.performance = value) : null;
-    key === '디자인' ? (score.design = value) : null;
+    setScore((current) => {
+      const newScore = { ...current };
+      key === '가성비' ? (newScore.costEfficiency = value) : null;
+      key === '품질' ? (newScore.quality = value) : null;
+      key === '만족감' ? (newScore.satisfaction = value) : null;
+      key === '성능' ? (newScore.performance = value) : null;
+      key === '디자인' ? (newScore.design = value) : null;
+
+      return newScore;
+    });
   };
 
   const onCreateClick = async () => {
     await postSnack({ score, content, productId: params.id });
   };
-
   return (
     <>
       <div className="flex items-center justify-between">
-        {ratingCategory.map((el: any, index: any) => {
+        {ratingCategory.map((el: string, index: number) => {
           return (
             <div className="flex items-center" key={index}>
               <p className={`${el} pr-1.5 text-lg`}>{el}</p>

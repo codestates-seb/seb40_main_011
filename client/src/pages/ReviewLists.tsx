@@ -7,27 +7,36 @@ import SnackReview from '../components/Review/SnackReview';
 import CreateSnackReview from '../components/Review/CreateSnackReview';
 import { getSnack, getSnackStats } from '../util/apiCollection';
 import { SnackReviews, SnackReviewAvg } from '../types/mainPageTypes';
+import { FaChevronRight, FaChevronLeft } from 'react-icons/fa';
 
 const ReviewLists = () => {
   const sortReviews = ['등록순', '추천순', '댓글순'];
   const ratingCategory = ['가성비', '품질', '만족감', '성능', '디자인'];
-
   const [snackReviewStats, setSnackReviewStats] = useState<SnackReviewAvg>();
   const [snackReviewData, setSnackReviewData] = useState<
     SnackReviews | undefined
   >();
+  const [limit, setLimit] = useState(6);
 
-  const productId = useParams().id;
+  const productId = Number(useParams().id);
 
   useEffect(() => {
     const getSnackData = async () => {
-      const { data } = await getSnack(productId);
+      const { data } = await getSnack(productId, limit);
       const stats = await getSnackStats(productId);
       setSnackReviewData(data);
       setSnackReviewStats(stats.data);
     };
     getSnackData();
-  }, []);
+  }, [limit]);
+
+  const onMoreClick = (e: React.MouseEvent<HTMLElement>) => {
+    setLimit(limit + 6);
+  };
+
+  const oncloseClick = () => {
+    setLimit(6);
+  };
 
   return (
     <div className="flex flex-col items-center justify-center ">
@@ -119,20 +128,24 @@ const ReviewLists = () => {
           <div>
             <div className="mb-2 text-xl font-medium text-left">한줄 리뷰</div>
             <div className="grid justify-center grid-cols-3 gap-x-20 gap-y-16">
-              <SnackReview
-                snackReviewData={snackReviewData}
-                ratingCategory={ratingCategory}
-              />
+              <SnackReview snackReviewData={snackReviewData} />
             </div>
           </div>
-
-          {/* {snackReviewData.hasNext ? (
-            <button className="px-10 py-2 my-10 rounded-xl bg-slate-200">
+          {snackReviewData?.hasNext ? (
+            <button
+              onClick={onMoreClick}
+              className="px-10 py-2 my-10 rounded-xl bg-slate-200"
+            >
               더보기
             </button>
           ) : (
-            ''
-          )} */}
+            <button
+              onClick={oncloseClick}
+              className="px-10 py-2 my-10 rounded-xl bg-slate-200"
+            >
+              접기
+            </button>
+          )}
         </div>
         {/* 한줄 리뷰 직성 */}
         <div className="my-16">
