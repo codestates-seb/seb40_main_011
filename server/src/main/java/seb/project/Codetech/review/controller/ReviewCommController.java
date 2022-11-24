@@ -1,11 +1,11 @@
 package seb.project.Codetech.review.controller;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Positive;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,19 +35,27 @@ public class ReviewCommController {
 
 		ReviewComment reviewComment = mapper.reviewCommPostRequestDtoToReviewComment(request);
 		ReviewComment createReviewComm =
-			reviewCommService.createReviewComm(email, request.getReviewId(), reviewComment);
-		reviewCommService.replayCommentCheck(request.getParentId(), createReviewComm);
+			reviewCommService.createReviewComm(email, request.getReviewId(), request.getParentId(), reviewComment);
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(createReviewComm);
 	}
 
-	@PatchMapping("/{id}")
+	@PatchMapping
 	public ResponseEntity<ReviewComment> patchReviewComm(@AuthenticationPrincipal String email,
-		@PathVariable @Positive Long id,
 		@RequestBody @Valid ReviewCommRequestDto.Patch request) {
+
 		ReviewComment reviewComment = mapper.reviewCommPatchRequestDtoToReviewComment(request);
-		ReviewComment modifyReviewComm = reviewCommService.modifyReviewComm(email, id, reviewComment);
+		ReviewComment modifyReviewComm = reviewCommService.modifyReviewComm(email, reviewComment);
 
 		return ResponseEntity.ok(modifyReviewComm);
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<ReviewComment> deleteReviewComm(@AuthenticationPrincipal String email,
+		@PathVariable Long id) {
+
+		reviewCommService.disableReviewComm(email, id);
+
+		return ResponseEntity.ok().build();
 	}
 }
