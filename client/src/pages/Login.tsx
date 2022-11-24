@@ -11,6 +11,7 @@ import {
   RiLockPasswordLine,
   BsFillPatchExclamationFill,
 } from '../icons';
+import { emailRegex, passwordRegex } from '../util/Regex';
 
 export default function Login() {
   // 홈으로 이동
@@ -36,26 +37,26 @@ export default function Login() {
   const [isValidPassword, setIsValidPassword] = useState(false);
 
   // 이메일, 비밀번호 유효성 검사
-  const passwordPattern = new RegExp('^[a-zA-Z0-9!@#$%^*+=-]+$');
-  const emailPattern = new RegExp(
-    '^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$'
-  );
+  // const passwordPattern = new RegExp('^[a-zA-Z0-9!@#$%^*+=-]+$');
+  // const emailPattern = new RegExp(
+  //   '^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$'
+  // );
 
   // onChange inputs
   const handleInputs = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
     if (name === 'email') {
       setEmail(value.trim());
-      if (!emailPattern.test(value.trim())) {
+      if (!emailRegex.test(value.trim())) {
         setIsValidEmail(false);
-      } else if (emailPattern.test(value.trim())) {
+      } else if (emailRegex.test(value.trim())) {
         setIsValidEmail(true);
       }
     } else if (name === 'password') {
       setPassword(value.trim());
-      if (!passwordPattern.test(value)) {
+      if (!passwordRegex.test(value)) {
         setIsValidPassword(false);
-      } else if (emailPattern.test(value)) {
+      } else if (passwordRegex.test(value)) {
         setIsValidPassword(true);
       }
     }
@@ -64,9 +65,12 @@ export default function Login() {
   const goSignup = () => {
     navigate('/signup');
   };
-  // login status
-  const { Login, Logout } = useIsLogin();
 
+  // login status
+  const { Login, isLogin, initialToken } = useIsLogin();
+  console.log(isLogin);
+  console.log(initialToken);
+  // console.log(initialToken);
   // handleEnter
   const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.code === 'Enter') {
@@ -80,6 +84,7 @@ export default function Login() {
     const loginResult = await postLogin({ email, password });
     switch (loginResult.status) {
       case 200:
+        console.log('저장 전 ' + isLogin);
         localStorage.setItem('refresh', loginResult.headers.get('refresh'));
         localStorage.setItem(
           'authorization',
@@ -89,7 +94,6 @@ export default function Login() {
         navigate('/');
         break;
       case 401:
-        Logout();
         alert('이메일과 비밀번호가 일치하지 않습니다.');
         console.error(loginResult.status + ' Error');
         break;
@@ -98,7 +102,7 @@ export default function Login() {
   };
 
   return (
-    <div className="w-full h-screen bg-slate-300 pt-20 max-md:pt-0 pb-32 flex flex-col items-center">
+    <div className="w-full h-screen bg-slate-300 pt-8 max-md:pt-0 flex flex-col items-center justify-center">
       <div className="max-md:w-full md:w-[32rem] bg-white flex justify-center flex-col p-16 rounded-3xl max-md:rounded-none shadow-2xl/30">
         <img
           src={require('../images/logo.png')}
@@ -203,13 +207,14 @@ export default function Login() {
           </button>
         </div>
       </div>
-      <div className="my-4 pt-1.5 pb-2 px-8 hover:bg-white/30 rounded-full">
+      <div className="my-4 pt-1.5 pb-2 px-8 hover:bg-white/20 rounded-full">
         <label className="text-gray-500 font-medium" htmlFor="goSignup">
           회원가입이 안되어있으시다구요?
         </label>
         <button
           className="font-bold text-gray-700 hover:text-blue-600 ml-4"
           onClick={goSignup}
+          id="goSignup"
         >
           회원가입
         </button>

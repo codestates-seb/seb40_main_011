@@ -1,10 +1,10 @@
-import { useState } from 'react';
 import QuestionInput from '../components/QuestionList/QuestionInput';
 import Question from '../components/QuestionList/Question';
 import Answer from '../components/QuestionList/Answer';
 import PendingAnswer from '../components/QuestionList/PendingAnswer';
 import PendingQuestion from '../components/QuestionList/PendingQuestion';
 import SelectBox from '../components/SelectBox/SelectBox';
+// import Confirm from '../components/Modal/Confirm';
 
 export default function QuestionLists() {
   return (

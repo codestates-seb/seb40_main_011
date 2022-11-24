@@ -1,5 +1,13 @@
+// import { initialToken } from '../store/login';
 import axios from 'axios';
-import { LoginInputs, SignupInputs } from '../types/mainPageTypes';
+// import { useIsLogin } from '../store/login';
+// const { initialToken } = useIsLogin();
+
+import {
+  LoginInputs,
+  SignupInputs,
+  QuestionContent,
+} from '../types/mainPageTypes';
 
 export const getReview = async () =>
   await axios
@@ -44,6 +52,17 @@ export const postSignup = async (data: SignupInputs) => {
   try {
     const signupResponse = await axios.post('/api/register', data);
     return signupResponse;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
+export const postQuestion = async (data: QuestionContent) => {
+  try {
+    const response = await axios.post('/api/questions', data, {
+      headers: { Authorization: localStorage.getItem('authorization') },
+    });
+    return response;
   } catch (err: any) {
     return err.response;
   }
