@@ -1,9 +1,11 @@
 import axios from 'axios';
-
+import {
+  LoginInputs,
+  SignupInputs,
+  QuestionContent,
+} from '../types/mainPageTypes';
 import { OptOutInputs } from '../components/Modal/OptOut';
 import { Token } from '../components/MyPage/Profile';
-import { LoginInputs, SignupInputs } from '../types/mainPageTypes';
-import { initialToken } from '../store/login';
 
 export const getReview = async () =>
   await axios
@@ -81,6 +83,17 @@ export const editAccount = async () => {
   try {
     const editUserInfo = await axios.patch('/api/user');
     return editUserInfo;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
+export const postQuestion = async (data: QuestionContent) => {
+  try {
+    const response = await axios.post('/api/questions', data, {
+      headers: { Authorization: localStorage.getItem('authorization') },
+    });
+    return response;
   } catch (err: any) {
     return err.response;
   }
