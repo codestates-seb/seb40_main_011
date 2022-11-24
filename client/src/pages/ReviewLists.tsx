@@ -1,83 +1,42 @@
 // 리뷰 디테일 fetching & boxing component
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Rating } from 'react-simple-star-rating';
 import DetailReview from '../components/Review/DetailReview';
 import SnackReview from '../components/Review/SnackReview';
-import CreatSnackReview from '../components/Review/CreatSnackReview';
-
-export interface RatingCategory {
-  ratingCategory: string[];
-}
-export interface SnackReviews {
-  hasNext: boolean;
-  cards: SnackReviewCards;
-}
-export interface SnackReviewCards {
-  id: number;
-  nickname: string;
-  profile: string | null;
-  score: SnackReviewScore;
-}
-export interface SnackReviewScore {
-  costEfficiency: number;
-  quality: number;
-  satisfaction: number;
-  design: number;
-  performance: number;
-  grade: number;
-}
-// interface SnackReviewData {
-//   snackReviewData: object;
-
-// }
+import CreateSnackReview from '../components/Review/CreateSnackReview';
+import { getSnack, getSnackStats } from '../util/apiCollection';
+import { SnackReviews, SnackReviewAvg } from '../types/mainPageTypes';
+import { FaChevronRight, FaChevronLeft } from 'react-icons/fa';
 
 const ReviewLists = () => {
   const sortReviews = ['등록순', '추천순', '댓글순'];
-  const snackReview = ['1', '2', '3', '4', '5', '6'];
   const ratingCategory = ['가성비', '품질', '만족감', '성능', '디자인'];
+  const [snackReviewStats, setSnackReviewStats] = useState<SnackReviewAvg>();
+  const [snackReviewData, setSnackReviewData] = useState<
+    SnackReviews | undefined
+  >();
+  const [limit, setLimit] = useState(6);
 
-  const [snackReviewStats, setSnackReviewStats] = useState(null);
-  const [snackReviewData, setSnackReviewData] = useState(null);
-
-  const productId = useParams<string>();
-
-  console.log(productId.id);
-
-  useEffect(() => {
-    const getSnackReviewStats = async () => {
-      try {
-        const response = await axios.get(
-          `i/snack-reviews/stats?productId=${productId}`
-        );
-        setSnackReviewStats(response.data);
-      } catch (err: any) {
-        return err.response;
-      }
-    };
-
-    getSnackReviewStats();
-  }, []);
-
-  console.log(setSnackReviewStats);
+  const productId = Number(useParams().id);
 
   useEffect(() => {
-    const getSnackReviewData = async () => {
-      try {
-        const response = await axios.get(
-          `/api/snack-reviews?productId=${productId.id}&offset=0&limit=6&sortByGrade=false&asc=false`
-        );
-        setSnackReviewData(response.data);
-      } catch (err: any) {
-        return err.response;
-      }
+    const getSnackData = async () => {
+      const { data } = await getSnack(productId, limit);
+      const stats = await getSnackStats(productId);
+      setSnackReviewData(data);
+      setSnackReviewStats(stats.data);
     };
+    getSnackData();
+  }, [limit]);
 
-    getSnackReviewData();
-  }, []);
+  const onMoreClick = (e: React.MouseEvent<HTMLElement>) => {
+    setLimit(limit + 6);
+  };
 
-  console.log(snackReviewData);
+  const oncloseClick = () => {
+    setLimit(6);
+  };
 
   return (
     <div className="flex flex-col items-center justify-center ">
@@ -119,48 +78,78 @@ const ReviewLists = () => {
           <div>
             <div className="my-3 text-3xl">Total Reviews</div>
             <div className="flex flex-col mb-5">
-              {ratingCategory.map((el, index) => {
-                return (
-                  <div
-                    className="flex items-center justify-center my-0.5"
-                    key={index}
-                  >
-                    <p className="pr-1.5 text-lg">{el}</p>
-                    <Rating
-                      allowFraction
-                      readonly
-                      initialValue={3.7}
-                      size={30}
-                    />
-                  </div>
-                );
-              })}
+              <div className="flex items-center justify-center my-0.5">
+                <p className="pr-1.5 text-lg">가성비</p>
+                <Rating
+                  allowFraction
+                  readonly
+                  initialValue={snackReviewStats?.avgCe}
+                  size={30}
+                />
+              </div>
+              <div className="flex items-center justify-center my-0.5">
+                <p className="pr-1.5 text-lg">품질</p>
+                <Rating
+                  allowFraction
+                  readonly
+                  initialValue={snackReviewStats?.avgQlt}
+                  size={30}
+                />
+              </div>
+              <div className="flex items-center justify-center my-0.5">
+                <p className="pr-1.5 text-lg">만족감</p>
+                <Rating
+                  allowFraction
+                  readonly
+                  initialValue={snackReviewStats?.avgStf}
+                  size={30}
+                />
+              </div>
+              <div className="flex items-center justify-center my-0.5">
+                <p className="pr-1.5 text-lg">성능</p>
+                <Rating
+                  allowFraction
+                  readonly
+                  initialValue={snackReviewStats?.avgPerf}
+                  size={30}
+                />
+              </div>
+              <div className="flex items-center justify-center my-0.5">
+                <p className="pr-1.5 text-lg">디자인</p>
+                <Rating
+                  allowFraction
+                  readonly
+                  initialValue={snackReviewStats?.avgDsn}
+                  size={30}
+                />
+              </div>
             </div>
           </div>
           <div>
             <div className="mb-2 text-xl font-medium text-left">한줄 리뷰</div>
             <div className="grid justify-center grid-cols-3 gap-x-20 gap-y-16">
-              {snackReview.map((el, index) => {
-                return (
-                  <div key={index}>
-                    <SnackReview ratingCategory={ratingCategory} />
-                  </div>
-                );
-              })}
+              <SnackReview snackReviewData={snackReviewData} />
             </div>
           </div>
-
-          {/* {snackReviewData.hasNext ? (
-            <button className="px-10 py-2 my-10 rounded-xl bg-slate-200">
+          {snackReviewData?.hasNext ? (
+            <button
+              onClick={onMoreClick}
+              className="px-10 py-2 my-10 rounded-xl bg-slate-200"
+            >
               더보기
             </button>
           ) : (
-            ''
-          )} */}
+            <button
+              onClick={oncloseClick}
+              className="px-10 py-2 my-10 rounded-xl bg-slate-200"
+            >
+              접기
+            </button>
+          )}
         </div>
         {/* 한줄 리뷰 직성 */}
         <div className="my-16">
-          <CreatSnackReview ratingCategory={ratingCategory} />
+          <CreateSnackReview ratingCategory={ratingCategory} />
         </div>
       </div>
     </div>

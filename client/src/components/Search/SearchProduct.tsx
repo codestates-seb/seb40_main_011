@@ -16,6 +16,7 @@ const SearchProduct = ({ keyword }: any) => {
     size: '9',
   };
 
+  //api 받으면 수정해야함
   useEffect(() => {
     const getProductData = async () => {
       //인스턴스 데이터

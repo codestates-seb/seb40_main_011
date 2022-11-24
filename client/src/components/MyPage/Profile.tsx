@@ -5,8 +5,6 @@ import EditProfile from '../Modal/EditProfile';
 import EditPassword from '../Modal/EditPassword';
 import EditProfileImg from '../Modal/EditProfileImg';
 import { getUserProfile } from '../../util/apiCollection';
-// import { initialToken } from '../../store/login';
-// import { useIsLogin } from '../../store/login';
 
 export interface UserProfile {
   email: string;
@@ -34,17 +32,16 @@ export interface EditPasswordModalHandler {
 
 const Profile = () => {
   const [userProfileData, setUserProfileData] = useState<UserProfile>();
-  // const { initialToken } = useIsLogin();
-  // console.log(initialToken);
+
   useEffect(() => {
     const getUserProfileData = async () => {
       const { data } = await getUserProfile();
       setUserProfileData(data);
+      console.log(userProfileData);
     };
     getUserProfileData();
   }, []);
 
-  console.log(userProfileData);
   // Modal
   const [isEditProfileImg, setIsEditProfileImg] = useState(false);
   const openEditProfileImgModalHandler = (
