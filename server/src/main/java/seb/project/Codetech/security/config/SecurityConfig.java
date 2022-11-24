@@ -81,9 +81,9 @@ public class SecurityConfig {
 			.and()
 			.authorizeHttpRequests(authorize -> authorize
 				.antMatchers(HttpMethod.OPTIONS).permitAll()
-				.antMatchers(HttpMethod.POST, "/api/register").permitAll()
-				.antMatchers(HttpMethod.PATCH, "/api/user/**").hasRole("USER")
-				.antMatchers(HttpMethod.GET, "/api/user").hasRole("USER")
+//				.antMatchers(HttpMethod.POST, "/api/register").permitAll()
+//				.antMatchers(HttpMethod.PATCH, "/api/user/**").hasRole("USER")
+//				.antMatchers(HttpMethod.GET, "/api/user").hasRole("USER")
 				.anyRequest().permitAll())
 			.oauth2Login(oauth2 -> oauth2
 				.successHandler(
