@@ -1,5 +1,6 @@
 package seb.project.Codetech.review.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import seb.project.Codetech.global.exception.BusinessLogicException;
 import seb.project.Codetech.global.exception.ExceptionCode;
 import seb.project.Codetech.product.entity.Product;
 import seb.project.Codetech.product.service.ProductService;
+import seb.project.Codetech.review.dto.ReviewResponseDto;
 import seb.project.Codetech.review.entity.Review;
 import seb.project.Codetech.review.repository.ReviewRepository;
 import seb.project.Codetech.user.entity.User;
@@ -36,10 +38,16 @@ public class ReviewService {
 		Product product = productService.findProduct(productId);
 		review.setUser(user); // 작성자 정보를 삽입한다.
 		review.setProduct(product); // 등록된 리뷰의 제품 정보를 삽입한다.
+		review.setType(product.getType()); // 제품 정보에서 타입 유형을 가져와서 삽입한다.
 		review.setWriter(user.getNickname()); // 작성자 닉네임을 삽입한다.
 		review.setView(0L); // 조회수 컬럼으로 0값으로 시작한다.
 
 		return reviewRepository.save(review);
+	}
+
+	@Transactional
+	public List<ReviewResponseDto.Post> responseReviewPost(Review review) {
+		return reviewRepository.findByReviewResponseDto(review);
 	}
 
 	@Transactional

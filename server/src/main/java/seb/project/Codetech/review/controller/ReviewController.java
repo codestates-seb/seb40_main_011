@@ -22,6 +22,7 @@ import lombok.extern.log4j.Log4j2;
 import seb.project.Codetech.file.entity.FileEntity;
 import seb.project.Codetech.file.service.FileService;
 import seb.project.Codetech.review.dto.ReviewRequestDto;
+import seb.project.Codetech.review.dto.ReviewResponseDto;
 import seb.project.Codetech.review.entity.Review;
 import seb.project.Codetech.review.mapper.ReviewMapper;
 import seb.project.Codetech.review.service.ReviewService;
@@ -42,7 +43,7 @@ public class ReviewController {
 	}
 
 	@PostMapping
-	public ResponseEntity<Review> postReview(@AuthenticationPrincipal String email,
+	public ResponseEntity<List<ReviewResponseDto.Post>> postReview(@AuthenticationPrincipal String email,
 		@RequestPart @Valid ReviewRequestDto.Post request,
 		@RequestPart List<MultipartFile> file) throws IOException {
 
@@ -50,8 +51,9 @@ public class ReviewController {
 		Review serviceReview = reviewService.createReview(email, request.getProductId(), postReview);
 		List<FileEntity> fileEntities = fileService.insertFiles(file);
 		fileService.setUploadReview(serviceReview, fileEntities);
+		List<ReviewResponseDto.Post> reviewPost = reviewService.responseReviewPost(serviceReview);
 
-		return ResponseEntity.status(HttpStatus.CREATED).body(serviceReview);
+		return ResponseEntity.status(HttpStatus.CREATED).body(reviewPost);
 	}
 
 	@PatchMapping("/{id}")
@@ -73,7 +75,7 @@ public class ReviewController {
 		@PathVariable @Positive Long id) {
 
 		reviewService.removeReview(email, id);
-		
+
 		return ResponseEntity.ok().build();
 	}
 }

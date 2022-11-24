@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -22,7 +23,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import seb.project.Codetech.file.entity.FileEntity;
 import seb.project.Codetech.global.auditing.BaseTime;
+import seb.project.Codetech.global.converter.TypeConverter;
 import seb.project.Codetech.product.entity.Product;
+import seb.project.Codetech.product.entity.Type;
 import seb.project.Codetech.recommend.entity.Recommend;
 import seb.project.Codetech.user.entity.User;
 
@@ -38,6 +41,10 @@ public class Review extends BaseTime {
 
 	@Column(nullable = false)
 	private String title;
+
+	@Column(nullable = false)
+	@Convert(converter = TypeConverter.class)
+	private Type type;
 
 	@Column(nullable = false, columnDefinition = "MEDIUMTEXT")
 	private String content;

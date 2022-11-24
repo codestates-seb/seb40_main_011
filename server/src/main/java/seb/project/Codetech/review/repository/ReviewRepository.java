@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 import seb.project.Codetech.review.entity.Review;
 
 @Repository
-public interface ReviewRepository extends JpaRepository<Review, Long> {
+public interface ReviewRepository extends JpaRepository<Review, Long>, CustomReviewRepository {
 }
