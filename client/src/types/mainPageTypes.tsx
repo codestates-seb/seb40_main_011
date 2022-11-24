@@ -78,3 +78,40 @@ export interface EditModeProps {
   setIsEditMode: Dispatch<SetStateAction<boolean>>;
   editedComment: string | undefined;
 }
+
+export interface SnackReviewProps {
+  snackReviewData: SnackReviews | undefined;
+}
+
+export interface RatingCategory {
+  ratingCategory: string[];
+}
+export interface SnackReviews {
+  hasNext: boolean;
+  cards: SnackReviewCards[];
+}
+export interface SnackReviewCards {
+  content: string;
+  createdAt: string;
+  id: number;
+  image: string | undefined;
+  nickname: string;
+  score: SnackReviewScore;
+}
+export interface SnackReviewScore {
+  costEfficiency: number;
+  quality: number;
+  satisfaction: number;
+  design: number;
+  performance: number;
+  grade: number;
+}
+
+export interface SnackReviewAvg {
+  total: number;
+  avgCe: number;
+  avgQlt: number;
+  avgStf: number;
+  avgDsn: number;
+  avgPerf: number;
+}

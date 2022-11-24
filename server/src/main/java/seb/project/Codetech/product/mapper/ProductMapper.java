@@ -16,7 +16,9 @@ public interface ProductMapper {
 
 	Product productPatchDtoToProduct(Long id, ProductDto.Patch patch);
 
-	ProductResponseDto productDtoToProductResponse(Product product);
+	ProductResponseDto.Post productToProductPostResponse(Product product);
+
+	ProductResponseDto.Patch productToProductPatchResponse(Product product);
 
 	List<ProductListResponse> productsDtoToProductResponse(List<Product> products);
 }
