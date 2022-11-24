@@ -11,7 +11,7 @@ import seb.project.Codetech.review.entity.Review;
 public interface ReviewMapper {
 	Review reviewRequestDtoToPostReview(ReviewRequestDto.Post request);
 
-	Review reviewRequestDtoToPatchReview(Long id, ReviewRequestDto.Patch request);
+	Review reviewRequestDtoToPatchReview(ReviewRequestDto.Patch request);
 
 	ReviewResponseDto.Post reviewPostResponseDtoToPost(Review review);
 }
