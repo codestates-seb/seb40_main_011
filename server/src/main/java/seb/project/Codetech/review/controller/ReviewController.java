@@ -23,6 +23,7 @@ import seb.project.Codetech.file.entity.FileEntity;
 import seb.project.Codetech.file.service.FileService;
 import seb.project.Codetech.recommend.service.RecommendService;
 import seb.project.Codetech.review.dto.ReviewRequestDto;
+import seb.project.Codetech.review.dto.ReviewResponseDto;
 import seb.project.Codetech.review.entity.Review;
 import seb.project.Codetech.review.mapper.ReviewMapper;
 import seb.project.Codetech.review.service.ReviewService;
@@ -37,7 +38,7 @@ public class ReviewController {
 	private final ReviewMapper mapper;
 	private final RecommendService recommendService;
 
-	public ReviewController(ReviewService reviewService, FileService fileService, ReviewMapper mapper) {
+	public ReviewController(ReviewService reviewService, FileService fileService, ReviewMapper mapper, RecommendService recommendService) {
 		this.reviewService = reviewService;
 		this.fileService = fileService;
 		this.mapper = mapper;
@@ -67,7 +68,7 @@ public class ReviewController {
 		@RequestPart List<MultipartFile> file) throws IOException {
 
 		Review patchReview = mapper.reviewRequestDtoToPatchReview(id, request);
-		Review serviceReview = reviewService.modifyReview(email, patchReview);
+		Review serviceReview = reviewService.modifyReview(email, request.getProductId(), patchReview);
 		List<FileEntity> fileEntities = fileService.insertFiles(file);
 		fileService.setUploadReview(serviceReview, fileEntities);
 
