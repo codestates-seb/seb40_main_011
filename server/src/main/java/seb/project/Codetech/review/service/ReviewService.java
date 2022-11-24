@@ -1,5 +1,6 @@
 package seb.project.Codetech.review.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import seb.project.Codetech.global.exception.BusinessLogicException;
 import seb.project.Codetech.global.exception.ExceptionCode;
 import seb.project.Codetech.product.entity.Product;
 import seb.project.Codetech.product.service.ProductService;
+import seb.project.Codetech.review.dto.ReviewResponseDto;
 import seb.project.Codetech.review.entity.Review;
 import seb.project.Codetech.review.repository.ReviewRepository;
 import seb.project.Codetech.user.entity.User;
@@ -51,8 +53,13 @@ public class ReviewService {
 	}
 
 	@Transactional
-	public Review modifyReview(String email, Long id, Long productId, Review review) {
-		Review findReview = findVerificationReview(id);
+	public List<ReviewResponseDto.Post> responseReviewPost(Review review) {
+		return reviewRepository.findByReviewResponseDto(review);
+	}
+
+	@Transactional
+	public Review modifyReview(String email, Long productId, Review review) {
+		Review findReview = findVerificationReview(productId);
 		User findUser = userService.findUser(email);
 		Product product = productService.findProduct(productId);
 
