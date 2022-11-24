@@ -1,10 +1,14 @@
 import { AxiosError } from 'axios';
 import { Review } from '../types/mainPageTypes';
-import { testInstance } from './axiosInstance';
+import { InstanceV1, testInstance } from './axiosInstance';
 
-const sampleTest = async () => {
+export const sampleTest = async (dataAmount: any) => {
   try {
-    const reviewRes = await testInstance.get('/review');
+    const reviewRes: any = await InstanceV1({
+      url: '/api/products',
+      method: 'get',
+      data: { dataAmount },
+    });
     return reviewRes.data;
   } catch (error: any) {
     return error.response;

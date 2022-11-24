@@ -8,6 +8,7 @@ import javax.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.BatchSize;
 import seb.project.Codetech.discount.entity.DiscountComment;
 import seb.project.Codetech.file.entity.FileEntity;
 import seb.project.Codetech.global.auditing.BaseTime;
@@ -69,18 +70,21 @@ public User(String nickname, String email, String password) {
 	private List<ReviewComment> reviewComments = new ArrayList<>();
 
 	@OneToMany(mappedBy = "writer")
+	@BatchSize(size = 100)
 	private List<SnackReview> snackReviews = new ArrayList<>();
 
 	@OneToMany(mappedBy = "writer")
+	@BatchSize(size = 100)
 	private List<Question> questions = new ArrayList<>();
 
 	@OneToMany(mappedBy = "writer")
+	@BatchSize(size = 100)
 	private List<Answer> answers = new ArrayList<>();
 
 	@OneToMany(mappedBy = "user")
 	private List<DiscountComment> discountComments = new ArrayList<>();
 
-	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
 	private FileEntity file;
 
 	public void setFile(FileEntity file){
