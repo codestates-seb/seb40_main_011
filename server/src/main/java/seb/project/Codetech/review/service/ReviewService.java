@@ -36,8 +36,10 @@ public class ReviewService {
 		Product product = productService.findProduct(productId);
 		review.setUser(user); // 작성자 정보를 삽입한다.
 		review.setProduct(product); // 등록된 리뷰의 제품 정보를 삽입한다.
+		review.setType(product.getType()); // 제품 정보에서 타입 유형을 가져와서 삽입한다.
 		review.setWriter(user.getNickname()); // 작성자 닉네임을 삽입한다.
 		review.setView(0L); // 조회수 컬럼으로 0값으로 시작한다.
+		review.setRecommendNumber(0L);
 
 		return reviewRepository.save(review);
 	}

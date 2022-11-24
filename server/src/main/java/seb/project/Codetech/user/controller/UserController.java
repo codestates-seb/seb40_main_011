@@ -123,13 +123,13 @@ public class UserController {
         return ResponseEntity.ok(userAndAnswersDto);
     }
 
-//    @Transactional(readOnly = true)
-//    @GetMapping("/user/recommends")
-//    public ResponseEntity<UserAndReviewsDto> getRecommends(@AuthenticationPrincipal String email,
-//                                                           @Positive @RequestParam(value = "page", defaultValue = "1") int page,
-//                                                           @Positive @RequestParam(value = "size",defaultValue = "5") int size,
-//                                                           @RequestParam(value = "sort",defaultValue = "createAt") String sort){
-//        UserAndReviewsDto userAndRecommendsDto = userService.userAndRecommendsDto(email,page-1,size,sort);
-//        return ResponseEntity.ok(userAndRecommendsDto);
-//    }
+    @Transactional(readOnly = true)
+    @GetMapping("/user/recommends")
+    public ResponseEntity<UserAndReviewsDto> getRecommends(@AuthenticationPrincipal String email,
+                                                           @Positive @RequestParam(value = "page", defaultValue = "1") int page,
+                                                           @Positive @RequestParam(value = "size",defaultValue = "5") int size,
+                                                           @RequestParam(value = "sort",defaultValue = "createAt") String sort){
+        UserAndReviewsDto userAndRecommendsDto = userService.userAndRecommendsDto(email,page-1,size,sort);
+        return ResponseEntity.ok(userAndRecommendsDto);
+    }
 }
