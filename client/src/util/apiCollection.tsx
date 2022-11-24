@@ -4,8 +4,8 @@ import {
   SignupInputs,
   QuestionContent,
 } from '../types/mainPageTypes';
-import { OptOutInputs } from '../components/Modal/OptOut';
-import { Token } from '../components/MyPage/Profile';
+// import { OptOutInputs } from '../components/Modal/OptOut';
+// import { Token } from '../components/MyPage/Profile';
 
 export const getReview = async () =>
   await axios
@@ -61,7 +61,7 @@ export const getUserProfile = async () => {
   try {
     const optOut = await axios.get('/api/user', {
       headers: {
-        Authorization: initialToken,
+        Authorization: localStorage.getItem('authorization'),
       },
     });
     return optOut;
