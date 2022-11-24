@@ -62,20 +62,21 @@ public class RecommendService {
     public Recommend editRecommend(String email, RecommendDto post) {
 
         User user = findUser(email);
+        Review review = findVerificationReview(post.getReviewId());
+        Recommend recommend = new Recommend();
 
-        log.info(user.getId());
-        log.info(post.getUserId());
         if(user.getId().equals(post.getUserId())){
             throw new BusinessLogicException(ExceptionCode.RECOMMEND_NOT_ALLOW);
         }
-//        if(repository.findByUserIdAndReviewId(user.getId(), post.getReviewId()).isPresent()){
-//            throw new BusinessLogicException(ExceptionCode.RECOMMEND_NOT_ALLOW);
-//        }
+        if(repository.findByUserAndReview(user.getId(), post.getReviewId())!=null){
+            review.setRecommendNumber(review.getRecommendNumber()-1);
+            repository.delete(repository.findByUserAndReview(user.getId(), post.getReviewId()));
+            return recommend;
+        }
 
-        Review review = findVerificationReview(post.getReviewId());
+
         review.setRecommendNumber(review.getRecommendNumber()+1);
         reviewRepository.save(review);
-        Recommend recommend = new Recommend();
         recommend.setReview(findVerificationReview(post.getReviewId()));
         recommend.setUser(findUser(email));
         return repository.save(recommend);

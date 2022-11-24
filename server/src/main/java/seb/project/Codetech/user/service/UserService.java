@@ -207,24 +207,24 @@ public class UserService {
 
     }
 
-//    public UserAndReviewsDto userAndRecommendsDto(String email, int page, int size, String sort) {
-//        User user = findUser(email);
-//        UserAndReviewsDto userAndRecommendsDto = new UserAndReviewsDto();
-//        List<Recommend> recommends = user.getRecommends();
-//        List<Review> reviewList = reviewRepository.findAllByRecommensIn(recommends);
-//        List<UserAndReviewsDto.MyReviewCard> cards = new ArrayList<>();
-//        for (Review review : reviewList){
-//            cards.add(new UserAndReviewsDto.MyReviewCard(review));
-//        }
-//        PageRequest pageRequest = PageRequest.of(page,size, Sort.by(sort).descending());
-//        int start = (int)pageRequest.getOffset();
-//        int end = Math.min((start+pageRequest.getPageSize()),cards.size());
-//        Page<UserAndReviewsDto.MyReviewCard> cardPage = new PageImpl<>(cards.subList(start,end),pageRequest,cards.size());
-//        userAndRecommendsDto.setEmail(user.getEmail());
-//        userAndRecommendsDto.setNickname(user.getNickname());
-//        userAndRecommendsDto.setPoint(user.getPoint());
-//        userAndRecommendsDto.setImage(user.getImage());
-//        userAndRecommendsDto.setReviews(cardPage);
-//        return userAndRecommendsDto;
-//    }
+    public UserAndReviewsDto userAndRecommendsDto(String email, int page, int size, String sort) {
+        User user = findUser(email);
+        UserAndReviewsDto userAndRecommendsDto = new UserAndReviewsDto();
+        List<Recommend> recommends = user.getRecommends();
+        List<Review> reviewList = reviewRepository.findAllByRecommendsIn(recommends);
+        List<UserAndReviewsDto.MyReviewCard> cards = new ArrayList<>();
+        for (Review review : reviewList){
+            cards.add(new UserAndReviewsDto.MyReviewCard(review));
+        }
+        PageRequest pageRequest = PageRequest.of(page,size, Sort.by(sort).descending());
+        int start = (int)pageRequest.getOffset();
+        int end = Math.min((start+pageRequest.getPageSize()),cards.size());
+        Page<UserAndReviewsDto.MyReviewCard> cardPage = new PageImpl<>(cards.subList(start,end),pageRequest,cards.size());
+        userAndRecommendsDto.setEmail(user.getEmail());
+        userAndRecommendsDto.setNickname(user.getNickname());
+        userAndRecommendsDto.setPoint(user.getPoint());
+        userAndRecommendsDto.setImage(user.getImage());
+        userAndRecommendsDto.setReviews(cardPage);
+        return userAndRecommendsDto;
+    }
 }
