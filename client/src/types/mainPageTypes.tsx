@@ -1,14 +1,20 @@
 import { Dispatch, SetStateAction } from 'react';
 
+export interface QuestionContent {
+  content: string;
+}
+
 export interface LoginInputs {
   email: string;
   password: string;
 }
+
 export interface SignupInputs {
   email: string;
   password: string;
   nickname: string;
 }
+
 export interface Product {
   id: number;
   name: string;
@@ -71,4 +77,41 @@ export interface EditModeProps {
   isEditMode: boolean;
   setIsEditMode: Dispatch<SetStateAction<boolean>>;
   editedComment: string | undefined;
+}
+
+export interface SnackReviewProps {
+  snackReviewData: SnackReviews | undefined;
+}
+
+export interface RatingCategory {
+  ratingCategory: string[];
+}
+export interface SnackReviews {
+  hasNext: boolean;
+  cards: SnackReviewCards[];
+}
+export interface SnackReviewCards {
+  content: string;
+  createdAt: string;
+  id: number;
+  image: string | undefined;
+  nickname: string;
+  score: SnackReviewScore;
+}
+export interface SnackReviewScore {
+  costEfficiency: number;
+  quality: number;
+  satisfaction: number;
+  design: number;
+  performance: number;
+  grade: number;
+}
+
+export interface SnackReviewAvg {
+  total: number;
+  avgCe: number;
+  avgQlt: number;
+  avgStf: number;
+  avgDsn: number;
+  avgPerf: number;
 }

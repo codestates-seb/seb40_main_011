@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react';
 import { Review, ReviewComments } from '../../types/mainPageTypes';
 import { useNavigate, useParams } from 'react-router-dom';
 import { AiOutlineLike } from 'react-icons/ai';
-import CommentInput from './CommentInput';
+import { CommentInput } from './CommentInput';
+
 import Comment from './Comment';
 
 const RvDetail = () => {

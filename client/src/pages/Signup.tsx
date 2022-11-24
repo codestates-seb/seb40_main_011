@@ -5,7 +5,12 @@ import React, { ChangeEvent, useCallback, useState } from 'react';
 import '../components/common.css';
 import { useNavigate } from 'react-router-dom';
 import { postSignup } from '../util/apiCollection';
-import { BsFillPatchExclamationFill, AiFillCheckCircle } from '../icons';
+import {
+  BsFillPatchExclamationFill,
+  AiFillEyeInvisible,
+  AiFillEye,
+} from '../icons';
+import { emailRegex, passwordRegex } from '../util/Regex';
 
 const Signup = () => {
   //이름, 이메일, 비밀번호, 비밀번호 확인
@@ -35,28 +40,7 @@ const Signup = () => {
     navigate('/login');
   };
 
-  // const onSubmit = useCallback(
-  //   async (e: React.FormEvent<HTMLFormElement>) => {
-  //     e.preventDefault();
-  //     try {
-  //       await axios
-  //         .post('/api/register', {
-  //           email: email,
-  //           password: password,
-  //           displayName: name,
-  //         })
-  //         .then((res) => {
-  //           console.log('User token', res.data.jwt);
-  //           localStorage.setItem('token', res.data.jwt);
-  //           navigator('/');
-  //         });
-  //     } catch (err) {
-  //       console.log('error', err);
-  //     }
-  //   },
-  //   [name, email, password]
-  // );
-
+  // 회원가입 submit
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const signupResult = await postSignup({ email, password, nickname });
@@ -85,8 +69,6 @@ const Signup = () => {
 
   //이메일
   const onChangeEmail = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    const emailRegex =
-      /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
     const emailCurrent = e.target.value;
     setEmail(emailCurrent);
 
@@ -102,8 +84,6 @@ const Signup = () => {
   //비밀번호
   const onChangePassword = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      const passwordRegex =
-        /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
       const passwordCurrent = e.target.value;
       setPassword(passwordCurrent);
 
@@ -142,8 +122,11 @@ const Signup = () => {
   const handlePasswordType = () => {
     if (passwordType === 'password') return setPasswordType('text');
     if (passwordType === 'text') return setPasswordType('password');
-    // if (e.target.checked) return setPasswordType('text');
-    // if (!e.target.checked) return setPasswordType('password');
+  };
+  const [passwordCheckType, setPasswordCheckType] = useState('password');
+  const handlePasswordCheckType = () => {
+    if (passwordCheckType === 'password') return setPasswordCheckType('text');
+    if (passwordCheckType === 'text') return setPasswordCheckType('password');
   };
 
   // handleEnter
@@ -154,8 +137,8 @@ const Signup = () => {
   };
 
   return (
-    <div className="w-full h-screen bg-slate-300 pt-20 pb-32 flex flex-col items-center">
-      <div className="max-md:w-full md:w-[32rem] bg-white flex justify-center flex-col p-16 rounded-3xl shadow-2xl/30">
+    <div className="w-full h-screen bg-slate-300 pt-8 max-md:pt-0 flex flex-col items-center justify-center">
+      <div className="max-md:w-full md:w-[32rem] bg-white flex justify-center flex-col p-16 rounded-3xl max-md:rounded-none shadow-2xl/30">
         <img
           src={require('../images/logo.png')}
           alt=""
@@ -234,7 +217,6 @@ const Signup = () => {
                 : 'mb-4'
             }`}
           >
-            {' '}
             <input
               type={passwordType}
               className="peer/password input-ani outline-none bg-transparent text-base absolute pt-3 px-6 top-0 w-full h-full font-medium"
@@ -251,6 +233,16 @@ const Signup = () => {
             >
               비밀번호
             </label>
+            <div
+              onClick={handlePasswordType}
+              className="absolute text-3xl text-gray-300 top-3.5 right-4 hover:text-gray-600"
+            >
+              {passwordType === 'password' ? (
+                <AiFillEyeInvisible />
+              ) : (
+                <AiFillEye />
+              )}
+            </div>
             {password.length > 5 && !isPassword && (
               <span className="relative pointer-events-none top-16 text-sm text-red-600 flex items-center">
                 <BsFillPatchExclamationFill className="inline mr-1 text-base mt-0.5" />
@@ -259,14 +251,14 @@ const Signup = () => {
             )}
           </div>
           <div
-            className={`relative bg-gray-50 rounded h-14 ring-inset ring-1 ring-slate-200 hover:ring-slate-400 hover:ring-2 ${
+            className={`relative bg-gray-50 rounded-bl rounded-br h-14 ring-inset ring-1 ring-slate-200 hover:ring-slate-400 hover:ring-2 ${
               passwordCheck.length > 5 && !isPasswordCheck
                 ? 'mb-10 ring-red-500 ring-2'
                 : 'mb-4'
             }`}
           >
             <input
-              type={passwordType}
+              type={passwordCheckType}
               className="peer/password input-ani outline-none bg-transparent text-base absolute pt-3 px-6 top-0 w-full h-full font-medium"
               value={passwordCheck}
               name="password"
@@ -281,6 +273,16 @@ const Signup = () => {
             >
               비밀번호 확인
             </label>
+            <div
+              onClick={handlePasswordCheckType}
+              className="absolute text-3xl text-gray-300 top-3.5 right-4 hover:text-gray-600"
+            >
+              {passwordCheckType === 'password' ? (
+                <AiFillEyeInvisible />
+              ) : (
+                <AiFillEye />
+              )}
+            </div>
             {passwordCheck.length > 5 && !isPasswordCheck && (
               <span className="relative pointer-events-none top-16 text-sm text-red-600 flex items-center">
                 <BsFillPatchExclamationFill className="inline mr-1 text-base mt-0.5" />
@@ -288,33 +290,32 @@ const Signup = () => {
               </span>
             )}
           </div>
-          <div
-            className="group mb-4 py-1 flex items-center"
+          {/* <div
+            className="group mb-4 py-1 flex items-center justify-center text-3xl text-gray-300 hover:text-gray-500 "
             onClick={handlePasswordType}
           >
-            <AiFillCheckCircle
-              className={`text-3xl hover:text-blue-500 ${
-                passwordType === 'password' ? 'text-gray-200' : 'text-blue-500'
-              }`}
-              id="passwordShown"
-              onClick={handlePasswordType}
-            />
-            {/* <input
-              type="checkbox"
-              className="w-6 h-6 rounded-fullduration-20 cursor-pointer"
-              value=""
-              id="passwordShown"
-              onChange={handlePasswordType}
-            /> */}
+            {passwordType === 'password' ? (
+              <AiFillEyeInvisible
+                id="passwordShown"
+                onClick={handlePasswordType}
+                className=""
+              />
+            ) : (
+              <AiFillEye
+                id="passwordShown"
+                onClick={handlePasswordType}
+                className="text-3xl"
+              />
+            )}
             <label
-              className="ml-2 pb-0.5 text-gray-500 group-hover:text-gray-700 group-hover:font-medium cursor-pointer"
+              className="ml-2 pb-0.5 group-hover:font-medium cursor-pointer text-base text-gray-500 group-hover:text-gray-700"
               htmlFor="passwordShown"
             >
               {passwordType === 'password'
-                ? '비밀번호 보이기'
+                ? '비밀번호 보기'
                 : '비밀번호 감추기'}
             </label>
-          </div>
+          </div> */}
           <button
             type="submit"
             className="w-full bg-blue-600 h-16 rounded-md text-xl font-bold pb-1 text-white hover:bg-blue-500"
@@ -323,13 +324,14 @@ const Signup = () => {
           </button>
         </form>
       </div>
-      <div className="my-4 pt-1.5 pb-2 px-8 hover:bg-white/30 rounded-full">
-        <span className="text-gray-500 font-medium">
+      <div className="my-4 pt-1.5 pb-2 px-8 hover:bg-white/20 rounded-full">
+        <label className="text-gray-500 font-medium" htmlFor="goLogin">
           계정이 이미 있으시다구요?
-        </span>
+        </label>
         <button
           className="font-bold text-gray-700 hover:text-blue-600 ml-4"
           onClick={goLogin}
+          id="goLogin"
         >
           로그인
         </button>

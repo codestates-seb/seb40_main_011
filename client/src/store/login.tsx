@@ -1,20 +1,23 @@
 import create from 'zustand';
+import { persist } from 'zustand/middleware';
 
 interface LoginState {
   isLogin: boolean;
-  // authorization: null | string;
+  initialToken: string | null;
   Login: () => void;
   Logout: () => void;
 }
 
-export const initialToken = localStorage.getItem('authorization');
-
-export const useIsLogin = create<LoginState>((set) => ({
-  isLogin: false,
-  Login() {
-    set({
-      isLogin: true,
-    });
-  },
-  Logout: () => set({ isLogin: false }),
-}));
+export const useIsLogin = create<LoginState>()(
+  persist((set) => ({
+    isLogin: false,
+    initialToken: null,
+    Login() {
+      set(() => ({
+        initialToken: localStorage.getItem('authorization'),
+        isLogin: true,
+      }));
+    },
+    Logout: () => set(() => ({ isLogin: false, initialToken: null })),
+  }))
+);

@@ -21,8 +21,8 @@ import org.springframework.web.multipart.MultipartFile;
 import lombok.extern.log4j.Log4j2;
 import seb.project.Codetech.file.entity.FileEntity;
 import seb.project.Codetech.file.service.FileService;
+import seb.project.Codetech.recommend.service.RecommendService;
 import seb.project.Codetech.review.dto.ReviewRequestDto;
-import seb.project.Codetech.review.dto.ReviewResponseDto;
 import seb.project.Codetech.review.entity.Review;
 import seb.project.Codetech.review.mapper.ReviewMapper;
 import seb.project.Codetech.review.service.ReviewService;
@@ -35,11 +35,13 @@ public class ReviewController {
 	private final ReviewService reviewService;
 	private final FileService fileService;
 	private final ReviewMapper mapper;
+	private final RecommendService recommendService;
 
 	public ReviewController(ReviewService reviewService, FileService fileService, ReviewMapper mapper) {
 		this.reviewService = reviewService;
 		this.fileService = fileService;
 		this.mapper = mapper;
+		this.recommendService = recommendService;
 	}
 
 	@PostMapping
@@ -52,6 +54,8 @@ public class ReviewController {
 		List<FileEntity> fileEntities = fileService.insertFiles(file);
 		fileService.setUploadReview(serviceReview, fileEntities);
 		List<ReviewResponseDto.Post> reviewPost = reviewService.responseReviewPost(serviceReview);
+		Long reviewId = serviceReview.getId();
+		recommendService.createRecommend(email,reviewId);
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(reviewPost);
 	}
@@ -63,7 +67,7 @@ public class ReviewController {
 		@RequestPart List<MultipartFile> file) throws IOException {
 
 		Review patchReview = mapper.reviewRequestDtoToPatchReview(id, request);
-		Review serviceReview = reviewService.modifyReview(email, id, request.getProductId(), patchReview);
+		Review serviceReview = reviewService.modifyReview(email, patchReview);
 		List<FileEntity> fileEntities = fileService.insertFiles(file);
 		fileService.setUploadReview(serviceReview, fileEntities);
 

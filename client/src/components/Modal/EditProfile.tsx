@@ -2,11 +2,29 @@
 import { useState } from 'react';
 import { BsXLg } from 'react-icons/bs';
 import { EditProfileModalHandler } from '../MyPage/Profile';
+import { editProfile } from '../../util/apiCollection';
+
+export interface EditProfile {
+  nickname: string | null;
+  password: string | null;
+}
 
 const EditProfile = ({
   openEditProfileModalHandler,
 }: EditProfileModalHandler) => {
-  const [username, setUsername] = useState();
+  const [username, setUsername] = useState('');
+
+  const handleUsername = (e: any) => {
+    setUsername(e.target.value);
+  };
+
+  const handleEditNickName = () => {
+    const data: EditProfile = { nickname: username, password: null };
+    const submitEditNick = async () => {
+      await editProfile(data);
+    };
+    submitEditNick();
+  };
 
   return (
     <div className="modal-bg">
@@ -23,11 +41,14 @@ const EditProfile = ({
             <input
               type="text"
               value={username}
-              placeholder=""
-              className="flex w-full mt-24 "
+              onChange={handleUsername}
+              placeholder="닉네임을 입력해주세요"
+              className="flex w-full mt-24 text-lg"
             />
           </div>
-          <div className="text-sm text-slate-500">닉네임을 입력해주세요</div>
+          <div className="text-sm text-slate-500">
+            닉네임은 2글자 이상 20글자 미만으로 입력해주세요
+          </div>
         </div>
         <div className="flex justify-center pt-16">
           <button
@@ -36,7 +57,10 @@ const EditProfile = ({
           >
             취소
           </button>
-          <button className="w-1/3 py-3 mx-5 border rounded-3xl bg-slate-300">
+          <button
+            className="w-1/3 py-3 mx-5 border rounded-3xl bg-slate-300"
+            onClick={handleEditNickName}
+          >
             확인
           </button>
         </div>

@@ -15,6 +15,9 @@ import seb.project.Codetech.snackreview.dto.SnackReviewServiceDto;
 import seb.project.Codetech.snackreview.entity.SnackReview;
 import seb.project.Codetech.snackreview.mapper.SnackReviewServiceMapper;
 import seb.project.Codetech.snackreview.repository.SnackReviewRepository;
+import seb.project.Codetech.user.entity.User;
+import seb.project.Codetech.user.repository.UserRepository;
+import seb.project.Codetech.user.service.UserService;
 
 @Service
 @Transactional
@@ -22,6 +25,8 @@ import seb.project.Codetech.snackreview.repository.SnackReviewRepository;
 public class SnackReviewService {
 	private final SnackReviewRepository snackReviewRepository;
 	private final SnackReviewServiceMapper dtoMapper;
+	private final UserService userService;
+	private final UserRepository userRepository;
 
 	@Transactional(readOnly = true)
 	public SnackReviewResponseDto.Slice readSlice(SnackReviewRequestDto.Get params) {
@@ -34,6 +39,9 @@ public class SnackReviewService {
 	public SnackReview createSnackReview(SnackReviewServiceDto.Create dto) {
 		SnackReview snackReview = dtoMapper.createDtoToEntity(dto);
 
+		User user = userService.findUser(dto.getLoginEmail());
+		user.updatePoint(10);
+		userRepository.save(user);
 		return snackReviewRepository.save(snackReview);
 	}
 
