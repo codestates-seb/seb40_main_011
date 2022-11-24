@@ -30,7 +30,7 @@ const ProductSelector = () => {
   //카테고리 셀렉터의 clickname 값을 받아와서 그 값을 api 요청할 때 url 로 넣어서 보내기
   const data = () => {
     axios
-      .get(`http://codetech.nworld.dev/api/products/review-search`, {
+      .get(`https://codetech.nworld.dev/api/products/review-search`, {
         params: { type: UpperText },
       })
       .then((res) => {
