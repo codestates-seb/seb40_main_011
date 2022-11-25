@@ -91,15 +91,18 @@ const ProductList = () => {
                 return (
                   <div
                     key={idx}
-                    className="mb-12 flex lg:w-1/3 justify-center drop-shadow-productList p-4 px-20 hover:-translate-y-1 transition ease-in-out hover:scale-110"
+                    className="mb-12 flex lg:w-1/3 md:w-1/2 justify-center drop-shadow-productList p-4 lg:px-16 hover:-translate-y-1 transition ease-in-out hover:scale-110"
                   >
                     <div
                       role="button"
                       onClick={onProductClick}
                       id={el.id.toString()}
-                      className=" flex flex-col w-full bg-white rounded-b-lg"
+                      className="flex flex-col w-full bg-white rounded-b-lg"
                     >
-                      <img className="rounded-t-lg h-48" src={el.image} />
+                      <img
+                        className="object-cover rounded-t-lg h-48"
+                        src={el.image}
+                      />
                       <div>
                         <div className="p-2 border-t-2 border-slate-300">
                           {el.name}

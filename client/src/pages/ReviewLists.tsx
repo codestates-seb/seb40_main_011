@@ -5,12 +5,7 @@ import { Rating } from 'react-simple-star-rating';
 import DetailReview from '../components/Review/DetailReview';
 import SnackReview from '../components/Review/SnackReview';
 import CreateSnackReview from '../components/Review/CreateSnackReview';
-import {
-  getSnack,
-  getGoodSnack,
-  getSnackStats,
-  getOldSnack,
-} from '../util/apiCollection';
+import { getSnack, getGoodSnack, getSnackStats } from '../util/apiCollection';
 import { SnackReviews, SnackReviewAvg } from '../types/mainPageTypes';
 import { useIsLogin } from '../store/login';
 import RvSelectBox from '../components/Review/RvSelectBox';

@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
+import { createDeflate } from 'zlib';
 
 export interface QuestionContent {
   content: string;
@@ -79,6 +80,47 @@ export interface EditModeProps {
   editedComment: string | undefined;
 }
 
+export interface XsRoundedButtonProps {
+  name: string;
+}
+
+export interface BodyTopProps {
+  nickname: string;
+  createdAt: number;
+}
+
+export interface PendingQuestionProps {
+  createdAt: number;
+  nickname: string;
+  content: string;
+  answerCards: null | any;
+}
+
+export interface QuestionListsProps {
+  id: number;
+  createdAt: number;
+  nickname: string;
+  content: string;
+  answerCards: null | PendingAnswerProps;
+}
+
+export interface PendingAnswerProps {
+  createdAt: number;
+  nickname: string;
+  content: string;
+}
+
+export interface AnswerCardsProps {
+  id: string;
+  createdAt: number;
+  nickname: string;
+  content: string;
+}
+
+export interface AnswerMoreProps {
+  count: number;
+}
+
 export interface SnackReviewProps {
   snackReviewData: SnackReviews | undefined;
 }
@@ -97,6 +139,7 @@ export interface SnackReviewCards {
   image: string | undefined;
   nickname: string;
   score: SnackReviewScore;
+  writerId: number;
 }
 export interface SnackReviewScore {
   [index: string]: number;

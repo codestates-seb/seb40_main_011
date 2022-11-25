@@ -9,5 +9,4 @@ import lombok.Setter;
 @Setter
 public class RecommendDto {
     private Long reviewId;
-    private Long userId;
 }

@@ -11,7 +11,6 @@ export interface count {
 
 export default function Comment({ comments }: CommentProps) {
   const { isLogin } = useIsLogin();
-  console.log(isLogin);
   const [moreComment, setMoreComment] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
   const [editedComment, setEditedComment] = useState('');

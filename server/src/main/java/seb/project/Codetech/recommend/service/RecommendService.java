@@ -31,13 +31,6 @@ public class RecommendService {
         this.reviewRepository = reviewRepository;
     }
 
-    public Recommend createRecommend(String email, Long reviewId){
-        Recommend recommend = new Recommend();
-        recommend.setUser(findUser(email));
-        recommend.setReview(findVerificationReview(reviewId));
-        return repository.save(recommend);
-    }
-
     public Long findUserId(String email) {
         Optional<User> optionalUser = userRepository.findByEmail(email);
         User findUser = optionalUser.orElseThrow(() -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
@@ -65,7 +58,7 @@ public class RecommendService {
         Review review = findVerificationReview(post.getReviewId());
         Recommend recommend = new Recommend();
 
-        if(user.getId().equals(post.getUserId())){
+        if(user.getId().equals(findVerificationReview(post.getReviewId()).getUser().getId())){
             throw new BusinessLogicException(ExceptionCode.RECOMMEND_NOT_ALLOW);
         }
         if(repository.findByUserAndReview(user.getId(), post.getReviewId())!=null){
@@ -76,15 +69,9 @@ public class RecommendService {
 
 
         review.setRecommendNumber(review.getRecommendNumber()+1);
-        reviewRepository.save(review);
         recommend.setReview(findVerificationReview(post.getReviewId()));
         recommend.setUser(findUser(email));
         return repository.save(recommend);
 
-    }
-
-    private Recommend findVerifiedRecommend(Long id) {
-        return repository.findById(id).orElseThrow(() ->
-                new BusinessLogicException(ExceptionCode.RECOMMEND_NOT_FOUND));
     }
 }

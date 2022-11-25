@@ -31,6 +31,7 @@ import seb.project.Codetech.product.dto.ProductDto;
 import seb.project.Codetech.product.dto.ProductListResponse;
 import seb.project.Codetech.product.dto.ProductResponseDto;
 import seb.project.Codetech.product.entity.Product;
+import seb.project.Codetech.product.entity.Type;
 import seb.project.Codetech.product.mapper.ProductMapper;
 import seb.project.Codetech.product.service.ProductService;
 
@@ -50,7 +51,7 @@ public class ProductController {
 	}
 
 	@PostMapping // 제품을 생성한다.
-	public ResponseEntity<ProductResponseDto> postProduct(@AuthenticationPrincipal String email,
+	public ResponseEntity<ProductResponseDto.Post> postProduct(@AuthenticationPrincipal String email,
 		@RequestPart @Valid ProductDto.Post request,
 		@RequestPart List<MultipartFile> file) throws IOException {
 
@@ -59,11 +60,11 @@ public class ProductController {
 		List<FileEntity> fileEntities = fileService.insertFiles(file); // 파일 정보를 등록하고 파일을 로컬에 저장한다.
 		fileService.setUploadProduct(serviceProduct, fileEntities); // 파일 정보를 제품에 등록한다.
 
-		return ResponseEntity.status(HttpStatus.CREATED).body(mapper.productDtoToProductResponse(serviceProduct));
+		return ResponseEntity.status(HttpStatus.CREATED).body(mapper.productToProductPostResponse(serviceProduct));
 	}
 
 	@PatchMapping("/{id}") // 등록된 제품을 수정한다.
-	public ResponseEntity<ProductResponseDto> patchProduct(@AuthenticationPrincipal String email,
+	public ResponseEntity<ProductResponseDto.Patch> patchProduct(@AuthenticationPrincipal String email,
 		@PathVariable @Positive Long id,
 		@RequestPart @Valid ProductDto.Patch request,
 		@RequestPart List<MultipartFile> file) throws IOException {
@@ -73,7 +74,7 @@ public class ProductController {
 		List<FileEntity> fileEntities = fileService.insertFiles(file);
 		fileService.setUploadProduct(serviceProduct, fileEntities);
 
-		return ResponseEntity.ok(mapper.productDtoToProductResponse(serviceProduct));
+		return ResponseEntity.ok(mapper.productToProductPatchResponse(serviceProduct));
 	}
 
 	@DeleteMapping("/{id}") // 등록된 제품을 삭제한다.
@@ -103,9 +104,9 @@ public class ProductController {
 	}
 
 	@GetMapping("/review-search") // 타입을 입력해서 타입의 모든 제품들의 이름을 가져온다.
-	public ResponseEntity<List<ProductResponseDto.selectProduct>> getTypeProduct(@RequestParam String type) {
-		List<ProductResponseDto.selectProduct> searchTypeProduct = productService.searchTypeProduct(type);
+	public ResponseEntity<List<ProductResponseDto.selectProduct>> getTypeProduct(@RequestParam Type type) {
+		List<ProductResponseDto.selectProduct> findByProductType = productService.findByProductType(type);
 
-		return ResponseEntity.ok(searchTypeProduct);
+		return ResponseEntity.ok(findByProductType);
 	}
 }
