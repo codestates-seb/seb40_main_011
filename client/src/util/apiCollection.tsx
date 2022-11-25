@@ -153,9 +153,21 @@ export const postQuestion = async (data: QuestionContent) => {
     const response = await axios.post('/api/questions', data, {
       headers: { Authorization: localStorage.getItem('authorization') },
     });
+    console.log(response);
     return response;
   } catch (err: any) {
     return err.response;
+  }
+};
+
+export const fetchQuestionData = async (size: number, asc: boolean) => {
+  try {
+    const response = await axios.get(
+      `/api/questions?size=${size}&adoption=false&asc=${asc}`
+    );
+    return response;
+  } catch (err: any) {
+    return err.reponse;
   }
 };
 
