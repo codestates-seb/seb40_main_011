@@ -19,11 +19,11 @@ export const getProduct = async () =>
     .then((data) => data)
     .catch((err) => err.response);
 
-export const postProduct = async (data: any) =>
-  await axios
-    .post('/api/product', data)
-    .then((data) => data)
-    .catch((err) => err.response);
+// export const postProduct = async (data: any) =>
+//   await axios
+//     .post('/api/product', data)
+//     .then((data) => data)
+//     .catch((err) => err.response);
 
 export const getReviewDetail = async (params: string | undefined) =>
   await axios
@@ -250,6 +250,20 @@ export const getUserReview = async (url: string, data: any) => {
       data,
     });
     return getReview;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
+export const selectProductImg = async (data: any) => {
+  try {
+    const submitImg = await axios.post('/api/products', data, {
+      headers: {
+        Authorization: initialToken,
+        // 'Content-Type': 'multipart/form-data',
+      },
+    });
+    return submitImg;
   } catch (err: any) {
     return err.response;
   }

@@ -1,12 +1,14 @@
 //제품 추가하기
 //안지은 작성
 
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import CategorieSelector from '../Selectors/CategorieSelector';
 import '../common.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { useIsLogin } from '../../store/login';
+// import { useIsLogin } from '../../store/login';
+import useCategorie from '../../store/categorie';
+import { selectProductImg } from '../../util/apiCollection';
 
 interface ModalProps {
   isModal: boolean;
@@ -14,70 +16,153 @@ interface ModalProps {
 }
 
 const AddProduct = ({ isModal, setIsModal }: ModalProps) => {
-  const { initialToken } = useIsLogin();
-  const navigator = useNavigate();
+  const { clickName } = useCategorie();
+  const navigate = useNavigate();
 
+  //clickName 대문자로 변경
+  const encoded = encodeURI(clickName);
+  const upperText = encoded.toUpperCase();
+
+  const [name, setName] = useState('');
+  const handelChangeName = (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    setName(e.target.value);
+  };
+
+  const [detail, setDetail] = useState('');
+  const handelChangeDetail = (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    setDetail(e.target.value);
+  };
+
+  //모달 열고 닫는 이벤트
   const openModalHandler = () => {
     setIsModal(!isModal);
   };
 
-  const [files, setFiles] = useState<File | null>(null);
-  const [showImages, setShowImages] = useState<string[]>([]);
-  const [showFile, setShowFile] = useState();
+  const [userImg, setUserImg] = useState('/img');
+  const [uploadImg, setUploadImg] = useState(false);
 
-  const handleDelete = (idx: number) => {
-    setShowImages([
-      ...showImages.slice(0, idx),
-      ...showImages.slice(idx + 1, showImages.length),
-    ]);
-  };
-
-  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
-    const formData = new FormData();
-    if (files) {
-      formData.append('file', files);
+  //이미지 올리는 함수
+  const handleChangeImg = async (e: any) => {
+    const reader = new FileReader();
+    if (e.target.files[0]) {
+      reader.readAsDataURL(e.target.files[0]);
     }
-
-    const config = {
-      // method: 'post',
-      // data: formData,
-      // withCredentials: true,
-      headers: {
-        Authorization: initialToken,
-      },
+    reader.onloadend = () => {
+      const resultImage: any = reader.result;
+      setUserImg(resultImage);
+      setUploadImg(true);
     };
-
-    axios
-      .post('https://codetech.nworld.dev/api/products', formData, config)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(`제품 등록하기 에러`, err));
   };
 
-  // const onLoadFile = (e: ChangeEvent<HTMLInputElement>) => {
-  //   const file = e.target.files;
-  //   console.log(file);
-  //   setShowFile(showFile);
+  // //폼 데이터 전송하는 함수
+  // const handleSubmitImg = async () => {
+  //   const formData = new FormData();
+  //   // formData.append('request', productData as any);
+  //   formData.append('file', userImg as any);
+
+  //   const imgEditData = {
+  //     request: {
+  //       name: name,
+  //       type: upperText,
+  //       detail: detail,
+  //     },
+  //     file: formData,
+  //   };
+  //   console.log(`imgEditData`, imgEditData);
+  //   const submitImg = async () => {
+  //     await selectProductImg(imgEditData);
+  //   };
+  //   submitImg();
   // };
 
-  //이미지 업로드
-  //파일 미리 볼 url
-  const [img, setImg] = useState(null as any);
-  const [previewImg, setPreviewImg] = useState(null as any);
-
-  const insertImg = (e: ChangeEvent<HTMLInputElement>) => {
-    if (!showFile) return false;
-
-    const imgEl = document.querySelector('.img_box') as HTMLElement | null;
-    const reader = new FileReader();
-
-    reader.onload = () => {
-      if (imgEl != null) {
-        img.style.background = `url(${reader.result})`;
-        console.log(img.style.background);
-      }
-      reader.readAsDataURL(showFile[0]);
-    };
+  //새로운 함수 작성
+  const productData: any = {
+    name: name,
+    tpye: upperText,
+    detail: detail,
   };
+
+  console.log(`productData`, productData);
+
+  const handleSubmitImg = async () => {
+    const formData = new FormData();
+    formData.append(
+      'file',
+      new Blob([uploadImg] as any, { type: 'application/json' })
+    );
+    formData.append(
+      'request',
+      new Blob([JSON.stringify(productData)] as any, {
+        type: 'application/json',
+      })
+    );
+
+    console.log(`formData`, formData);
+
+    const submitForm = await selectProductImg(formData);
+    switch (submitForm.status) {
+      case 200:
+        navigate('/review/write');
+        location.reload();
+        break;
+      case 415:
+        console.log('실패');
+    }
+  };
+
+  // const productData = {
+  //   name: name,
+  //   type: upperText,
+  //   detail: detail,
+  // };
+  // console.log(`productData`, productData);
+
+  // const handleSubmit = async () => {
+  //   const formData = new FormData();
+  //   // formData.append('name', name);
+  //   // formData.append('type', clickName);
+  //   // formData.append('detail', detail);
+  //   // const productData = {
+  //   //   name: name,
+  //   //   type: upperText,
+  //   //   detail: detail,
+  //   // };
+
+  //   formData.append('request', productData as any);
+  //   formData.append('file', img as any);
+
+  //   axios
+  //     .post('https://codetech.nworld.dev/api/products', {
+  //       headers: {
+  //         Authorization: initialToken,
+  //         'Content-Type': 'multipart/form-data',
+  //       },
+  //       file: formData,
+  //     })
+  //     .then((res) => {
+  //       console.log(res.data);
+  //       setName('');
+  //       setImg(undefined);
+  //       setImgPreview('');
+  //       setDetail('');
+  //     })
+  //     .catch(function (error) {
+  //       if (error.response) {
+  //         console.log(`error.response.data`, error.response.data);
+  //         console.log(`error.response.status`, error.response.status);
+  //         console.log(`error.response.headers`, error.response.headers);
+  //       } else if (error.request) {
+  //         console.log(`error.request`, error.request);
+  //       } else {
+  //         console.log('Error', error.message);
+  //       }
+  //       console.log(`error.config`, error.config);
+  //     });
+
+  //   console.log(`폼데이터 잘 들어가나?`, formData);
+  // };
 
   return (
     <>
@@ -87,9 +172,10 @@ const AddProduct = ({ isModal, setIsModal }: ModalProps) => {
             <h1 className="px-24 pt-16 pb-8 text-3xl">제품을 추가해주세요</h1>
             <div className="flex justify-center border border-red-700">
               <form
+                id="form-data"
                 className="w-2/3"
-                method="post"
-                action="https://codetech.nworld.dev/api/products"
+                // method="post"
+                // action="/api/products"
                 encType="multipart/form-data"
               >
                 <div className="pb-5">
@@ -101,6 +187,8 @@ const AddProduct = ({ isModal, setIsModal }: ModalProps) => {
                   <input
                     className="justify-between alsolute t-0 text-sm bg-white h-10 rounded border border-slate-200 flex items-center px-4 pb-0.5 font-medium text-gray-500 w-full"
                     type="text"
+                    value={name}
+                    onChange={handelChangeName}
                     placeholder="제품명을 입력해주세요"
                   />
                 </div>
@@ -109,27 +197,29 @@ const AddProduct = ({ isModal, setIsModal }: ModalProps) => {
                   <input
                     className="justify-between alsolute t-0 text-sm bg-white h-10 rounded border border-slate-200 flex items-center px-4 pb-0.5 font-medium text-gray-500 w-full"
                     type="text"
+                    value={detail}
+                    onChange={handelChangeDetail}
                     placeholder="디테일을 입력해주세요"
                   />
                 </div>
                 <div className="pb-5">
                   <p className="modal-font">이미지 업로드</p>
-                  {img === null ? (
+                  {uploadImg === false ? (
                     <div className="flex rounded-lg bg-slate-200 h-28">
                       <div className="m-auto">
                         <input
                           type="file"
                           className="real-upload"
                           accept="/image/*"
-                          onChange={(e) => insertImg(e)}
-                          // onChange={onLoadFile}
+                          // onChange={handleImg}
+                          onChange={handleChangeImg}
                         />
                       </div>
                     </div>
                   ) : (
                     <div className="flex rounded-lg bg-slate-200 h-28">
                       <div className="m-auto">
-                        <img src={previewImg} alt="img" className="img_box" />
+                        <img src={userImg} alt="" className="" />
                       </div>
                     </div>
                   )}
@@ -144,7 +234,8 @@ const AddProduct = ({ isModal, setIsModal }: ModalProps) => {
                   <button
                     type="submit"
                     className="w-1/3 py-3 mx-5 border rounded-3xl bg-slate-300"
-                    onClick={handleClick}
+                    // onClick={handleSubmit}
+                    onClick={handleSubmitImg}
                   >
                     완료
                   </button>
@@ -161,6 +252,115 @@ const AddProduct = ({ isModal, setIsModal }: ModalProps) => {
 
 export default AddProduct;
 
+// const handleImg = (e: ChangeEvent<HTMLInputElement>) => {
+//   e.preventDefault();
+//   if (e.target.files) {
+//     const uploadFile = e.target.files[0];
+//     setImg(uploadFile);
+//     //가져온 이미지 프리뷰
+//     const objectUrl = URL.createObjectURL(e.target.files[0]);
+//     setImgPreview(objectUrl);
+//     console.log(`objectUrl`, objectUrl);
+//   }
+// };
+
+// const handleImg = (e: ChangeEvent<HTMLInputElement>) => {
+//   e.preventDefault();
+//   if (e.target.files) {
+//     const uploadFile = e.target.files[0];
+//     setImg(uploadFile);
+//     //가져온 이미지 프리뷰
+//     const objectUrl = URL.createObjectURL(e.target.files[0]);
+//     setImgPreview(objectUrl);
+//     console.log(`objectUrl`, objectUrl);
+//   }
+// };
+
+// const formData = new FormData(document.getElementById('form-data'));
+
+//이미지 업로드
+//파일 미리 볼 url
+// const [showImages, setShowImages] = useState<string[]>([]);
+// const [showFile, setShowFile] = useState();
+// const [img, setImg] = useState(null as any);
+// const [previewImg, setPreviewImg] = useState(null as any);
+
+// const insertImg = (e: ChangeEvent<HTMLInputElement>) => {
+//   if (!showFile) return false;
+
+//   const imgEl = document.querySelector('.img_box') as HTMLElement | null;
+//   const reader = new FileReader();
+
+//   reader.onload = () => {
+//     if (imgEl != null) {
+//       img.style.background = `url(${reader.result})`;
+//       console.log(img.style.background);
+//     }
+//     reader.readAsDataURL(showFile[0]);
+//   };
+// };
+
+// const [files, setFiles] = useState<File | null>(null);
+// const [showImages, setShowImages] = useState<string[]>([]);
+// const [showFile, setShowFile] = useState();
+
+// const handleDelete = (idx: number) => {
+//   setShowImages([
+//     ...showImages.slice(0, idx),
+//     ...showImages.slice(idx + 1, showImages.length),
+//   ]);
+// };
+
+// const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+//   const formData = new FormData();
+//   if (files) {
+//     formData.append('file', files);
+//   }
+
+//   const config = {
+//     // method: 'post',
+//     // data: formData,
+//     // withCredentials: true,
+//     headers: {
+//       Authorization: initialToken,
+//     },
+//   };
+
+//   axios
+//     .post('https://codetech.nworld.dev/api/products', formData, config)
+//     .then((res) => console.log(res))
+//     .catch((err) => console.log(`제품 등록하기 에러`, err));
+// };
+
+// // const onLoadFile = (e: ChangeEvent<HTMLInputElement>) => {
+// //   const file = e.target.files;
+// //   console.log(file);
+// //   setShowFile(showFile);
+// // };
+
+// //이미지 업로드
+// //파일 미리 볼 url
+// const [img, setImg] = useState(null as any);
+// const [previewImg, setPreviewImg] = useState(null as any);
+
+// const insertImg = (e: ChangeEvent<HTMLInputElement>) => {
+//   if (!showFile) return false;
+
+//   const imgEl = document.querySelector('.img_box') as HTMLElement | null;
+//   const reader = new FileReader();
+
+//   reader.onload = () => {
+//     if (imgEl != null) {
+//       img.style.background = `url(${reader.result})`;
+//       console.log(img.style.background);
+//     }
+//     reader.readAsDataURL(showFile[0]);
+//   };
+// };
+
+{
+  /* <여기부터 다른 코드임></여기부터> */
+}
 // const handleUpload = async (event: ChangeEvent<HTMLInputElement>) => {
 //   if (event.target.files) {
 //     setFiles(event.target.files[0]);

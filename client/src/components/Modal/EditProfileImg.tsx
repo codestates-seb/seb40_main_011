@@ -45,6 +45,8 @@ const EditProgileImg = ({
       })
     );
 
+    console.log(`마이페이지`, formData);
+
     const submitImg = await editProfileImg(formData);
     switch (submitImg.status) {
       case 200:
