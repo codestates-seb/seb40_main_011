@@ -111,6 +111,8 @@ public class UserService {
             throw new BusinessLogicException(ExceptionCode.PASSWORD_NOT_MATCH);
         }
         findUser.setStatus(true);
+//        findUser.setEmail("null");
+//        findUser.setNickname("탈퇴한 회원");
         userRepository.save(findUser);
     }
 
