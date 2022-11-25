@@ -54,7 +54,7 @@ public class ReviewService {
 
 	@Transactional
 	public Review modifyReview(String email, Long productId, Review review) {
-		Review findReview = findVerificationReview(productId);
+		Review findReview = findVerificationReview(review.getId());
 		User findUser = userService.findUser(email);
 		Product product = productService.findProduct(productId);
 
@@ -81,6 +81,14 @@ public class ReviewService {
 		}
 
 		reviewRepository.deleteById(id);
+	}
+
+	@Transactional
+	public Review loadReview(Long id) {
+		Review review = findVerificationReview(id);
+
+		review.setView(review.getView() + 1L);
+		return reviewRepository.save(review);
 	}
 
 	public Review findVerificationReview(Long id) {

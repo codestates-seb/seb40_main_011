@@ -35,6 +35,9 @@ public class ReviewComment extends BaseTime {
 	@Column(nullable = false)
 	private String writer;
 
+	@Column(nullable = false)
+	private boolean status;
+
 	@OneToMany(mappedBy = "parent")
 	private List<ReviewComment> child = new ArrayList<>();
 

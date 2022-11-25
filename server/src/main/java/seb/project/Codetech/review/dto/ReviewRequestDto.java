@@ -2,6 +2,7 @@ package seb.project.Codetech.review.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 public class ReviewRequestDto {
 
@@ -14,10 +15,18 @@ public class ReviewRequestDto {
 	}
 
 	@Getter
+	@Setter
 	@NoArgsConstructor
 	public static class Patch {
+		private Long id;
 		private Long productId;
 		private String title;
 		private String content;
+	}
+
+	@Getter
+	@NoArgsConstructor
+	public static class Get {
+		private Long id;
 	}
 }

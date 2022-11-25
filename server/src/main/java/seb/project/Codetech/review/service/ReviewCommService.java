@@ -29,25 +29,38 @@ public class ReviewCommService {
 	}
 
 	@Transactional
-	public ReviewComment createReviewComm(String email, Long reviewId, ReviewComment reviewComment) {
+	public ReviewComment createReviewComm(String email, Long reviewId, Long parentId, ReviewComment reviewComment) {
 		Review review = reviewService.findVerificationReview(reviewId);
 		User user = userService.findUser(email);
 		reviewComment.setReview(review);
 		reviewComment.setUser(user);
 		reviewComment.setWriter(user.getNickname());
+		reviewComment.setStatus(true); // 댓글은 생성시에 기본적으로 활성화 상태이다.
 		user.updatePoint(5);
 
+		if (parentId > 0) { // 댓글이 부모 댓글의 값이 있고 활성화 상태면 대댓글으로 등록된다.
+			ReviewComment parentComm = findVerificationReviewComm(parentId);
+
+			if (!parentComm.isStatus() || parentComm.getParent() != null) { // 부모 댓글인지 검증해서 아니면 예외
+				throw new BusinessLogicException(ExceptionCode.REVIEW_COMM_NOT_FOUND);
+			}
+			reviewComment.setParent(parentComm); // 맞으면 부모댓글 아이디를 삽입한다.
+		}
 
 		return reviewCommRepository.save(reviewComment);
 	}
 
 	@Transactional
-	public ReviewComment modifyReviewComm(String email, Long id, ReviewComment reviewComment) {
-		ReviewComment reviewComm = findVerificationReviewComm(id);
+	public ReviewComment modifyReviewComm(String email, ReviewComment reviewComment) {
+		ReviewComment reviewComm = findVerificationReviewComm(reviewComment.getId());
 		User user = userService.findUser(email);
 
 		if (!reviewComm.getUser().getId().equals(user.getId())) {
 			throw new BusinessLogicException(ExceptionCode.REVIEW_COMM_NOT_MODIFY);
+		}
+
+		if (!reviewComm.isStatus()) { // 댓글이 비활성화 상태일때 수정할 수 없다.
+			throw new BusinessLogicException(ExceptionCode.REVIEW_COMM_NOT_FOUND);
 		}
 
 		Optional.ofNullable(reviewComment.getContent()).ifPresent(reviewComm::setContent);
@@ -56,13 +69,17 @@ public class ReviewCommService {
 	}
 
 	@Transactional
-	public void replayCommentCheck(Long parentId, ReviewComment reviewComment) {
-		if (parentId > 0) { // 부모댓글이 1이상이면 대댓글로 부모 정보를 삽입한다.
-			ReviewComment parentComm = findVerificationReviewComm(parentId);
-			ReviewComment childComm = findVerificationReviewComm(reviewComment.getId());
-			childComm.setParent(parentComm);
-			reviewCommRepository.save(childComm);
+	public void disableReviewComm(String email, Long id) {
+		User user = userService.findUser(email);
+		ReviewComment reviewComm = findVerificationReviewComm(id);
+
+		if (!reviewComm.getUser().getId().equals(user.getId())) {
+			throw new BusinessLogicException(ExceptionCode.REVIEW_COMM_NOT_DELETE);
 		}
+
+		reviewComm.setStatus(false);
+
+		reviewCommRepository.save(reviewComm);
 	}
 
 	public ReviewComment findVerificationReviewComm(Long reviewCommId) {
