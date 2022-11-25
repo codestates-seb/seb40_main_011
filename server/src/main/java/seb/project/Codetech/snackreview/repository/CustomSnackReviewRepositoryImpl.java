@@ -40,6 +40,7 @@ public class CustomSnackReviewRepositoryImpl implements CustomSnackReviewReposit
 				snackReview.content,
 				snackReview.createdAt,
 				user.id.as("writerId"),
+				user.image,
 				user.nickname)
 			)
 			.from(snackReview)
