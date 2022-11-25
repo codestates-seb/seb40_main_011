@@ -1,57 +1,85 @@
 // 리뷰 디테일 fetching & boxing component
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Rating } from 'react-simple-star-rating';
 import DetailReview from '../components/Review/DetailReview';
 import SnackReview from '../components/Review/SnackReview';
 import CreateSnackReview from '../components/Review/CreateSnackReview';
-import { getSnack, getSnackStats } from '../util/apiCollection';
+import {
+  getSnack,
+  getGoodSnack,
+  getSnackStats,
+  getOldSnack,
+} from '../util/apiCollection';
 import { SnackReviews, SnackReviewAvg } from '../types/mainPageTypes';
-import { FaChevronRight, FaChevronLeft } from 'react-icons/fa';
+import { useIsLogin } from '../store/login';
+import RvSelectBox from '../components/Review/RvSelectBox';
 
 const ReviewLists = () => {
+  const navigate = useNavigate();
+  const { isLogin } = useIsLogin();
   const sortReviews = ['등록순', '추천순', '댓글순'];
   const ratingCategory = ['가성비', '품질', '만족감', '성능', '디자인'];
   const [snackReviewStats, setSnackReviewStats] = useState<SnackReviewAvg>();
-  const [snackReviewData, setSnackReviewData] = useState<
-    SnackReviews | undefined
-  >();
+  const [snackReviewData, setSnackReviewData] = useState<SnackReviews>();
   const [limit, setLimit] = useState(6);
+  const [spread, setSpread] = useState(false);
+  const [selected, setSelected] = useState('최신 순');
 
   const productId = Number(useParams().id);
 
   useEffect(() => {
     const getSnackData = async () => {
-      const { data } = await getSnack(productId, limit);
-      const stats = await getSnackStats(productId);
-      setSnackReviewData(data);
-      setSnackReviewStats(stats.data);
+      if (selected === '최신 순') {
+        const { data } = await getSnack(productId, limit);
+        const stats = await getSnackStats(productId);
+        setSnackReviewData(data);
+        setSnackReviewStats(stats.data);
+      }
+      if (selected === '별점 순') {
+        const { data } = await getGoodSnack(productId, limit);
+        const stats = await getSnackStats(productId);
+        setSnackReviewData(data);
+        setSnackReviewStats(stats.data);
+      }
     };
     getSnackData();
-  }, [limit]);
+  }, [limit, selected]);
 
   const onMoreClick = (e: React.MouseEvent<HTMLElement>) => {
     setLimit(limit + 6);
   };
 
-  const oncloseClick = () => {
-    setLimit(6);
+  const onReviewWrite = () => {
+    if (!isLogin) {
+      window.alert('로그인을 해주세요');
+    } else {
+      navigate('/review/write');
+    }
+  };
+
+  const handleBoxClose = () => {
+    if (!spread) return null;
+    setSpread(!spread);
   };
 
   return (
-    <div className="flex flex-col items-center justify-center ">
+    <div
+      className="flex flex-col items-center justify-center"
+      onClick={handleBoxClose}
+    >
       <div className="mt-10 w-[1060px] text-center">
         <div className="mb-3 text-2xl font-bold">category</div>
         <div className="text-5xl font-bold">product</div>
-
-        <Link
-          to="/categories/review/write"
-          className="flex items-center justify-end"
-        >
-          <button className="px-8 py-3 my-2 rounded-2xl bg-slate-200">
+        <div className="flex items-center justify-end">
+          <button
+            onClick={onReviewWrite}
+            className="px-8 py-3 my-2 rounded-2xl bg-slate-200"
+          >
             리뷰쓰기
           </button>
-        </Link>
+        </div>
+
         {/* detail review */}
         <div className="mt-6">
           <div className="text-right">
@@ -126,7 +154,15 @@ const ReviewLists = () => {
             </div>
           </div>
           <div>
-            <div className="mb-2 text-xl font-medium text-left">한줄 리뷰</div>
+            <div className="flex mb-2 text-xl font-medium justify-between">
+              <div>한줄 리뷰</div>
+              <RvSelectBox
+                spread={spread}
+                setSpread={setSpread}
+                selected={selected}
+                setSelected={setSelected}
+              />
+            </div>
             <div className="grid justify-center grid-cols-3 gap-x-20 gap-y-16">
               <SnackReview snackReviewData={snackReviewData} />
             </div>
@@ -138,14 +174,7 @@ const ReviewLists = () => {
             >
               더보기
             </button>
-          ) : (
-            <button
-              onClick={oncloseClick}
-              className="px-10 py-2 my-10 rounded-xl bg-slate-200"
-            >
-              접기
-            </button>
-          )}
+          ) : null}
         </div>
         {/* 한줄 리뷰 직성 */}
         <div className="my-16">

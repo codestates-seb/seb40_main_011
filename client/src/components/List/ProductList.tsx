@@ -5,18 +5,15 @@ import { Product } from '../../types/mainPageTypes';
 import MainCategory from '../Selectors/MainCategory';
 import { useNavigate } from 'react-router-dom';
 import { FaChevronRight, FaChevronLeft } from 'react-icons/fa';
+import { useIsLogin } from '../../store/login';
 
 const ProductList = () => {
   const navigate = useNavigate();
+  const { isLogin } = useIsLogin();
   const [products, setProducts] = useState<Product[]>();
   const [category, setCategory] = useState('all');
   const [totalPage, setTotalPage] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-
-  const pageAmount = {
-    page: '0',
-    size: '9',
-  };
 
   useEffect(() => {
     const getProductData = async () => {
@@ -45,7 +42,11 @@ const ProductList = () => {
 
   //베스트 리뷰 클릭시 해당 리뷰로 가짐
   const onReviewClick = () => {
-    navigate('/review/create');
+    if (!isLogin) {
+      navigate('/login');
+    } else {
+      navigate('/review/write');
+    }
   };
 
   const onProductClick = (e: React.MouseEvent<HTMLElement>) => {

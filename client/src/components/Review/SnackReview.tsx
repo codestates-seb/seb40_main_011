@@ -13,6 +13,7 @@ const SnackReview = ({ snackReviewData }: SnackReviewProps) => {
 
   const onDeleteClick = (e: any) => {
     deleteSnack(e.currentTarget.id);
+    window.location.reload();
   };
 
   return (
@@ -21,7 +22,7 @@ const SnackReview = ({ snackReviewData }: SnackReviewProps) => {
         return (
           <div
             key={idx}
-            className="border w-[300px] h-[300px] p-4 rounded-3xl shadow-md"
+            className="border w-[300px] h-[330px] p-4 rounded-3xl shadow-md"
           >
             <div className="flex items-center justify-between">
               <img
@@ -81,7 +82,9 @@ const SnackReview = ({ snackReviewData }: SnackReviewProps) => {
                 />
               </div>
             </div>
-            <div className="text-justify h-[95px]">{el.content}</div>
+            <div className="text-justify h-[110px] border-t-2 pt-2">
+              {el.content}
+            </div>
             <div className="flex items-end justify-end text-sm">
               <button
                 onClick={onEditClick}

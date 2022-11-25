@@ -14,7 +14,7 @@ const ProductSelector = () => {
   const [spread, setSpread] = useState(false);
   const { clickName, setClickName } = useCategorie();
   //get으로 받아온 데이터 저장
-  const [categorie, setCategorie] = useState([]);
+  const [category, setCategory] = useState([]);
 
   const handleSelect = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
@@ -30,12 +30,12 @@ const ProductSelector = () => {
   //카테고리 셀렉터의 clickname 값을 받아와서 그 값을 api 요청할 때 url 로 넣어서 보내기
   useEffect(() => {
     axios
-      .get(`http://codetech.nworld.dev/api/products/review-search`, {
+      .get(`https://codetech.nworld.dev/api/products/review-search`, {
         params: { type: UpperText },
       })
       .then((res) => res.data())
       .then((categorie) => {
-        setCategorie(categorie.name);
+        setCategory(categorie.name);
       })
       .catch((err) => console.log(`clickName err =>`, err));
   }, [spread]);
