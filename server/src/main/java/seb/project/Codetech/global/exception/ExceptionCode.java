@@ -8,6 +8,7 @@ public enum ExceptionCode {
 	USER_NOT_FOUND(404, "회원을 찾을 수 없습니다."),
 	USER_EXISTS(409, "회원이 이미 존재합니다."),
 	PASSWORD_NOT_MATCH(404, "비밀번호가 일치하지 않습니다."),
+	NEW_PASSWORD_NOT_MATCH(404,"두 새로운 비밀번호가 일치하지 않습니다."),
 
 	// 상세리뷰 예외처리
 	REVIEW_NOT_MODIFY(401, "작성자만 상세리뷰를 수정할 수 있습니다."),

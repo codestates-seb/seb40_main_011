@@ -43,24 +43,28 @@ public class UserController {
 
     @Transactional
     @PatchMapping("/user/image")
-    public ResponseEntity<UserResponseDto> patchUser(@AuthenticationPrincipal String email,
-                                                     @RequestPart @Valid UserPatchDto patch,
+    public ResponseEntity<UserResponseDto> patchUserImage(@AuthenticationPrincipal String email,
                                                      @RequestPart MultipartFile file) throws IOException {
-        User user = mapper.userPatchDtoToUser(patch);
-        User serviceUser = userService.updateUser(email,user);
+        User user = userService.findUser(email);
         FileEntity saveFile = fileService.saveFile(file);
-        FileEntity serviceFile = fileService.setUploadUser(serviceUser,saveFile);
-        serviceUser.setImage(serviceFile.getPath());
-        return ResponseEntity.ok(mapper.userToUserResponseDto(serviceUser));
+        FileEntity serviceFile = fileService.setUploadUser(user,saveFile);
+        user.setImage(serviceFile.getPath());
+        return ResponseEntity.ok(mapper.userToUserResponseDto(user));
     }
 
     @Transactional
-    @PatchMapping("/user")
-    public ResponseEntity<UserResponseDto> patchUserImage(@AuthenticationPrincipal String email,
+    @PatchMapping("/user/nickname")
+    public ResponseEntity<UserResponseDto> patchUser(@AuthenticationPrincipal String email,
                                                           @RequestBody @Valid UserPatchDto patch){
-        User user = mapper.userPatchDtoToUser(patch);
-        User serviceUser = userService.updateUser(email,user);
-        return ResponseEntity.ok(mapper.userToUserResponseDto(serviceUser));
+        User user = userService.updateUser(email,patch);
+        return ResponseEntity.ok(mapper.userToUserResponseDto(user));
+    }
+
+    @PatchMapping("/user/password")
+    public ResponseEntity<UserResponseDto> patchUserPassword(@AuthenticationPrincipal String email,
+                                            @RequestBody @Valid UserPasswordDto passwordDto){
+        User loginUser = userService.checkPassword(email,passwordDto);
+        return ResponseEntity.ok(mapper.userToUserResponseDto(loginUser));
     }
 
     @Transactional

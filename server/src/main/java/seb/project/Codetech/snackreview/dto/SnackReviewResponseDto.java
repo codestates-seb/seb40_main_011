@@ -42,6 +42,7 @@ public class SnackReviewResponseDto {
 	@NoArgsConstructor
 	public static class Card {
 		private Long id;
+		private Long writerId;
 		private String nickname;
 		private String image;
 		private ReviewScore score;
