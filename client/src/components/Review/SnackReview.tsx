@@ -9,8 +9,6 @@ const SnackReview = ({ snackReviewData }: SnackReviewProps) => {
   };
 
   const { loginId } = useIsLogin();
-  console.log(loginId);
-  console.log(typeof snackReviewData?.cards[0].writerId);
 
   const onEditClick = (e: any) => {
     console.log(e.currentTarget.id);
