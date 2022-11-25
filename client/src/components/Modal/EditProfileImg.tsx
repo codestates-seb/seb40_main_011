@@ -1,5 +1,6 @@
 //프로필 이미지 변경
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { BsXLg } from 'react-icons/bs';
 import { EditProfileImgModalHandler } from '../MyPage/Profile';
 import { editProfileImg } from '../../util/apiCollection';
@@ -9,35 +10,52 @@ const EditProgileImg = ({
 }: EditProfileImgModalHandler) => {
   // 이미지 전송 후 이미지 리렌더링
   const [userImg, setUserImg] = useState('/img');
-  const [uploadImg, setUploadImg] = useState(false);
+  const [uploadImg, setUploadImg] = useState();
+
+  const navigate = useNavigate();
 
   const handleChangeImg = async (e: any) => {
     const reader = new FileReader();
+
     if (e.target.files[0]) {
       reader.readAsDataURL(e.target.files[0]);
     }
     reader.onloadend = () => {
       const resultImage: any = reader.result;
       setUserImg(resultImage);
-      setUploadImg(true);
+      setUploadImg(e.target.files[0]);
     };
   };
 
+  // const dummy: any = `{"password": null, "nickname": null }`;
+  const dummy: any = { password: null, nickname: null };
+
   const handleSubmitImg = async () => {
     const formData = new FormData();
-    formData.append('file', userImg as any);
+    formData.append(
+      'file',
+      new Blob([uploadImg] as any, {
+        type: 'application/json',
+      })
+    );
+    formData.append(
+      'patch',
+      new Blob([JSON.stringify(dummy)] as any, {
+        type: 'application/json',
+      })
+    );
 
-    const imgEditData = {
-      patch: {
-        password: null,
-        nickname: null,
-      },
-      file: formData,
-    };
-    const submitImg = async () => {
-      await editProfileImg(imgEditData);
-    };
-    submitImg();
+    const submitImg = await editProfileImg(formData);
+    switch (submitImg.status) {
+      case 200:
+        navigate('/mypage');
+        location.reload();
+        break;
+      case 415:
+        alert('이미지를 선택 해주세요');
+        break;
+      default:
+    }
   };
 
   return (

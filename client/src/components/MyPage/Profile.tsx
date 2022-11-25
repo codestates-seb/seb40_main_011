@@ -5,19 +5,14 @@ import EditProfile from '../Modal/EditProfile';
 import EditPassword from '../Modal/EditPassword';
 import EditProfileImg from '../Modal/EditProfileImg';
 import { getUserProfile } from '../../util/apiCollection';
+import userInfo from '../../store/userInfo';
+import { UserInfo } from '../../store/userInfo';
 
 export interface UserProfile {
   email: string;
   nickname: string;
   image: string;
   point: number;
-}
-
-export interface Token {
-  headers: Auth;
-}
-interface Auth {
-  Authorization: string | null;
 }
 
 export interface EditProfileImgModalHandler {
@@ -31,15 +26,20 @@ export interface EditPasswordModalHandler {
 }
 
 const Profile = () => {
+  let { email, nickname, image, point } = userInfo<UserInfo>((state) => state);
+
   const [userProfileData, setUserProfileData] = useState<UserProfile>();
 
   useEffect(() => {
     const getUserProfileData = async () => {
       const { data } = await getUserProfile();
       setUserProfileData(data);
-      console.log(userProfileData);
     };
     getUserProfileData();
+    email = userProfileData?.email;
+    nickname = userProfileData?.nickname;
+    image = userProfileData?.image;
+    point = userProfileData?.point;
   }, []);
 
   // Modal
@@ -85,9 +85,9 @@ const Profile = () => {
       <div className="flex items-center justify-center bg-slate-100">
         <div className="mx-10">
           <img
-            src=""
+            src={`https://codetech.nworld.dev${userProfileData?.image}`}
             alt=""
-            className="mt-10 bg-gray-400 border-none rounded-full w-60 h-60"
+            className="mt-10 border-none rounded-full bg-gray-400/90 w-60 h-60"
           />
           <div className="flex justify-center">
             <button

@@ -36,6 +36,7 @@ public class CustomQuestionRepositoryImpl implements CustomQuestionRepository {
 			.select(Projections.bean(QuestionResponseDto.Card.class,
 				question.id,
 				question.content,
+				user.id.as("writerId"),
 				user.nickname,
 				question.adoptedId,
 				question.deleted,
@@ -58,6 +59,7 @@ public class CustomQuestionRepositoryImpl implements CustomQuestionRepository {
 				answer.id,
 				answer.question.id.as("questionId"),
 				answer.content,
+				user.id.as("writerId"),
 				user.nickname,
 				answer.createdAt,
 				answer.modifiedAt
