@@ -34,6 +34,7 @@ public class UserAndReviewsDto {
 
         private Long productId;
         private String productName;
+        private Long writerId;
 
         public MyReviewCard(Review review){
             this.id = review.getId();
@@ -46,6 +47,7 @@ public class UserAndReviewsDto {
             this.modifiedAt = review.getModifiedAt();
             this.productId = review.getProduct().getId();
             this.productName = review.getProduct().getName();
+            this.writerId = review.getUser().getId();
         }
 
     }

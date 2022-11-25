@@ -26,6 +26,7 @@ public class UserAndQuestionsDto {
         private String content;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
+        private Long writerId;
 
         public MyQuestionCard(Question question){
             this.id = question.getId();
@@ -33,6 +34,7 @@ public class UserAndQuestionsDto {
             this.content = question.getContent();
             this.createdAt = question.getCreatedAt();
             this.modifiedAt = question.getModifiedAt();
+            this.writerId = question.getWriter().getId();
         }
     }
 }
