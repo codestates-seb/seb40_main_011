@@ -1,11 +1,16 @@
 import { Rating } from 'react-simple-star-rating';
 import { SnackReviewProps, SnackReviewCards } from '../../types/mainPageTypes';
 import { deleteSnack } from '../../util/apiCollection';
+import { useIsLogin } from '../../store/login';
 
 const SnackReview = ({ snackReviewData }: SnackReviewProps) => {
   const getParsedDate = (createdAt: string) => {
     return new Date(createdAt).toLocaleDateString('ko-KR');
   };
+
+  const { loginId } = useIsLogin();
+  console.log(loginId);
+  console.log(typeof snackReviewData?.cards[0].writerId);
 
   const onEditClick = (e: any) => {
     console.log(e.currentTarget.id);
@@ -13,6 +18,7 @@ const SnackReview = ({ snackReviewData }: SnackReviewProps) => {
 
   const onDeleteClick = (e: any) => {
     deleteSnack(e.currentTarget.id);
+    window.location.reload();
   };
 
   return (
@@ -21,7 +27,7 @@ const SnackReview = ({ snackReviewData }: SnackReviewProps) => {
         return (
           <div
             key={idx}
-            className="border w-[300px] h-[300px] p-4 rounded-3xl shadow-md"
+            className="border w-[300px] h-[330px] p-4 rounded-3xl shadow-md"
           >
             <div className="flex items-center justify-between">
               <img
@@ -81,22 +87,29 @@ const SnackReview = ({ snackReviewData }: SnackReviewProps) => {
                 />
               </div>
             </div>
-            <div className="text-justify h-[95px]">{el.content}</div>
+            <div className="text-justify h-[110px] border-t-2 pt-2">
+              {el.content}
+            </div>
+
             <div className="flex items-end justify-end text-sm">
-              <button
-                onClick={onEditClick}
-                id={el.id.toString()}
-                className="border m-0.5 p-0.5 rounded-lg"
-              >
-                수정
-              </button>
-              <button
-                onClick={onDeleteClick}
-                id={el.id.toString()}
-                className="border m-0.5 p-0.5 rounded-lg"
-              >
-                삭제
-              </button>
+              {Number(loginId) === el.writerId ? (
+                <>
+                  <button
+                    onClick={onEditClick}
+                    id={el.id.toString()}
+                    className="border m-0.5 p-0.5 rounded-lg"
+                  >
+                    수정
+                  </button>
+                  <button
+                    onClick={onDeleteClick}
+                    id={el.id.toString()}
+                    className="border m-0.5 p-0.5 rounded-lg"
+                  >
+                    삭제
+                  </button>
+                </>
+              ) : null}
             </div>
           </div>
         );

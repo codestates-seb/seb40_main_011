@@ -12,7 +12,7 @@ export default function HeaderTextButton({ name }: { name: string }) {
       case 'signup':
         navigate('/signup');
         break;
-      case 'mypage':
+      case 'My Page':
         navigate('/mypage');
         break;
       case 'logout':

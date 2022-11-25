@@ -139,14 +139,15 @@ export interface SnackReviewCards {
   image: string | undefined;
   nickname: string;
   score: SnackReviewScore;
+  writerId: number;
 }
 export interface SnackReviewScore {
+  [index: string]: number;
   costEfficiency: number;
   quality: number;
   satisfaction: number;
   design: number;
   performance: number;
-  grade: number;
 }
 
 export interface SnackReviewAvg {
@@ -156,4 +157,11 @@ export interface SnackReviewAvg {
   avgStf: number;
   avgDsn: number;
   avgPerf: number;
+}
+
+export interface SelectBoxProps {
+  spread: boolean;
+  setSpread: Dispatch<SetStateAction<boolean>>;
+  selected: string;
+  setSelected: Dispatch<SetStateAction<string>>;
 }

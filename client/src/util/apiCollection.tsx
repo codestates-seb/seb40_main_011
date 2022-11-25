@@ -118,6 +118,38 @@ export const getSnack = async (productId: any, limit: number) => {
   }
 };
 
+export const getGoodSnack = async (productId: any, limit: number) => {
+  try {
+    const response = await axios.get(
+      `/api/snack-reviews?productId=${productId}&offset=0&limit=${limit}&sortByGrade=true&asc=false`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    return response;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
+export const getOldSnack = async (productId: any, limit: number) => {
+  try {
+    const response = await axios.get(
+      `/api/snack-reviews?productId=${productId}&offset=0&limit=${limit}&sortByGrade=false&asc=true`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    return response;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
 export const getSnackStats = async (productId: number) => {
   try {
     const response = await axios.get(

@@ -14,7 +14,7 @@ const ProductSelector = () => {
   const [spread, setSpread] = useState(false);
   const { clickName, setClickName } = useCategorie();
   //get으로 받아온 데이터 저장
-  const [categorie, setCategorie] = useState([]);
+  const [category, setCategory] = useState([]);
 
   const handleSelect = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
@@ -35,7 +35,7 @@ const ProductSelector = () => {
       })
       .then((res) => {
         console.log(`res.data`, res.data);
-        setCategorie(res.data);
+        setCategory(res.data);
       })
       .catch(function (error) {
         if (error.response) {
@@ -100,7 +100,7 @@ const ProductSelector = () => {
           onClick={handleSelect}
           className="absolute z-10 w-full overflow-hidden bg-white border top-10 rounded-bl-xl rounded-br-xl drop-shadow-md"
         >
-          {categorie.map((product, idx) => {
+          {category.map((product, idx) => {
             return (
               <button
                 key={idx}

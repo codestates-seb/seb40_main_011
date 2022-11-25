@@ -4,11 +4,13 @@ import TextareaAutosize from 'react-textarea-autosize';
 import { RatingCategory } from '../../types/mainPageTypes';
 import { postSnack } from '../../util/apiCollection';
 import { useParams } from 'react-router-dom';
-
+import { useIsLogin } from '../../store/login';
+import { SnackReviewScore } from '../../types/mainPageTypes';
 const CreateSnackReview = ({ ratingCategory }: RatingCategory) => {
+  const { isLogin } = useIsLogin();
   const params = useParams();
   const [content, setContent] = useState('');
-  const [score, setScore] = useState<any>({
+  const [score, setScore] = useState<SnackReviewScore>({
     costEfficiency: 0,
     quality: 0,
     satisfaction: 0,
@@ -18,11 +20,26 @@ const CreateSnackReview = ({ ratingCategory }: RatingCategory) => {
 
   const handleTextarea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
+    if (content.length > 100) {
+      window.alert('최대 글자수에 맞춰주세요');
+      setContent(content.slice(0, 100));
+    }
   };
 
-  const handleRating = (value: number, index: number, event: any) => {
-    const key = event.currentTarget.className.split(' ')[1];
-    setScore((current: any) => {
+  const onInputFocus = () => {
+    if (!isLogin) {
+      window.alert('로그인을 해주세요');
+      (document.activeElement as HTMLElement).blur();
+    }
+  };
+
+  const handleRating = (
+    value: number,
+    index: number,
+    event: React.MouseEvent<HTMLSpanElement, MouseEvent> | undefined
+  ) => {
+    const key = event?.currentTarget.className.split(' ')[1];
+    setScore((current) => {
       const newScore = { ...current };
       key === '가성비' ? (newScore.costEfficiency = value) : null;
       key === '품질' ? (newScore.quality = value) : null;
@@ -70,6 +87,7 @@ const CreateSnackReview = ({ ratingCategory }: RatingCategory) => {
         <div className="flex justify-center bg-white border-b border-gray-200">
           <div className="w-full py-10">
             <TextareaAutosize
+              onFocus={onInputFocus}
               minRows={3}
               maxRows={6}
               className={`w-full outline-none text-gray-300 font-medium resize-none focus:text-gray-700 text-lg ${
