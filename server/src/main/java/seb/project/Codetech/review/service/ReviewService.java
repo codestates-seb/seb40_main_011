@@ -15,7 +15,6 @@ import seb.project.Codetech.review.dto.ReviewResponseDto;
 import seb.project.Codetech.review.entity.Review;
 import seb.project.Codetech.review.repository.ReviewRepository;
 import seb.project.Codetech.user.entity.User;
-import seb.project.Codetech.user.repository.UserRepository;
 import seb.project.Codetech.user.service.UserService;
 
 @Service
@@ -26,14 +25,11 @@ public class ReviewService {
 	private final UserService userService;
 	private final ProductService productService;
 	private final ReviewRepository reviewRepository;
-	private final UserRepository userRepository;
 
-	public ReviewService(UserService userService, ProductService productService, ReviewRepository reviewRepository,
-						 UserRepository userRepository) {
+	public ReviewService(UserService userService, ProductService productService, ReviewRepository reviewRepository) {
 		this.userService = userService;
 		this.productService = productService;
 		this.reviewRepository = reviewRepository;
-		this.userRepository = userRepository;
 	}
 
 	@Transactional
@@ -47,7 +43,6 @@ public class ReviewService {
 		review.setView(0L); // 조회수 컬럼으로 0값으로 시작한다.
 		review.setRecommendNumber(0L);
 		user.updatePoint(100);
-		userRepository.save(user);
 
 		return reviewRepository.save(review);
 	}
@@ -71,8 +66,7 @@ public class ReviewService {
 		Optional.ofNullable(review.getContent()).ifPresent(findReview::setContent);
 		Optional.ofNullable(product).ifPresent(findReview::setProduct); // 회원이 제품을 변경하면 변경되도록 설정
 		Optional.ofNullable(review.getFileEntities()).ifPresent(findReview::setFileEntities);
-		findUser.updatePoint(10);
-		userRepository.save(findUser);
+		findUser.updatePoint(1);
 
 		return reviewRepository.save(findReview);
 	}

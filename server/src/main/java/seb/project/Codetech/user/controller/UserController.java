@@ -35,10 +35,10 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<User> registerUser(@Valid @RequestBody UserPostDto register){
+    public ResponseEntity<UserResponseDto> registerUser(@Valid @RequestBody UserPostDto register){
         User user = mapper.userRegisterToUser(register);
         User registerUser = userService.registerUser(user);
-        return ResponseEntity.ok(registerUser);
+        return ResponseEntity.ok(mapper.userToUserResponseDto(registerUser));
     }
 
     @Transactional

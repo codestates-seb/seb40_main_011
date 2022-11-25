@@ -94,7 +94,7 @@ public class UserService {
         }
         findUser.updatePoint(1);
 
-        return userRepository.save(findUser);
+        return findUser;
     }
 
     public Long findUserId(String email) {
