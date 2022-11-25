@@ -16,8 +16,6 @@ import seb.project.Codetech.question.dto.QuestionRequestDto;
 import seb.project.Codetech.question.dto.QuestionResponseDto;
 import seb.project.Codetech.question.entity.Question;
 import seb.project.Codetech.question.respository.QuestionRepository;
-import seb.project.Codetech.user.entity.User;
-import seb.project.Codetech.user.repository.UserRepository;
 import seb.project.Codetech.user.service.UserService;
 
 @Service
@@ -26,7 +24,6 @@ import seb.project.Codetech.user.service.UserService;
 public class QuestionService {
 	private final QuestionRepository questionRepository;
 	private final UserService userService;
-	private final UserRepository userRepository;
 
 	@Transactional(readOnly = true)
 	public QuestionResponseDto.Slice readQuestion(QuestionRequestDto.Get params) {
@@ -47,9 +44,7 @@ public class QuestionService {
 	public Long createQuestion(String email, String content) {
 		Question question = Question.from(content);
 		question.setWriter(userService.findUser(email));
-		User user = userService.findUser(email);
-		user.updatePoint(10);
-		userRepository.save(user);
+		question.getWriter().updatePoint(10);
 
 		return questionRepository.save(question).getId();
 	}

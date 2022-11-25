@@ -11,7 +11,6 @@ import seb.project.Codetech.review.entity.Review;
 import seb.project.Codetech.review.entity.ReviewComment;
 import seb.project.Codetech.review.repository.ReviewCommRepository;
 import seb.project.Codetech.user.entity.User;
-import seb.project.Codetech.user.repository.UserRepository;
 import seb.project.Codetech.user.service.UserService;
 
 @Service
@@ -20,14 +19,12 @@ public class ReviewCommService {
 	private final ReviewCommRepository reviewCommRepository;
 	private final ReviewService reviewService;
 	private final UserService userService;
-	private final UserRepository userRepository;
 
 	public ReviewCommService(ReviewCommRepository reviewCommRepository, ReviewService reviewService,
-		UserService userService, UserRepository userRepository) {
+		UserService userService) {
 		this.reviewCommRepository = reviewCommRepository;
 		this.reviewService = reviewService;
 		this.userService = userService;
-		this.userRepository = userRepository;
 
 	}
 
@@ -39,7 +36,6 @@ public class ReviewCommService {
 		reviewComment.setUser(user);
 		reviewComment.setWriter(user.getNickname());
 		user.updatePoint(5);
-		userRepository.save(user);
 
 
 		return reviewCommRepository.save(reviewComment);
