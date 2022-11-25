@@ -15,6 +15,7 @@ public class ReviewCommRequestDto {
 	@Getter
 	@NoArgsConstructor
 	public static class Patch {
+		private Long id;
 		private String content;
 	}
 }
