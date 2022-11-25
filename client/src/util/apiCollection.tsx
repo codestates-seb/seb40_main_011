@@ -70,9 +70,11 @@ export const getUserProfile = async () => {
   }
 };
 
-export const delAccount = async () => {
+export const delAccount = async (data: any) => {
   try {
-    const optOut = await axios.patch('/api/withdraw');
+    const optOut = await axios.patch('/api/withdraw', data, {
+      headers: { Authorization: initialToken },
+    });
     return optOut;
   } catch (err: any) {
     return err.response;
@@ -205,24 +207,49 @@ export const fetchQuestionData = async (size: number, asc: boolean) => {
 
 export const editProfileImg = async (data: any) => {
   try {
-    const submitImg = await axios.patch(
-      '/api/user/image',
-      { headers: { Authorization: initialToken } },
-      data
-    );
+    const submitImg = await axios.patch('/api/user/image', data, {
+      headers: {
+        Authorization: initialToken,
+        // 'Content-type': 'application/json',
+        // 'Content-type': 'multipart/form-data',
+      },
+    });
+
     return submitImg;
   } catch (err: any) {
     return err.response;
   }
 };
 
-export const editProfile = async (data: any) => {
+export const editNickname = async (data: any) => {
   try {
-    const submitImg = await axios.patch('/api/user', {
+    const submitImg = await axios.patch('/api/user', data, {
+      headers: { Authorization: initialToken },
+    });
+    return submitImg;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
+export const editPassword = async (data: any) => {
+  try {
+    const submitImg = await axios.patch('/api/user', data, {
+      headers: { Authorization: initialToken },
+    });
+    return submitImg;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
+export const getUserReview = async (url: string, data: any) => {
+  try {
+    const getReview = await axios.get(`/api/user/${url}`, {
       headers: { Authorization: initialToken },
       data,
     });
-    return submitImg;
+    return getReview;
   } catch (err: any) {
     return err.response;
   }

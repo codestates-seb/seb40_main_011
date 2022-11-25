@@ -5,41 +5,53 @@ import {
   BsHeart,
   BsPatchQuestion,
   BsLightbulb,
+  BsChevronDoubleLeft,
 } from 'react-icons/bs';
-import { getUserReview } from '../../util/ServerApiCollection';
+import { domainToASCII } from 'url';
+import { getUserReview } from '../../util/apiCollection';
 
 const MypageTab = (): JSX.Element => {
   const [currentTab, setCurrentTab] = useState(0);
+  const [currentReview, setCurrentReview] = useState('reviews');
   const [detailReviewList, setDetailReviewList] = useState();
 
   const menuArr = [
     {
       icon: <BsFileRichtext />,
       name: '상세 리뷰',
-      content: 'detail review',
+      content: 'reviews',
     },
     {
       icon: <BsChatSquareText />,
       name: '한줄 리뷰',
-      content: 'snack review',
+      content: 'snack-reviews',
     },
-    { icon: <BsHeart />, name: '좋아요', content: 'likes' },
+    { icon: <BsHeart />, name: '좋아요', content: 'recommends' },
     { icon: <BsPatchQuestion />, name: '내 질문', content: 'questions' },
     { icon: <BsLightbulb />, name: '내 답글', content: 'answers' },
   ];
 
   const selectMenuHandler = (index: number) => {
     setCurrentTab(index);
-  };
-
-  useEffect(() => {
+    setCurrentReview(menuArr[index].content);
+    const params = {
+      page: 1,
+      size: 5,
+      sort: 'creaedAt',
+    };
     const getDetailReviewList = async () => {
-      const { data } = await getUserReview();
+      const { data } = await getUserReview(menuArr[index].content, params);
       setDetailReviewList(data);
-      console.log(detailReviewList);
+      // console.log(detailReviewList);
     };
     getDetailReviewList();
-  }, []);
+    console.log(detailReviewList);
+    console.log(currentReview);
+    // console.log(menuArr[currentTab].content);
+    // if (detailReviewList) {
+    //   console.log(detailReviewList[menuArr[currentTab].content]);
+    // }
+  };
 
   return (
     <div className="">
@@ -65,7 +77,9 @@ const MypageTab = (): JSX.Element => {
       </div>
       <div className="flex justify-center">
         <div className="flex flex-col justify-center w-[850px] p-5">
-          {menuArr[currentTab].content}
+          {detailReviewList
+            ? detailReviewList[menuArr[currentTab].content]
+            : ''}
           <div className="mb-2 text-lg">tilte</div>
           <div className="flex text-sm">
             <div className="px-3 py-0.5 bg-slate-300 rounded-lg">Category</div>
