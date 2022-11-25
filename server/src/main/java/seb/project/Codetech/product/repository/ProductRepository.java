@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 import seb.project.Codetech.product.entity.Product;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product, Long>, ProductRepositoryCustom {
+public interface ProductRepository extends JpaRepository<Product, Long>, CustomProductRepository {
 }

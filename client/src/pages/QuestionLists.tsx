@@ -1,16 +1,31 @@
 import QuestionInput from '../components/QuestionList/QuestionInput';
 import Question from '../components/QuestionList/Question';
 import Answer from '../components/QuestionList/Answer';
-import PendingAnswer from '../components/QuestionList/PendingAnswer';
 import PendingQuestion from '../components/QuestionList/PendingQuestion';
 import SelectBox from '../components/SelectBox/SelectBox';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { fetchQuestionData } from '../util/apiCollection';
+import { QuestionListsProps } from '../types/mainPageTypes';
 // import Confirm from '../components/Modal/Confirm';
 
 export default function QuestionLists() {
-  useEffect(async () => {
-    const QuestionData = await getQuestionData();
-  });
+  const [questions, setQuestions] = useState([]);
+
+  useEffect(() => {
+    const getQuestion = async () => {
+      const data = await fetchQuestionData();
+      console.log(data);
+      switch (data.status) {
+        case 200: {
+          const { cards } = data.data;
+          setQuestions(cards);
+          console.log(data.data);
+        }
+      }
+    };
+    getQuestion();
+  }, []);
+
   return (
     <>
       <QuestionInput />
@@ -25,9 +40,18 @@ export default function QuestionLists() {
             </div>
             <SelectBox />
           </div>
-          <PendingQuestion />
-          <PendingAnswer />
-          <Question />
+          {questions.map((el: QuestionListsProps) => {
+            const { id, createdAt, nickname, content, answerCards } = el;
+            return (
+              <PendingQuestion
+                key={id}
+                createdAt={createdAt}
+                nickname={nickname}
+                content={content}
+                answerCards={answerCards}
+              />
+            );
+          })}
           <button className="w-4/5 hover:bg-slate-200 rounded h-10 text-gray-400 hover:text-gray-600 pb-0.5 font-medium">
             더보기
           </button>
@@ -41,8 +65,6 @@ export default function QuestionLists() {
             <SelectBox />
           </div>
           <Question />
-          <Answer />
-          <Answer />
           <Answer />
           <button className="w-4/5 hover:bg-slate-200 rounded h-10 text-gray-400 hover:text-gray-600 pb-0.5 font-medium">
             더 보기

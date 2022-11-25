@@ -92,8 +92,9 @@ public class UserService {
         if(user.getPassword()!=null){
             findUser.setPassword(passwordEncoder.encode(user.getPassword()));
         }
+        findUser.updatePoint(1);
 
-        return userRepository.save(findUser);
+        return findUser;
     }
 
     public Long findUserId(String email) {

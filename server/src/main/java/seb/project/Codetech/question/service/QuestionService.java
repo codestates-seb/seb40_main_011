@@ -44,6 +44,7 @@ public class QuestionService {
 	public Long createQuestion(String email, String content) {
 		Question question = Question.from(content);
 		question.setWriter(userService.findUser(email));
+		question.getWriter().updatePoint(10);
 
 		return questionRepository.save(question).getId();
 	}

@@ -34,6 +34,7 @@ public class SnackReviewService {
 	public SnackReview createSnackReview(SnackReviewServiceDto.Create dto) {
 		SnackReview snackReview = dtoMapper.createDtoToEntity(dto);
 
+		snackReview.getWriter().updatePoint(10);
 		return snackReviewRepository.save(snackReview);
 	}
 

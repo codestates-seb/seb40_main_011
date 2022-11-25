@@ -68,8 +68,6 @@ export default function Login() {
 
   // login status
   const { Login, isLogin, initialToken } = useIsLogin();
-  console.log(isLogin);
-  console.log(initialToken);
   // console.log(initialToken);
   // handleEnter
   const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {

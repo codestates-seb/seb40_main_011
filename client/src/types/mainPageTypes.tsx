@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
+import { createDeflate } from 'zlib';
 
 export interface QuestionContent {
   content: string;
@@ -77,4 +78,82 @@ export interface EditModeProps {
   isEditMode: boolean;
   setIsEditMode: Dispatch<SetStateAction<boolean>>;
   editedComment: string | undefined;
+}
+
+export interface XsRoundedButtonProps {
+  name: string;
+}
+
+export interface BodyTopProps {
+  nickname: string;
+  createdAt: number;
+}
+
+export interface PendingQuestionProps {
+  createdAt: number;
+  nickname: string;
+  content: string;
+  answerCards: null | any;
+}
+
+export interface QuestionListsProps {
+  id: number;
+  createdAt: number;
+  nickname: string;
+  content: string;
+  answerCards: null | PendingAnswerProps;
+}
+
+export interface PendingAnswerProps {
+  createdAt: number;
+  nickname: string;
+  content: string;
+}
+
+export interface AnswerCardsProps {
+  id: string;
+  createdAt: number;
+  nickname: string;
+  content: string;
+}
+
+export interface AnswerMoreProps {
+  count: number;
+}
+
+export interface SnackReviewProps {
+  snackReviewData: SnackReviews | undefined;
+}
+
+export interface RatingCategory {
+  ratingCategory: string[];
+}
+export interface SnackReviews {
+  hasNext: boolean;
+  cards: SnackReviewCards[];
+}
+export interface SnackReviewCards {
+  content: string;
+  createdAt: string;
+  id: number;
+  image: string | undefined;
+  nickname: string;
+  score: SnackReviewScore;
+}
+export interface SnackReviewScore {
+  costEfficiency: number;
+  quality: number;
+  satisfaction: number;
+  design: number;
+  performance: number;
+  grade: number;
+}
+
+export interface SnackReviewAvg {
+  total: number;
+  avgCe: number;
+  avgQlt: number;
+  avgStf: number;
+  avgDsn: number;
+  avgPerf: number;
 }

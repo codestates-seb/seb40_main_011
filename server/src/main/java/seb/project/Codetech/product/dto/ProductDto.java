@@ -23,6 +23,6 @@ public class ProductDto {
 	}
 
 	public static class Search {
-		private String name;
+		private Type type;
 	}
 }

@@ -36,6 +36,7 @@ const MypageTab = (): JSX.Element => {
     const getDetailReviewList = async () => {
       const { data } = await getUserReview();
       setDetailReviewList(data);
+      console.log(detailReviewList);
     };
     getDetailReviewList();
   }, []);

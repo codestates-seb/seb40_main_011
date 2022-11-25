@@ -1,5 +1,6 @@
 package seb.project.Codetech.review.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import seb.project.Codetech.global.exception.BusinessLogicException;
 import seb.project.Codetech.global.exception.ExceptionCode;
 import seb.project.Codetech.product.entity.Product;
 import seb.project.Codetech.product.service.ProductService;
+import seb.project.Codetech.review.dto.ReviewResponseDto;
 import seb.project.Codetech.review.entity.Review;
 import seb.project.Codetech.review.repository.ReviewRepository;
 import seb.project.Codetech.user.entity.User;
@@ -40,13 +42,19 @@ public class ReviewService {
 		review.setWriter(user.getNickname()); // 작성자 닉네임을 삽입한다.
 		review.setView(0L); // 조회수 컬럼으로 0값으로 시작한다.
 		review.setRecommendNumber(0L);
+		user.updatePoint(100);
 
 		return reviewRepository.save(review);
 	}
 
 	@Transactional
-	public Review modifyReview(String email, Long id, Long productId, Review review) {
-		Review findReview = findVerificationReview(id);
+	public List<ReviewResponseDto.Post> responseReviewPost(Review review) {
+		return reviewRepository.findByReviewResponseDto(review);
+	}
+
+	@Transactional
+	public Review modifyReview(String email, Long productId, Review review) {
+		Review findReview = findVerificationReview(review.getId());
 		User findUser = userService.findUser(email);
 		Product product = productService.findProduct(productId);
 
@@ -58,6 +66,7 @@ public class ReviewService {
 		Optional.ofNullable(review.getContent()).ifPresent(findReview::setContent);
 		Optional.ofNullable(product).ifPresent(findReview::setProduct); // 회원이 제품을 변경하면 변경되도록 설정
 		Optional.ofNullable(review.getFileEntities()).ifPresent(findReview::setFileEntities);
+		findUser.updatePoint(1);
 
 		return reviewRepository.save(findReview);
 	}
@@ -72,6 +81,14 @@ public class ReviewService {
 		}
 
 		reviewRepository.deleteById(id);
+	}
+
+	@Transactional
+	public Review loadReview(Long id) {
+		Review review = findVerificationReview(id);
+
+		review.setView(review.getView() + 1L);
+		return reviewRepository.save(review);
 	}
 
 	public Review findVerificationReview(Long id) {

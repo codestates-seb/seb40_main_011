@@ -1,15 +1,15 @@
 import XsRoundedButton from '../Buttons/XsRoundedButton';
+import { BodyTopProps } from '../../types/mainPageTypes';
 
-export interface btn {
-  name: string;
-}
+export default function BodyTop({ nickname, createdAt }: BodyTopProps) {
+  // const formatter = new Intl.NumberFormat('kr', { compactDisplay: 'short' });
 
-export default function BodyTop({ nickname, createdAt }) {
   return (
-    <div className="flex justify-between mb-1.5 items-center">
+    <div className="flex text-sm font-medium justify-between mb-1.5 items-center">
       <span>
-        <span className="font-semibold">{nickname}</span>
-        <span className="text-sm font-medium before:content-['•'] before:mr-1.5 before:ml-1.5 before:text-gray-400 font-medium text-gray-400">
+        <span className="text-gray-800">{nickname}</span>
+        <span className="before:content-['•'] before:mr-1.5 before:ml-1.5 text-gray-400">
+          {/* {createdAt.toLocaleString('en')} */}
           {createdAt}
         </span>
       </span>

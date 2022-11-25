@@ -14,6 +14,7 @@ import seb.project.Codetech.global.exception.ExceptionCode;
 import seb.project.Codetech.global.page.PageInfo;
 import seb.project.Codetech.product.dto.ProductResponseDto;
 import seb.project.Codetech.product.entity.Product;
+import seb.project.Codetech.product.entity.Type;
 import seb.project.Codetech.product.repository.ProductRepository;
 import seb.project.Codetech.user.entity.User;
 import seb.project.Codetech.user.repository.UserRepository;
@@ -77,8 +78,8 @@ public class ProductService {
 		productRepository.delete(findProduct);
 	}
 
-	public List<ProductResponseDto.selectProduct> searchTypeProduct(String type) {
-		return productRepository.searchTypePrduct(type);
+	public List<ProductResponseDto.selectProduct> findByProductType(Type type) {
+		return productRepository.findByProductType(type);
 	}
 
 	public Product findProductId(Long id) { // 제품 정보를 가져오기 위한 메소드
