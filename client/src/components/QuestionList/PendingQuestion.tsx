@@ -41,7 +41,8 @@ export default function PendingQuestion({
           )}
         </div>
       </div>
-      {/* {!showAnswer &&
+      {answerCards !== null &&
+        showAnswer &&
         answerCards.map((el: AnswerCardsProps) => {
           const { id, createdAt, nickname, content } = el;
           return (
@@ -52,7 +53,7 @@ export default function PendingQuestion({
               content={content}
             />
           );
-        })} */}
+        })}
     </div>
   );
 }

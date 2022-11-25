@@ -8,7 +8,7 @@ export default function PendingAnswer({
   content,
 }: PendingAnswerProps) {
   return (
-    <div className="flex mb-6">
+    <div className="w-full flex mb-6">
       <div className="w-16 flex-none flex items-center">
         <button className="flex flex-col justify-center items-center text-slate-300 hover:text-slate-500 group hover:bg-slate-200 px-1.5 pt-1.5 pb-2 rounded-lg">
           <AiFillCheckCircle className="text-3xl mb-0.5" />
@@ -17,7 +17,7 @@ export default function PendingAnswer({
           </span>
         </button>
       </div>
-      <div className="">
+      <div className="w-full">
         <BodyTop createdAt={createdAt} nickname={nickname} />
         <div className="ring-1 ring-gray-200 rounded-xl overflow-hidden bg-white">
           <div className="px-6 pt-3 pb-4 border-b border-gray-200">
