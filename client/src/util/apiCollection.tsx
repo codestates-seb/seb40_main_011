@@ -160,13 +160,10 @@ export const postQuestion = async (data: QuestionContent) => {
   }
 };
 
-export const fetchQuestionData = async () => {
-  const size = 3;
-  const adoption = false;
-  const asc = false;
+export const fetchQuestionData = async (size: number, asc: boolean) => {
   try {
     const response = await axios.get(
-      `/api/questions?size=${size}&adoption=${adoption}&asc=${asc}`
+      `/api/questions?size=${size}&adoption=false&asc=${asc}`
     );
     return response;
   } catch (err: any) {
