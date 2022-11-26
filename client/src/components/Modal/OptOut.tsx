@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { BsXLg, BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
 import { OptOutModalHandler } from '../../pages/MyPage';
 import { delAccount } from '../../util/apiCollection';
-// import { initialToken } from '../../store/login';
 import { useIsLogin } from '../../store/login';
 
 export interface OptOutInputs {
@@ -17,33 +16,32 @@ interface Header {
 }
 
 const OptOut = ({ openOptOutModalHandler }: OptOutModalHandler) => {
-  const { initialToken } = useIsLogin();
   const navigate = useNavigate();
 
   const [password, setPassword] = useState();
 
   const [viewPassword, setViewPassword] = useState(false);
-  const viewPasswordHandler = (event: React.MouseEvent<HTMLElement>) => {
+  const viewPasswordHandler = (e: React.MouseEvent<HTMLElement>) => {
     setViewPassword(!viewPassword);
   };
 
-  const config = {
-    headers: { Authorization: initialToken },
-    body: password,
+  const handlePassword = (e: any) => {
+    setPassword(e.target.value);
   };
 
   const handleOptOut = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
-    const loginResult = await delAccount();
-    switch (loginResult.status) {
+
+    const data = { password: password };
+
+    const accountResult = await delAccount(data);
+    switch (accountResult.status) {
       case 200:
-        openOptOutModalHandler;
         localStorage.clear();
         navigate('/');
         break;
-      case 401:
+      case 500:
         alert('비밀번호가 일치하지 않습니다.');
-        console.error(loginResult.status + ' Error');
         break;
       default:
     }
@@ -65,6 +63,7 @@ const OptOut = ({ openOptOutModalHandler }: OptOutModalHandler) => {
               <input
                 type="text"
                 value={password}
+                onChange={handlePassword}
                 placeholder="비밀번호"
                 className="flex w-full py-2 mt-24 text-lg"
               />
@@ -72,6 +71,7 @@ const OptOut = ({ openOptOutModalHandler }: OptOutModalHandler) => {
               <input
                 type="password"
                 value={password}
+                onChange={handlePassword}
                 placeholder="비밀번호"
                 className="flex w-full py-2 mt-24 text-lg"
               />

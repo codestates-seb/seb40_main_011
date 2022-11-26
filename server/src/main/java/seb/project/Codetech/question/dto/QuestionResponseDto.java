@@ -21,6 +21,7 @@ public class QuestionResponseDto {
 	@NoArgsConstructor
 	public static class Card {
 		private Long id;
+		private Long writerId;
 		private String content;
 		private String nickname;
 		private String image;
@@ -35,6 +36,7 @@ public class QuestionResponseDto {
 	@NoArgsConstructor
 	public static class AnswerCard {
 		private Long id;
+		private Long writerId;
 		private Long questionId;
 		private String content;
 		private String nickname;

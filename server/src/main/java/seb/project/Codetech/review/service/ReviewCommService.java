@@ -11,7 +11,6 @@ import seb.project.Codetech.review.entity.Review;
 import seb.project.Codetech.review.entity.ReviewComment;
 import seb.project.Codetech.review.repository.ReviewCommRepository;
 import seb.project.Codetech.user.entity.User;
-import seb.project.Codetech.user.repository.UserRepository;
 import seb.project.Codetech.user.service.UserService;
 
 @Service
@@ -20,14 +19,12 @@ public class ReviewCommService {
 	private final ReviewCommRepository reviewCommRepository;
 	private final ReviewService reviewService;
 	private final UserService userService;
-	private final UserRepository userRepository;
 
 	public ReviewCommService(ReviewCommRepository reviewCommRepository, ReviewService reviewService,
-		UserService userService, UserRepository userRepository) {
+		UserService userService) {
 		this.reviewCommRepository = reviewCommRepository;
 		this.reviewService = reviewService;
 		this.userService = userService;
-		this.userRepository = userRepository;
 
 	}
 
@@ -40,7 +37,6 @@ public class ReviewCommService {
 		reviewComment.setWriter(user.getNickname());
 		reviewComment.setStatus(true); // 댓글은 생성시에 기본적으로 활성화 상태이다.
 		user.updatePoint(5);
-		userRepository.save(user);
 
 		if (parentId > 0) { // 댓글이 부모 댓글의 값이 있고 활성화 상태면 대댓글으로 등록된다.
 			ReviewComment parentComm = findVerificationReviewComm(parentId);
