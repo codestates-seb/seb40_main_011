@@ -5,18 +5,15 @@ import { Product } from '../../types/mainPageTypes';
 import MainCategory from '../Selectors/MainCategory';
 import { useNavigate } from 'react-router-dom';
 import { FaChevronRight, FaChevronLeft } from 'react-icons/fa';
+import { useIsLogin } from '../../store/login';
 
 const ProductList = () => {
   const navigate = useNavigate();
+  const { isLogin } = useIsLogin();
   const [products, setProducts] = useState<Product[]>();
   const [category, setCategory] = useState('all');
   const [totalPage, setTotalPage] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-
-  const pageAmount = {
-    page: '0',
-    size: '9',
-  };
 
   useEffect(() => {
     const getProductData = async () => {
@@ -45,7 +42,11 @@ const ProductList = () => {
 
   //베스트 리뷰 클릭시 해당 리뷰로 가짐
   const onReviewClick = () => {
-    navigate('/review/create');
+    if (!isLogin) {
+      navigate('/login');
+    } else {
+      navigate('/review/write');
+    }
   };
 
   const onProductClick = (e: React.MouseEvent<HTMLElement>) => {
@@ -90,15 +91,18 @@ const ProductList = () => {
                 return (
                   <div
                     key={idx}
-                    className="mb-12 flex lg:w-1/3 justify-center drop-shadow-productList p-4 px-20 hover:-translate-y-1 transition ease-in-out hover:scale-110"
+                    className="mb-12 flex lg:w-1/3 md:w-1/2 justify-center drop-shadow-productList p-4 lg:px-16 hover:-translate-y-1 transition ease-in-out hover:scale-110"
                   >
                     <div
                       role="button"
                       onClick={onProductClick}
                       id={el.id.toString()}
-                      className=" flex flex-col w-full bg-white rounded-b-lg"
+                      className="flex flex-col w-full bg-white rounded-b-lg"
                     >
-                      <img className="rounded-t-lg h-48" src={el.image} />
+                      <img
+                        className="object-cover rounded-t-lg h-48"
+                        src={el.image}
+                      />
                       <div>
                         <div className="p-2 border-t-2 border-slate-300">
                           {el.name}

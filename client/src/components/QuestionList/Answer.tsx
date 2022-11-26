@@ -9,7 +9,7 @@ export default function Answer() {
         <span className="text-xs font-medium">채택됨</span>
       </div>
       <div className="">
-        <BodyTop />
+        {/* <BodyTop /> */}
         <div className="ring-1 ring-gray-200 rounded-xl overflow-hidden bg-white">
           <div className="px-6 pt-3 pb-4 border-b border-gray-200">
             Assumenda molestiae est quos aperiam quod maiores enim laboriosam

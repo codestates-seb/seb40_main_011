@@ -67,9 +67,7 @@ export default function Login() {
   };
 
   // login status
-  const { Login, isLogin, initialToken } = useIsLogin();
-  // console.log(initialToken);
-  // handleEnter
+  const { Login } = useIsLogin();
   const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.code === 'Enter') {
       handleSubmit;
@@ -82,13 +80,12 @@ export default function Login() {
     const loginResult = await postLogin({ email, password });
     switch (loginResult.status) {
       case 200:
-        console.log('저장 전 ' + isLogin);
         localStorage.setItem('refresh', loginResult.headers.get('refresh'));
         localStorage.setItem(
           'authorization',
           loginResult.headers.get('authorization')
         );
-        Login();
+        Login(loginResult.headers.id);
         navigate('/');
         break;
       case 401:

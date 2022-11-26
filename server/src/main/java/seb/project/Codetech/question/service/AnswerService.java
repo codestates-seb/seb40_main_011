@@ -14,7 +14,6 @@ import seb.project.Codetech.question.entity.Answer;
 import seb.project.Codetech.question.mapper.AnswerServiceMapper;
 import seb.project.Codetech.question.respository.AnswerRepository;
 import seb.project.Codetech.user.entity.User;
-import seb.project.Codetech.user.repository.UserRepository;
 import seb.project.Codetech.user.service.UserService;
 
 @Service
@@ -24,14 +23,12 @@ public class AnswerService {
 	private final AnswerRepository answerRepository;
 	private final AnswerServiceMapper dtoMapper;
 	private final UserService userService;
-	private final UserRepository userRepository;
 
 	public Long createdAnswer(AnswerServiceDto.Create dto) {
 		Answer answer = dtoMapper.createdDtoToEntity(dto);
 
 		User user = userService.findUser(dto.getEmail());
 		user.updatePoint(50);
-		userRepository.save(user);
 		return answerRepository.save(answer).getId();
 	}
 

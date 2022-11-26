@@ -54,6 +54,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
 		response.setHeader("Authorization", "Bearer " + accessToken);
 		response.setHeader("Refresh", refreshToken);
+		response.addIntHeader("id",user.getId().intValue());
 
 		this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);
 	}

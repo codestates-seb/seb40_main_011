@@ -19,11 +19,11 @@ export const getProduct = async () =>
     .then((data) => data)
     .catch((err) => err.response);
 
-export const postProduct = async (data: any) =>
-  await axios
-    .post('/api/product', data)
-    .then((data) => data)
-    .catch((err) => err.response);
+// export const postProduct = async (data: any) =>
+//   await axios
+//     .post('/api/product', data)
+//     .then((data) => data)
+//     .catch((err) => err.response);
 
 export const getReviewDetail = async (params: string | undefined) =>
   await axios
@@ -70,9 +70,11 @@ export const getUserProfile = async () => {
   }
 };
 
-export const delAccount = async () => {
+export const delAccount = async (data: any) => {
   try {
-    const optOut = await axios.patch('/api/withdraw');
+    const optOut = await axios.patch('/api/withdraw', data, {
+      headers: { Authorization: initialToken },
+    });
     return optOut;
   } catch (err: any) {
     return err.response;
@@ -106,6 +108,38 @@ export const getSnack = async (productId: any, limit: number) => {
   try {
     const response = await axios.get(
       `/api/snack-reviews?productId=${productId}&offset=0&limit=${limit}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    return response;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
+export const getGoodSnack = async (productId: any, limit: number) => {
+  try {
+    const response = await axios.get(
+      `/api/snack-reviews?productId=${productId}&offset=0&limit=${limit}&sortByGrade=true&asc=false`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    return response;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
+export const getOldSnack = async (productId: any, limit: number) => {
+  try {
+    const response = await axios.get(
+      `/api/snack-reviews?productId=${productId}&offset=0&limit=${limit}&sortByGrade=false&asc=true`,
       {
         headers: {
           'Content-Type': 'application/json',
@@ -153,30 +187,80 @@ export const postQuestion = async (data: QuestionContent) => {
     const response = await axios.post('/api/questions', data, {
       headers: { Authorization: localStorage.getItem('authorization') },
     });
+    console.log(response);
     return response;
   } catch (err: any) {
     return err.response;
   }
 };
 
+export const fetchQuestionData = async (size: number, asc: boolean) => {
+  try {
+    const response = await axios.get(
+      `/api/questions?size=${size}&adoption=false&asc=${asc}`
+    );
+    return response;
+  } catch (err: any) {
+    return err.reponse;
+  }
+};
+
 export const editProfileImg = async (data: any) => {
   try {
-    const submitImg = await axios.patch(
-      '/api/user/image',
-      { headers: { Authorization: initialToken } },
-      data
-    );
+    const submitImg = await axios.patch('/api/user/image', data, {
+      headers: {
+        Authorization: initialToken,
+        // 'Content-type': 'application/json',
+        // 'Content-type': 'multipart/form-data',
+      },
+    });
+
     return submitImg;
   } catch (err: any) {
     return err.response;
   }
 };
 
-export const editProfile = async (data: any) => {
+export const editNickname = async (data: any) => {
   try {
-    const submitImg = await axios.patch('/api/user', {
+    const submitImg = await axios.patch('/api/user', data, {
+      headers: { Authorization: initialToken },
+    });
+    return submitImg;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
+export const editPassword = async (data: any) => {
+  try {
+    const submitImg = await axios.patch('/api/user', data, {
+      headers: { Authorization: initialToken },
+    });
+    return submitImg;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
+export const getUserReview = async (url: string, data: any) => {
+  try {
+    const getReview = await axios.get(`/api/user/${url}`, {
       headers: { Authorization: initialToken },
       data,
+    });
+    return getReview;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
+export const selectProductImg = async (data: any) => {
+  try {
+    const submitImg = await axios.post('/api/products', data, {
+      headers: {
+        Authorization: initialToken,
+      },
     });
     return submitImg;
   } catch (err: any) {

@@ -36,7 +36,7 @@ export default function Header() {
             </div>
           ) : (
             <div>
-              <HeaderTextButton name="myprofile" />
+              <HeaderTextButton name="My Page" />
               <HeaderTextButton name="logout" />
             </div>
           )}

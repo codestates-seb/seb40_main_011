@@ -39,14 +39,11 @@ public class ReviewController {
 	private final ReviewService reviewService;
 	private final FileService fileService;
 	private final ReviewMapper mapper;
-	private final RecommendService recommendService;
 
-	public ReviewController(ReviewService reviewService, FileService fileService, ReviewMapper mapper,
-		RecommendService recommendService) {
+	public ReviewController(ReviewService reviewService, FileService fileService, ReviewMapper mapper) {
 		this.reviewService = reviewService;
 		this.fileService = fileService;
 		this.mapper = mapper;
-		this.recommendService = recommendService;
 	}
 
 	@PostMapping
@@ -59,8 +56,6 @@ public class ReviewController {
 		List<FileEntity> fileEntities = fileService.insertFiles(file);
 		fileService.setUploadReview(serviceReview, fileEntities);
 		List<ReviewResponseDto.Post> reviewPost = reviewService.responseReviewPost(serviceReview);
-		Long reviewId = serviceReview.getId();
-		recommendService.createRecommend(email, reviewId);
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(reviewPost);
 	}

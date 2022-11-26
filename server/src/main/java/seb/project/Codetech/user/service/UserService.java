@@ -21,10 +21,7 @@ import seb.project.Codetech.review.repository.ReviewRepository;
 import seb.project.Codetech.security.auth.event.UserRegistrationApplicationEvent;
 import seb.project.Codetech.security.auth.utils.UserAuthorityUtils;
 import seb.project.Codetech.snackreview.entity.SnackReview;
-import seb.project.Codetech.user.dto.UserAndQuestionsDto;
-import seb.project.Codetech.user.dto.UserAndReviewsDto;
-import seb.project.Codetech.user.dto.UserAndSnackReviewsDto;
-import seb.project.Codetech.user.dto.UserWithdrawDto;
+import seb.project.Codetech.user.dto.*;
 import seb.project.Codetech.user.entity.User;
 import seb.project.Codetech.user.repository.UserRepository;
 
@@ -84,17 +81,12 @@ public class UserService {
         if(user.isPresent()) throw new BusinessLogicException(ExceptionCode.USER_EXISTS);
     }
 
-    public User updateUser( String email, User user){
+    public User updateUser( String email,UserPatchDto patchDto){
         User findUser = findVerifiedUser(findUserId(email));
 
-        Optional.ofNullable(user.getNickname()).ifPresent(findUser::setNickname);
+        Optional.ofNullable(patchDto.getNickname()).ifPresent(findUser::setNickname);
 
-        if(user.getPassword()!=null){
-            findUser.setPassword(passwordEncoder.encode(user.getPassword()));
-        }
-        findUser.updatePoint(1);
-
-        return userRepository.save(findUser);
+        return findUser;
     }
 
     public Long findUserId(String email) {
@@ -115,15 +107,11 @@ public class UserService {
 
     public void withdrawUser(String email, UserWithdrawDto withdraw) {
         User findUser = findVerifiedUser(findUserId(email));
-        log.info(withdraw.getPassword());
-        log.info(findUser.getPassword());
         if(!passwordEncoder.matches(withdraw.getPassword(), findUser.getPassword())){
             throw new BusinessLogicException(ExceptionCode.PASSWORD_NOT_MATCH);
         }
         findUser.setStatus(true);
         userRepository.save(findUser);
-
-
     }
 
     public UserAndSnackReviewsDto userAndSnackReviewsDto(String email,int page, int size, String sort){
@@ -227,5 +215,19 @@ public class UserService {
         userAndRecommendsDto.setImage(user.getImage());
         userAndRecommendsDto.setReviews(cardPage);
         return userAndRecommendsDto;
+    }
+
+    public User checkPassword(String email, UserPasswordDto passwordDto) {
+        User loginUser = findUser(email);
+        String password = passwordDto.getOldPassword();
+        if(!passwordEncoder.matches(password, loginUser.getPassword())){
+            throw new BusinessLogicException(ExceptionCode.PASSWORD_NOT_MATCH);
+        }
+        if(!passwordDto.getNewPassword().equals(passwordDto.getNewCheckPassword())){
+            throw new BusinessLogicException(ExceptionCode.NEW_PASSWORD_NOT_MATCH);
+        }
+        loginUser.setPassword(passwordEncoder.encode(passwordDto.getNewPassword()));
+        userRepository.save(loginUser);
+        return loginUser;
     }
 }
