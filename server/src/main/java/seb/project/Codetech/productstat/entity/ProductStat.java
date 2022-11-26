@@ -1,4 +1,4 @@
-package seb.project.Codetech.redis.entity;
+package seb.project.Codetech.productstat.entity;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
@@ -10,7 +10,8 @@ import lombok.Getter;
 public class ProductStat {
 	@Id
 	private Long id;
-	private long total;
+	private long snackCount;
+	private long reviewCount;
 	private double avgCe;
 	private double avgQlt;
 	private double avgStf;
@@ -21,6 +22,8 @@ public class ProductStat {
 	public void setId(Long productId) {
 		this.id = productId;
 	}
+
+	public void updateReviewCount(long reviewCount) { this.reviewCount = reviewCount; }
 
 	public void calculateAvgScore() {
 		this.avgScore = (avgCe + avgQlt + avgStf + avgDsn + avgPerf) / 5;

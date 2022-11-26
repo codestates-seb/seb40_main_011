@@ -4,12 +4,14 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -25,10 +27,13 @@ import seb.project.Codetech.user.entity.User;
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 	private final AuthenticationManager authenticationManager;
 	private final JwtTokenizer jwtTokenizer;
+	private final RedisTemplate<String,String> redisTemplate;
 
-	public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtTokenizer jwtTokenizer) {
+	public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtTokenizer jwtTokenizer,
+								   RedisTemplate<String,String> redisTemplate) {
 		this.authenticationManager = authenticationManager;
 		this.jwtTokenizer = jwtTokenizer;
+		this.redisTemplate = redisTemplate;
 	}
 
 	@SneakyThrows
@@ -51,6 +56,12 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
 		String accessToken = delegateAccessToken(user);
 		String refreshToken = delegateRefreshToken(user);
+
+		if(Boolean.TRUE.equals(redisTemplate.hasKey(user.getEmail()))){
+			redisTemplate.delete(user.getEmail());
+		}
+		redisTemplate.opsForValue()
+				.set(user.getEmail(),refreshToken, 7 * 60 * 60 * 1000L, TimeUnit.MILLISECONDS);
 
 		response.setHeader("Authorization", "Bearer " + accessToken);
 		response.setHeader("Refresh", refreshToken);

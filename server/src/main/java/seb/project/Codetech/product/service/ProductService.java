@@ -1,7 +1,9 @@
 package seb.project.Codetech.product.service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,6 +18,8 @@ import seb.project.Codetech.product.dto.ProductResponseDto;
 import seb.project.Codetech.product.entity.Product;
 import seb.project.Codetech.product.entity.Type;
 import seb.project.Codetech.product.repository.ProductRepository;
+import seb.project.Codetech.productstat.entity.ProductStat;
+import seb.project.Codetech.productstat.service.ProductStatService;
 import seb.project.Codetech.user.entity.User;
 import seb.project.Codetech.user.repository.UserRepository;
 
@@ -25,10 +29,13 @@ public class ProductService {
 
 	private final ProductRepository productRepository;
 	private final UserRepository userRepository;
+	private final ProductStatService productStatService;
 
-	public ProductService(ProductRepository productRepository, UserRepository userRepository) {
+	public ProductService(ProductRepository productRepository, UserRepository userRepository,
+		ProductStatService productStatService) {
 		this.productRepository = productRepository;
 		this.userRepository = userRepository;
+		this.productStatService = productStatService;
 	}
 
 	@Transactional
@@ -82,8 +89,21 @@ public class ProductService {
 		return productRepository.findByProductType(type);
 	}
 
-	public List<ProductResponseDto.Category> searchTypeProducts(Type type) {
-		return productRepository.findByProductTypes(type);
+	public ProductResponseDto.MainPage searchMainPage() {
+		List<ProductResponseDto.Card> cards = productRepository.searchMainPage();
+		setProductStatToCard(cards);
+
+		List<Long> productIds = cards.stream()
+			.map(c -> c.getId())
+			.collect(Collectors.toList());
+
+		Map<Long, String> fileMap = productRepository.searchFileSByProductIds(productIds);
+
+		cards.forEach(
+			card -> card.setFilePath(fileMap.get(card.getId()))
+		);
+
+		return new ProductResponseDto.MainPage(cards);
 	}
 
 	public Product findProductId(Long id) { // 제품 정보를 가져오기 위한 메소드
@@ -94,5 +114,14 @@ public class ProductService {
 	public User findUser(String email) { // 유저 데이터를 가져오기 위한 메소드
 		return userRepository.findByEmail(email)
 			.orElseThrow(() -> new BusinessLogicException(ExceptionCode.PRODUCT_NOT_USE));
+	}
+
+	private void setProductStatToCard(List<ProductResponseDto.Card> cards) {
+		for (ProductResponseDto.Card card : cards) {
+			ProductStat productStat = productStatService.findVerifiedOne(card.getId());
+			card.setReviewCount(productStat.getReviewCount());
+			card.setSnackCount(productStat.getSnackCount());
+			card.setAvgScore(productStat.getAvgScore());
+		}
 	}
 }

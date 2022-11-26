@@ -97,10 +97,9 @@ public class ProductController {
 	}
 
 	@GetMapping("/main-search")
-	public ResponseEntity<List<ProductResponseDto.Category>> getCategoryProduct(@RequestParam Type type) {
+	public ResponseEntity<ProductResponseDto.MainPage> getMainPageProducts() {
+		ProductResponseDto.MainPage mainPage = productService.searchMainPage();
 
-		List<ProductResponseDto.Category> searchTypeProducts = productService.searchTypeProducts(type);
-
-		return ResponseEntity.ok(searchTypeProducts);
+		return ResponseEntity.ok(mainPage);
 	}
 }

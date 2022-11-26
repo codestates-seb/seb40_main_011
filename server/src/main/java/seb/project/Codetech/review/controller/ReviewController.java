@@ -3,6 +3,7 @@ package seb.project.Codetech.review.controller;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -29,10 +30,12 @@ import seb.project.Codetech.review.service.ReviewService;
 public class ReviewController {
 
 	private final ReviewService reviewService;
+	private final ApplicationEventPublisher applicationEventPublisher;
 	private final ReviewMapper mapper;
 
-	public ReviewController(ReviewService reviewService, ReviewMapper mapper) {
+	public ReviewController(ReviewService reviewService, ReviewMapper mapper, ApplicationEventPublisher applicationEventPublisher) {
 		this.reviewService = reviewService;
+		this.applicationEventPublisher = applicationEventPublisher;
 		this.mapper = mapper;
 	}
 
@@ -42,6 +45,9 @@ public class ReviewController {
 
 		Review postReview = mapper.reviewRequestDtoToPostReview(request);
 		Review serviceReview = reviewService.createReview(email, request.getProductId(), postReview);
+
+		applicationEventPublisher.publishEvent(
+			new ReviewUpdateEvent(request.getProductId()));
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(serviceReview.getId());
 	}
@@ -53,6 +59,9 @@ public class ReviewController {
 		Review patchReview = mapper.reviewRequestDtoToPatchReview(request);
 		Review serviceReview = reviewService.modifyReview(email, request.getProductId(), patchReview);
 
+		applicationEventPublisher.publishEvent(
+			new ReviewUpdateEvent(request.getProductId()));
+
 		return ResponseEntity.ok(serviceReview.getId());
 	}
 
@@ -60,7 +69,8 @@ public class ReviewController {
 	public ResponseEntity<Review> deleteReview(@AuthenticationPrincipal String email,
 		@PathVariable @Positive Long id) {
 
-		reviewService.removeReview(email, id);
+		Long productId = reviewService.removeReview(email, id);
+		applicationEventPublisher.publishEvent(new ReviewUpdateEvent(productId));
 
 		return ResponseEntity.ok().build();
 	}

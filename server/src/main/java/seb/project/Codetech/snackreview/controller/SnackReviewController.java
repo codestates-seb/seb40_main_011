@@ -3,6 +3,7 @@ package seb.project.Codetech.snackreview.controller;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -19,7 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
-import seb.project.Codetech.redis.service.ProductStatService;
+import seb.project.Codetech.event.dto.SnackReviewUpdateEvent;
+import seb.project.Codetech.productstat.service.ProductStatService;
 import seb.project.Codetech.snackreview.dto.SnackReviewRequestDto;
 import seb.project.Codetech.snackreview.dto.SnackReviewResponseDto;
 import seb.project.Codetech.snackreview.dto.SnackReviewServiceDto;
@@ -33,8 +35,9 @@ import seb.project.Codetech.snackreview.service.SnackReviewService;
 @Validated
 public class SnackReviewController {
 	private final SnackReviewService snackReviewService;
-	private final SnackReviewControllerMapper dtoMapper;
 	private final ProductStatService productStatService;
+	private final ApplicationEventPublisher applicationEventPublisher;
+	private final SnackReviewControllerMapper dtoMapper;
 
 	@GetMapping
 	public ResponseEntity<SnackReviewResponseDto.Slice> getSlice(@ModelAttribute SnackReviewRequestDto.Get params) {
@@ -60,7 +63,8 @@ public class SnackReviewController {
 		SnackReview created = snackReviewService.createSnackReview(createDto);
 		Long createdId = created.getId();
 
-		productStatService.updateProductStat(created.getProduct().getId());
+		applicationEventPublisher.publishEvent(
+			new SnackReviewUpdateEvent(created.getProduct().getId()));
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(createdId);
 	}
@@ -74,7 +78,8 @@ public class SnackReviewController {
 		SnackReview updated = snackReviewService.updateSnackReview(updateDto);
 		Long updatedId = updated.getId();
 
-		productStatService.updateProductStat(updated.getProduct().getId());
+		applicationEventPublisher.publishEvent(
+			new SnackReviewUpdateEvent(updated.getProduct().getId()));
 
 		return ResponseEntity.ok().body(updatedId);
 	}
@@ -83,7 +88,8 @@ public class SnackReviewController {
 	public ResponseEntity<?> deleteSnackReview(@Positive @PathVariable Long id) {
 		SnackReview deleted = snackReviewService.deleteSnackReview(id);
 
-		productStatService.updateProductStat(deleted.getProduct().getId());
+		applicationEventPublisher.publishEvent(
+			new SnackReviewUpdateEvent(deleted.getProduct().getId()));
 
 		return ResponseEntity.noContent().build();
 	}
