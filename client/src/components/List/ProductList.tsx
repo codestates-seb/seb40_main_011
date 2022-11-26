@@ -93,7 +93,10 @@ const ProductList = () => {
               </button>
             </div>
             <div className="w-full flex justify-center items-center">
-              <MainCategory setCategory={setCategory} />
+              <MainCategory
+                setCategory={setCategory}
+                setCurrentPage={setCurrentPage}
+              />
             </div>
           </div>
           <div className="flex items-center justify-center">
@@ -126,11 +129,11 @@ const ProductList = () => {
                         <div className="p-2 border-t-2 border-slate-300">
                           {el.name}
                         </div>
-                        <div className="flex p-2 justify-between">
+                        <div className="flex p-2 justify-between items-center">
                           <div className="p-1 px-2 rounded-full bg-slate-100 text-slate-600 text-sm">
                             {el.type.toLowerCase()}
                           </div>
-                          <div className="이거 평점으로 바꿀거임">
+                          <div className="text-sm ">
                             {getParsedDate(el.createdAt)}
                           </div>
                         </div>

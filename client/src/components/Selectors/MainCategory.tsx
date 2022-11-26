@@ -4,10 +4,11 @@ import { BiMouseAlt } from 'react-icons/bi';
 import { BsKeyboard, BsLaptop, BsTablet, BsThreeDots } from 'react-icons/bs';
 import { CategoryProps } from '../../types/mainPageTypes';
 
-const MainCategory = ({ setCategory }: CategoryProps) => {
+const MainCategory = ({ setCategory, setCurrentPage }: CategoryProps) => {
   const onClick = (e: React.MouseEvent<HTMLElement>) => {
     setCategory(e.currentTarget.id);
     console.log(e.currentTarget.id);
+    setCurrentPage(1);
   };
   const categoryList = [
     { id: 'All', icon: <GrCube size="30" /> },
