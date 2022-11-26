@@ -5,8 +5,10 @@ import { useEffect, useState } from 'react';
 import { fetchQuestionData } from '../../util/apiCollection';
 import { QuestionListType } from '../../types/mainPageTypes';
 import { AiOutlineCheck } from 'react-icons/ai';
+import { useNavigate } from 'react-router-dom';
 
 const QuestionList = () => {
+  const navigate = useNavigate();
   const [questions, setQuestions] = useState<QuestionListType[]>([]);
   const [answerNeed, setAnswerNeed] = useState<QuestionListType[]>([]);
 
@@ -20,6 +22,10 @@ const QuestionList = () => {
     getQuestionData();
   }, []);
 
+  const handleOnClick = () => {
+    navigate('/question-lists');
+  };
+
   return (
     <div className="flex w-full justify-evenly mb-16">
       <div className="flex flex-col p-4 w-1/3">
@@ -28,7 +34,7 @@ const QuestionList = () => {
             <AiOutlineCheck className="text-3xl mb-0.5 mr-2" />
             채택이 완료된 질문
           </div>
-          <button>
+          <button onClick={handleOnClick}>
             <FaChevronRight size="30" />
           </button>
         </div>
@@ -46,7 +52,7 @@ const QuestionList = () => {
           <div className="font-bold text-xl text-yellow-600">
             🥺&nbsp;&nbsp;&nbsp;답변이 필요한 질문
           </div>
-          <button>
+          <button onClick={handleOnClick}>
             <FaChevronRight size="30" />
           </button>
         </div>
