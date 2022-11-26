@@ -100,6 +100,8 @@ const ProductSelector = () => {
     console.log(`e.currentTarget.textContent=>>`, e.currentTarget.textContent);
   };
 
+  console.log(categorie);
+
   return (
     <div className="relative flex flex-col w-full">
       <button
@@ -129,7 +131,7 @@ const ProductSelector = () => {
                   onClick={handleButClick}
                   className="flex items-center w-full px-4 pt-2 pb-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900"
                 >
-                  {product.name}
+                  {product}
                 </button>
               );
             })
