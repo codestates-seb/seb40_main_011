@@ -277,3 +277,16 @@ export const uploadEditorImage = async (data: any) => {
     return err.response;
   }
 };
+
+export const getProducts = async () => {
+  try {
+    const response = await axios.get(`/api/products/main-search`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    return response;
+  } catch (err: any) {
+    return err.response;
+  }
+};

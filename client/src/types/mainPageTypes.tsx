@@ -17,13 +17,14 @@ export interface SignupInputs {
 }
 
 export interface Product {
+  avgScore: number;
+  createdAt: string;
+  filePath: string;
   id: number;
   name: string;
+  reviewCount: number;
+  snackCount: number;
   type: string;
-  image: string;
-  detail: string;
-  createdAt: string;
-  modifiedAt: string;
 }
 export interface Review {
   id: number;

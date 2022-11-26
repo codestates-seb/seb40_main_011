@@ -7,6 +7,7 @@ import { CategoryProps } from '../../types/mainPageTypes';
 const MainCategory = ({ setCategory }: CategoryProps) => {
   const onClick = (e: React.MouseEvent<HTMLElement>) => {
     setCategory(e.currentTarget.id);
+    console.log(e.currentTarget.id);
   };
   const categoryList = [
     { id: 'All', icon: <GrCube size="30" /> },
