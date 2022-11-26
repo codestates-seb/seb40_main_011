@@ -63,6 +63,8 @@ const ProductSelector = () => {
     console.log(`e.currentTarget.textContent=>>`, e.currentTarget.textContent);
   };
 
+  console.log(categorie);
+
   return (
     <div className="relative flex flex-col w-full">
       <button

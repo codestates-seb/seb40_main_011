@@ -19,7 +19,7 @@ export default function QuestionLists() {
 
   useEffect(() => {
     const getQuestion = async () => {
-      const data = await fetchQuestionData(pendingMore, pendingSort);
+      const data = await fetchQuestionData(pendingMore, true, pendingSort);
       // console.log(data);
       switch (data.status) {
         case 200: {
