@@ -243,11 +243,10 @@ export const editPassword = async (data: any) => {
   }
 };
 
-export const getUserReview = async (url: string, data: any) => {
+export const getUserReview = async (url: string, params: string) => {
   try {
-    const getReview = await axios.get(`/api/user/${url}`, {
+    const getReview = await axios.get(`/api/user/${url}${params}`, {
       headers: { Authorization: initialToken },
-      data,
     });
     return getReview;
   } catch (err: any) {

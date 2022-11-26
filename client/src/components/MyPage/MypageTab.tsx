@@ -13,11 +13,20 @@ import ReviewsTab from './ReviewsTab';
 import SnackReviewTab from './SnackReviewTab';
 import QuestionsTab from './QuestionsTab';
 import AnswersTab from './AnswersTab';
+import ReviewTabPagenation from './ReviewTabPagenation';
+
+// interface ReviewData {
+//   content:
+// totalPages: number;
+// }
 
 const MypageTab = (): JSX.Element => {
   const [currentTab, setCurrentTab] = useState(0);
   const [currentReview, setCurrentReview] = useState('reviews');
   const [reviewListData, setReviewListData] = useState();
+  const [totalPages, setTotalPages] = useState(0);
+
+  const [currentPage, setCurrentPage] = useState(1);
 
   const menuArr = [
     {
@@ -38,51 +47,53 @@ const MypageTab = (): JSX.Element => {
   const selectMenuHandler = async (index: number) => {
     setCurrentTab(index);
     setCurrentReview(menuArr[index].content);
-    const params = {
-      page: 1,
-      size: 5,
-      sort: 'creaedAt',
-    };
+    const params = `?page=${currentPage}&size=5&sort=createdAt`;
     switch (currentReview) {
       case 'reviews':
         {
           const reviewData = await getUserReview(currentReview, params);
           setReviewListData(reviewData?.data.reviews);
-          console.log(reviewListData);
         }
         break;
-      case 'snakc-reviews':
+      case 'snack-reviews':
         {
           const snackReviewData = await getUserReview(currentReview, params);
-          setReviewListData(snackReviewData?.data.SnackReview);
+          setReviewListData(snackReviewData.data.snackReviews.content);
+          setTotalPages(snackReviewData.data.snackReviews.totalPages);
           console.log(reviewListData);
+          console.log(totalPages);
         }
         break;
       case 'recommends': {
         const recommendData = await getUserReview(currentReview, params);
         setReviewListData(recommendData?.data.reviews);
-        console.log(reviewListData);
         break;
       }
       case 'questions':
         {
           const questinData = await getUserReview(currentReview, params);
           setReviewListData(questinData?.data.questions);
-          console.log(reviewListData);
         }
         break;
       case 'answers':
         {
           const answerData = await getUserReview(currentReview, params);
-          setReviewListData(answerData?.data.answers);
-          console.log(reviewListData);
+          setReviewListData(answerData?.data.questions);
         }
         break;
-      default: {
-        const defaultData = await getUserReview(currentReview, params);
-        setReviewListData(defaultData?.data.reviews);
-      }
+      default:
     }
+  };
+
+  const onClickPage = (target: any) => {
+    if (target === 'Prev') {
+      setCurrentPage(currentPage - 1);
+    } else if (target === 'Next') {
+      setCurrentPage(currentPage + 1);
+    } else {
+      setCurrentPage(+target);
+    }
+    selectMenuHandler(currentTab);
   };
 
   return (
@@ -107,7 +118,7 @@ const MypageTab = (): JSX.Element => {
           })}
         </ul>
       </div>
-      <div className="flex justify-center">
+      <div className="flex flex-col items-center justify-center">
         {currentReview === 'reviews' ? (
           <ReviewsTab reviewListData={reviewListData} />
         ) : (
@@ -134,6 +145,17 @@ const MypageTab = (): JSX.Element => {
           <></>
         )}
       </div>
+      {totalPages ? (
+        <div className="flex flex-col items-center justify-center ">
+          <ReviewTabPagenation
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onClickPage={onClickPage}
+          />
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

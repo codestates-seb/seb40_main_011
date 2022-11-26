@@ -2,14 +2,12 @@ import { useEffect, useState } from 'react';
 import { getUserReview } from '../../util/apiCollection';
 
 const ReviewsTab = ({ reviewListData }: any) => {
-  console.log(reviewListData?.content);
-
   return (
     <>
       {reviewListData?.content.length === 0 ? (
         <div className="flex flex-col justify-center w-[850px] p-5 mt-20">
           <div className="mb-2 text-xl text-center">
-            작성 한줄 리뷰가 없습니다
+            작성한 상세 리뷰가 없습니다
           </div>
         </div>
       ) : (
