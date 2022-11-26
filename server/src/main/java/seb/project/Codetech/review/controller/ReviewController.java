@@ -1,8 +1,5 @@
 package seb.project.Codetech.review.controller;
 
-import java.io.IOException;
-import java.util.List;
-
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 
@@ -14,19 +11,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import lombok.extern.log4j.Log4j2;
-import seb.project.Codetech.file.entity.FileEntity;
-import seb.project.Codetech.file.service.FileService;
 import seb.project.Codetech.product.entity.Type;
-import seb.project.Codetech.recommend.service.RecommendService;
 import seb.project.Codetech.review.dto.ReviewRequestDto;
-import seb.project.Codetech.review.dto.ReviewResponseDto;
 import seb.project.Codetech.review.entity.Review;
 import seb.project.Codetech.review.mapper.ReviewMapper;
 import seb.project.Codetech.review.service.ReviewService;
@@ -37,40 +29,31 @@ import seb.project.Codetech.review.service.ReviewService;
 public class ReviewController {
 
 	private final ReviewService reviewService;
-	private final FileService fileService;
 	private final ReviewMapper mapper;
 
-	public ReviewController(ReviewService reviewService, FileService fileService, ReviewMapper mapper) {
+	public ReviewController(ReviewService reviewService, ReviewMapper mapper) {
 		this.reviewService = reviewService;
-		this.fileService = fileService;
 		this.mapper = mapper;
 	}
 
 	@PostMapping
-	public ResponseEntity<List<ReviewResponseDto.Post>> postReview(@AuthenticationPrincipal String email,
-		@RequestPart @Valid ReviewRequestDto.Post request,
-		@RequestPart List<MultipartFile> file) throws IOException {
+	public ResponseEntity<Long> postReview(@AuthenticationPrincipal String email,
+		@RequestBody @Valid ReviewRequestDto.Post request) {
 
 		Review postReview = mapper.reviewRequestDtoToPostReview(request);
 		Review serviceReview = reviewService.createReview(email, request.getProductId(), postReview);
-		List<FileEntity> fileEntities = fileService.insertFiles(file);
-		fileService.setUploadReview(serviceReview, fileEntities);
-		List<ReviewResponseDto.Post> reviewPost = reviewService.responseReviewPost(serviceReview);
 
-		return ResponseEntity.status(HttpStatus.CREATED).body(reviewPost);
+		return ResponseEntity.status(HttpStatus.CREATED).body(serviceReview.getId());
 	}
 
 	@PatchMapping
-	public ResponseEntity<Review> patchReview(@AuthenticationPrincipal String email,
-		@RequestPart @Valid ReviewRequestDto.Patch request,
-		@RequestPart List<MultipartFile> file) throws IOException {
+	public ResponseEntity<Long> patchReview(@AuthenticationPrincipal String email,
+		@RequestBody @Valid ReviewRequestDto.Patch request) {
 
 		Review patchReview = mapper.reviewRequestDtoToPatchReview(request);
 		Review serviceReview = reviewService.modifyReview(email, request.getProductId(), patchReview);
-		List<FileEntity> fileEntities = fileService.insertFiles(file);
-		fileService.setUploadReview(serviceReview, fileEntities);
 
-		return ResponseEntity.ok(serviceReview);
+		return ResponseEntity.ok(serviceReview.getId());
 	}
 
 	@DeleteMapping("/{id}")
