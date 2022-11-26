@@ -24,7 +24,6 @@ import lombok.extern.log4j.Log4j2;
 import seb.project.Codetech.file.entity.FileEntity;
 import seb.project.Codetech.file.service.FileService;
 import seb.project.Codetech.product.entity.Type;
-import seb.project.Codetech.recommend.service.RecommendService;
 import seb.project.Codetech.review.dto.ReviewRequestDto;
 import seb.project.Codetech.review.dto.ReviewResponseDto;
 import seb.project.Codetech.review.entity.Review;
@@ -39,14 +38,11 @@ public class ReviewController {
 	private final ReviewService reviewService;
 	private final FileService fileService;
 	private final ReviewMapper mapper;
-	private final RecommendService recommendService;
 
-	public ReviewController(ReviewService reviewService, FileService fileService, ReviewMapper mapper,
-		RecommendService recommendService) {
+	public ReviewController(ReviewService reviewService, FileService fileService, ReviewMapper mapper) {
 		this.reviewService = reviewService;
 		this.fileService = fileService;
 		this.mapper = mapper;
-		this.recommendService = recommendService;
 	}
 
 	@PostMapping
@@ -59,8 +55,6 @@ public class ReviewController {
 		List<FileEntity> fileEntities = fileService.insertFiles(file);
 		fileService.setUploadReview(serviceReview, fileEntities);
 		List<ReviewResponseDto.Post> reviewPost = reviewService.responseReviewPost(serviceReview);
-		Long reviewId = serviceReview.getId();
-		recommendService.createRecommend(email, reviewId);
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(reviewPost);
 	}
