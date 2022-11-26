@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import lombok.extern.log4j.Log4j2;
 import seb.project.Codetech.file.entity.FileEntity;
 import seb.project.Codetech.file.service.FileService;
+import seb.project.Codetech.product.entity.Type;
 import seb.project.Codetech.recommend.service.RecommendService;
 import seb.project.Codetech.review.dto.ReviewRequestDto;
 import seb.project.Codetech.review.dto.ReviewResponseDto;
@@ -90,5 +92,11 @@ public class ReviewController {
 		Review loadReview = reviewService.loadReview(id);
 
 		return ResponseEntity.ok(loadReview);
+	}
+
+	@GetMapping("/category")
+	public ResponseEntity<Review> getTypeSearch(@RequestParam Type type) {
+		reviewService.searchTypeReview(type);
+		return null;
 	}
 }

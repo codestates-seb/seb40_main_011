@@ -35,7 +35,27 @@ public class ProductResponseDto {
 
 	@Getter
 	@NoArgsConstructor
-	public static class selectProduct {
+	public static class Select {
 		private String name;
+	}
+
+	@Getter @Setter
+	@NoArgsConstructor
+	public static class Category {
+		private Long id;
+		private String name;
+		private Type type;
+		private String fileName;
+		private String filePath;
+		private Long reviewCount;
+
+		public Category(Long id, String name, Type type, String fileName, String filePath, Long reviewCount) {
+			this.id = id;
+			this.name = name;
+			this.type = type;
+			this.fileName = fileName;
+			this.filePath = filePath;
+			this.reviewCount = reviewCount;
+		}
 	}
 }

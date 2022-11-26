@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
+import seb.project.Codetech.product.entity.Type;
 import seb.project.Codetech.review.dto.ReviewResponseDto;
 import seb.project.Codetech.review.entity.Review;
 
@@ -37,5 +38,10 @@ public class CustomReviewRepositoryImpl implements CustomReviewRepository {
 			.leftJoin(review.product, product).on(product.eq(findReview.getProduct()))
 			.fetch();
 
+	}
+
+	@Override
+	public ReviewResponseDto.TypeSearch findByTypeReviewResponseDto(Type type) {
+		return null;
 	}
 }
