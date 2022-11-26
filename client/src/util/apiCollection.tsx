@@ -260,7 +260,6 @@ export const selectProductImg = async (data: any) => {
     const submitImg = await axios.post('/api/products', data, {
       headers: {
         Authorization: initialToken,
-        // 'Content-Type': 'multipart/form-data',
       },
     });
     return submitImg;
