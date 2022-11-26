@@ -61,20 +61,22 @@ public class FileService {
 
 			FileEntity file = new FileEntity();
 
-			String orgName = uploadFile.getOriginalFilename();
-			String uuidName = UUID.randomUUID().toString();
+			String orgName = uploadFile.getOriginalFilename(); // 파일 이름 추출
+			String uuidName = UUID.randomUUID().toString(); // UUID 이름 생성
+			assert orgName != null;
+				String ext = orgName.substring(orgName.lastIndexOf(".") + 1); // 확장자 추출
 
 			// 원본 파일이름을 설정한다.
 			file.setOrgName(orgName);
 
 			// uuid 파일 이름을 설정한다.
-			file.setUuidName(uuidName);
+			file.setUuidName(uuidName + "." + ext);
 
 			// 설정한 저장경로(filePath)와 파일 이름을 통해 저장 경로를 데이터로 삽입한다.
-			file.setPath(filePath + uuidName);
+			file.setPath(filePath + uuidName + "." + ext);
 
 			// 로컬에 파일을 저장한다 파일 이름은 uuid로 저장.
-			uploadFile.transferTo(new File(rootPath + filePath + uuidName));
+			uploadFile.transferTo(new File(rootPath + filePath + uuidName + "." + ext));
 
 			// 데이터베이스에 파일 정보를 저장한다.
 			return fileRepository.save(file);
