@@ -78,8 +78,12 @@ public class ProductService {
 		productRepository.delete(findProduct);
 	}
 
-	public List<ProductResponseDto.selectProduct> findByProductType(Type type) {
+	public List<ProductResponseDto.Select> searchTypeProduct(Type type) {
 		return productRepository.findByProductType(type);
+	}
+
+	public List<ProductResponseDto.Category> searchTypeProducts(Type type) {
+		return productRepository.findByProductTypes(type);
 	}
 
 	public Product findProductId(Long id) { // 제품 정보를 가져오기 위한 메소드
