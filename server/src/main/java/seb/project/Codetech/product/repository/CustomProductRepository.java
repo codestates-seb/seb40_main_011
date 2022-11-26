@@ -6,5 +6,6 @@ import seb.project.Codetech.product.dto.ProductResponseDto;
 import seb.project.Codetech.product.entity.Type;
 
 public interface CustomProductRepository {
-	List<ProductResponseDto.selectProduct> findByProductType(Type type);
+	List<ProductResponseDto.Select> findByProductType(Type type);
+	List<ProductResponseDto.Category> findByProductTypes(Type type);
 }

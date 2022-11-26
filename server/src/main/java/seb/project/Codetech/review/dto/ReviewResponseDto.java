@@ -25,4 +25,11 @@ public class ReviewResponseDto {
 		private String productDetail;
 		private List<FileEntity> fileEntities;
 	}
+
+	@Getter
+	@Setter
+	@NoArgsConstructor
+	public static class TypeSearch {
+
+	}
 }

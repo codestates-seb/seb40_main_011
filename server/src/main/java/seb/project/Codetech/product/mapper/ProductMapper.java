@@ -21,4 +21,5 @@ public interface ProductMapper {
 	ProductResponseDto.Patch productToProductPatchResponse(Product product);
 
 	List<ProductListResponse> productsDtoToProductResponse(List<Product> products);
+
 }
