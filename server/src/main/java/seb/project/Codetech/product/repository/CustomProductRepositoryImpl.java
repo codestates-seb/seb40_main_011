@@ -2,18 +2,18 @@ package seb.project.Codetech.product.repository;
 
 import static seb.project.Codetech.file.entity.QFileEntity.*;
 import static seb.project.Codetech.product.entity.QProduct.*;
-import static seb.project.Codetech.review.entity.QReview.*;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Projections;
-import com.querydsl.core.types.dsl.NumberPath;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import seb.project.Codetech.product.dto.ProductResponseDto;
@@ -42,39 +42,37 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
 	}
 
 	@Override
-	public List<ProductResponseDto.Category> findByProductTypes(Type type) {
+	public List<ProductResponseDto.Card> searchMainPage() {
 
-		List<ProductResponseDto.Category> categories = queryFactory
-			.select(Projections.fields(
-					ProductResponseDto.Category.class,
-					product.id,
-					product.name,
-					product.type,
-					fileEntity.uuidName.as("fileName"),
-					fileEntity.path.as("filePath")
-				)
-			)
+		return queryFactory
+			.select(Projections.bean(ProductResponseDto.Card.class,
+				product.id,
+				product.name,
+				product.type,
+				product.createdAt
+			))
 			.from(product)
-			.where(product.type.eq(type))
-			.leftJoin(product.fileEntities, fileEntity)
+			.fetch();
+	}
+
+	@Override
+	public Map<Long, String> searchFileSByProductIds(List<Long> productIds) {
+		List<Tuple> paths = queryFactory
+			.select(
+				product.id,
+				fileEntity.path
+			)
+			.from(fileEntity)
+			.join(fileEntity.product, product)
+			.where(fileEntity.product.id.in(productIds))
 			.fetch();
 
-		List<NumberPath<Long>> productId =
-			categories.stream().map(c -> product.id).collect(Collectors.toList());
+		Map<Long, String> fileMap = new HashMap<>();
 
-		ProductResponseDto.Category reviewCount = queryFactory
-			.select(Projections.fields(
-				ProductResponseDto.Category.class,
-				product,
-				review.count().as("reviewCount"))
-			)
-			.from(product)
-			.leftJoin(product.reviews, review)
-			.where(review.product.id.eq(product.id))
-			.fetchOne();
+		paths.forEach(
+			p -> fileMap.put(p.get(product.id), p.get(fileEntity.path))
+		);
 
-		categories.add(reviewCount);
-
-		return categories;
+		return fileMap;
 	}
 }

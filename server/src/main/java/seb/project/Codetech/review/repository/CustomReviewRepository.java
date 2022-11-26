@@ -9,4 +9,5 @@ import seb.project.Codetech.review.entity.Review;
 public interface CustomReviewRepository {
 	List<ReviewResponseDto.Post> findByReviewResponseDto(Review review);
 	ReviewResponseDto.TypeSearch findByTypeReviewResponseDto(Type type);
+	long getReviewCountByProductId(Long productId);
 }

@@ -16,7 +16,7 @@ import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
-import seb.project.Codetech.redis.entity.ProductStat;
+import seb.project.Codetech.productstat.entity.ProductStat;
 import seb.project.Codetech.snackreview.dto.SnackReviewRequestDto;
 import seb.project.Codetech.snackreview.dto.SnackReviewResponseDto;
 
@@ -56,7 +56,7 @@ public class CustomSnackReviewRepositoryImpl implements CustomSnackReviewReposit
 	public ProductStat searchInfoGroupByProductId(Long productId) {
 		ProductStat productStat = queryFactory
 			.select(Projections.fields(ProductStat.class,
-				snackReview.count().as("total"),
+				snackReview.count().as("snackCount"),
 				snackReview.score.costEfficiency.avg().as("avgCe"),
 				snackReview.score.design.avg().as("avgDsn"),
 				snackReview.score.quality.avg().as("avgQlt"),
