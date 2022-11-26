@@ -149,7 +149,7 @@ const ReviewLists = () => {
             </div>
           </div>
           <div>
-            <div className="flex mb-2 text-xl font-medium justify-between">
+            <div className="flex justify-between mb-2 text-xl font-medium">
               <div>한줄 리뷰</div>
               <RvSelectBox
                 spread={spread}

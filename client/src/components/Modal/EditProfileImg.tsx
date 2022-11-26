@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { BsXLg } from 'react-icons/bs';
 import { EditProfileImgModalHandler } from '../MyPage/Profile';
 import { editProfileImg } from '../../util/apiCollection';
+import userInfo from '../../store/userInfo';
+import { UserInfo } from '../../store/userInfo';
 
 const EditProgileImg = ({
   openEditProfileImgModalHandler,
@@ -44,8 +46,6 @@ const EditProgileImg = ({
         type: 'application/json',
       })
     );
-
-    console.log(`마이페이지`, formData);
 
     const submitImg = await editProfileImg(formData);
     switch (submitImg.status) {

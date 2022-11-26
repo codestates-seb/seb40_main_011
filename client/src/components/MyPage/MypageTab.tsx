@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, SetStateAction } from 'react';
 import {
   BsFileRichtext,
   BsChatSquareText,
@@ -7,13 +7,17 @@ import {
   BsLightbulb,
   BsChevronDoubleLeft,
 } from 'react-icons/bs';
-import { domainToASCII } from 'url';
 import { getUserReview } from '../../util/apiCollection';
+import LikeReviewTab from './LikeReviewTab';
+import ReviewsTab from './ReviewsTab';
+import SnackReviewTab from './SnackReviewTab';
+import QuestionsTab from './QuestionsTab';
+import AnswersTab from './AnswersTab';
 
 const MypageTab = (): JSX.Element => {
   const [currentTab, setCurrentTab] = useState(0);
   const [currentReview, setCurrentReview] = useState('reviews');
-  const [detailReviewList, setDetailReviewList] = useState();
+  const [reviewListData, setReviewListData] = useState();
 
   const menuArr = [
     {
@@ -31,7 +35,7 @@ const MypageTab = (): JSX.Element => {
     { icon: <BsLightbulb />, name: '내 답글', content: 'answers' },
   ];
 
-  const selectMenuHandler = (index: number) => {
+  const selectMenuHandler = async (index: number) => {
     setCurrentTab(index);
     setCurrentReview(menuArr[index].content);
     const params = {
@@ -39,18 +43,46 @@ const MypageTab = (): JSX.Element => {
       size: 5,
       sort: 'creaedAt',
     };
-    const getDetailReviewList = async () => {
-      const { data } = await getUserReview(menuArr[index].content, params);
-      setDetailReviewList(data);
-      // console.log(detailReviewList);
-    };
-    getDetailReviewList();
-    console.log(detailReviewList);
-    console.log(currentReview);
-    // console.log(menuArr[currentTab].content);
-    // if (detailReviewList) {
-    //   console.log(detailReviewList[menuArr[currentTab].content]);
-    // }
+    switch (currentReview) {
+      case 'reviews':
+        {
+          const reviewData = await getUserReview(currentReview, params);
+          setReviewListData(reviewData?.data.reviews);
+          console.log(reviewListData);
+        }
+        break;
+      case 'snakc-reviews':
+        {
+          const snackReviewData = await getUserReview(currentReview, params);
+          setReviewListData(snackReviewData?.data.SnackReview);
+          console.log(reviewListData);
+        }
+        break;
+      case 'recommends': {
+        const recommendData = await getUserReview(currentReview, params);
+        setReviewListData(recommendData?.data.reviews);
+        console.log(reviewListData);
+        break;
+      }
+      case 'questions':
+        {
+          const questinData = await getUserReview(currentReview, params);
+          setReviewListData(questinData?.data.questions);
+          console.log(reviewListData);
+        }
+        break;
+      case 'answers':
+        {
+          const answerData = await getUserReview(currentReview, params);
+          setReviewListData(answerData?.data.answers);
+          console.log(reviewListData);
+        }
+        break;
+      default: {
+        const defaultData = await getUserReview(currentReview, params);
+        setReviewListData(defaultData?.data.reviews);
+      }
+    }
   };
 
   return (
@@ -76,18 +108,31 @@ const MypageTab = (): JSX.Element => {
         </ul>
       </div>
       <div className="flex justify-center">
-        <div className="flex flex-col justify-center w-[850px] p-5">
-          {detailReviewList
-            ? detailReviewList[menuArr[currentTab].content]
-            : ''}
-          <div className="mb-2 text-lg">tilte</div>
-          <div className="flex text-sm">
-            <div className="px-3 py-0.5 bg-slate-300 rounded-lg">Category</div>
-            <div className="px-3 py-0.5">Brand</div>
-            <div className="px-3 py-0.5">Product</div>
-            <div className="ml-auto text-slate-600">date</div>
-          </div>
-        </div>
+        {currentReview === 'reviews' ? (
+          <ReviewsTab reviewListData={reviewListData} />
+        ) : (
+          <></>
+        )}
+        {currentReview === 'snack-reviews' ? (
+          <SnackReviewTab reviewListData={reviewListData} />
+        ) : (
+          <></>
+        )}
+        {currentReview === 'recommends' ? (
+          <LikeReviewTab reviewListData={reviewListData} />
+        ) : (
+          <></>
+        )}
+        {currentReview === 'questions' ? (
+          <QuestionsTab reviewListData={reviewListData} />
+        ) : (
+          <></>
+        )}
+        {currentReview === 'answers' ? (
+          <AnswersTab reviewListData={reviewListData} />
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );
