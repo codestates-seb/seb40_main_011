@@ -77,4 +77,41 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
 
 		return categories;
 	}
+
+	@Override
+	public List<ProductResponseDto.Category> findByProductTypes(Type type) {
+
+		List<ProductResponseDto.Category> categories = queryFactory
+			.select(Projections.fields(
+					ProductResponseDto.Category.class,
+					product.id,
+					product.name,
+					product.type,
+					fileEntity.uuidName.as("fileName"),
+					fileEntity.path.as("filePath")
+				)
+			)
+			.from(product)
+			.where(product.type.eq(type))
+			.leftJoin(product.fileEntities, fileEntity)
+			.fetch();
+
+		List<NumberPath<Long>> productId =
+			categories.stream().map(c -> product.id).collect(Collectors.toList());
+
+		ProductResponseDto.Category reviewCount = queryFactory
+			.select(Projections.fields(
+				ProductResponseDto.Category.class,
+				product,
+				review.count().as("reviewCount"))
+			)
+			.from(product)
+			.leftJoin(product.reviews, review)
+			.where(review.product.id.eq(product.id))
+			.fetchOne();
+
+		categories.add(reviewCount);
+
+		return categories;
+	}
 }
