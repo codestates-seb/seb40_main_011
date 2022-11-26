@@ -33,8 +33,9 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
 	public List<ProductResponseDto.Select> findByProductType(Type type) {
 		return queryFactory
 			.select(Projections.fields(ProductResponseDto.Select.class,
-				product.name)
-			)
+				product.id,
+				product.name
+			))
 			.from(product)
 			.where(product.type.eq(type))
 			.fetch();

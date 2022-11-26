@@ -36,6 +36,7 @@ public class ProductResponseDto {
 	@Getter
 	@NoArgsConstructor
 	public static class Select {
+		private Long id;
 		private String name;
 	}
 
