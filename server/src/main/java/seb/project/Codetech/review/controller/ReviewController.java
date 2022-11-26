@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.log4j.Log4j2;
+import seb.project.Codetech.event.dto.ReviewUpdateEvent;
 import seb.project.Codetech.product.entity.Type;
 import seb.project.Codetech.review.dto.ReviewRequestDto;
 import seb.project.Codetech.review.entity.Review;
