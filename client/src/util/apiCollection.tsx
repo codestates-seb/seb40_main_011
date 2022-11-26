@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { blob } from 'stream/consumers';
 import {
   LoginInputs,
   SignupInputs,
@@ -263,6 +264,15 @@ export const selectProductImg = async (data: any) => {
       },
     });
     return submitImg;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
+export const uploadEditorImage = async (data: any) => {
+  try {
+    const editorImg = await axios.post('/api/upload', data);
+    return editorImg;
   } catch (err: any) {
     return err.response;
   }
