@@ -8,12 +8,16 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import org.springframework.stereotype.Repository;
+
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
+import seb.project.Codetech.product.entity.Type;
 import seb.project.Codetech.review.dto.ReviewResponseDto;
 import seb.project.Codetech.review.entity.Review;
 
+@Repository
 public class CustomReviewRepositoryImpl implements CustomReviewRepository {
 	private final JPAQueryFactory queryFactory;
 
@@ -37,5 +41,20 @@ public class CustomReviewRepositoryImpl implements CustomReviewRepository {
 			.leftJoin(review.product, product).on(product.eq(findReview.getProduct()))
 			.fetch();
 
+	}
+
+	@Override
+	public ReviewResponseDto.TypeSearch findByTypeReviewResponseDto(Type type) {
+		return null;
+	}
+
+	@Override
+	public long getReviewCountByProductId(Long productId) {
+
+		return queryFactory
+			.select(review.count())
+			.from(review)
+			.where(review.product.id.eq(productId))
+			.fetchFirst();
 	}
 }

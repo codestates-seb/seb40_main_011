@@ -1,8 +1,8 @@
-package seb.project.Codetech.redis.repository;
+package seb.project.Codetech.productstat.repository;
 
 import org.springframework.data.repository.CrudRepository;
 
-import seb.project.Codetech.redis.entity.ProductStat;
+import seb.project.Codetech.productstat.entity.ProductStat;
 
 public interface ProductStatRepository extends CrudRepository<ProductStat, Long> {
 }

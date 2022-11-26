@@ -1,7 +1,9 @@
 package seb.project.Codetech.product.dto;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -35,7 +37,28 @@ public class ProductResponseDto {
 
 	@Getter
 	@NoArgsConstructor
-	public static class selectProduct {
+	public static class Select {
+		private Long id;
 		private String name;
+	}
+
+	@Getter
+	@AllArgsConstructor
+	public static class MainPage {
+		List<Card> cards;
+	}
+
+	@Getter
+	@Setter
+	@NoArgsConstructor
+	public static class Card {
+		private Long id;
+		private String name;
+		private Type type;
+		private LocalDateTime createdAt;
+		private String filePath;
+		private long reviewCount;
+		private long snackCount;
+		private double avgScore;
 	}
 }

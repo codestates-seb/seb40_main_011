@@ -6,7 +6,6 @@ import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -25,10 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import lombok.extern.log4j.Log4j2;
 import seb.project.Codetech.file.entity.FileEntity;
 import seb.project.Codetech.file.service.FileService;
-import seb.project.Codetech.global.page.PageInfo;
-import seb.project.Codetech.global.page.PageListDto;
 import seb.project.Codetech.product.dto.ProductDto;
-import seb.project.Codetech.product.dto.ProductListResponse;
 import seb.project.Codetech.product.dto.ProductResponseDto;
 import seb.project.Codetech.product.entity.Product;
 import seb.project.Codetech.product.entity.Type;
@@ -94,19 +89,17 @@ public class ProductController {
 		return ResponseEntity.ok(serviceProduct);
 	}
 
-	@GetMapping("/category") // 등록된 모든 제품을 조회한다.
-	public ResponseEntity<PageListDto<ProductListResponse>> getProducts(@RequestBody @Valid PageInfo.Request request) {
+	@GetMapping("/review-search") // 타입을 입력해서 타입의 모든 제품들의 이름을 가져온다.
+	public ResponseEntity<List<ProductResponseDto.Select>> getTypeProduct(@RequestParam Type type) {
+		List<ProductResponseDto.Select> searchType = productService.searchTypeProduct(type);
 
-		Page<Product> pageProduct = productService.findAllProduct(request);
-		List<Product> products = pageProduct.getContent();
-
-		return ResponseEntity.ok(new PageListDto<>(mapper.productsDtoToProductResponse(products), pageProduct));
+		return ResponseEntity.ok(searchType);
 	}
 
-	@GetMapping("/review-search") // 타입을 입력해서 타입의 모든 제품들의 이름을 가져온다.
-	public ResponseEntity<List<ProductResponseDto.selectProduct>> getTypeProduct(@RequestParam Type type) {
-		List<ProductResponseDto.selectProduct> findByProductType = productService.findByProductType(type);
+	@GetMapping("/main-search")
+	public ResponseEntity<ProductResponseDto.MainPage> getMainPageProducts() {
+		ProductResponseDto.MainPage mainPage = productService.searchMainPage();
 
-		return ResponseEntity.ok(findByProductType);
+		return ResponseEntity.ok(mainPage);
 	}
 }

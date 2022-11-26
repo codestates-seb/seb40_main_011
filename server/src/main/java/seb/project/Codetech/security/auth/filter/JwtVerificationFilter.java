@@ -46,13 +46,14 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
 			request.setAttribute("exception", se);
 		} catch (ExpiredJwtException ee) {
 			request.setAttribute("exception", ee);
+			response.sendError(418, "ExpiredJwtException error");
 		} catch (Exception e) {
 			request.setAttribute("exception", e);
 		}
 
 		String logoutToken = request.getHeader("Authorization");
 		if (null != redisTemplate.opsForValue().get(logoutToken)) {
-			throw new BusinessLogicException(ExceptionCode.USER_NOT_FOUND);
+			throw new BusinessLogicException(ExceptionCode.NEED_LOGIN);
 		}
 
 		filterChain.doFilter(request, response);
@@ -67,7 +68,7 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
 	}
 
 	private Map<String, Object> verifyJws(HttpServletRequest request) {
-		String jws = request.getHeader("Authorization").replace("Bearer", "");
+		String jws = request.getHeader("Authorization").replace("Bearer ", "");
 		String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
 
 		return jwtTokenizer.getClaims(jws, base64EncodedSecretKey).getBody();

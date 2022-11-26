@@ -1,10 +1,13 @@
 package seb.project.Codetech.product.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import seb.project.Codetech.product.dto.ProductResponseDto;
 import seb.project.Codetech.product.entity.Type;
 
 public interface CustomProductRepository {
-	List<ProductResponseDto.selectProduct> findByProductType(Type type);
+	List<ProductResponseDto.Select> findByProductType(Type type);
+	List<ProductResponseDto.Card> searchMainPage();
+	Map<Long, String> searchFileSByProductIds(List<Long> productIds);
 }

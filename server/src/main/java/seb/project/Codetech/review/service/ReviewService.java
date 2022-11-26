@@ -10,6 +10,7 @@ import lombok.extern.log4j.Log4j2;
 import seb.project.Codetech.global.exception.BusinessLogicException;
 import seb.project.Codetech.global.exception.ExceptionCode;
 import seb.project.Codetech.product.entity.Product;
+import seb.project.Codetech.product.entity.Type;
 import seb.project.Codetech.product.service.ProductService;
 import seb.project.Codetech.review.dto.ReviewResponseDto;
 import seb.project.Codetech.review.entity.Review;
@@ -72,15 +73,18 @@ public class ReviewService {
 	}
 
 	@Transactional
-	public void removeReview(String email, Long id) {
+	public Long removeReview(String email, Long id) {
 		User user = userService.findUser(email);
 		Review review = findVerificationReview(id);
+		Long productId = review.getProduct().getId();
 
 		if (!review.getUser().getId().equals(user.getId())) {
 			throw new BusinessLogicException(ExceptionCode.REVIEW_NOT_MODIFY);
 		}
 
 		reviewRepository.deleteById(id);
+
+		return productId;
 	}
 
 	@Transactional
@@ -89,6 +93,11 @@ public class ReviewService {
 
 		review.setView(review.getView() + 1L);
 		return reviewRepository.save(review);
+	}
+
+	public Review searchTypeReview(Type type) {
+		reviewRepository.findByTypeReviewResponseDto(type);
+		return null;
 	}
 
 	public Review findVerificationReview(Long id) {

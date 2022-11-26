@@ -15,6 +15,7 @@ import seb.project.Codetech.user.mapper.UserMapper;
 import seb.project.Codetech.user.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.io.IOException;
@@ -79,12 +80,12 @@ public class UserController {
                              @Valid @RequestBody UserWithdrawDto withdraw,
                                        HttpServletRequest request){
         userService.withdrawUser(email,withdraw);
-        userService.logout(request);
+        userService.logout(request, email);
     }
 
     @PostMapping("/logout")
-    public void logoutUser(HttpServletRequest request){
-        userService.logout(request);
+    public void logoutUser(@AuthenticationPrincipal String email, HttpServletRequest request){
+        userService.logout(request, email);
     }
 
     @Transactional(readOnly = true)
@@ -135,5 +136,12 @@ public class UserController {
                                                            @RequestParam(value = "sort",defaultValue = "createAt") String sort){
         UserAndReviewsDto userAndRecommendsDto = userService.userAndRecommendsDto(email,page-1,size,sort);
         return ResponseEntity.ok(userAndRecommendsDto);
+    }
+
+    @Transactional
+    @PostMapping("/refresh")
+    public ResponseEntity<UserResponseDto> refresh(HttpServletRequest request, HttpServletResponse response){
+        User user = userService.checkRefresh(request,response);
+        return ResponseEntity.ok(mapper.userToUserResponseDto(user));
     }
 }
