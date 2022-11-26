@@ -73,15 +73,18 @@ public class ReviewService {
 	}
 
 	@Transactional
-	public void removeReview(String email, Long id) {
+	public Long removeReview(String email, Long id) {
 		User user = userService.findUser(email);
 		Review review = findVerificationReview(id);
+		Long productId = review.getProduct().getId();
 
 		if (!review.getUser().getId().equals(user.getId())) {
 			throw new BusinessLogicException(ExceptionCode.REVIEW_NOT_MODIFY);
 		}
 
 		reviewRepository.deleteById(id);
+
+		return productId;
 	}
 
 	@Transactional
