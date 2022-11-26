@@ -10,22 +10,11 @@ import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin
 import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
 import { useRef } from 'react';
 import useReview from '../../store/review';
-// import AddPost from '../Buttons/AddPost';
+import { uploadEditorImage } from '../../util/apiCollection';
 
 function TextEditor() {
   const editorRef = useRef<Editor>(null);
-  // const [text, setText] = useState('');
   const { content, setContent } = useReview();
-
-  // const onChange = () => {
-  //   const data = editorRef.current?.getInstance().getMarkdown();
-  //   console.log(data);
-  // };
-
-  // const showContents = () => {
-  //   const contentMark = editorRef.current?.getInstance().getMarkdown();
-  //   console.log(contentMark);
-  // };
 
   const handleClick = () => {
     const data = editorRef.current?.getInstance().getMarkdown();
@@ -40,14 +29,28 @@ function TextEditor() {
       <Editor
         ref={editorRef}
         previewStyle="vertical"
-        initialValue=""
+        initialValue="내용을 입력해주세요"
         height="550px"
         usageStatistics={false}
-        // onChange={onChange}
         plugins={[[codeSyntaxHighlight, { highlighter: Prism }]]}
+        hooks={{
+          async addImageBlobHook(blob, callback) {
+            const formData = new FormData();
+            formData.append('file', blob);
+            const imageURL = await uploadEditorImage(formData);
+            const imageUrlData = imageURL.data;
+            callback(`https://codetech.nworld.dev${imageUrlData}`, '');
+          },
+        }}
       />
       <div className="flex justify-center mt-3">
-        <button onClick={handleClick}>작성 완료</button>
+        <button
+          onClick={handleClick}
+          type="submit"
+          className="w-[300px] h-16 pb-1 text-xl font-bold text-white bg-blue-600 rounded-md hover:bg-blue-500"
+        >
+          작성 완료
+        </button>
       </div>
     </>
   );

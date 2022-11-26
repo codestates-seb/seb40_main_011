@@ -2,7 +2,7 @@
 //리뷰 작성 페이지에서 사용
 //안지은 작성
 import '../common.css';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { AiFillCaretDown } from 'react-icons/ai';
 import { AiFillCaretUp } from 'react-icons/ai';
 import axios from 'axios';
@@ -27,38 +27,6 @@ const ProductSelector = () => {
   //대문자로 변환
   const upperText = encoded.toUpperCase();
 
-  // //소분류 셀렉터 클릭시 대분류에서 선택한 text 값과 일치하는 type의 data list 를 가져옴
-  // const handleSelectClick = async (e: React.MouseEvent<HTMLElement>) => {
-  //   e.preventDefault();
-  //   setSpread(!spread);
-  //   await axios
-  //     .get(`/api/products/review-search`, {
-  //       params: { type: upperText },
-  //     })
-  //     .then((res) => {
-  //       console.log(`res.data`, res.data);
-  //       setCategorie(res.data);
-  //       console.log(`categorie`, categorie);
-  //     })
-  //     .catch(function (error) {
-  //       if (error.response) {
-  //         // 요청이 이루어졌으며 서버가 2xx의 범위를 벗어나는 상태 코드로 응답했습니다.
-  //         console.log(`error.response.data`, error.response.data);
-  //         console.log(`error.response.status`, error.response.status);
-  //         console.log(`error.response.headers`, error.response.headers);
-  //       } else if (error.request) {
-  //         // 요청이 이루어 졌으나 응답을 받지 못했습니다.
-  //         // `error.request`는 브라우저의 XMLHttpRequest 인스턴스 또는
-  //         // Node.js의 http.ClientRequest 인스턴스입니다.
-  //         console.log(`error.request`, error.request);
-  //       } else {
-  //         // 오류를 발생시킨 요청을 설정하는 중에 문제가 발생했습니다.
-  //         console.log('Error', error.message);
-  //       }
-  //       console.log(`error.config`, error.config);
-  //     });
-  // };
-
   //소분류 셀렉터 클릭시 대분류에서 선택한 text 값과 일치하는 type의 data list 를 가져옴
   const handleSelectClick = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
@@ -74,17 +42,12 @@ const ProductSelector = () => {
       })
       .catch(function (error) {
         if (error.response) {
-          // 요청이 이루어졌으며 서버가 2xx의 범위를 벗어나는 상태 코드로 응답했습니다.
           console.log(`error.response.data`, error.response.data);
           console.log(`error.response.status`, error.response.status);
           console.log(`error.response.headers`, error.response.headers);
         } else if (error.request) {
-          // 요청이 이루어 졌으나 응답을 받지 못했습니다.
-          // `error.request`는 브라우저의 XMLHttpRequest 인스턴스 또는
-          // Node.js의 http.ClientRequest 인스턴스입니다.
           console.log(`error.request`, error.request);
         } else {
-          // 오류를 발생시킨 요청을 설정하는 중에 문제가 발생했습니다.
           console.log('Error', error.message);
         }
         console.log(`error.config`, error.config);
@@ -121,7 +84,7 @@ const ProductSelector = () => {
               제품이 없습니다
             </button>
           ) : (
-            categorie.map((product, idx) => {
+            categorie.map((product: any, idx) => {
               return (
                 <button
                   key={idx}
