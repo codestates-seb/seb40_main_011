@@ -1,5 +1,9 @@
 package seb.project.Codetech.user.service;
 
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
@@ -19,6 +23,7 @@ import seb.project.Codetech.recommend.entity.Recommend;
 import seb.project.Codetech.review.entity.Review;
 import seb.project.Codetech.review.repository.ReviewRepository;
 import seb.project.Codetech.security.auth.event.UserRegistrationApplicationEvent;
+import seb.project.Codetech.security.auth.jwt.JwtTokenizer;
 import seb.project.Codetech.security.auth.utils.UserAuthorityUtils;
 import seb.project.Codetech.snackreview.entity.SnackReview;
 import seb.project.Codetech.user.dto.*;
@@ -26,9 +31,9 @@ import seb.project.Codetech.user.entity.User;
 import seb.project.Codetech.user.repository.UserRepository;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import javax.servlet.http.HttpServletResponse;
+import java.security.Key;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -42,10 +47,11 @@ public class UserService {
     private final RedisTemplate<String,String> redisTemplate;
     private final QuestionRepository questionRepository;
     private final ReviewRepository reviewRepository;
+    private final JwtTokenizer jwtTokenizer;
 
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, UserAuthorityUtils authorityUtils,
                        ApplicationEventPublisher publisher, RedisTemplate<String,String> redisTemplate,
-                       QuestionRepository questionRepository, ReviewRepository reviewRepository){
+                       QuestionRepository questionRepository, ReviewRepository reviewRepository, JwtTokenizer jwtTokenizer){
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityUtils = authorityUtils;
@@ -53,11 +59,13 @@ public class UserService {
         this.redisTemplate = redisTemplate;
         this.questionRepository = questionRepository;
         this.reviewRepository = reviewRepository;
+        this.jwtTokenizer = jwtTokenizer;
     }
 
-    public void logout(HttpServletRequest request) {
+    public void logout(HttpServletRequest request, String email) {
         redisTemplate.opsForValue()
                 .set(request.getHeader("Authorization"),"logout",30 * 60 * 1000L, TimeUnit.MILLISECONDS);
+        redisTemplate.delete(email);
     }
 
     public User registerUser(User user) {
@@ -231,5 +239,51 @@ public class UserService {
         loginUser.setPassword(passwordEncoder.encode(passwordDto.getNewPassword()));
         userRepository.save(loginUser);
         return loginUser;
+    }
+
+    public User checkRefresh(HttpServletRequest request, HttpServletResponse response){
+
+        String logoutToken = request.getHeader("Expired");
+        String refresh = request.getHeader("Refresh");
+        String jws = request.getHeader("Expired").replace("Bearer ", "");
+        String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
+        User user = findUser(getAccount(jws,base64EncodedSecretKey));
+
+        if (null != redisTemplate.opsForValue().get(logoutToken)) {
+            throw new BusinessLogicException(ExceptionCode.NEED_LOGIN);
+        }
+        if(!Objects.equals(redisTemplate.opsForValue().get(user.getEmail()), refresh)){
+            throw new BusinessLogicException(ExceptionCode.NEED_LOGIN);
+        }
+        String newAccessToken = newAccessToken(user);
+        response.setHeader("Authorization", "Bearer " + newAccessToken);
+        return user;
+    }
+
+    private String getAccount(String token,String base64EncodedSecretKey){
+        byte[] keyBytes = Decoders.BASE64.decode(base64EncodedSecretKey);
+        Key secretKey = Keys.hmacShaKeyFor(keyBytes);
+        try {
+            Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody().getSubject();
+        } catch (ExpiredJwtException ee) {
+            ee.printStackTrace();
+            return ee.getClaims().getSubject();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody().getSubject();
+    }
+
+    private String newAccessToken(User user) {
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("username", user.getEmail());
+        claims.put("roles", user.getRoles());
+
+        String subject = user.getEmail();
+        Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes());
+
+        String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
+
+        return jwtTokenizer.generateAccessToken(claims, subject, expiration, base64EncodedSecretKey);
     }
 }
