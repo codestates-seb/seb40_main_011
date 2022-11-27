@@ -21,7 +21,6 @@ import seb.project.Codetech.file.repository.FileRepository;
 import seb.project.Codetech.global.exception.BusinessLogicException;
 import seb.project.Codetech.global.exception.ExceptionCode;
 import seb.project.Codetech.product.entity.Product;
-import seb.project.Codetech.review.entity.Review;
 import seb.project.Codetech.user.entity.User;
 
 @Service
@@ -91,12 +90,12 @@ public class FileService {
 		}
 	}
 
-	public void setUploadReview(Review review, List<FileEntity> fileEntities) {
-		for (FileEntity file : fileEntities) {
-			file.setReview(review);
-			fileRepository.save(file);
-		}
-	}
+	// public void setUploadReview(Review review, List<FileEntity> fileEntities) {
+	// 	for (FileEntity file : fileEntities) {
+	// 		file.setReview(review);
+	// 		fileRepository.save(file);
+	// 	}
+	// }
 
 	public void checkDir(String root, String path) {
 

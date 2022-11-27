@@ -1,18 +1,25 @@
 package seb.project.Codetech.review.dto;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import seb.project.Codetech.file.entity.FileEntity;
 import seb.project.Codetech.product.entity.Type;
 
 public class ReviewResponseDto {
 	@Getter
-	@Setter
 	@NoArgsConstructor
-	public static class Post {
+	@AllArgsConstructor
+	public static class Slice {
+		private boolean hasNext;
+		private List<Page> pages;
+	}
+
+	@Getter
+	@NoArgsConstructor
+	public static class Page {
 		private String title;
 		private String content;
 		private Long view;
@@ -23,13 +30,16 @@ public class ReviewResponseDto {
 		private String userImage;
 		private String productName;
 		private String productDetail;
-		private List<FileEntity> fileEntities;
 	}
 
 	@Getter
-	@Setter
 	@NoArgsConstructor
-	public static class TypeSearch {
-
+	public static class Best {
+		private String title;
+		private String content;
+		private Type type;
+		private String writer;
+		private LocalDateTime createdAt;
+		private String image;
 	}
 }

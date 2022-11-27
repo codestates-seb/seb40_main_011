@@ -1,6 +1,5 @@
 package seb.project.Codetech.review.repository;
 
-import static seb.project.Codetech.product.entity.QProduct.*;
 import static seb.project.Codetech.review.entity.QReview.*;
 import static seb.project.Codetech.user.entity.QUser.*;
 
@@ -13,9 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
-import seb.project.Codetech.product.entity.Type;
 import seb.project.Codetech.review.dto.ReviewResponseDto;
-import seb.project.Codetech.review.entity.Review;
 
 @Repository
 public class CustomReviewRepositoryImpl implements CustomReviewRepository {
@@ -25,28 +22,23 @@ public class CustomReviewRepositoryImpl implements CustomReviewRepository {
 		this.queryFactory = new JPAQueryFactory(em);
 	}
 
-	@Override
-	public List<ReviewResponseDto.Post> findByReviewResponseDto(Review findReview) {
-
-		return queryFactory
-			.select(
-				Projections.bean(ReviewResponseDto.Post.class,
-					review.id, review.title, review.content, review.writer, review.view, review.type,
-					user.id.as("userId"), user.nickname.as("userNickname"), user.image.as("userImage"),
-					product.name.as("productName"), product.detail.as("productDetail")
-				))
-			.from(review)
-			.where(review.id.eq(findReview.getId()))
-			.leftJoin(review.user, user).on(user.eq(findReview.getUser()))
-			.leftJoin(review.product, product).on(product.eq(findReview.getProduct()))
-			.fetch();
-
-	}
-
-	@Override
-	public ReviewResponseDto.TypeSearch findByTypeReviewResponseDto(Type type) {
-		return null;
-	}
+	// @Override
+	// public Slice<ReviewResponseDto.Page> searchProductPageReviewsBySlice(Review findReview) {
+	//
+	// 	queryFactory
+	// 		.select(
+	// 			Projections.bean(ReviewResponseDto.Page.class,
+	// 				review.id, review.title, review.content, review.writer, review.view, review.type,
+	// 				user.id.as("userId"), user.nickname.as("userNickname"), user.image.as("userImage"),
+	// 				product.name.as("productName"), product.detail.as("productDetail")
+	// 			))
+	// 		.from(review)
+	// 		.where(review.id.eq(findReview.getId()))
+	// 		.leftJoin(review.user, user).on(user.eq(findReview.getUser()))
+	// 		.leftJoin(review.product, product).on(product.eq(findReview.getProduct()))
+	// 		.fetch();
+	//
+	// }
 
 	@Override
 	public long getReviewCountByProductId(Long productId) {
@@ -56,5 +48,24 @@ public class CustomReviewRepositoryImpl implements CustomReviewRepository {
 			.from(review)
 			.where(review.product.id.eq(productId))
 			.fetchFirst();
+	}
+
+	@Override
+	public List<ReviewResponseDto.Best> getBestReviewContent(Integer size) {
+		return queryFactory
+			.select(Projections.fields(ReviewResponseDto.Best.class,
+				review.title,
+				review.content,
+				review.type,
+				review.writer,
+				review.createdAt,
+				user.image)
+			)
+			.from(review)
+			.leftJoin(review.user, user)
+			.orderBy(review.RecommendNumber.desc())
+			.offset(0)
+			.limit(size)
+			.fetch();
 	}
 }
