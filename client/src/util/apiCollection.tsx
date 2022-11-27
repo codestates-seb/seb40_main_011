@@ -137,22 +137,6 @@ export const getGoodSnack = async (productId: any, limit: number) => {
   }
 };
 
-export const getOldSnack = async (productId: any, limit: number) => {
-  try {
-    const response = await axios.get(
-      `/api/snack-reviews?productId=${productId}&offset=0&limit=${limit}&sortByGrade=false&asc=true`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    );
-    return response;
-  } catch (err: any) {
-    return err.response;
-  }
-};
-
 export const getSnackStats = async (productId: number) => {
   try {
     const response = await axios.get(
@@ -195,10 +179,14 @@ export const postQuestion = async (data: QuestionContent) => {
   }
 };
 
-export const fetchQuestionData = async (size: number, asc: boolean) => {
+export const fetchQuestionData = async (
+  size: number,
+  adoption: boolean,
+  asc: boolean
+) => {
   try {
     const response = await axios.get(
-      `/api/questions?size=${size}&adoption=false&asc=${asc}`
+      `/api/questions?size=${size}&adoption=${adoption}&asc=${asc}`
     );
     return response;
   } catch (err: any) {
@@ -244,11 +232,10 @@ export const editPassword = async (data: any) => {
   }
 };
 
-export const getUserReview = async (url: string, data: any) => {
+export const getUserReview = async (url: string, params: string) => {
   try {
-    const getReview = await axios.get(`/api/user/${url}`, {
+    const getReview = await axios.get(`/api/user/${url}${params}`, {
       headers: { Authorization: initialToken },
-      data,
     });
     return getReview;
   } catch (err: any) {
@@ -273,6 +260,19 @@ export const uploadEditorImage = async (data: any) => {
   try {
     const editorImg = await axios.post('/api/upload', data);
     return editorImg;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
+export const getProducts = async () => {
+  try {
+    const response = await axios.get(`/api/products/main-search`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    return response;
   } catch (err: any) {
     return err.response;
   }

@@ -29,7 +29,7 @@ const SnackReview = ({ snackReviewData }: SnackReviewProps) => {
           >
             <div className="flex items-center justify-between">
               <img
-                src={el?.image}
+                src={`https://codetech.nworld.dev${el?.image}`}
                 alt=""
                 className="w-16 h-16 rounded-full bg-slate-200"
               />

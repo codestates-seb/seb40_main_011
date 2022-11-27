@@ -1,5 +1,5 @@
 // [GET]
-import { getProductTest } from '../../util/testApiCollection';
+import { getProducts } from '../../util/apiCollection';
 import { useEffect, useState } from 'react';
 import { Product } from '../../types/mainPageTypes';
 import MainCategory from '../Selectors/MainCategory';
@@ -10,20 +10,26 @@ import { useIsLogin } from '../../store/login';
 const ProductList = () => {
   const navigate = useNavigate();
   const { isLogin } = useIsLogin();
-  const [products, setProducts] = useState<Product[]>();
+  const [products, setProducts] = useState<Product[]>([]);
   const [category, setCategory] = useState('all');
   const [totalPage, setTotalPage] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
+  const offset = (currentPage - 1) * 9;
+
+  const getParsedDate = (createdAt: string) => {
+    return new Date(createdAt).toLocaleDateString('ko-KR');
+  };
 
   useEffect(() => {
     const getProductData = async () => {
       //인스턴스 데이터
-      const { data } = await getProductTest();
+      const { data } = await getProducts();
+      setProducts(data.cards.reverse());
+      setTotalPage(Math.ceil(data.cards.length / 9));
       //카테고리 분기
       if (category === 'all') {
         //all이 선택되면 전체에서 앞의 9개만 가지고 오기
-        setProducts(data.slice(0, 9));
-        setTotalPage(Math.ceil(data.length / 9));
+        setProducts(data.cards);
         //data.length / 9 round up 해서 정수만큼 페이지네이션 구현 2페이지로 갈땐 (start + 9, end + 9) > 버튼 눌렀을때도
         //< 버튼누르면 반대로 뺴주기
       }
@@ -31,9 +37,14 @@ const ProductList = () => {
       else {
         //그 외 카테고리가 선택되면 카테고리명과 제품의 type을 비교해서 9개 가지고 오기
         setProducts(
-          data
-            .filter((el: Product) => el.type.toLowerCase() === category)
-            .slice(0, 9)
+          data.cards.filter((el: Product) => el.type.toLowerCase() === category)
+        );
+        setTotalPage(
+          Math.ceil(
+            data.cards.filter(
+              (el: Product) => el.type.toLowerCase() === category
+            ).length / 9
+          )
         );
       }
     };
@@ -82,12 +93,15 @@ const ProductList = () => {
               </button>
             </div>
             <div className="w-full flex justify-center items-center">
-              <MainCategory setCategory={setCategory} />
+              <MainCategory
+                setCategory={setCategory}
+                setCurrentPage={setCurrentPage}
+              />
             </div>
           </div>
           <div className="flex items-center justify-center">
             <div className="m-16 flex flex-wrap w-4/5">
-              {products.map((el, idx) => {
+              {products.slice(offset, offset + 9).map((el, idx) => {
                 return (
                   <div
                     key={idx}
@@ -97,20 +111,30 @@ const ProductList = () => {
                       role="button"
                       onClick={onProductClick}
                       id={el.id.toString()}
-                      className="flex flex-col w-full bg-white rounded-b-lg"
+                      className="flex flex-col w-full bg-white rounded-b-lg "
                     >
-                      <img
-                        className="object-cover rounded-t-lg h-48"
-                        src={el.image}
-                      />
-                      <div>
+                      {el?.filePath === null ? (
+                        <img
+                          src={require('../../images/Image-null.png')}
+                          className="object-cover rounded-t-lg h-48"
+                        />
+                      ) : (
+                        <img
+                          className="object-cover rounded-t-lg h-48"
+                          src={`https://codetech.nworld.dev${el?.filePath}`}
+                        />
+                      )}
+
+                      <div className="h-full flex flex-col justify-between">
                         <div className="p-2 border-t-2 border-slate-300">
                           {el.name}
                         </div>
-                        <div className="flex p-2 justify-between">
-                          <div>{el.type.toLowerCase()}</div>
-                          <div className="이거 평점으로 바꿀거임">
-                            {el.createdAt}
+                        <div className="flex p-2 justify-between items-center">
+                          <div className="p-1 px-2 rounded-full bg-slate-100 text-slate-600 text-sm">
+                            {el.type.toLowerCase()}
+                          </div>
+                          <div className="text-sm ">
+                            {getParsedDate(el.createdAt)}
                           </div>
                         </div>
                       </div>

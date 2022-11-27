@@ -1,3 +1,4 @@
+import exp from 'constants';
 import { Dispatch, SetStateAction } from 'react';
 import { createDeflate } from 'zlib';
 
@@ -17,13 +18,14 @@ export interface SignupInputs {
 }
 
 export interface Product {
+  avgScore: number;
+  createdAt: string;
+  filePath: string;
   id: number;
   name: string;
+  reviewCount: number;
+  snackCount: number;
   type: string;
-  image: string;
-  detail: string;
-  createdAt: string;
-  modifiedAt: string;
 }
 export interface Review {
   id: number;
@@ -64,6 +66,7 @@ export interface CommentProps {
 
 export interface CategoryProps {
   setCategory: Dispatch<SetStateAction<string>>;
+  setCurrentPage: Dispatch<SetStateAction<number>>;
 }
 
 export interface SubCommentProps {
@@ -102,6 +105,18 @@ export interface QuestionListsProps {
   nickname: string;
   content: string;
   answerCards: null | PendingAnswerProps;
+}
+
+export interface QuestionListType {
+  adoptedId: number;
+  content: string;
+  createdAt: string;
+  deleted: boolean;
+  id: number;
+  image: string;
+  modifiedAt: string;
+  nickname: string;
+  writerId: number;
 }
 
 export interface PendingAnswerProps {
