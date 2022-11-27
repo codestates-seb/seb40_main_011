@@ -1,5 +1,7 @@
 package seb.project.Codetech.review.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 
@@ -19,8 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.log4j.Log4j2;
 import seb.project.Codetech.event.dto.ReviewUpdateEvent;
-import seb.project.Codetech.product.entity.Type;
 import seb.project.Codetech.review.dto.ReviewRequestDto;
+import seb.project.Codetech.review.dto.ReviewResponseDto;
 import seb.project.Codetech.review.entity.Review;
 import seb.project.Codetech.review.mapper.ReviewMapper;
 import seb.project.Codetech.review.service.ReviewService;
@@ -83,9 +85,11 @@ public class ReviewController {
 		return ResponseEntity.ok(loadReview);
 	}
 
-	@GetMapping("/category")
-	public ResponseEntity<Review> getTypeSearch(@RequestParam Type type) {
-		reviewService.searchTypeReview(type);
-		return null;
+	@GetMapping("/best")
+	public ResponseEntity<List<ReviewResponseDto.Best>> getBestReview(@RequestParam Integer size) {
+
+		List<ReviewResponseDto.Best> loadBestReview = reviewService.loadBestReview(size);
+
+		return ResponseEntity.ok(loadBestReview);
 	}
 }
