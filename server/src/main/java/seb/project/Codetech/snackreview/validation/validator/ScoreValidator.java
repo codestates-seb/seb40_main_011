@@ -24,10 +24,10 @@ public class ScoreValidator implements ConstraintValidator<ValidScore, ReviewSco
 				continue;
 			}
 			field.setAccessible(true);
-			int value = 0;
+			float value = 0;
 
 			try {
-				value = field.getInt(score);
+				value = field.getFloat(score);
 			} catch (IllegalAccessException e) {
 			}
 
