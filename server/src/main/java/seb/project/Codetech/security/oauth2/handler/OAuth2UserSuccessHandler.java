@@ -44,22 +44,21 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 		var oAuth2User = (OAuth2User)authentication.getPrincipal();
 		String email = String.valueOf(oAuth2User.getAttributes().get("email"));
 		String nickname = String.valueOf(oAuth2User.getAttributes().get("name"));
-		//        String provider = "google";
+		String provider = "google";
 		String password = String.valueOf(oAuth2User.getAttributes().get("providerId"));
 		List<String> authorities = authorityUtils.createRoles(email);
 		if (userRepository.findByEmail(email).isEmpty()) {
-
-			saveUser(email, nickname, password);
+			saveUser(nickname, email, password,provider);
 		}
-		redirect(request, response, email, authorities);
+		redirect(request, response, email, provider, authorities);
 	}
 
-	private void redirect(HttpServletRequest request, HttpServletResponse response, String username,
+	private void redirect(HttpServletRequest request, HttpServletResponse response, String username, String provider,
 		List<String> authorities) throws IOException {
-		String accessToken = delegateAccessToken(username, authorities);
+		String accessToken = delegateAccessToken(username, authorities,provider);
 		String refreshToken = delegateRefreshToken(username);
 
-		String uri = createURI(accessToken, refreshToken).toString();
+		String uri = createURI("Bearer " +accessToken, refreshToken).toString();
 		getRedirectStrategy().sendRedirect(request, response, uri);
 	}
 
@@ -72,7 +71,8 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 			.newInstance()
 			.scheme("http")
 			.host("localhost")
-			//                .port(80)
+//			.host("codetech.nworld.dev")
+//			.port(80)
 			.path("/receive-token.html")
 			.queryParams(queryParams)
 			.build()
@@ -86,10 +86,11 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 		return jwtTokenizer.generateRefreshToken(username, expiration, base64EncodedSecretKey);
 	}
 
-	private String delegateAccessToken(String username, List<String> authorities) {
+	private String delegateAccessToken(String username, List<String> authorities, String provider) {
 		Map<String, Object> claims = new HashMap<>();
 		claims.put("username", username);
 		claims.put("roles", authorities);
+		claims.put("provider", provider);
 
 		Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes());
 		String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
@@ -97,8 +98,10 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 		return jwtTokenizer.generateAccessToken(claims, username, expiration, base64EncodedSecretKey);
 	}
 
-	private void saveUser(String nickname, String email, String password) {
-		User user = new User(nickname, email, password);
+	private void saveUser(String nickname, String email, String password, String provider) {
+		User user = new User(nickname, email, password,provider);
 		userService.registerUser(user);
+		user.setProvider("google");
+		userRepository.save(user);
 	}
 }

@@ -22,7 +22,6 @@ import seb.project.Codetech.question.respository.QuestionRepository;
 import seb.project.Codetech.recommend.entity.Recommend;
 import seb.project.Codetech.review.entity.Review;
 import seb.project.Codetech.review.repository.ReviewRepository;
-import seb.project.Codetech.security.auth.event.UserRegistrationApplicationEvent;
 import seb.project.Codetech.security.auth.jwt.JwtTokenizer;
 import seb.project.Codetech.security.auth.utils.UserAuthorityUtils;
 import seb.project.Codetech.snackreview.entity.SnackReview;
@@ -76,12 +75,11 @@ public class UserService {
 
         List<String> roles = authorityUtils.createRoles(user.getEmail());
         user.setRoles(roles);
+        user.setProvider("local");
 
-        User savedUser = userRepository.save(user);
+        //        publisher.publishEvent(new UserRegistrationApplicationEvent(savedUser));
 
-        publisher.publishEvent(new UserRegistrationApplicationEvent(savedUser));
-
-        return savedUser;
+        return userRepository.save(user);
     }
 
     private void verifyExistsEmail(String email) {
@@ -278,8 +276,9 @@ public class UserService {
         Map<String, Object> claims = new HashMap<>();
         claims.put("username", user.getEmail());
         claims.put("roles", user.getRoles());
+        claims.put("provider", user.getProvider());
 
-        String subject = user.getEmail();
+        String subject = "codetech";
         Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes());
 
         String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
