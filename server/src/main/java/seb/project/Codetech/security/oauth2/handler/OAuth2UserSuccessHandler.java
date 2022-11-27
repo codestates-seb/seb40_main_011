@@ -6,11 +6,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
@@ -29,13 +31,15 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 	private final UserAuthorityUtils authorityUtils;
 	private final UserService userService;
 	private final UserRepository userRepository;
+	private final RedisTemplate<String,String> redisTemplate;
 
 	public OAuth2UserSuccessHandler(JwtTokenizer jwtTokenizer, UserAuthorityUtils authorityUtils,
-		UserService userService, UserRepository userRepository) {
+		UserService userService, UserRepository userRepository, RedisTemplate<String,String> redisTemplate) {
 		this.jwtTokenizer = jwtTokenizer;
 		this.authorityUtils = authorityUtils;
 		this.userService = userService;
 		this.userRepository = userRepository;
+		this.redisTemplate = redisTemplate;
 	}
 
 	@Override
@@ -53,10 +57,12 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 		redirect(request, response, email, provider, authorities);
 	}
 
-	private void redirect(HttpServletRequest request, HttpServletResponse response, String username, String provider,
+	private void redirect(HttpServletRequest request, HttpServletResponse response, String email, String provider,
 		List<String> authorities) throws IOException {
-		String accessToken = delegateAccessToken(username, authorities,provider);
-		String refreshToken = delegateRefreshToken(username);
+		String accessToken = delegateAccessToken(email, authorities,provider);
+		String refreshToken = delegateRefreshToken(email);
+		redisTemplate.opsForValue()
+				.set(email,refreshToken, 7 * 60 * 60 * 1000L, TimeUnit.MILLISECONDS);
 
 		String uri = createURI("Bearer " +accessToken, refreshToken).toString();
 		getRedirectStrategy().sendRedirect(request, response, uri);
@@ -79,23 +85,23 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 			.toUri();
 	}
 
-	private String delegateRefreshToken(String username) {
+	private String delegateRefreshToken(String email) {
 		Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getRefreshTokenExpirationMinutes());
 		String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
 
-		return jwtTokenizer.generateRefreshToken(username, expiration, base64EncodedSecretKey);
+		return jwtTokenizer.generateRefreshToken(email, expiration, base64EncodedSecretKey);
 	}
 
-	private String delegateAccessToken(String username, List<String> authorities, String provider) {
+	private String delegateAccessToken(String email, List<String> authorities, String provider) {
 		Map<String, Object> claims = new HashMap<>();
-		claims.put("username", username);
+		claims.put("email", email);
 		claims.put("roles", authorities);
 		claims.put("provider", provider);
 
 		Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes());
 		String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
 
-		return jwtTokenizer.generateAccessToken(claims, username, expiration, base64EncodedSecretKey);
+		return jwtTokenizer.generateAccessToken(claims, email, expiration, base64EncodedSecretKey);
 	}
 
 	private void saveUser(String nickname, String email, String password, String provider) {

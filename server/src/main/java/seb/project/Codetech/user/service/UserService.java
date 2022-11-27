@@ -75,7 +75,7 @@ public class UserService {
 
         List<String> roles = authorityUtils.createRoles(user.getEmail());
         user.setRoles(roles);
-        user.setProvider("local");
+        user.setProvider("register");
 
         //        publisher.publishEvent(new UserRegistrationApplicationEvent(savedUser));
 
@@ -274,7 +274,7 @@ public class UserService {
 
     private String newAccessToken(User user) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("username", user.getEmail());
+        claims.put("email", user.getEmail());
         claims.put("roles", user.getRoles());
         claims.put("provider", user.getProvider());
 
