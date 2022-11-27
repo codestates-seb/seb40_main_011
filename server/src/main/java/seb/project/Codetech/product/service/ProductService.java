@@ -91,17 +91,9 @@ public class ProductService {
 
 	public ProductResponseDto.MainPage searchMainPage() {
 		List<ProductResponseDto.Card> cards = productRepository.searchMainPage();
+
+		searchFilePathsOfMainPage(cards);
 		setProductStatToCard(cards);
-
-		List<Long> productIds = cards.stream()
-			.map(c -> c.getId())
-			.collect(Collectors.toList());
-
-		Map<Long, String> fileMap = productRepository.searchFileSByProductIds(productIds);
-
-		cards.forEach(
-			card -> card.setFilePath(fileMap.get(card.getId()))
-		);
 
 		return new ProductResponseDto.MainPage(cards);
 	}
@@ -123,5 +115,17 @@ public class ProductService {
 			card.setSnackCount(productStat.getSnackCount());
 			card.setAvgScore(productStat.getAvgScore());
 		}
+	}
+
+	private void searchFilePathsOfMainPage(List<ProductResponseDto.Card> cards) {
+		List<Long> productIds = cards.stream()
+			.map(c -> c.getId())
+			.collect(Collectors.toList());
+
+		Map<Long, String> fileMap = productRepository.searchFileSByProductIds(productIds);
+
+		cards.forEach(
+			card -> card.setFilePath(fileMap.get(card.getId()))
+		);
 	}
 }
