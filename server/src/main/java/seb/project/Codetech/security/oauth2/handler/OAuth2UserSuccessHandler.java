@@ -46,15 +46,15 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 		Authentication authentication) throws IOException, ServletException {
 		var oAuth2User = (OAuth2User)authentication.getPrincipal();
-		String email = String.valueOf(oAuth2User.getAttributes().get("email"));
+		String username = String.valueOf(oAuth2User.getAttributes().get("email"));
 		String nickname = String.valueOf(oAuth2User.getAttributes().get("name"));
 		String provider = "google";
 		String password = String.valueOf(oAuth2User.getAttributes().get("providerId"));
-		List<String> authorities = authorityUtils.createRoles(email);
-		if (userRepository.findByEmail(email).isEmpty()) {
-			saveUser(nickname, email, password,provider);
+		List<String> authorities = authorityUtils.createRoles(username);
+		if (userRepository.findByEmail(username).isEmpty()) {
+			saveUser(nickname, username, password,provider);
 		}
-		redirect(request, response, email, provider, authorities);
+		redirect(request, response, username, provider, authorities);
 	}
 
 	private void redirect(HttpServletRequest request, HttpServletResponse response, String email, String provider,
