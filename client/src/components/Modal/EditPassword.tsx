@@ -5,16 +5,35 @@ import { EditPasswordModalHandler } from '../MyPage/Profile';
 import { editPassword } from '../../util/apiCollection';
 import { passwordRegex } from '../../util/Regex';
 
+export interface Password {
+  oldPassword: string;
+  newPassword: string;
+  newCheckPassword: string;
+}
 const EditPassword = ({
   openEditPasswordModalHandler,
 }: EditPasswordModalHandler) => {
-  const [prePassword, setPrePassword] = useState();
-  const [password, setPassword] = useState();
-  const [passwordCheck, setPasswordCheck] = useState();
+  const [prePassword, setPrePassword] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordCheck, setPasswordCheck] = useState('');
 
   const [prePasswordError, setPrePasswordError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [passwordCheckError, setPasswordCheckError] = useState(false);
+
+  const [viewPrePassword, setViewPrePassword] = useState(false);
+  const [viewPassword, setViewPassword] = useState(false);
+  const [viewPasswordCheck, setViewPasswordCheck] = useState(false);
+
+  const viewPrePasswordHandler = (e: React.MouseEvent<HTMLElement>) => {
+    setViewPrePassword(!viewPrePassword);
+  };
+  const viewPasswordHandler = (e: React.MouseEvent<HTMLElement>) => {
+    setViewPassword(!viewPassword);
+  };
+  const viewPasswordCheckHandler = (e: React.MouseEvent<HTMLElement>) => {
+    setViewPasswordCheck(!viewPasswordCheck);
+  };
 
   const handlePrePassword = (e: any) => {
     setPrePassword(e.target.value);
@@ -26,7 +45,7 @@ const EditPassword = ({
   };
   const handlePassword = (e: any) => {
     setPassword(e.target.value);
-    if (!prePassword || !passwordRegex.test(prePassword)) {
+    if (!passwordRegex.test(password)) {
       setPasswordError(true);
     } else {
       setPasswordError(false);
@@ -42,7 +61,7 @@ const EditPassword = ({
   };
 
   const handleSubmitPassword = () => {
-    const data: any = {
+    const data: Password = {
       oldPassword: prePassword,
       newPassword: password,
       newCheckPassword: passwordCheck,
@@ -63,13 +82,31 @@ const EditPassword = ({
           <div className="mb-6 text-3xl">비밀번호를 변경하시겠습니까?</div>
 
           <div className="flex items-end border-b ">
-            <input
-              type="password"
-              value={prePassword}
-              onChange={handlePrePassword}
-              placeholder="현재 비빌번호를 입력해주세요"
-              className="flex w-full p-1.5 mt-4"
-            />
+            {viewPrePassword ? (
+              <input
+                type="text"
+                value={prePassword}
+                onChange={handlePrePassword}
+                placeholder="현재 비빌번호를 입력해주세요"
+                className="flex w-full p-1.5 mt-4"
+              />
+            ) : (
+              <input
+                type="password"
+                value={prePassword}
+                onChange={handlePrePassword}
+                placeholder="현재 비빌번호를 입력해주세요"
+                className="flex w-full p-1.5 mt-4"
+              />
+            )}
+
+            <button onClick={viewPrePasswordHandler} className="p-2">
+              {viewPrePassword ? (
+                <BsFillEyeSlashFill className="w-[20px] h-[20px]  text-slate-500" />
+              ) : (
+                <BsFillEyeFill className="w-[20px] h-[20px]  text-slate-500" />
+              )}
+            </button>
           </div>
           <div
             className={`text-sm text-red-600 ${
@@ -79,13 +116,31 @@ const EditPassword = ({
             비밀번호가 일치하지 않습니다
           </div>
           <div className="flex items-end border-b">
-            <input
-              type="password"
-              value={password}
-              onChange={handlePassword}
-              placeholder="새 비빌번호를 입력해주세요 "
-              className="flex w-full p-1.5 mt-4"
-            />
+            {viewPassword ? (
+              <input
+                type="text"
+                value={password}
+                onChange={handlePassword}
+                placeholder="새 비빌번호를 입력해주세요 "
+                className="flex w-full p-1.5 mt-4"
+              />
+            ) : (
+              <input
+                type="password"
+                value={password}
+                onChange={handlePassword}
+                placeholder="새 비빌번호를 입력해주세요 "
+                className="flex w-full p-1.5 mt-4"
+              />
+            )}
+
+            <button onClick={viewPasswordHandler} className="p-2">
+              {viewPassword ? (
+                <BsFillEyeSlashFill className="w-[20px] h-[20px]  text-slate-500" />
+              ) : (
+                <BsFillEyeFill className="w-[20px] h-[20px]  text-slate-500" />
+              )}
+            </button>
           </div>
           <div
             className={`text-sm text-red-600 ${
@@ -96,13 +151,31 @@ const EditPassword = ({
           </div>
 
           <div className="flex items-end border-b">
-            <input
-              type="password"
-              value={passwordCheck}
-              onChange={handlePasswordCheck}
-              placeholder="새 비빌번호를 확인해주세요"
-              className="flex w-full p-1.5 mt-4"
-            />
+            {viewPasswordCheck ? (
+              <input
+                type="text"
+                value={passwordCheck}
+                onChange={handlePasswordCheck}
+                placeholder="새 비빌번호를 확인해주세요"
+                className="flex w-full p-1.5 mt-4"
+              />
+            ) : (
+              <input
+                type="password"
+                value={passwordCheck}
+                onChange={handlePasswordCheck}
+                placeholder="새 비빌번호를 확인해주세요"
+                className="flex w-full p-1.5 mt-4"
+              />
+            )}
+
+            <button onClick={viewPasswordCheckHandler} className="p-2">
+              {viewPasswordCheck ? (
+                <BsFillEyeSlashFill className="w-[20px] h-[20px]  text-slate-500" />
+              ) : (
+                <BsFillEyeFill className="w-[20px] h-[20px]  text-slate-500" />
+              )}
+            </button>
           </div>
 
           <div

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Password } from '../components/Modal/EditPassword';
 import { blob } from 'stream/consumers';
 import {
   LoginInputs,
@@ -310,7 +311,7 @@ export const editNickname = async (data: any) => {
   }
 };
 
-export const editPassword = async (data: any) => {
+export const editPassword = async (data: Password) => {
   try {
     const submitImg = await axios.patch('/api/user', data, {
       headers: { Authorization: initialToken },
