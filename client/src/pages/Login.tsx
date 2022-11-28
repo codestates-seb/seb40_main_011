@@ -97,7 +97,7 @@ export default function Login() {
   };
 
   return (
-    <div className="w-full h-screen bg-slate-300 pt-8 max-md:pt-0 flex flex-col items-center justify-center">
+    <div className="w-full h-screen bg-slate-300 pt-8 max-md:pt-0 flex flex-col items-center justify-center max-md:justify-start">
       <div className="max-md:w-full md:w-[32rem] bg-white flex justify-center flex-col p-16 rounded-3xl max-md:rounded-none shadow-2xl/30">
         <img
           src={require('../images/logo.png')}

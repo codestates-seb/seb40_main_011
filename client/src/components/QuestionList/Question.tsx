@@ -1,25 +1,71 @@
 import BodyTop from './BodyTop';
 import AnswerMore from './AnswerMore';
+import Answer from './Answer';
+import { QuestionProps, AnswerCardsProps } from '../../types/mainPageTypes';
+import { useState } from 'react';
 
-export default function Question() {
+export default function Question({
+  createdAt,
+  nickname,
+  content,
+  answerCards,
+  adoptedId,
+  writerId,
+}: QuestionProps): JSX.Element {
+  // 답변 불러오기
+  const [showAnswer, setShowAnswer] = useState(false);
+  const handleShowAnswer = () => {
+    setShowAnswer(true);
+  };
+
+  console.log();
   return (
-    <div className="flex my-6 mr-16">
-      <img
-        src="https://xsgames.co/randomusers/avatar.php?g=female"
-        alt=""
-        className="w-12 h-12 rounded-full mx-2 ring ring-slate-200"
-      />
-      <div>
-        {/* <BodyTop /> */}
-        <div className="ring-1 ring-gray-200 rounded-xl overflow-hidden bg-white">
-          <div className="px-6 pt-3 pb-4 border-b border-gray-200">
-            Assumenda molestiae est quos aperiam quod maiores enim laboriosam
-            et. At quia atque quidem aut consequatur. Incidunt tempore
-            voluptatibus.
+    <div className="w-full">
+      <div className="w-full flex mt-5">
+        <img
+          src="https://xsgames.co/randomusers/avatar.php?g=female"
+          alt=""
+          className="w-12 h-12 rounded-2xl mx-3 mt-3 ring ring-slate-200"
+        />
+        <div className="w-full">
+          <BodyTop
+            createdAt={createdAt}
+            nickname={nickname}
+            adoptedId={adoptedId}
+          />
+          <div className="flex">
+            <div className="grow mr-2">
+              <div className="px-4 pt-2 pb-3 rounded bg-white text-gray-600 font-medium">
+                {content}
+              </div>
+              {answerCards !== null && !showAnswer && (
+                <button
+                  onClick={handleShowAnswer}
+                  className="w-full mt-1 rounded overflow-hidden"
+                >
+                  <AnswerMore count={answerCards.length} />
+                </button>
+              )}
+            </div>
           </div>
         </div>
-        <AnswerMore count={3} />
       </div>
+      {answerCards !== null &&
+        showAnswer &&
+        answerCards.map((el: AnswerCardsProps) => {
+          const { id, createdAt, nickname, content, writerId } = el;
+          return (
+            <Answer
+              key={id}
+              createdAt={createdAt}
+              nickname={nickname}
+              content={content}
+              writerId={writerId}
+              id={Number(id)}
+              adoptedId={adoptedId}
+            />
+          );
+        })}
     </div>
   );
 }

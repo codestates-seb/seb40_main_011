@@ -13,7 +13,7 @@ export default function Header() {
   const { isLogin } = useIsLogin();
 
   return (
-    <div className="sticky top-0 z-20 shadow bg-white">
+    <div className="sticky top-0 z-20 bg-white">
       <div className="max-xl:w-full xl:w-[80rem] mx-auto px-4 h-20 flex flex-row items-center justify-between">
         <button className="flex-none" onClick={handleHomeClick}>
           <img
