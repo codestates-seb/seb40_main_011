@@ -14,10 +14,16 @@ const QuestionList = () => {
 
   useEffect(() => {
     const getQuestionData = async () => {
-      const { data } = await fetchQuestionData(5, true, false);
+      const { data } = await fetchQuestionData(5, false, true);
       setQuestions(data.cards);
-      const secondData = await fetchQuestionData(5, false, false);
-      setAnswerNeed(secondData.data.cards);
+    };
+    getQuestionData();
+  }, []);
+
+  useEffect(() => {
+    const getQuestionData = async () => {
+      const { data } = await fetchQuestionData(5, false, false);
+      setAnswerNeed(data.cards);
     };
     getQuestionData();
   }, []);
@@ -27,9 +33,9 @@ const QuestionList = () => {
   };
 
   return (
-    <div className="flex w-full justify-evenly mb-16">
-      <div className="flex flex-col p-4 w-1/3">
-        <div className="flex justify-between w-full">
+    <div className="flex w-full justify-evenly mb-16 max-md:flex-col max-md:items-center">
+      <div className="flex flex-col p-4 w-1/3 max-md:w-full">
+        <div className="flex justify-between w-full max-md:justify-evenly">
           <div className="font-bold text-xl flex text-green-600">
             <AiOutlineCheck className="text-3xl mb-0.5 mr-2" />
             채택이 완료된 질문
@@ -47,8 +53,8 @@ const QuestionList = () => {
           ))}
         </div>
       </div>
-      <div className="flex flex-col p-4 w-1/3">
-        <div className="flex justify-between w-full">
+      <div className="flex flex-col p-4 w-1/3 max-md:w-full">
+        <div className="flex justify-between w-full max-md:justify-evenly">
           <div className="font-bold text-xl text-yellow-600">
             🥺&nbsp;&nbsp;&nbsp;답변이 필요한 질문
           </div>

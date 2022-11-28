@@ -2,8 +2,12 @@ import { Rating } from 'react-simple-star-rating';
 import { SnackReviewProps, SnackReviewCards } from '../../types/mainPageTypes';
 import { deleteSnack } from '../../util/apiCollection';
 import { useIsLogin } from '../../store/login';
+import { useState } from 'react';
+import EditSnackReview from './EditSnackReview';
 
 const SnackReview = ({ snackReviewData }: SnackReviewProps) => {
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [editedReview, setEditedReview] = useState('');
   const getParsedDate = (createdAt: string) => {
     return new Date(createdAt).toLocaleDateString('ko-KR');
   };
@@ -12,6 +16,7 @@ const SnackReview = ({ snackReviewData }: SnackReviewProps) => {
 
   const onEditClick = (e: any) => {
     console.log(e.currentTarget.id);
+    setIsEditMode(!isEditMode);
   };
 
   const onDeleteClick = (e: any) => {
@@ -85,9 +90,17 @@ const SnackReview = ({ snackReviewData }: SnackReviewProps) => {
                 />
               </div>
             </div>
-            <div className="text-justify h-[110px] border-t-2 pt-2">
-              {el.content}
-            </div>
+            {isEditMode ? (
+              <EditSnackReview
+                review={el}
+                editedReview={editedReview}
+                setEditedReview={setEditedReview}
+              />
+            ) : (
+              <div className="text-justify h-[110px] border-t-2 pt-2">
+                {el.content}
+              </div>
+            )}
 
             <div className="flex items-end justify-end text-sm">
               {Number(loginId) === el.writerId ? (

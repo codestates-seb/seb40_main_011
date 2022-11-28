@@ -59,7 +59,7 @@ const CreateSnackReview = ({ ratingCategory }: RatingCategory) => {
     );
     if (ratingValidation === 1) {
       await postSnack({ score, content, productId: params.id });
-      window.location.reload();
+      // window.location.reload();
     } else {
       window.alert('별점을 매겨주세요!');
     }
