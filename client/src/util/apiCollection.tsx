@@ -4,6 +4,7 @@ import {
   LoginInputs,
   SignupInputs,
   QuestionContent,
+  AnswerContent,
 } from '../types/mainPageTypes';
 
 const initialToken = localStorage.getItem('authorization');
@@ -179,10 +180,98 @@ export const postQuestion = async (data: QuestionContent) => {
   }
 };
 
+export const patchQuestion = async (questionId: number, content: string) => {
+  try {
+    const response = await axios.patch(
+      `/api/questions/${questionId}`,
+      { content },
+      {
+        headers: { Authorization: localStorage.getItem('authorization') },
+      }
+    );
+    console.log(response);
+    return response;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
+export const patchAnswer = async (answerId: string, content: string) => {
+  try {
+    const response = await axios.patch(
+      `/api/answers/${answerId}`,
+      { content },
+      {
+        headers: { Authorization: localStorage.getItem('authorization') },
+      }
+    );
+    console.log(response);
+    return response;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
+export const postAnswer = async (data: AnswerContent) => {
+  try {
+    const response = await axios.post('/api/answers', data, {
+      headers: { Authorization: localStorage.getItem('authorization') },
+    });
+    // console.log(response);
+    return response;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
+export const postAdopt = async (data: {
+  answerId: string;
+  questionId: number;
+}) => {
+  const { questionId, answerId } = data;
+  try {
+    const response = await axios.post(
+      `/api/questions/${questionId}/adopt`,
+      { answerId },
+      {
+        headers: { Authorization: localStorage.getItem('authorization') },
+      }
+    );
+    console.log(response);
+    return response;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
+export const deleteQuestion = async (questionId: number | undefined) => {
+  try {
+    const response = await axios.delete(`/api/questions/${questionId}`, {
+      headers: { Authorization: localStorage.getItem('authorization') },
+    });
+    // console.log(response);
+    return response;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
+export const deleteAnswer = async (answerId: string | undefined) => {
+  try {
+    const response = await axios.delete(`/api/answers/${answerId}`, {
+      headers: { Authorization: localStorage.getItem('authorization') },
+    });
+    // console.log(response);
+    return response;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
 export const fetchQuestionData = async (
   size: number,
-  adoption: boolean,
-  asc: boolean
+  asc: boolean,
+  adoption: boolean
 ) => {
   try {
     const response = await axios.get(
