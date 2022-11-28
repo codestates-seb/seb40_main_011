@@ -99,7 +99,7 @@ const ReviewLists = () => {
         {/* snack review */}
         <div className="mt-10">
           <div>
-            <div className="my-3 text-3xl">Total Reviews</div>
+            <div className="my-3 text-3xl">평균 별점</div>
             <div className="flex flex-col mb-5">
               <div className="flex items-center justify-center my-0.5">
                 <p className="pr-1.5 text-lg">가성비</p>
