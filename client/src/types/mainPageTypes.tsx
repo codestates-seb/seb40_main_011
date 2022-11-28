@@ -192,6 +192,11 @@ export interface WriteAnswerProps {
   questionContent?: string;
 }
 
+export interface setShowModalProps {
+  setShowModal(state: boolean): void;
+  msg: string;
+}
+
 export interface EditQuestionProps {
   setShowModal(state: boolean): void;
   content: string;
