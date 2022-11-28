@@ -1,12 +1,11 @@
 import QuestionInput from '../components/QuestionList/QuestionInput';
-import Question from '../components/QuestionList/Question';
-import Answer from '../components/QuestionList/Answer';
 import PendingQuestion from '../components/QuestionList/PendingQuestion';
 import SelectBox from '../components/SelectBox/SelectBox';
 import { useEffect, useState } from 'react';
 import { fetchQuestionData } from '../util/apiCollection';
 import { QuestionListsProps } from '../types/mainPageTypes';
 // import Confirm from '../components/Modal/Confirm';
+import Completes from '../components/QuestionList/Completes';
 
 export default function QuestionLists() {
   const [questions, setQuestions] = useState([]);
@@ -17,21 +16,25 @@ export default function QuestionLists() {
   // 정렬
   const [pendingSort, setPendingSort] = useState(false);
 
+  // select box
+  const [selected, setSelected] = useState('최신 순');
+  const [spread, setSpread] = useState(false);
+
   useEffect(() => {
     const getQuestion = async () => {
-      const data = await fetchQuestionData(pendingMore, true, pendingSort);
+      const data = await fetchQuestionData(pendingMore, pendingSort, false);
       // console.log(data);
       switch (data.status) {
         case 200: {
           const { cards, hasNext } = data.data;
           setQuestions(cards);
           setPendingMoreStatus(hasNext);
-          console.log(data.data);
+          // console.log(data.data);
         }
       }
     };
     getQuestion();
-  }, [pendingMore]);
+  }, [pendingMore, selected]);
 
   const handleQuestionMore = () => {
     setPendingMore(pendingMore + 3);
@@ -41,17 +44,23 @@ export default function QuestionLists() {
       <QuestionInput />
       <div className="bg-slate-100 flex justify-center pb-20">
         <div className="w-[48rem] flex flex-col items-center">
-          <div className="w-full flex justify-between pt-10 pb-4">
-            <div className="flex items-center text-2xl text-slate-600">
-              <span className="mr-2 font-bold">Somebody help me!</span>
-              <div className="w-8 h-8 flex justify-center items-center pb-1 pr-0.5 rounded-full bg-gray-600 font-medium mt-1 text-white">
-                4
-              </div>
+          <div className="w-full flex justify-between pt-10 pb-4 px-2">
+            <div className="flex items-center text-3xl text-slate-600">
+              <span className="mr-2 font-bold tracking-tight">
+                Somebody help me!
+              </span>
             </div>
-            <SelectBox />
+            <SelectBox
+              spread={spread}
+              setSpread={setSpread}
+              selected={selected}
+              setSelected={setSelected}
+              setPendingSort={setPendingSort}
+            />
           </div>
           {questions.map((el: QuestionListsProps) => {
-            const { id, createdAt, nickname, content, answerCards } = el;
+            const { id, createdAt, nickname, content, answerCards, writerId } =
+              el;
             return (
               <PendingQuestion
                 key={id}
@@ -59,31 +68,25 @@ export default function QuestionLists() {
                 nickname={nickname}
                 content={content}
                 answerCards={answerCards}
+                writerId={writerId}
+                id={id}
               />
             );
           })}
           {pendingMoreStatus && (
-            <button
-              className="mt-2 w-80 hover:bg-slate-200 rounded-full h-12 text-gray-400 hover:text-gray-600 pb-0.5 font-medium"
-              onClick={handleQuestionMore}
-            >
-              더보기
-            </button>
-          )}
-          <div className="w-full flex justify-between pt-10 pb-4">
-            <div className="flex items-center text-2xl text-slate-600">
-              <span className="mr-2 font-bold">Mission complete!</span>
-              <div className="w-8 h-8 flex justify-center items-center pb-1 pr-0.5 rounded-full bg-gray-600 font-medium mt-1 text-white">
-                4
-              </div>
+            <div className="mt-12 mb-4 px-2 w-full">
+              <button
+                className="group w-full bg-slate-200/70 hover:bg-slate-500 rounded h-12 text-gray-400 hover:text-white pb-0.5 font-medium"
+                onClick={handleQuestionMore}
+              >
+                <span className="group-hover:font-bold group-hover:underline">
+                  미채택
+                </span>
+                된 질문, 더 불러와 볼까?
+              </button>
             </div>
-            <SelectBox />
-          </div>
-          <Question />
-          <Answer />
-          <button className="w-4/5 hover:bg-slate-200 rounded h-10 text-gray-400 hover:text-gray-600 pb-0.5 font-medium">
-            더 보기
-          </button>
+          )}
+          <Completes />
         </div>
       </div>
     </>

@@ -18,7 +18,6 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import seb.project.Codetech.review.dto.ReviewResponseDto;
-import seb.project.Codetech.review.entity.Review;
 
 @Repository
 public class CustomReviewRepositoryImpl implements CustomReviewRepository {

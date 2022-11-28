@@ -1,6 +1,8 @@
 import TextareaAutosize from 'react-textarea-autosize';
 import { useState } from 'react';
 import { postQuestion } from '../../util/apiCollection';
+import { useNavigate } from 'react-router-dom';
+import { useIsLogin } from '../../store/login';
 
 export interface QuestionInputProps {
   placeholder: string;
@@ -21,14 +23,21 @@ export default function QuestionInput({
     setQuestion(e.target.value);
   };
 
+  // 로그인 상태여부 체크
+  const { isLogin } = useIsLogin();
+  const navigate = useNavigate();
+
   // 질문하기
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!isLogin) {
+      navigate('/login');
+    }
     const content = question.trim();
     const Result = await postQuestion({ content });
-    console.log(Result);
     switch (Result.status) {
       case 201:
+        setQuestion('');
         console.log('Success');
         location.reload();
         break;
@@ -44,7 +53,7 @@ export default function QuestionInput({
   return (
     <>
       <div className="flex justify-center bg-white border-b border-gray-200">
-        <form className="py-10 w-[48rem]">
+        <form className="py-10 w-[48rem] px-4">
           <TextareaAutosize
             minRows={3}
             maxRows={6}
@@ -54,6 +63,7 @@ export default function QuestionInput({
             placeholder={placeholder}
             onChange={handleTextarea}
             value={question}
+            autoFocus
           />
           <div className="flex items-center justify-between">
             <span className="text-sm text-gray-400">
