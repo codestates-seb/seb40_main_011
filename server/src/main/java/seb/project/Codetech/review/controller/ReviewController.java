@@ -36,7 +36,8 @@ public class ReviewController {
 	private final ApplicationEventPublisher applicationEventPublisher;
 	private final ReviewMapper mapper;
 
-	public ReviewController(ReviewService reviewService, ReviewMapper mapper, ApplicationEventPublisher applicationEventPublisher) {
+	public ReviewController(ReviewService reviewService, ReviewMapper mapper,
+		ApplicationEventPublisher applicationEventPublisher) {
 		this.reviewService = reviewService;
 		this.applicationEventPublisher = applicationEventPublisher;
 		this.mapper = mapper;
@@ -79,8 +80,8 @@ public class ReviewController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Review> getReview(@PathVariable Long id) {
-		Review loadReview = reviewService.loadReview(id);
+	public ResponseEntity<ReviewResponseDto.Page> getReview(@PathVariable Long id) {
+		ReviewResponseDto.Page loadReview = reviewService.loadReview(id);
 
 		return ResponseEntity.ok(loadReview);
 	}
