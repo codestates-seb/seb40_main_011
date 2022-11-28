@@ -1,5 +1,5 @@
 // Review List fetching & boxing comp
-import { getReviewDetailTest } from '../../util/testApiCollection';
+import { getReviewDetail } from '../../util/apiCollection';
 import { useEffect, useState } from 'react';
 import { Review, ReviewComments } from '../../types/mainPageTypes';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -16,7 +16,7 @@ const RvDetail = () => {
 
   useEffect(() => {
     const getReviewData = async () => {
-      const { data } = await getReviewDetailTest(params.id);
+      const { data } = await getReviewDetail(params.id);
       setReview(data);
       setComments(data?.comments);
     };

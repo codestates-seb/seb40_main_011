@@ -45,7 +45,8 @@ export interface Review {
   createdAt: string;
   modifedAt: string;
   likes: number;
-  profileImg: string;
+  image?: string;
+  profileImg?: string;
   comments: ReviewComments[];
 }
 

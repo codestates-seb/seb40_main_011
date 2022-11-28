@@ -1,5 +1,6 @@
 import { BsFillPatchExclamationFill, BsFilePerson } from 'react-icons/bs';
 import { MdOutlineEmail } from 'react-icons/md';
+import { GiHamburgerMenu } from 'react-icons/gi';
 import {
   AiFillEye,
   AiFillCheckCircle,
@@ -13,6 +14,7 @@ import {
 } from 'react-icons/ri';
 
 export {
+  GiHamburgerMenu,
   BsFillPatchExclamationFill,
   MdOutlineEmail,
   AiFillEyeInvisible,
