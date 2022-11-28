@@ -19,11 +19,7 @@ export default function BodyTop({
   adoptedId,
   editable,
 }: BodyTopProps) {
-  console.log(editable);
   const { loginId } = useIsLogin();
-
-  // 질문 수정여부
-  // const;
 
   // 질문수정 모달
   const [showModal, setShowModal] = useState(false);
