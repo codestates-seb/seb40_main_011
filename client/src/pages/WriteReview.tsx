@@ -41,7 +41,8 @@ const WriteReview = () => {
     setTitle(titleUpdate);
   }, []);
 
-  const onClickModal = (e?: React.MouseEvent<HTMLElement>) => {
+  const onClickModal = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
     setIsModal(!isModal);
   };
 

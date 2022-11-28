@@ -5,21 +5,25 @@ import '../common.css';
 import React, { useState } from 'react';
 import { AiFillCaretDown } from 'react-icons/ai';
 import { AiFillCaretUp } from 'react-icons/ai';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import useCategorie from '../../store/categorie';
+
+interface ICategorieData {
+  id: number;
+  name: string;
+}
 
 const ProductSelector = () => {
   const [spread, setSpread] = useState(false);
   const { clickName, setClickName } = useCategorie();
   //get으로 받아온 데이터 저장
-  const [categorie, setCategorie] = useState<string[] | null>(null);
+  const [categorie, setCategorie] = useState<ICategorieData[] | null>([]);
   //소분류 셀렉터에서 클릭한 버튼의 이름을 저장
   const [selectName, setSelectName] = useState('제품 선택');
 
   const handleSelect = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     setSpread(!spread);
-    // console.log(clickName);
   };
 
   //url 디코딩
@@ -31,27 +35,29 @@ const ProductSelector = () => {
   const handleSelectClick = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     setSpread(!spread);
-    await axios
-      .get(`/api/products/review-search`, {
+    try {
+      const res = await axios.get(`/api/products/review-search`, {
         params: { type: upperText },
-      })
-      .then((res) => {
-        console.log(`res.data`, res.data);
-        setCategorie(res.data);
-        console.log(`categorie`, categorie);
-      })
-      .catch(function (error) {
-        if (error.response) {
-          console.log(`error.response.data`, error.response.data);
-          console.log(`error.response.status`, error.response.status);
-          console.log(`error.response.headers`, error.response.headers);
-        } else if (error.request) {
-          console.log(`error.request`, error.request);
-        } else {
-          console.log('Error', error.message);
-        }
-        console.log(`error.config`, error.config);
       });
+      setCategorie(res.data);
+    } catch (error: unknown) {
+      handleError(error);
+    }
+  };
+
+  //에러 핸들러
+  const handleError = (Error: any | AxiosError): string => {
+    const status = Error.status as string;
+    let message: string;
+    switch (status) {
+      case '404':
+        message = '존재하지 않는 페이지입니다';
+        break;
+      default:
+        message = '알 수 없는 오류가 발생했습니다. 잠시 후 다시 시도해주세요';
+        break;
+    }
+    return message;
   };
 
   //소분류 셀렉터에서 카테고리 클릭시 그 버튼의 id를 저장
@@ -60,10 +66,7 @@ const ProductSelector = () => {
       setSelectName(e.currentTarget.textContent); //클릭한 버튼의 id값이 들어옴
       setSpread(!spread);
     }
-    console.log(`e.currentTarget.textContent=>>`, e.currentTarget.textContent);
   };
-
-  console.log(categorie);
 
   return (
     <div className="relative flex flex-col w-full">
@@ -86,15 +89,14 @@ const ProductSelector = () => {
               제품이 없습니다
             </button>
           ) : (
-            categorie.map((product: any, idx) => {
+            categorie.map((product, idx) => {
               return (
                 <button
                   key={idx}
-                  // id={product.name}
                   onClick={handleButClick}
                   className="flex items-center w-full px-4 pt-2 pb-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900"
                 >
-                  {/* {product.name} */}
+                  {product.name}
                 </button>
               );
             })

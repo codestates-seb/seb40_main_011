@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { postQuestion } from '../../util/apiCollection';
 import { useNavigate } from 'react-router-dom';
 import { useIsLogin } from '../../store/login';
+import Confirm from '../Modal/Confirm';
 
 export interface QuestionInputProps {
   placeholder: string;
@@ -30,6 +31,10 @@ export default function QuestionInput({
   // 질문하기
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (question.length === 0) {
+      setShowModal(true);
+      return;
+    }
     if (!isLogin) {
       navigate('/login');
     }
@@ -50,8 +55,13 @@ export default function QuestionInput({
     }
   };
 
+  // input 빈내용 모달
+  const [showModal, setShowModal] = useState(false);
+  const msg = '이런? 내용이 없네요 :(';
+
   return (
     <>
+      {showModal && <Confirm setShowModal={setShowModal} msg={msg} />}
       <div className="flex justify-center bg-white border-b border-gray-200">
         <form className="py-10 w-[48rem] px-4">
           <TextareaAutosize

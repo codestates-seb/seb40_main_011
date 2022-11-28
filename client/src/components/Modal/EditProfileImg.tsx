@@ -3,15 +3,17 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BsXLg } from 'react-icons/bs';
 import { EditProfileImgModalHandler } from '../MyPage/Profile';
+import { UserProfile } from '../MyPage/Profile';
 import { editProfileImg } from '../../util/apiCollection';
-import userInfo from '../../store/userInfo';
-import { UserInfo } from '../../store/userInfo';
 
-const EditProgileImg = ({
-  openEditProfileImgModalHandler,
-}: EditProfileImgModalHandler) => {
+const EditProgileImg = (
+  // { openEditProfileImgModalHandler }: EditProfileImgModalHandler,
+  { openEditProfileImgModalHandler, userProfileData }: any
+) => {
   // 이미지 전송 후 이미지 리렌더링
-  const [userImg, setUserImg] = useState('/img');
+  const [userImg, setUserImg] = useState(
+    `https://codetech.nworld.dev${userProfileData?.image}`
+  );
   const [uploadImg, setUploadImg] = useState();
 
   const navigate = useNavigate();

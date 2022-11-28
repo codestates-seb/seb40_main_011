@@ -111,7 +111,11 @@ public class CustomReviewRepositoryImpl implements CustomReviewRepository {
 	@Override
 	public long getReviewCountByProductId(Long productId) {
 
-		return queryFactory.select(review.count()).from(review).where(review.product.id.eq(productId)).fetchFirst();
+		return queryFactory
+			.select(review.count())
+			.from(review)
+			.where(review.product.id.eq(productId))
+			.fetchFirst();
 	}
 
 	// @Override

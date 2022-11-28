@@ -1,3 +1,4 @@
+import { exit } from 'process';
 import { useState } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import { WriteAnswerProps } from '../../types/mainPageTypes';
@@ -13,6 +14,9 @@ export default function WriteAnswer({
   // 모달 닫히기 state
   const [answer, setAnswer] = useState('');
   const [question, setQuestion] = useState(content);
+
+  // error 메시지
+  const [showError, setShowError] = useState(false);
 
   // 취소 클릭 모달 닫히기
   const handleTextarea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -35,6 +39,10 @@ export default function WriteAnswer({
     e.preventDefault();
     if (questionId !== undefined) {
       const content = answer.trim();
+      if (content.length === 0) {
+        e.preventDefault();
+        return setShowError(true);
+      }
       const Result = await postAnswer({ questionId, content });
       switch (Result.status) {
         case 201:
@@ -78,6 +86,11 @@ export default function WriteAnswer({
           {questionContent ? questionContent : content}
         </div>
         <div className="bg-white pt-4 pb-6 px-4">
+          {showError && (
+            <div className="text-red-500 font-medium text-sm mx-4 bg-red-100 rounded px-2 pt-2 pb-2 mb-3">
+              3글자 이상 입력하셔야 답변하실 수 있습니다.
+            </div>
+          )}
           <form className="w-full" onSubmit={handleSubmit}>
             <TextareaAutosize
               minRows={3}
@@ -91,7 +104,15 @@ export default function WriteAnswer({
             />
             <div className="flex items-center justify-between">
               <span className="text-sm text-gray-400 pl-4">
-                현재 글자수 {answer.length} / 최대 글자수 100자
+                현재 글자수{' '}
+                <span
+                  className={`${
+                    question.length > 5 && showError && `text-red-500`
+                  }`}
+                >
+                  {answer.length}
+                </span>
+                / 최대 글자수 100자
               </span>
               <div>
                 <button

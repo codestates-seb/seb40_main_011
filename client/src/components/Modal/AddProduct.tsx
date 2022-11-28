@@ -95,7 +95,7 @@ const AddProduct = ({ isModal, setIsModal }: ModalProps) => {
   return (
     <>
       <div>
-        <div className="top-0 left-0 flex modal-bg">
+        <div className="top-0 left-0 z-20 flex modal-bg">
           <div className="modal-window h-[650px]">
             <h1 className="px-24 pt-16 pb-8 text-3xl">제품을 추가해주세요</h1>
             <div className="flex justify-center ">

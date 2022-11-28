@@ -79,9 +79,9 @@ const OptOut = ({ openOptOutModalHandler }: OptOutModalHandler) => {
 
             <button onClick={viewPasswordHandler} className="p-2">
               {viewPassword ? (
-                <BsFillEyeSlashFill className="w-[20px] h-[20px] " />
+                <BsFillEyeSlashFill className="w-[20px] h-[20px]  text-slate-500" />
               ) : (
-                <BsFillEyeFill className="w-[20px] h-[20px]" />
+                <BsFillEyeFill className="w-[20px] h-[20px]  text-slate-500" />
               )}
             </button>
           </div>

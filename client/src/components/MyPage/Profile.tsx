@@ -5,14 +5,12 @@ import EditProfile from '../Modal/EditProfile';
 import EditPassword from '../Modal/EditPassword';
 import EditProfileImg from '../Modal/EditProfileImg';
 import { getUserProfile } from '../../util/apiCollection';
-import userInfo from '../../store/userInfo';
-import { UserInfo } from '../../store/userInfo';
 
 export interface UserProfile {
-  email: string;
-  nickname: string;
-  image: string;
-  point: number;
+  email: string | undefined;
+  nickname: string | undefined;
+  image: string | undefined;
+  point: number | undefined;
 }
 
 export interface EditProfileImgModalHandler {
@@ -26,9 +24,9 @@ export interface EditPasswordModalHandler {
 }
 
 const Profile = () => {
-  let { email, nickname, image, point } = userInfo<UserInfo>((state) => state);
-
-  const [userProfileData, setUserProfileData] = useState<UserProfile>();
+  const [userProfileData, setUserProfileData] = useState<
+    UserProfile | undefined
+  >();
 
   useEffect(() => {
     const getUserProfileData = async () => {
@@ -36,10 +34,6 @@ const Profile = () => {
       setUserProfileData(data);
     };
     getUserProfileData();
-    email = userProfileData?.email;
-    nickname = userProfileData?.nickname;
-    image = userProfileData?.image;
-    point = userProfileData?.point;
   }, []);
 
   // Modal
@@ -69,6 +63,7 @@ const Profile = () => {
       {!isEditProfileImg ? null : (
         <EditProfileImg
           openEditProfileImgModalHandler={openEditProfileImgModalHandler}
+          userProfileData={userProfileData}
         />
       )}
       {!isEditProfile ? null : (
