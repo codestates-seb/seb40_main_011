@@ -120,11 +120,11 @@ public class UserController {
 
     @Transactional(readOnly = true)
     @GetMapping("/user/answers")
-    public ResponseEntity<UserAndQuestionsDto> getAnswers(@AuthenticationPrincipal String email,
+    public ResponseEntity<UserAndAnswersDto> getAnswers(@AuthenticationPrincipal String email,
                                                           @Positive @RequestParam(value = "page", defaultValue = "1") int page,
                                                           @Positive @RequestParam(value = "size",defaultValue = "5") int size,
                                                           @RequestParam(value = "sort",defaultValue = "createAt") String sort){
-        UserAndQuestionsDto userAndAnswersDto = userService.userAndAnswersDto(email,page-1,size,sort);
+        UserAndAnswersDto userAndAnswersDto = userService.userAndAnswersDto(email,page-1,size,sort);
         return ResponseEntity.ok(userAndAnswersDto);
     }
 
