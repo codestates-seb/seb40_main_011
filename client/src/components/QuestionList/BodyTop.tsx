@@ -84,7 +84,7 @@ export default function BodyTop({
           {format(createdAt)}
         </span>
       </span>
-      {loginId == writerId && adoptedId === undefined && editable && (
+      {loginId == writerId && adoptedId === undefined && (editable || editable === undefined) && (
         <div className="flex items-center">
           <button onClick={() => setShowModal(true)}>
             <XsRoundedButton name={'수정'} />
