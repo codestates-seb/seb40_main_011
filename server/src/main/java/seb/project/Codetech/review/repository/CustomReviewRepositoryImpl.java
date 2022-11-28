@@ -111,7 +111,11 @@ public class CustomReviewRepositoryImpl implements CustomReviewRepository {
 	@Override
 	public long getReviewCountByProductId(Long productId) {
 
-		return queryFactory.select(review.count()).from(review).where(review.product.id.eq(productId)).fetchFirst();
+		return queryFactory
+			.select(review.count())
+			.from(review)
+			.where(review.product.id.eq(productId))
+			.fetchFirst();
 	}
 
 	// @Override
@@ -135,8 +139,15 @@ public class CustomReviewRepositoryImpl implements CustomReviewRepository {
 	@Override
 	public List<ReviewResponseDto.Best> getBestReviewContent(Integer size) {
 		return queryFactory.select(
-				Projections.fields(ReviewResponseDto.Best.class, review.title, review.content, review.type, review.writer,
-					review.createdAt, user.image))
+				Projections.fields(ReviewResponseDto.Best.class,
+					review.id,
+					review.title,
+					review.content,
+					review.RecommendNumber,
+					review.type,
+					review.writer,
+					review.createdAt,
+					user.image))
 			.from(review)
 			.leftJoin(review.user, user)
 			.orderBy(review.RecommendNumber.desc())
