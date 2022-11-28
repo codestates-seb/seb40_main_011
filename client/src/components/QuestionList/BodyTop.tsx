@@ -84,17 +84,19 @@ export default function BodyTop({
           {format(createdAt)}
         </span>
       </span>
-      {loginId == writerId && adoptedId === undefined && (editable || editable === undefined) && (
-        <div className="flex items-center">
-          <button onClick={() => setShowModal(true)}>
-            <XsRoundedButton name={'수정'} />
-          </button>
-          <div className="h-3 border-l border border-gray-200 inline-block mx-1.5" />
-          <button onClick={handleDelete}>
-            <XsRoundedButton name={'삭제'} />
-          </button>
-        </div>
-      )}
+      {loginId == writerId &&
+        adoptedId === undefined &&
+        (editable || editable === undefined) && (
+          <div className="flex items-center">
+            <button onClick={() => setShowModal(true)}>
+              <XsRoundedButton name={'수정'} />
+            </button>
+            <div className="h-3 border-l border border-gray-200 inline-block mx-1.5" />
+            <button onClick={handleDelete}>
+              <XsRoundedButton name={'삭제'} />
+            </button>
+          </div>
+        )}
     </div>
   );
 }
