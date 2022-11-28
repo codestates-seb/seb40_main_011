@@ -43,8 +43,10 @@ public class ReviewResponseDto {
 	@Getter
 	@NoArgsConstructor
 	public static class Best {
+		private Long id;
 		private String title;
 		private String content;
+		private Long RecommendNumber;
 		private Type type;
 		private String writer;
 		private LocalDateTime createdAt;
