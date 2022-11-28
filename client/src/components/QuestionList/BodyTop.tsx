@@ -17,8 +17,13 @@ export default function BodyTop({
   content,
   questionContent,
   adoptedId,
+  editable,
 }: BodyTopProps) {
+  console.log(editable);
   const { loginId } = useIsLogin();
+
+  // 질문 수정여부
+  // const;
 
   // 질문수정 모달
   const [showModal, setShowModal] = useState(false);
@@ -83,7 +88,7 @@ export default function BodyTop({
           {format(createdAt)}
         </span>
       </span>
-      {loginId == writerId && adoptedId === undefined && (
+      {loginId == writerId && adoptedId === undefined && editable && (
         <div className="flex items-center">
           <button onClick={() => setShowModal(true)}>
             <XsRoundedButton name={'수정'} />

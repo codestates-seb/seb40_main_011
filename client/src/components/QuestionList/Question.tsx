@@ -3,6 +3,7 @@ import AnswerMore from './AnswerMore';
 import Answer from './Answer';
 import { QuestionProps, AnswerCardsProps } from '../../types/mainPageTypes';
 import { useState } from 'react';
+import Avatar from '../Avatar/Avatar';
 
 export default function Question({
   createdAt,
@@ -11,6 +12,7 @@ export default function Question({
   answerCards,
   adoptedId,
   writerId,
+  image,
 }: QuestionProps): JSX.Element {
   // 답변 불러오기
   const [showAnswer, setShowAnswer] = useState(false);
@@ -22,11 +24,7 @@ export default function Question({
   return (
     <div className="w-full">
       <div className="w-full flex mt-5">
-        <img
-          src="https://xsgames.co/randomusers/avatar.php?g=female"
-          alt=""
-          className="w-12 h-12 rounded-2xl mx-3 mt-3 ring ring-slate-200"
-        />
+        <Avatar image={image} />
         <div className="w-full">
           <BodyTop
             createdAt={createdAt}
@@ -53,7 +51,7 @@ export default function Question({
       {answerCards !== null &&
         showAnswer &&
         answerCards.map((el: AnswerCardsProps) => {
-          const { id, createdAt, nickname, content, writerId } = el;
+          const { id, createdAt, nickname, content, writerId, image } = el;
           return (
             <Answer
               key={id}
@@ -63,6 +61,7 @@ export default function Question({
               writerId={writerId}
               id={Number(id)}
               adoptedId={adoptedId}
+              image={image}
             />
           );
         })}

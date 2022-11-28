@@ -22,7 +22,7 @@ export default function SelectBox({
     e.preventDefault();
     setSelected(e.currentTarget.id);
     // console.log(e.currentTarget.id);
-    console.log(selected);
+    // console.log(selected);
     if (setPendingSort !== undefined) {
       switch (selected) {
         case '최신 순':
@@ -53,12 +53,12 @@ export default function SelectBox({
     <div className="relative flex flex-col w-40">
       <button
         onClick={handleSpread}
-        className={`flex justify-between alsolute t-0 text-sm bg-white hover:bg-slate-200 h-10 rounded border border-slate-200 flex items-center px-4 pb-0.5 font-medium text-gray-500`}
+        className={`flex justify-between alsolute t-0 text-sm bg-white hover:bg-slate-300 h-10 rounded border border-slate-200 flex items-center px-4 pb-0.5 font-medium text-gray-500`}
       >
         {selected} <AiFillCaretDown />
       </button>
       {spread && (
-        <ul className="absolute w-full top-0 border bg-white rounded overflow-hidden drop-shadow-md">
+        <ul className="z-30 absolute w-full top-0 border bg-white rounded overflow-hidden drop-shadow-md">
           {filter.map((el, idx) => (
             <button
               onClick={handleSelect}
@@ -70,6 +70,12 @@ export default function SelectBox({
             </button>
           ))}
         </ul>
+      )}
+      {spread && (
+        <div
+          onClick={handleSpread}
+          className="z-20 fixed inset-0 h-screen w-full bg-black/10"
+        />
       )}
     </div>
   );

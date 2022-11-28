@@ -11,7 +11,7 @@ export interface QuestionInputProps {
 }
 
 QuestionInput.defaultProps = {
-  placeholder: 'Enter your question...',
+  placeholder: '무엇이든 물어보세요',
   button: '질문하기',
 };
 
