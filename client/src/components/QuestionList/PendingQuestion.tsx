@@ -10,6 +10,7 @@ import { BsFillChatTextFill } from 'react-icons/bs';
 import WriteAnswer from '../Modal/WriteAnswer';
 import { useIsLogin } from '../../store/login';
 import { useNavigate } from 'react-router-dom';
+import Avatar from '../Avatar/Avatar';
 
 export default function PendingQuestion({
   createdAt,
@@ -18,6 +19,7 @@ export default function PendingQuestion({
   answerCards,
   writerId,
   id,
+  image,
 }: PendingQuestionProps): JSX.Element {
   const questionId = id;
   const questionWriterId = writerId;
@@ -40,6 +42,15 @@ export default function PendingQuestion({
     setShowModal(true);
   };
 
+  // 질문수정 state
+  const getEdit = () => {
+    if (answerCards === null) {
+      return true;
+    }
+    return false;
+  };
+  const editable = getEdit();
+
   return (
     <div className="w-full">
       {showModal && (
@@ -50,11 +61,7 @@ export default function PendingQuestion({
         />
       )}
       <div className="w-full flex mt-5">
-        <img
-          src="https://xsgames.co/randomusers/avatar.php?g=female"
-          alt=""
-          className="w-12 h-12 rounded-2xl mx-3 mt-3 ring ring-slate-200"
-        />
+        <Avatar image={image} />
         <div className="w-full">
           <BodyTop
             createdAt={createdAt}
@@ -62,6 +69,7 @@ export default function PendingQuestion({
             writerId={writerId}
             questionId={questionId}
             content={content}
+            editable={editable}
           />
           <div className="flex">
             <div className="grow">
@@ -80,9 +88,9 @@ export default function PendingQuestion({
             <div className="flex-none w-16 mx-2 flex justify-center items-start">
               <button
                 onClick={handleShowModalAnswer}
-                className="group w-full h-11 bg-slate-200 hover:bg-blue-100 rounded"
+                className="group w-full h-11 text-2xl bg-blue-100 rounded duration-300 hover:ring hover:ring-blue-300 "
               >
-                <BsFillChatTextFill className=" text-2xl text-slate-400 group-hover:text-blue-500 mx-auto" />
+                <BsFillChatTextFill className="text-blue-500 mx-auto" />
               </button>
             </div>
           </div>
@@ -91,7 +99,7 @@ export default function PendingQuestion({
       {answerCards !== null &&
         showAnswer &&
         answerCards.map((el: AnswerCardsProps) => {
-          const { id, createdAt, nickname, content, writerId } = el;
+          const { id, createdAt, nickname, content, writerId, image } = el;
           return (
             <PendingAnswer
               key={id}
@@ -103,6 +111,7 @@ export default function PendingQuestion({
               questionId={questionId}
               questionWriterId={questionWriterId}
               questionContent={questionContent}
+              image={image}
             />
           );
         })}

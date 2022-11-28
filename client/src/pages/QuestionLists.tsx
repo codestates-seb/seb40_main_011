@@ -23,13 +23,11 @@ export default function QuestionLists() {
   useEffect(() => {
     const getQuestion = async () => {
       const data = await fetchQuestionData(pendingMore, pendingSort, false);
-      // console.log(data);
       switch (data.status) {
         case 200: {
           const { cards, hasNext } = data.data;
           setQuestions(cards);
           setPendingMoreStatus(hasNext);
-          // console.log(data.data);
         }
       }
     };
@@ -42,12 +40,12 @@ export default function QuestionLists() {
   return (
     <>
       <QuestionInput />
-      <div className="bg-slate-100 flex justify-center pb-20">
+      <div className="bg-slate-100 flex justify-center py-16">
         <div className="w-[48rem] flex flex-col items-center">
-          <div className="w-full flex justify-between pt-10 pb-4 px-2">
+          <div className="w-full flex justify-between pb-4 px-2">
             <div className="flex items-center text-3xl text-slate-600">
               <span className="mr-2 font-bold tracking-tight">
-                Somebody help me!
+                {/* Somebody help me! */}저 좀 도와주세요 ㅠ_ㅠ
               </span>
             </div>
             <SelectBox
@@ -59,8 +57,15 @@ export default function QuestionLists() {
             />
           </div>
           {questions.map((el: QuestionListsProps) => {
-            const { id, createdAt, nickname, content, answerCards, writerId } =
-              el;
+            const {
+              id,
+              createdAt,
+              nickname,
+              content,
+              answerCards,
+              writerId,
+              image,
+            } = el;
             return (
               <PendingQuestion
                 key={id}
@@ -70,25 +75,24 @@ export default function QuestionLists() {
                 answerCards={answerCards}
                 writerId={writerId}
                 id={id}
+                image={image}
               />
             );
           })}
           {pendingMoreStatus && (
             <div className="mt-12 mb-4 px-2 w-full">
               <button
-                className="group w-full bg-slate-200/70 hover:bg-slate-500 rounded h-12 text-gray-400 hover:text-white pb-0.5 font-medium"
+                className="w-full bg-slate-500 hover:bg-slate-400 rounded h-12 text-white pb-0.5 font-medium"
                 onClick={handleQuestionMore}
               >
-                <span className="group-hover:font-bold group-hover:underline">
-                  미채택
-                </span>
-                된 질문, 더 불러와 볼까?
+                <span className="font-bold underline">미채택</span>된 질문, 더
+                불러와 볼까?
               </button>
             </div>
           )}
-          <Completes />
         </div>
       </div>
+      <Completes />
     </>
   );
 }

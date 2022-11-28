@@ -20,6 +20,7 @@ export interface SignupInputs {
   email: string;
   password: string;
   nickname: string;
+  image: string;
 }
 
 export interface Product {
@@ -102,6 +103,7 @@ export interface BodyTopProps {
   content?: string;
   questionContent?: string;
   adoptedId?: number;
+  editable?: boolean;
 }
 
 export interface PendingQuestionProps {
@@ -111,6 +113,7 @@ export interface PendingQuestionProps {
   answerCards: null | any;
   writerId: number;
   id: number;
+  image: string;
 }
 
 export interface QuestionListsProps {
@@ -120,6 +123,7 @@ export interface QuestionListsProps {
   nickname: string;
   content: string;
   answerCards: null | PendingAnswerProps;
+  image: string;
 }
 
 export interface QuestionListType {
@@ -142,6 +146,7 @@ export interface QuestionMapProps {
   content: string;
   answerCards: null | any;
   writerId: number;
+  image: string;
 }
 
 export interface QuestionProps {
@@ -151,6 +156,7 @@ export interface QuestionProps {
   content: string;
   answerCards: null | any;
   writerId: number;
+  image: string;
 }
 
 export interface PendingAnswerProps {
@@ -162,6 +168,7 @@ export interface PendingAnswerProps {
   questionId: number;
   questionWriterId: number;
   questionContent: string;
+  image: string;
 }
 
 export interface AnswerProps {
@@ -171,6 +178,7 @@ export interface AnswerProps {
   writerId: number;
   id: number;
   adoptedId: number;
+  image: string;
 }
 
 export interface AnswerCardsProps {
@@ -179,6 +187,7 @@ export interface AnswerCardsProps {
   nickname: string;
   content: string;
   writerId: number;
+  image: string;
 }
 
 export interface AnswerMoreProps {
