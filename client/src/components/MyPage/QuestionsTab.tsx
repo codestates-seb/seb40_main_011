@@ -1,8 +1,11 @@
 import { useEffect, useState, SetStateAction } from 'react';
+import { BsCheckCircleFill } from 'react-icons/bs';
+
 import { getUserReview } from '../../util/apiCollection';
 import ReviewTabPagenation from './ReviewTabPagenation';
 
 interface ReviewType {
+  adoptedId: null | number;
   id: number;
   content: string;
   createdAt: string;
@@ -20,9 +23,6 @@ const QuestionsTab = () => {
     const params = `?page=${currentPage}&size=5&sort=createdAt`;
     const DetailReviewData = async () => {
       const { data } = await getUserReview('questions', params);
-      console.log(data);
-      console.log(data?.questions.content);
-      console.log(data?.questions.totalPages);
       setReviewData(data?.questions.content);
       setTotalPages(data?.questions.totalPages);
     };
@@ -61,9 +61,14 @@ const QuestionsTab = () => {
                   <div className="mb-2 overflow-hidden text-ellipsis line-clamp-2">
                     {el.content}
                   </div>
+                  {el.adoptedId ? (
+                    <BsCheckCircleFill className=" w-[20px] h-[20px] ml-auto mb-1" />
+                  ) : (
+                    <></>
+                  )}
+
                   <div className="flex text-sm">
-                    <div className="px-3 py-0.5 bg-slate-300 rounded-lg"></div>
-                    <div className="px-3 py-0.5"></div>
+                    <div className="px-3 py-0.5"> </div>
                     <div className="ml-auto text-slate-600">
                       {new Date(el.createdAt).toLocaleDateString('en-US', {
                         month: 'short',
@@ -78,7 +83,7 @@ const QuestionsTab = () => {
               </>
             );
           })}
-          {totalPages ? (
+          {totalPages > 1 ? (
             <ReviewTabPagenation
               currentPage={currentPage}
               totalPages={totalPages}

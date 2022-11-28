@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { BsXLg, BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
 import { OptOutModalHandler } from '../../pages/MyPage';
 import { delAccount } from '../../util/apiCollection';
-import { useIsLogin } from '../../store/login';
 
 export interface OptOutInputs {
   headers: Header;

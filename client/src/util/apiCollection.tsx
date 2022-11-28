@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { Password } from '../components/Modal/EditPassword';
 import { blob } from 'stream/consumers';
+import { EditSncakReview } from '../components/Modal/SnackReviewModal';
 import {
   LoginInputs,
   SignupInputs,
@@ -194,7 +195,21 @@ export const getSnackStats = async (productId: number) => {
   }
 };
 
-export const deleteSnack = async (snackId: string) => {
+export const editSnack = async (snackId: number, data: EditSncakReview) => {
+  try {
+    const response = await axios.patch(`/api/snack-reviews/${snackId}`, data, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: localStorage.getItem('authorization'),
+      },
+    });
+    return response;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
+export const deleteSnack = async (snackId: number) => {
   try {
     const response = await axios.delete(`/api/snack-reviews/${snackId}`, {
       headers: {
@@ -341,7 +356,7 @@ export const editProfileImg = async (data: any) => {
 
 export const editNickname = async (data: any) => {
   try {
-    const submitImg = await axios.patch('/api/user', data, {
+    const submitImg = await axios.patch('/api/user/nickname', data, {
       headers: { Authorization: initialToken },
     });
     return submitImg;
@@ -349,10 +364,11 @@ export const editNickname = async (data: any) => {
     return err.response;
   }
 };
+479;
 
 export const editPassword = async (data: Password) => {
   try {
-    const submitImg = await axios.patch('/api/user', data, {
+    const submitImg = await axios.patch('/api/user/password', data, {
       headers: { Authorization: initialToken },
     });
     return submitImg;
