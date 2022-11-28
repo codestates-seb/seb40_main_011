@@ -18,6 +18,7 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import seb.project.Codetech.review.dto.ReviewResponseDto;
+import seb.project.Codetech.review.entity.Review;
 
 @Repository
 public class CustomReviewRepositoryImpl implements CustomReviewRepository {
@@ -134,8 +135,15 @@ public class CustomReviewRepositoryImpl implements CustomReviewRepository {
 	@Override
 	public List<ReviewResponseDto.Best> getBestReviewContent(Integer size) {
 		return queryFactory.select(
-				Projections.fields(ReviewResponseDto.Best.class, review.title, review.content, review.type, review.writer,
-					review.createdAt, user.image))
+				Projections.fields(ReviewResponseDto.Best.class,
+					review.id,
+					review.title,
+					review.content,
+					review.RecommendNumber,
+					review.type,
+					review.writer,
+					review.createdAt,
+					user.image))
 			.from(review)
 			.leftJoin(review.user, user)
 			.orderBy(review.RecommendNumber.desc())
