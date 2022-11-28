@@ -46,7 +46,7 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 		Authentication authentication) throws IOException, ServletException {
 		var oAuth2User = (OAuth2User)authentication.getPrincipal();
-		String username = String.valueOf(oAuth2User.getAttributes().get("username"));
+		String username = String.valueOf(oAuth2User.getAttributes().get("email"));
 		String nickname = String.valueOf(oAuth2User.getAttributes().get("name"));
 		String provider = "google";
 		String password = String.valueOf(oAuth2User.getAttributes().get("providerId"));
@@ -94,7 +94,7 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 
 	private String delegateAccessToken(String email, List<String> authorities, String provider) {
 		Map<String, Object> claims = new HashMap<>();
-		claims.put("username", email);
+		claims.put("email", email);
 		claims.put("roles", authorities);
 		claims.put("provider", provider);
 
