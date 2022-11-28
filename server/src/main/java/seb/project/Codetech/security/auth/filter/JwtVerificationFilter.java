@@ -17,7 +17,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.security.SignatureException;
 import seb.project.Codetech.global.exception.BusinessLogicException;
 import seb.project.Codetech.global.exception.ExceptionCode;
 import seb.project.Codetech.security.auth.jwt.JwtTokenizer;
@@ -42,13 +41,11 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
 		try {
 			Map<String, Object> claims = verifyJws(request);
 			setAuthenticationToConText(claims);
-		} catch (SignatureException se) {
-			request.setAttribute("exception", se);
 		} catch (ExpiredJwtException ee) {
 			request.setAttribute("exception", ee);
-			response.sendError(418, "ExpiredJwtException error");
-		} catch (Exception e) {
-			request.setAttribute("exception", e);
+			response.sendError(412);
+		} catch (Exception se) {
+			request.setAttribute("exception", se);
 		}
 
 		String logoutToken = request.getHeader("Authorization");
@@ -61,9 +58,9 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
 	}
 
 	private void setAuthenticationToConText(Map<String, Object> claims) {
-		String username = (String)claims.get("username");
+		String email = (String)claims.get("email");
 		List<GrantedAuthority> authorities = authorityUtils.createAuthorities((List)claims.get("roles"));
-		Authentication authentication = new UsernamePasswordAuthenticationToken(username, null, authorities);
+		Authentication authentication = new UsernamePasswordAuthenticationToken(email, null, authorities);
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 	}
 

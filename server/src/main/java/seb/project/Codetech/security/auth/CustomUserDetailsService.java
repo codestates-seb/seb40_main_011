@@ -43,6 +43,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 			setNickname(user.getNickname());
 			setPassword(user.getPassword());
 			setRoles(user.getRoles());
+			setProvider(user.getProvider());
 		}
 
 		@Override

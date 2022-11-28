@@ -87,7 +87,7 @@ public class SecurityConfig {
 				.anyRequest().permitAll())
 			.oauth2Login(oauth2 -> oauth2
 				.successHandler(
-					new OAuth2UserSuccessHandler(jwtTokenizer, authorityUtils, userService, userRepository)));
+					new OAuth2UserSuccessHandler(jwtTokenizer, authorityUtils, userService, userRepository,redisTemplate)));
 		return http.build();
 
 	}
