@@ -17,9 +17,9 @@ const EditPassword = ({
   const [password, setPassword] = useState('');
   const [passwordCheck, setPasswordCheck] = useState('');
 
-  const [prePasswordError, setPrePasswordError] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
-  const [passwordCheckError, setPasswordCheckError] = useState(false);
+  const [prePasswordError, setPrePasswordError] = useState(true);
+  const [passwordError, setPasswordError] = useState(true);
+  const [passwordCheckError, setPasswordCheckError] = useState(true);
 
   const [viewPrePassword, setViewPrePassword] = useState(false);
   const [viewPassword, setViewPassword] = useState(false);
@@ -37,11 +37,11 @@ const EditPassword = ({
 
   const handlePrePassword = (e: any) => {
     setPrePassword(e.target.value);
-    if (!prePassword || !passwordRegex.test(prePassword)) {
-      setPrePasswordError(true);
-    } else {
-      setPrePasswordError(false);
-    }
+    // if (!prePassword || !passwordRegex.test(prePassword)) {
+    //   setPrePasswordError(true);
+    // } else {
+    //   setPrePasswordError(false);
+    // }
   };
   const handlePassword = (e: any) => {
     setPassword(e.target.value);
@@ -53,23 +53,33 @@ const EditPassword = ({
   };
   const handlePasswordCheck = (e: any) => {
     setPasswordCheck(e.target.value);
-    if (password !== passwordCheck) {
-      setPasswordCheckError(true);
-    } else {
-      setPasswordCheckError(false);
-    }
+    // if (password !== passwordCheck) {
+    //   setPasswordCheckError(true);
+    // } else {
+    //   setPasswordCheckError(false);
+    // }
   };
 
-  const handleSubmitPassword = () => {
-    const data: Password = {
-      oldPassword: prePassword,
-      newPassword: password,
-      newCheckPassword: passwordCheck,
-    };
-    const submitEditNick = async () => {
-      await editPassword(data);
-    };
-    submitEditNick();
+  const handleSubmitPassword = async () => {
+    if (!prePasswordError && !passwordError && !passwordCheckError) {
+      const data: Password = {
+        oldPassword: prePassword,
+        newPassword: password,
+        newCheckPassword: passwordCheck,
+      };
+      const submitEditPassword = await editPassword(data);
+      switch (submitEditPassword.status) {
+        case 200:
+          location.reload();
+          break;
+        default:
+      }
+    }
+    // else if (passwordError) {
+    //   alert('숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요');
+    // } else if (passwordCheckError) {
+    //   alert('비밀번호가 일치하지 않습니다');
+    // }
   };
 
   return (
