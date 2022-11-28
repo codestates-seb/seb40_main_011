@@ -1,7 +1,6 @@
 //회원가입 페이지
 //안지은, 김광민 작성
 import React, { ChangeEvent, useCallback, useState } from 'react';
-// import SignUpButton from '../components/Buttons/SignUp';
 import '../components/common.css';
 import { useNavigate } from 'react-router-dom';
 import { postSignup } from '../util/apiCollection';
@@ -11,6 +10,7 @@ import {
   AiFillEye,
 } from '../icons';
 import { emailRegex, passwordRegex } from '../util/Regex';
+import Confirm from '../components/Modal/Confirm';
 
 const Signup = () => {
   //이름, 이메일, 비밀번호, 비밀번호 확인
@@ -43,6 +43,22 @@ const Signup = () => {
   // 회원가입 submit
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (nickname.length === 0) {
+      setMsg(errorMsg[0]);
+      return setShowModal(true);
+    }
+    if (email.length === 0) {
+      setMsg(errorMsg[1]);
+      return setShowModal(true);
+    }
+    if (password.length === 0) {
+      setMsg(errorMsg[2]);
+      return setShowModal(true);
+    }
+    if (passwordCheck.length === 0) {
+      setMsg(errorMsg[3]);
+      return setShowModal(true);
+    }
     const signupResult = await postSignup({ email, password, nickname });
     switch (signupResult.status) {
       case 200:
@@ -136,8 +152,19 @@ const Signup = () => {
     }
   };
 
+  // error modal
+  const [showModal, setShowModal] = useState(false);
+  const errorMsg: [string, string, string, string] = [
+    '닉네임을 입력하지 않았습니다.',
+    '이메일을 입력하지 않았습니다.',
+    '비밀번호를 입력하지 않았습니다.',
+    '비밀번호 확인을 입력하지 않았습니다.',
+  ];
+  const [msg, setMsg] = useState(errorMsg[0]);
+
   return (
-    <div className="w-full h-screen bg-slate-300 pt-8 max-md:pt-0 flex flex-col items-center justify-center">
+    <div className="w-full h-screen bg-slate-300 pt-8 max-md:pt-0 flex flex-col items-center justify-center  max-md:justify-start">
+      {showModal && <Confirm msg={msg} setShowModal={setShowModal} />}
       <div className="max-md:w-full md:w-[32rem] bg-white flex justify-center flex-col p-16 rounded-3xl max-md:rounded-none shadow-2xl/30">
         <img
           src={require('../images/logo.png')}

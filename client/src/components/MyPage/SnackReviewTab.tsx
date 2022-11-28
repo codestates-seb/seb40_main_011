@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, SetStateAction } from 'react';
+import { getUserReview } from '../../util/apiCollection';
+import ReviewTabPagenation from './ReviewTabPagenation';
 
 interface ReviewType {
   id: number;
@@ -20,10 +22,40 @@ interface ScoreType {
   grade: number;
 }
 
-const SnackReviewTab = ({ reviewListData }: ReviewType | undefined | any) => {
+const SnackReviewTab = () => {
+  const [reviewData, setReviewData] = useState<any[]>();
+
+  const [totalPages, setTotalPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [isUpdate, setIsUpdate] = useState(true);
+
+  useEffect(() => {
+    const params = `?page=${currentPage}&size=5&sort=createdAt`;
+    const snackReviewData = async () => {
+      const { data } = await getUserReview('snack-reviews', params);
+      setReviewData(data?.snackReviews.content);
+      setTotalPages(data?.snackReviews.totalPages);
+    };
+    snackReviewData();
+    setIsUpdate(false);
+  }, [isUpdate]);
+
+  const onClickPage = (
+    target: SetStateAction<string> | SetStateAction<number>
+  ) => {
+    if (target === 'Prev') {
+      setCurrentPage(currentPage - 1);
+    } else if (target === 'Next') {
+      setCurrentPage(currentPage + 1);
+    } else {
+      setCurrentPage(+target);
+    }
+    setIsUpdate(true);
+  };
+
   return (
     <>
-      {!reviewListData ? (
+      {!reviewData || reviewData?.length === 0 ? (
         <div className="flex flex-col justify-center w-[850px] p-5 mt-20">
           <div className="mb-2 text-xl text-center">
             작성한 한줄 리뷰가 없습니다
@@ -31,7 +63,7 @@ const SnackReviewTab = ({ reviewListData }: ReviewType | undefined | any) => {
         </div>
       ) : (
         <>
-          {reviewListData?.map((el: ReviewType, index: number) => {
+          {reviewData?.map((el: ReviewType, index: number) => {
             return (
               <>
                 <div
@@ -60,6 +92,15 @@ const SnackReviewTab = ({ reviewListData }: ReviewType | undefined | any) => {
               </>
             );
           })}
+          {totalPages ? (
+            <ReviewTabPagenation
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onClickPage={onClickPage}
+            />
+          ) : (
+            <></>
+          )}
         </>
       )}
     </>

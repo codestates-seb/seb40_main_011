@@ -12,10 +12,10 @@ import seb.project.Codetech.snackreview.entity.ReviewScore;
 
 public class SnackReviewRequestDto {
 	@Getter
-	@Valid
 	@NoArgsConstructor
 	public static class Post {
 		@NotNull
+		@Valid
 		private ReviewScore score;
 		@NotBlank
 		private String content;
@@ -24,7 +24,6 @@ public class SnackReviewRequestDto {
 	}
 
 	@Getter
-	@Valid
 	@NoArgsConstructor
 	public static class Patch {
 		@NotNull

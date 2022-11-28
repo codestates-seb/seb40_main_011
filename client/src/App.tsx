@@ -28,6 +28,7 @@ function App() {
           <Route path="review/write" element={<WriteReview />} />
           <Route path="question-lists" element={<QuestionLists />} />
           <Route path="review/:id" element={<RvDetail />} />
+          <Route path="/*" element={<Main />} />
         </Route>
       </Routes>
     </BrowserRouter>

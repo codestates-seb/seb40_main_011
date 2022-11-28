@@ -81,11 +81,12 @@ public class ReviewService {
 	}
 
 	@Transactional
-	public Review loadReview(Long id) {
+	public ReviewResponseDto.Page loadReview(Long id) {
 		Review review = findVerificationReview(id);
 
 		review.setView(review.getView() + 1L);
-		return reviewRepository.save(review);
+		Review saveReview = reviewRepository.save(review);
+		return reviewRepository.getReviewPageByReview(id, saveReview);
 	}
 
 	public List<ReviewResponseDto.Best> loadBestReview(Integer size) {

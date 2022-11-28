@@ -13,7 +13,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@EnableRedisRepositories(basePackages = {"seb.project.Codetech.redis","seb.project.Codetech.productstat"})
+@EnableRedisRepositories(basePackages = {"seb.project.Codetech.productstat"})
 @EnableTransactionManagement
 public class RedisConfig {
 

@@ -12,6 +12,8 @@ import {
   BsFillPatchExclamationFill,
 } from '../icons';
 import { emailRegex, passwordRegex } from '../util/Regex';
+import Confirm from '../components/Modal/Confirm';
+import { stringify } from 'querystring';
 
 export default function Login() {
   // 홈으로 이동
@@ -77,6 +79,14 @@ export default function Login() {
   // submit
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (email.length === 0) {
+      setMsg(errorMsg[0]);
+      return setShowModal(true);
+    }
+    if (password.length === 0) {
+      setMsg(errorMsg[1]);
+      return setShowModal(true);
+    }
     const loginResult = await postLogin({ email, password });
     switch (loginResult.status) {
       case 200:
@@ -89,15 +99,24 @@ export default function Login() {
         navigate('/');
         break;
       case 401:
-        alert('이메일과 비밀번호가 일치하지 않습니다.');
+        // alert('이메일과 비밀번호가 일치하지 않습니다.');
         console.error(loginResult.status + ' Error');
         break;
       default:
     }
   };
 
+  // showError 모달
+  const [showModal, setShowModal] = useState(false);
+  const errorMsg: [string, string] = [
+    '이메일을 입력하지 않았습니다.',
+    '비밀번호를 입력하지 않았습니다.',
+  ];
+  const [msg, setMsg] = useState(errorMsg[0]);
+
   return (
-    <div className="w-full h-screen bg-slate-300 pt-8 max-md:pt-0 flex flex-col items-center justify-center">
+    <div className="w-full h-screen bg-slate-300 pt-8 max-md:pt-0 flex flex-col items-center justify-center max-md:justify-start">
+      {showModal && <Confirm setShowModal={setShowModal} msg={msg} />}
       <div className="max-md:w-full md:w-[32rem] bg-white flex justify-center flex-col p-16 rounded-3xl max-md:rounded-none shadow-2xl/30">
         <img
           src={require('../images/logo.png')}

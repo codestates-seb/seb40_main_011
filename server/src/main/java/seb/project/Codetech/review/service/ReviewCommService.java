@@ -25,11 +25,10 @@ public class ReviewCommService {
 		this.reviewCommRepository = reviewCommRepository;
 		this.reviewService = reviewService;
 		this.userService = userService;
-
 	}
 
 	@Transactional
-	public ReviewComment createReviewComm(String email, Long reviewId, Long parentId, ReviewComment reviewComment) {
+	public Long createReviewComm(String email, Long reviewId, Long parentId, ReviewComment reviewComment) {
 		Review review = reviewService.findVerificationReview(reviewId);
 		User user = userService.findUser(email);
 		reviewComment.setReview(review);
@@ -47,11 +46,11 @@ public class ReviewCommService {
 			reviewComment.setParent(parentComm); // 맞으면 부모댓글 아이디를 삽입한다.
 		}
 
-		return reviewCommRepository.save(reviewComment);
+		return reviewCommRepository.save(reviewComment).getReview().getId();
 	}
 
 	@Transactional
-	public ReviewComment modifyReviewComm(String email, ReviewComment reviewComment) {
+	public Long modifyReviewComm(String email, ReviewComment reviewComment) {
 		ReviewComment reviewComm = findVerificationReviewComm(reviewComment.getId());
 		User user = userService.findUser(email);
 
@@ -65,7 +64,7 @@ public class ReviewCommService {
 
 		Optional.ofNullable(reviewComment.getContent()).ifPresent(reviewComm::setContent);
 
-		return reviewCommRepository.save(reviewComm);
+		return reviewCommRepository.save(reviewComm).getReview().getId();
 	}
 
 	@Transactional
@@ -78,6 +77,7 @@ public class ReviewCommService {
 		}
 
 		reviewComm.setStatus(false);
+		reviewComm.setContent("작성자가 삭제한 댓글입니다.");
 
 		reviewCommRepository.save(reviewComm);
 	}

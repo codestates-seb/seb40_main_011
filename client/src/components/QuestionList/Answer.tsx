@@ -1,28 +1,42 @@
-import { AiOutlineCheck } from 'react-icons/ai';
 import BodyTop from './BodyTop';
+import { AnswerProps } from '../../types/mainPageTypes';
 
-export default function Answer() {
+export default function Answer({
+  createdAt,
+  nickname,
+  content,
+  writerId,
+  id,
+  adoptedId,
+}: AnswerProps) {
   return (
-    <div className="flex mb-6">
-      <div className="w-16 flex-none flex flex-col justify-center items-center pr-2 text-green-600 pb-1">
-        <AiOutlineCheck className="text-3xl mb-0.5" />
-        <span className="text-xs font-medium">채택됨</span>
-      </div>
-      <div className="">
-        {/* <BodyTop /> */}
-        <div className="ring-1 ring-gray-200 rounded-xl overflow-hidden bg-white">
-          <div className="px-6 pt-3 pb-4 border-b border-gray-200">
-            Assumenda molestiae est quos aperiam quod maiores enim laboriosam
-            et. At quia atque quidem aut consequatur. Incidunt tempore
-            voluptatibus.
-          </div>
-        </div>
-      </div>
+    <div className="w-full flex mt-3 mb-1">
       <img
         src="https://xsgames.co/randomusers/avatar.php?g=male"
         alt=""
-        className="w-12 h-12 rounded-full mx-2 flex-none ring ring-slate-200"
+        className="w-12 h-12 rounded-2xl mx-3 ml-16 mt-3 ring ring-slate-200"
       />
+      <div className="w-full">
+        <BodyTop
+          createdAt={createdAt}
+          nickname={nickname}
+          adoptedId={adoptedId}
+        />
+        <div className="flex relative">
+          <div
+            className={`grow px-4 pt-2 pb-3 rounded bg-white text-gray-600 font-medium mr-2 ${
+              id === adoptedId && `ring-2 ring-inset ring-emerald-200`
+            }`}
+          >
+            {content}
+          </div>
+          {id === adoptedId && (
+            <div className="tracking-tight absolute text-sm font-medium bg-green-500 text-white px-3 rounded-full pt-0.5 pb-1 right-6 -top-3">
+              채택된 답변
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

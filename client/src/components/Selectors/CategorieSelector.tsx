@@ -13,7 +13,6 @@ const CategoriSelectors = () => {
   const [spread, setSpread] = useState(false);
   //셀렉터에서 클릭한 것 이름 저장
   const { clickName, setClickName } = useCategorie();
-  //   const [clickName, setClickName] = useState('대분류 선택');
 
   //대분류 셀렉터 클릭 이벤트 함수
   const handleSelectClick = (e: React.MouseEvent<HTMLElement>) => {
@@ -27,7 +26,6 @@ const CategoriSelectors = () => {
       setClickName(e.currentTarget.textContent); //클릭한 버튼의 id값이 들어옴
       setSpread(!spread);
     }
-    console.log(`e.currentTarget.textContent=>>`, e.currentTarget.textContent);
   };
 
   return (
@@ -49,24 +47,10 @@ const CategoriSelectors = () => {
         >
           <button
             onClick={handleButClick}
-            id="MONITOR"
+            id="DESKTOP"
             className="flex items-center w-full px-4 pt-2 pb-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900"
           >
-            Monitor
-          </button>
-          <button
-            onClick={handleButClick}
-            id="MOUSE"
-            className="flex items-center w-full px-4 pt-2 pb-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900"
-          >
-            Mouse
-          </button>
-          <button
-            onClick={handleButClick}
-            id="KEYBOARD"
-            className="flex items-center w-full px-4 pt-2 pb-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900"
-          >
-            Keyboard
+            Desktop
           </button>
           <button
             onClick={handleButClick}
@@ -77,17 +61,31 @@ const CategoriSelectors = () => {
           </button>
           <button
             onClick={handleButClick}
-            id="TABLET"
+            id="MONITOR"
             className="flex items-center w-full px-4 pt-2 pb-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900"
           >
-            Tablet
+            Monitor
+          </button>
+          <button
+            onClick={handleButClick}
+            id="KEYBOARD"
+            className="flex items-center w-full px-4 pt-2 pb-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900"
+          >
+            Keyboard
+          </button>
+          <button
+            onClick={handleButClick}
+            id="MOUSE"
+            className="flex items-center w-full px-4 pt-2 pb-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900"
+          >
+            Mouse
           </button>
           <button
             onClick={handleButClick}
             id="ETC"
             className="flex items-center w-full px-4 pt-2 pb-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900"
           >
-            etc
+            Etc
           </button>
         </div>
       )}
@@ -96,45 +94,3 @@ const CategoriSelectors = () => {
 };
 
 export default CategoriSelectors;
-
-{
-  /* <div className="absolute z-10 w-full overflow-hidden bg-white border top-10 rounded-bl-xl rounded-br-xl drop-shadow-md">
-{productsData.map((name, idx) => {
-  return (
-    <button
-      key={idx}
-      onClick={(idx) => handleButClick(idx)}
-      className="flex items-center w-full px-4 pt-2 pb-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900"
-    >
-      {name.name}
-    </button>
-  );
-})}
-</div> */
-}
-
-//대분류 데이터
-//   const productsData = [
-//     // { name: '대분류 선택', type: 'default' },
-//     { name: 'Monitor', type: 'MONITOR' },
-//     { name: 'Mouse', type: 'MOUSE' },
-//     { name: 'Keyboard', type: 'KEYBOARD' },
-//     { name: 'Laptop', type: 'LAPTOP' },
-//     { name: 'Tablet', type: 'TABLET' },
-//     { name: 'ETC', type: 'ETC' },
-//   ];
-
-//clickName의 id값이 null이 아니라면 selectName id의 text를 id의 텍스트로 바꾼다
-//   useEffect(() => {
-//     if (clickName !== '' && clickText !== null) {
-//       const name = document.getElementById(clickName);
-//       const text = clickText; //클릭한 버튼의 text 값
-//       console.log(`innerText =>`, name);
-
-//       const selectName = document.getElementById('selectname');
-//       if (name !== null && selectName !== null) {
-//         selectName.innerHTML = `${text}`;
-//         console.log(`selectName =>`, clickName);
-//       }
-//     }
-//   }, [clickText]);

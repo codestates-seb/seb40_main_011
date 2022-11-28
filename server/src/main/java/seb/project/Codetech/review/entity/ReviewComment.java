@@ -12,8 +12,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -44,7 +42,7 @@ public class ReviewComment extends BaseTime {
 	@ManyToOne
 	@JoinColumn(name = "parent_id")
 	//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-	@JsonIdentityReference(alwaysAsId = true)
+	//@JsonIdentityReference(alwaysAsId = true)
 	private ReviewComment parent;
 
 	@ManyToOne
