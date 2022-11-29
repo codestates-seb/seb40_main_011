@@ -11,17 +11,38 @@ import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
 import { useRef } from 'react';
 import useReview from '../../store/review';
 import { uploadEditorImage } from '../../util/apiCollection';
+import { postEditorContent } from '../../util/apiCollection';
+import { useNavigate } from 'react-router-dom';
 
 function TextEditor() {
   const editorRef = useRef<Editor>(null);
-  const { content, setContent } = useReview();
+  const { productId, title, content, setContent } = useReview();
+  const navigate = useNavigate();
 
-  const handleClick = () => {
+  const handleClick = async () => {
     const data = editorRef.current?.getInstance().getMarkdown();
     if (typeof data === 'string') {
       setContent(data);
     }
-    console.log(`마크다운으로 보내기 작동함`, content);
+    const editorData: any = {
+      productId: productId,
+      title: title,
+      content: data,
+    };
+
+    const submit = await postEditorContent(editorData);
+    console.log(`submit`, submit);
+    switch (submit.status) {
+      case 201:
+        console.log('Success');
+        navigate('/');
+        break;
+      case 401:
+        alert('에러');
+        console.error(submit.status + 'Error');
+        break;
+      default:
+    }
   };
 
   return (
@@ -29,7 +50,7 @@ function TextEditor() {
       <Editor
         ref={editorRef}
         previewStyle="vertical"
-        initialValue="내용을 입력해주세요"
+        initialValue={content || '내용을 입력하세요'}
         height="550px"
         usageStatistics={false}
         plugins={[[codeSyntaxHighlight, { highlighter: Prism }]]}
@@ -43,7 +64,7 @@ function TextEditor() {
           },
         }}
       />
-      <div className="flex justify-center mt-3">
+      <div className="flex justify-center mt-10">
         <button
           onClick={handleClick}
           type="submit"

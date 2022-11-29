@@ -424,6 +424,19 @@ export const uploadEditorImage = async (data: any) => {
   }
 };
 
+export const postEditorContent = async (data: any) => {
+  try {
+    const editorContent = await axios.post('/api/reviews', data, {
+      headers: {
+        Authorization: initialToken,
+      },
+    });
+    return editorContent;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
 export const getProducts = async () => {
   try {
     const response = await axios.get(`/api/products/main-search`, {
