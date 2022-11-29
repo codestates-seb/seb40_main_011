@@ -57,6 +57,20 @@ export const postLogin = async (data: LoginInputs) => {
   }
 };
 
+export const postRefresh = async () => {
+  try {
+    const response = await axios.post('/api/refresh', '', {
+      headers: {
+        Expired: localStorage.getItem('authorization'),
+        Refresh: localStorage.getItem('refresh'),
+      },
+    });
+    return response;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
 export const getSearchResult = async () => {
   try {
     const searchResponse = await axios.get('/api/products/1');

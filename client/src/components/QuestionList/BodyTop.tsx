@@ -37,12 +37,10 @@ export default function BodyTop({
       const Result = await deleteQuestion(questionId);
       switch (Result.status) {
         case 204:
-          // console.log('Success');
           location.reload();
           break;
         case 401:
           alert('에러');
-          console.log('...');
           console.error(Result.status + ' Error');
           break;
         default:
@@ -52,12 +50,10 @@ export default function BodyTop({
       const Result = await deleteAnswer(answerId);
       switch (Result.status) {
         case 204:
-          // console.log('Success');
           location.reload();
           break;
         case 401:
           alert('에러');
-          console.log('...');
           console.error(Result.status + ' Error');
           break;
         default:
@@ -118,9 +114,6 @@ export default function BodyTop({
           >
             <XsRoundedButton name={'삭제'} />
           </button>
-          {/* <button onClick={() => handleDelete()}>
-            <XsRoundedButton name={'삭제'} />
-          </button> */}
         </div>
       )}
     </div>
