@@ -333,32 +333,6 @@ const Signup = () => {
               </span>
             )}
           </div>
-          {/* <div
-            className="group mb-4 py-1 flex items-center justify-center text-3xl text-gray-300 hover:text-gray-500 "
-            onClick={handlePasswordType}
-          >
-            {passwordType === 'password' ? (
-              <AiFillEyeInvisible
-                id="passwordShown"
-                onClick={handlePasswordType}
-                className=""
-              />
-            ) : (
-              <AiFillEye
-                id="passwordShown"
-                onClick={handlePasswordType}
-                className="text-3xl"
-              />
-            )}
-            <label
-              className="ml-2 pb-0.5 group-hover:font-medium cursor-pointer text-base text-gray-500 group-hover:text-gray-700"
-              htmlFor="passwordShown"
-            >
-              {passwordType === 'password'
-                ? '비밀번호 보기'
-                : '비밀번호 감추기'}
-            </label>
-          </div> */}
           <button
             type="submit"
             className="w-full bg-blue-600 h-16 rounded-md text-xl font-bold pb-1 text-white hover:bg-blue-500"
