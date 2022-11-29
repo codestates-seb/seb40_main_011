@@ -41,7 +41,6 @@ export default function EditQuestion({
           console.error(Result.status + ' Error');
           break;
         case 412: {
-          console.log('412');
           loginRefresh();
           handleSubmit(e);
         }

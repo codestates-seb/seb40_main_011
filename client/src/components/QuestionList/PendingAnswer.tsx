@@ -4,6 +4,7 @@ import { PendingAnswerProps } from '../../types/mainPageTypes';
 import { postAdopt } from '../../util/apiCollection';
 import { useIsLogin } from '../../store/login';
 import Avatar from '../Avatar/Avatar';
+import { loginRefresh } from '../../util/loginRefresh';
 
 export default function PendingAnswer({
   createdAt,
@@ -31,7 +32,10 @@ export default function PendingAnswer({
         console.log('...');
         console.error(Result.status + ' Error');
         break;
-      default:
+      case 412: {
+        loginRefresh();
+        handleAdopt();
+      }
     }
   };
 
