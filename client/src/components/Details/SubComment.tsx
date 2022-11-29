@@ -1,5 +1,5 @@
 import { SubCommentProps } from '../../types/mainPageTypes';
-import { SubComments } from '../../types/mainPageTypes';
+import { ReviewComments } from '../../types/mainPageTypes';
 import EditComment from './EditComment';
 import { useState } from 'react';
 
@@ -19,6 +19,10 @@ const SubComment = ({
     }
   };
 
+  const getParsedDate = (createdAt: string) => {
+    return new Date(createdAt).toLocaleDateString('ko-KR');
+  };
+
   const onSubCommentHide = () => {
     setMoreComment(!moreComment);
     console.log(moreComment);
@@ -30,19 +34,19 @@ const SubComment = ({
 
   return (
     <>
-      {child?.map((el: SubComments, idx: number) => (
+      {child?.map((el: ReviewComments, idx: number) => (
         <div className="w-full flex my-6 mr-16" key={idx}>
           <img
-            src={el.profileImg}
+            src={`https://codetech.nworld.dev${el?.userImage}`}
             alt=""
             className="w-12 h-12 rounded-full mx-2 ring ring-slate-200"
           />
           <div className="w-2/3">
             <div className="flex justify-between mb-1.5 items-center">
               <span>
-                <span className="font-semibold">{el.nickname}</span>
+                <span className="font-semibold">{el.writer}</span>
                 <span className="text-sm font-medium before:content-['•'] before:mr-1.5 before:ml-1.5 before:text-gray-400 font-medium text-gray-400">
-                  {el.createdAt}
+                  {getParsedDate(el.createdAt)}
                 </span>
               </span>
               <div>
@@ -57,7 +61,7 @@ const SubComment = ({
             {isEditSub ? (
               <input
                 autoFocus
-                defaultValue={el.subComment}
+                defaultValue={el.content}
                 className="w-full px-6 pt-3 pb-4 rounded-xl border-b border-gray-200"
                 onChange={onCommentEdit}
                 onKeyUp={(comment) =>
@@ -67,7 +71,7 @@ const SubComment = ({
             ) : (
               <div className="ring-1 ring-gray-200 rounded-xl overflow-hidden bg-white">
                 <div className="px-6 pt-3 pb-4 border-b border-gray-200">
-                  {el.subComment}
+                  {el.content}
                 </div>
               </div>
             )}

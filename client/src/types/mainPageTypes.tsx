@@ -93,7 +93,7 @@ export interface CategoryProps {
 
 export interface SubCommentProps {
   setMoreComment: Dispatch<SetStateAction<boolean>>;
-  child: SubComments[];
+  child: ReviewComments[];
   moreComment: boolean;
   isEditSub: boolean;
   setIsEditSub: Dispatch<SetStateAction<boolean>>;
