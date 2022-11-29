@@ -80,8 +80,7 @@ public class ReviewResponseDto {
 		private String writer;
 		private String userImage;
 		//private String thumbnail;
-		@Setter
-		private Long reviewCommCount;
+		private Long commentCount;
 	}
 
 	@Getter
