@@ -71,6 +71,15 @@ export const postRefresh = async () => {
   }
 };
 
+export const postGoogle = async () => {
+  try {
+    const response = await axios.post('/oauth2/authorization/google');
+    console.log(response);
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
 export const getSearchResult = async () => {
   try {
     const searchResponse = await axios.get('/api/products/1');
