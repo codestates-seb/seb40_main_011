@@ -93,11 +93,19 @@ export default function BodyTop({
         </span>
       </span>
       {loginId == writerId && adoptedId === undefined && (
+<<<<<<< Updated upstream
         <div className="flex items-center">
           <button
             onClick={() => {
               // if (editable || editable !== undefined) {
               if (!editable) {
+=======
+        // (editable || editable === undefined) && (
+        <div className="flex items-center">
+          <button
+            onClick={() => {
+              if (editable || editable !== undefined) {
+>>>>>>> Stashed changes
                 setModalMsg('답변달린 질문은 수정할 수 없습니다.');
                 return setShowAlert(true);
               }
@@ -109,11 +117,19 @@ export default function BodyTop({
           <div className="h-3 border-l border border-gray-200 inline-block mx-1.5" />
           <button
             onClick={() => {
+<<<<<<< Updated upstream
               if (!editable) {
                 setModalMsg('답변달린 질문은 삭제할 수 없습니다.');
                 return setShowAlert(true);
               }
               return handleDelete();
+=======
+              if (editable || editable !== undefined) {
+                setModalMsg('답변달린 질문은 삭제할 수 없습니다.');
+                return setShowAlert(true);
+              }
+              return handleDelete;
+>>>>>>> Stashed changes
             }}
           >
             <XsRoundedButton name={'삭제'} />
