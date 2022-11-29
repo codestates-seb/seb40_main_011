@@ -48,6 +48,7 @@ dependencies { // 시큐리티의 경우는 시큐리티 전담자가 기본 설
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.apache.tika:tika-core:2.6.0'
     implementation 'org.apache.tika:tika-parsers:2.6.0'
+    implementation 'org.springframework.boot:spring-boot-starter-mail'//이메일 인증
 //    querydsl 의존성
     implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
     annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}"
