@@ -26,7 +26,7 @@ const LikeReviewTab = () => {
   useEffect(() => {
     const params = `?page=${currentPage}&size=5&sort=createdAt`;
     const DetailReviewData = async () => {
-      const { data } = await getUserReview('recommends', params);
+      const { data }: any = await getUserReview('recommends', params);
       setReviewData(data?.reviews.content);
       setTotalPages(data?.reviews.totalPages);
     };

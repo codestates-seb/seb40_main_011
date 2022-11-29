@@ -7,7 +7,7 @@ const DetailReview = ({ productId }: DetailReviewProps) => {
     <div className="flex mb-3">
       <img src="" alt="" className="w-[300px] h-[250px] mr-3" />
       <div className="flex flex-col overflow-hidden text-left w-[760px]">
-        <div className="mb-1 text-2xl">리뷰제목</div>
+        <div className="mb-1 text-2xl">review title</div>
         <div className="pb-1 overflow-hidden text-xl text-justify whitespace-normal h-36 text-ellipsis line-clamp-5">
           At vero eos et accusamus et iusto odio dignissimos ducimus qui
           blanditiis praesentium voluptatum deleniti atque corrupti quos dolores
@@ -24,21 +24,26 @@ const DetailReview = ({ productId }: DetailReviewProps) => {
           asperiores repellat
         </div>
 
-        <div className="flex flex-row items-center  mt-2.5 w-full">
-          <div>Likes</div>
-          <div>Comment</div>
-          <div className="flex flex-row items-center ml-auto">
-            <div>username</div>
-            <div>date</div>
-            <img
-              src=""
-              alt=""
-              className="w-16 h-16 rounded-full bg-slate-200"
-            />
+            <div className="flex flex-row items-center  mt-2.5 w-full">
+              <div>Likes</div>
+              <div>Comment</div>
+              <div className="flex flex-row items-center ml-auto">
+                <div>username</div>
+                <div>date</div>
+                <img
+                  src=""
+                  alt=""
+                  className="w-16 h-16 rounded-full bg-slate-200"
+                />
+              </div>
+            </div>
           </div>
         </div>
+        <button className="px-10 py-2 my-5 rounded-xl bg-slate-200">
+          더보기
+        </button>
       </div>
-    </div>
+    </>
   );
 };
 

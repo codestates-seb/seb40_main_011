@@ -20,6 +20,7 @@ interface ScoreType {
   satisfaction: number;
   design: number;
   performance: number;
+  grade: number;
 }
 
 const SnackReviewModal = ({ selectedReview, openModalHandler }: any) => {
@@ -31,14 +32,15 @@ const SnackReviewModal = ({ selectedReview, openModalHandler }: any) => {
   };
 
   const [content, setContent] = useState(selectedReview?.content);
+  const [score, setScore] = useState<any>(selectedReview?.score);
 
-  const [score, setScore] = useState<SnackReviewScore>({
-    costEfficiency: 1,
-    quality: 1,
-    satisfaction: 1,
-    performance: 1,
-    design: 1,
-  });
+  //   {
+  //   costEfficiency: 0,
+  //   quality: 0,
+  //   satisfaction: 0,
+  //   performance: 0,
+  //   design: 0,
+  // });
 
   const ratingArr = [
     { name: '가성비', en: 'costEfficiency' },
@@ -48,28 +50,65 @@ const SnackReviewModal = ({ selectedReview, openModalHandler }: any) => {
     { name: '디자인', en: 'design' },
   ];
 
-  const onEditClick = (e: any) => {
-    editSnack(e.currentTarget.id, { score, content });
-    // console.log({ score, content });
-  };
-
-  const handleRating = (
-    value: number,
-    index: number,
-    event: React.MouseEvent<HTMLSpanElement, MouseEvent> | undefined
-  ) => {
-    const key = event?.currentTarget.className.split(' ')[1];
-    setScore((current) => {
+  const handleRatingC = (el: any) => {
+    setScore((current: any) => {
       const newScore = { ...current };
-      key === '가성비' ? (newScore.costEfficiency = value) : null;
-      key === '품질' ? (newScore.quality = value) : null;
-      key === '만족감' ? (newScore.satisfaction = value) : null;
-      key === '성능' ? (newScore.performance = value) : null;
-      key === '디자인' ? (newScore.design = value) : null;
-
+      newScore.costEfficiency = el;
       return newScore;
     });
   };
+  const handleRatingQ = (el: any) => {
+    setScore((current: any) => {
+      const newScore = { ...current };
+      newScore.costEfficiency = el;
+      return newScore;
+    });
+  };
+  const handleRatingS = (el: any) => {
+    setScore((current: any) => {
+      const newScore = { ...current };
+      newScore.costEfficiency = el;
+      return newScore;
+    });
+  };
+  const handleRatingP = (el: any) => {
+    setScore((current: any) => {
+      const newScore = { ...current };
+      newScore.costEfficiency = el;
+      return newScore;
+    });
+  };
+  const handleRatingD = (el: any) => {
+    setScore((current: any) => {
+      const newScore = { ...current };
+      newScore.costEfficiency = el;
+      return newScore;
+    });
+    console.log(score);
+  };
+
+  // const handleRating = (
+  //   value: number,
+  //   index: number,
+  //   event: React.MouseEvent<HTMLSpanElement, MouseEvent> | undefined
+  // ) => {
+
+  //   const key = event?.currentTarget.className.split(' ')[1];
+  //   // console.log(key);
+  //   setScore((current) => {
+  //     const newScore = { ...current };
+  //     key === '가성비' ? (newScore.costEfficiency = value) : null;
+  //     key === '품질' ? (newScore.quality = value) : null;
+  //     key === '만족감' ? (newScore.satisfaction = value) : null;
+  //     key === '성능' ? (newScore.performance = value) : null;
+  //     key === '디자인' ? (newScore.design = value) : null;
+
+  //     // console.log(newScore);
+
+  //     return newScore;
+  //   });
+  // };
+
   const handleTextarea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
     if (content.length > 100) {
@@ -77,17 +116,33 @@ const SnackReviewModal = ({ selectedReview, openModalHandler }: any) => {
       setContent(content.slice(0, 100));
     }
   };
+
   const onSubmitClick = async () => {
-    const arr = Object.keys(score).map((el) => (score[el] === 0 ? 0 : 1));
-    const ratingValidation = arr.reduce(
-      (acc: number, cur: number) => acc * cur,
-      1
-    );
-    if (ratingValidation === 1) {
-      await editSnack(selectedReview.id, { score, content });
-      window.location.reload();
-    } else {
-      window.alert('별점을 매겨주세요!');
+    // const arr = Object.keys(score).map((el) => (score[el] === 0 ? 0 : 1));
+    // const ratingValidation = arr.reduce(
+    //   (acc: number, cur: number) => acc * cur,
+    //   1
+    // );
+    // if (ratingValidation === 1) {
+    //   await editSnack(selectedReview.id, { score, content });
+    //   window.location.reload();
+    // } else {
+    //   console.log(ratingValidation);
+    //   window.alert('별점을 매겨주세요!');
+    // }
+
+    delete score.grade;
+
+    console.log({ score, content });
+    console.log(selectedReview.id);
+
+    const data: any = { score, content: content };
+    const editReview = await editSnack(selectedReview.id, data);
+    switch (editReview.status) {
+      case 200:
+        location.reload();
+        break;
+      default:
     }
   };
 
@@ -105,13 +160,13 @@ const SnackReviewModal = ({ selectedReview, openModalHandler }: any) => {
           <button className="ml-auto " onClick={openModalHandler}>
             <BsXLg className="ml-auto" />
           </button>
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-start">
             <img
               src={`https://codetech.nworld.dev${el?.image}`}
               alt=""
-              className="w-16 w-full h-16 rounded-full bg-slate-200"
+              className="w-16 h-16 rounded-full bg-slate-200"
             />
-            <div className="flex flex-col items-start justify-start w-full ml-8">
+            <div className="flex flex-col items-start justify-start ml-8">
               <div>{el.nickname}</div>
               <div className="ml-auto text-xs text-gray-400">
                 {' '}
@@ -127,35 +182,60 @@ const SnackReviewModal = ({ selectedReview, openModalHandler }: any) => {
           {editStus ? (
             <>
               <div className="grid grid-cols-3 my-1.5">
-                {ratingArr.map((ele, idx) => {
-                  return (
-                    <div
-                      className="flex items-center justify-center "
-                      key={idx}
-                    >
-                      <p className="pr-0.5">{ele.name}</p>
-                      <Rating
-                        allowFraction
-                        initialValue={el.score[ele.en]}
-                        size={20}
-                        onClick={(value, index, event) =>
-                          handleRating(value, index, event)
-                        }
-                      />
-                    </div>
-                  );
-                })}
+                <div className="flex items-center justify-between px-1">
+                  <p className="pr-0.5 text-xl">가성비</p>
+                  <Rating
+                    allowFraction
+                    initialValue={el.score.costEfficiency}
+                    size={25}
+                    onClick={handleRatingC}
+                  />
+                </div>
+                <div className="flex items-center justify-between px-1">
+                  <p className="pr-0.5 text-xl">품질</p>
+                  <Rating
+                    allowFraction
+                    initialValue={el.score.quality}
+                    size={25}
+                    onClick={handleRatingQ}
+                  />
+                </div>
+                <div className="flex items-center justify-between px-1">
+                  <p className="pr-0.5 text-xl">만족감</p>
+                  <Rating
+                    allowFraction
+                    initialValue={el.score.satisfaction}
+                    size={25}
+                    onClick={handleRatingS}
+                  />
+                </div>
+                <div className="flex items-center justify-between px-1">
+                  <p className="pr-0.5 text-xl">성능</p>
+                  <Rating
+                    allowFraction
+                    initialValue={el.score.performance}
+                    size={25}
+                    onClick={handleRatingP}
+                  />
+                </div>
+                <div className="flex items-center justify-between px-1">
+                  <p className="pr-0.5 text-xl">디자인</p>
+                  <Rating
+                    allowFraction
+                    initialValue={el.score.design}
+                    size={25}
+                    onClick={handleRatingD}
+                  />
+                </div>
               </div>
               <TextareaAutosize
-                className={`w-full bg-transparent outline-none text-gray-300 font-medium resize-none focus:text-gray-700 text-lg ${
+                className={`w-full mt-1.5 bg-transparent outline-none text-gray-300 font-medium resize-none focus:text-gray-700 text-lg ${
                   content.length !== 0 && `text-gray-700`
                 }`}
+                minRows={7}
                 value={content}
                 onChange={handleTextarea}
               />
-              <span className="flex pt-3 text-sm text-gray-400">
-                현재 글자수 {content.length} / 최대 글자수 100자
-              </span>
             </>
           ) : (
             <>
@@ -163,15 +243,15 @@ const SnackReviewModal = ({ selectedReview, openModalHandler }: any) => {
                 {ratingArr.map((ele, idx) => {
                   return (
                     <div
-                      className="flex items-center justify-center "
+                      className="flex items-center justify-between px-1"
                       key={idx}
                     >
-                      <p className="pr-0.5 ">{ele.name}</p>
+                      <p className="pr-0.5 text-xl">{ele.name}</p>
                       <Rating
                         allowFraction
                         readonly
                         initialValue={el.score[ele.en]}
-                        size={20}
+                        size={25}
                       />
                     </div>
                   );
@@ -186,36 +266,42 @@ const SnackReviewModal = ({ selectedReview, openModalHandler }: any) => {
             {Number(loginId) === el.writerId ? (
               editStus ? (
                 <>
-                  <>
-                    <button
-                      onClick={handelEditStus}
-                      id={el.id.toString()}
-                      className="border m-0.5 p-0.5 rounded-lg"
-                    >
-                      취소
-                    </button>
-                    <button
-                      onClick={onSubmitClick}
-                      id={el.id.toString()}
-                      className="border m-0.5 p-0.5 rounded-lg"
-                    >
-                      수정
-                    </button>
-                  </>
+                  <div className="flex items-center justify-between w-full">
+                    <span className="flex text-sm text-gray-400">
+                      현재 글자수 {content.length} / 최대 글자수 100자
+                    </span>
+                    <div>
+                      {' '}
+                      <button
+                        onClick={handelEditStus}
+                        id={el.id.toString()}
+                        className="px-3 py-2 m-1 border rounded-lg"
+                      >
+                        취소
+                      </button>
+                      <button
+                        onClick={onSubmitClick}
+                        id={el.id.toString()}
+                        className="px-3 py-2 m-1 border rounded-lg"
+                      >
+                        수정
+                      </button>
+                    </div>
+                  </div>
                 </>
               ) : (
                 <>
                   <button
                     onClick={handelEditStus}
                     id={el.id.toString()}
-                    className="border m-0.5 p-0.5 rounded-lg"
+                    className="px-3 py-2 m-1 border rounded-lg"
                   >
                     수정
                   </button>
                   <button
                     onClick={onDeleteClick}
                     id={el.id.toString()}
-                    className="border m-0.5 p-0.5 rounded-lg"
+                    className="px-3 py-2 m-1 border rounded-lg"
                   >
                     삭제
                   </button>

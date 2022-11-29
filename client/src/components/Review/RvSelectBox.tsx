@@ -7,8 +7,9 @@ export default function RvSelectBox({
   setSpread,
   selected,
   setSelected,
+  menu,
 }: SelectBoxProps) {
-  const [menu] = useState(['최신 순', '별점 순']);
+  const [selector] = useState(menu);
 
   const handleSelect = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
@@ -29,15 +30,15 @@ export default function RvSelectBox({
         {selected} {spread ? <AiFillCaretUp /> : <AiFillCaretDown />}
       </button>
       {spread && (
-        <ul className="absolute w-full top-10 border bg-white rounded-bl-xl rounded-br-xl overflow-hidden drop-shadow-md">
-          {menu
+        <ul className="absolute w-full overflow-hidden bg-white border top-10 rounded-bl-xl rounded-br-xl drop-shadow-md">
+          {selector
             .filter((el) => el !== selected)
             .map((el, idx) => (
               <button
                 onClick={handleSelect}
                 key={idx}
                 id={el}
-                className="w-full px-4 text-sm pb-3 pt-2 hover:bg-gray-100 flex items-center text-gray-500 hover:text-gray-900 font-medium"
+                className="flex items-center w-full px-4 pt-2 pb-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900"
               >
                 {el}
               </button>

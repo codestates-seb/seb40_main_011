@@ -24,7 +24,7 @@ const ReviewsTab = () => {
   useEffect(() => {
     const params = `?page=${currentPage}&size=5&sort=createdAt`;
     const DetailReviewData = async () => {
-      const { data } = await getUserReview('reviews', params);
+      const { data }: any = await getUserReview('reviews', params);
       setReviewData(data?.reviews.content);
       setTotalPages(data?.reviews.totalPages);
     };

@@ -21,7 +21,7 @@ export const AnswersTab = () => {
   useEffect(() => {
     const params = `?page=${currentPage}&size=5&sort=createdAt`;
     const DetailReviewData = async () => {
-      const { data } = await getUserReview('answers', params);
+      const { data }: any = await getUserReview('answers', params);
       console.log(data);
       setReviewData(data?.questions.content);
       setTotalPages(data?.questions.totalPages);
