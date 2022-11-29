@@ -32,6 +32,7 @@ const ReviewLists = () => {
 
   const ratingCategory = ['가성비', '품질', '만족감', '성능', '디자인'];
   const menu = ['최신 순', '별점 순'];
+  const sortReviews = ['최신 순', '별점 순', '댓글 순'];
 
   const { isLogin } = useIsLogin();
   const productId = Number(useParams().id);
