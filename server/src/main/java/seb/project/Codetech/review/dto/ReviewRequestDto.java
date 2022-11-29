@@ -22,11 +22,16 @@ public class ReviewRequestDto {
 		private Long productId;
 		private String title;
 		private String content;
+
 	}
 
 	@Getter
+	@Setter
 	@NoArgsConstructor
 	public static class Get {
-		private Long id;
+		private Long productId;
+		private int sort;
+		private long offset;
+		private int limit;
 	}
 }

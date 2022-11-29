@@ -5,7 +5,6 @@ import static seb.project.Codetech.review.entity.QReview.*;
 import static seb.project.Codetech.review.entity.QReviewComment.*;
 import static seb.project.Codetech.user.entity.QUser.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,6 +16,7 @@ import org.springframework.stereotype.Repository;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
+import seb.project.Codetech.review.dto.ReviewRequestDto;
 import seb.project.Codetech.review.dto.ReviewResponseDto;
 import seb.project.Codetech.review.entity.Review;
 
@@ -49,7 +49,7 @@ public class CustomReviewRepositoryImpl implements CustomReviewRepository {
 		var commentMap = new HashMap<Long, ReviewResponseDto.Comment>();
 
 		for (var comment : comments) {
-			comment.setChild(new ArrayList<>());
+			//comment.setChild(new ArrayList<>());
 			commentMap.put(comment.getId(), comment);
 		}
 
@@ -87,7 +87,9 @@ public class CustomReviewRepositoryImpl implements CustomReviewRepository {
 					review.content,
 					review.type,
 					review.view,
+					review.RecommendNumber,
 					review.writer,
+					review.createdAt,
 					user.id.as("userId"),
 					user.image.as("userImage"),
 					product.name.as("productName"),
@@ -109,6 +111,42 @@ public class CustomReviewRepositoryImpl implements CustomReviewRepository {
 	}
 
 	@Override
+	public List<ReviewResponseDto.ReviewList> loadSortReviewByProductId(ReviewRequestDto.Get get) {
+
+		var reviewList = queryFactory
+			.select(Projections.fields(ReviewResponseDto.ReviewList.class,
+					review.id,
+					review.title,
+					review.content,
+					review.writer,
+					review.RecommendNumber,
+					review.createdAt,
+					user.image.as("userImage")
+				)
+			)
+			.from(review)
+			.where(review.product.id.eq(get.getProductId()))
+			.leftJoin(review.user, user)
+			.orderBy(review.id.desc())
+			.offset(get.getOffset())
+			.limit(get.getLimit() + 1)
+			.fetch();
+
+		for (ReviewResponseDto.ReviewList review : reviewList) {
+
+			var reviewCount = queryFactory
+				.select(reviewComment.review.id.count())
+				.from(reviewComment)
+				.where(reviewComment.review.id.eq(review.getId()))
+				.fetchOne();
+
+			review.setReviewCommCount(reviewCount);
+		}
+
+		return reviewList;
+	}
+
+	@Override
 	public long getReviewCountByProductId(Long productId) {
 
 		return queryFactory
@@ -117,24 +155,6 @@ public class CustomReviewRepositoryImpl implements CustomReviewRepository {
 			.where(review.product.id.eq(productId))
 			.fetchFirst();
 	}
-
-	// @Override
-	// public Slice<ReviewResponseDto.Page> searchProductPageReviewsBySlice(Review findReview) {
-	//
-	// 	queryFactory
-	// 		.select(
-	// 			Projections.bean(ReviewResponseDto.Page.class,
-	// 				review.id, review.title, review.content, review.writer, review.view, review.type,
-	// 				user.id.as("userId"), user.nickname.as("userNickname"), user.image.as("userImage"),
-	// 				product.name.as("productName"), product.detail.as("productDetail")
-	// 			))
-	// 		.from(review)
-	// 		.where(review.id.eq(findReview.getId()))
-	// 		.leftJoin(review.user, user).on(user.eq(findReview.getUser()))
-	// 		.leftJoin(review.product, product).on(product.eq(findReview.getProduct()))
-	// 		.fetch();
-	//
-	// }
 
 	@Override
 	public List<ReviewResponseDto.Best> getBestReviewContent(Integer size) {
@@ -154,5 +174,14 @@ public class CustomReviewRepositoryImpl implements CustomReviewRepository {
 			.offset(0)
 			.limit(size)
 			.fetch();
+	}
+
+	public boolean hasNext(List<ReviewResponseDto.ReviewList> lists, int limit) {
+		if (lists.size() > limit) {
+			lists.remove(limit);
+			return true;
+		}
+
+		return false;
 	}
 }
