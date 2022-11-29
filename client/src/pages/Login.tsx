@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { postLogin } from '../util/apiCollection';
+import { postLogin, postGoogle } from '../util/apiCollection';
 import { useIsLogin } from '../store/login';
 import {
   MdOutlineEmail,
@@ -13,7 +13,6 @@ import {
 } from '../icons';
 import { emailRegex, passwordRegex } from '../util/Regex';
 import Confirm from '../components/Modal/Confirm';
-import { stringify } from 'querystring';
 
 export default function Login() {
   // 홈으로 이동
@@ -106,6 +105,11 @@ export default function Login() {
     }
   };
 
+  // google login
+  const handleGoogle = async () => {
+    const loginResult = await postGoogle();
+  };
+
   // showError 모달
   const [showModal, setShowModal] = useState(false);
   const errorMsg: [string, string] = [
@@ -155,7 +159,6 @@ export default function Login() {
               </span>
             )}
           </div>
-          {/* <div className="relative mb-4 rounded bg-gray-50 h-14 ring-inset ring-1 ring-slate-200"> */}
           <div
             className={`relative bg-gray-50 rounded h-14 ring-inset ring-1 ring-slate-200 hover:ring-slate-400 hover:ring-2 ${
               password.length > 5 && !isValidPassword
@@ -213,9 +216,16 @@ export default function Login() {
           <button className="mx-8">
             <RiKakaoTalkFill className="w-16 h-16 p-3 overflow-hidden text-gray-400 duration-300 bg-white border rounded-full hover:p-2 hover:border-0 hover:text-black hover:bg-yellow-300 bg-border-0" />
           </button>
-          <button className="mx-8">
-            <AiOutlineGoogle className="w-16 h-16 p-3 overflow-hidden text-gray-400 duration-300 bg-white border rounded-full hover:p-2 hover:border-0 hover:text-white hover:bg-red-500 bg-border-0" />
-          </button>
+          <a
+            href="/oauth2/authorization/google"
+            className="mx-8"
+            target="_blank"
+          >
+            <AiOutlineGoogle
+              onClick={handleGoogle}
+              className="w-16 h-16 p-3 overflow-hidden text-gray-400 duration-300 bg-white border rounded-full hover:p-2 hover:border-0 hover:text-white hover:bg-red-500 bg-border-0"
+            />
+          </a>
           <button className="flex justify-center items-center text-[34px] hover:text-[40px] font-black pb-1 w-16 h-16 rounded-full bg-white border hover:border-0 overflow-hidden text-gray-400 hover:text-white hover:bg-green-500 mx-8 duration-300">
             <div className="pointer-events-none">N</div>
           </button>

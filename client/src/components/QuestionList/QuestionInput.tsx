@@ -4,6 +4,7 @@ import { postQuestion } from '../../util/apiCollection';
 import { useNavigate } from 'react-router-dom';
 import { useIsLogin } from '../../store/login';
 import Confirm from '../Modal/Confirm';
+import { loginRefresh } from '../../util/loginRefresh';
 
 export interface QuestionInputProps {
   placeholder: string;
@@ -11,7 +12,7 @@ export interface QuestionInputProps {
 }
 
 QuestionInput.defaultProps = {
-  placeholder: 'Enter your question...',
+  placeholder: '무엇이든 물어보세요',
   button: '질문하기',
 };
 
@@ -51,7 +52,10 @@ export default function QuestionInput({
         console.log('...');
         console.error(Result.status + ' Error');
         break;
-      default:
+      case 412: {
+        loginRefresh();
+        handleSubmit(e);
+      }
     }
   };
 
