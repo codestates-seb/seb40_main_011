@@ -66,7 +66,7 @@ const CreateSnackReview = ({ ratingCategory }: RatingCategory) => {
       });
       console.log(response);
       switch (response.status) {
-        case 204:
+        default:
           location.reload();
           break;
         case 401:
@@ -75,7 +75,7 @@ const CreateSnackReview = ({ ratingCategory }: RatingCategory) => {
           break;
         case 412: {
           loginRefresh();
-          // onCreateClick();
+          onCreateClick();
         }
       }
     } else {

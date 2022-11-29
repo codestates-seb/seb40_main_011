@@ -83,7 +83,7 @@ export interface ReviewComments {
 }
 
 export interface CommentProps {
-  comments: ReviewComments[] | undefined;
+  reviewComments: ReviewComments | undefined;
 }
 
 export interface CategoryProps {

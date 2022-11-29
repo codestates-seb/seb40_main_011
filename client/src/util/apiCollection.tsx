@@ -9,34 +9,7 @@ import {
   AnswerContent,
 } from '../types/mainPageTypes';
 
-let initialToken: any = localStorage.getItem('authorization');
-
-const reissueToken = async (reqUrl: string, expired: string, req: any) => {
-  const data = '';
-  try {
-    const resReissue = await axios.post('/api/refresh', data, {
-      headers: {
-        'Content-Type': 'application/json',
-        Expired: expired,
-        Refresh: localStorage.getItem('refresh'),
-      },
-    });
-
-    initialToken = resReissue.headers.authorization;
-    localStorage.setItem('authorization', initialToken);
-
-    const originalResponse = await axios.post(reqUrl, req, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: initialToken,
-      },
-    });
-
-    return originalResponse;
-  } catch (err: any) {
-    return err.response;
-  }
-};
+const initialToken: any = localStorage.getItem('authorization');
 
 export const postSnack = async (req: any) => {
   const reqUrl = '/api/snack-reviews';
@@ -486,6 +459,20 @@ export const getProducts = async () => {
 export const postComment = async (req: any) => {
   try {
     const response = await axios.post('/api/review-comm', req, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: localStorage.getItem('authorization'),
+      },
+    });
+    return response;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
+export const editComment = async (req: any) => {
+  try {
+    const response = await axios.patch('/api/review-comm', req, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: localStorage.getItem('authorization'),

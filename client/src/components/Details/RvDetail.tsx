@@ -30,8 +30,7 @@ const RvDetail = () => {
     view: 0,
     writer: '',
   });
-  const [comments, setComments] = useState<ReviewComments[]>();
-
+  const [comments, setComments] = useState<ReviewComments[]>([]);
   const getParsedDate = (createdAt: string) => {
     return new Date(createdAt).toLocaleDateString('ko-KR');
   };
@@ -59,6 +58,20 @@ const RvDetail = () => {
         )}
       </>
     );
+  };
+  const CommentView = () => {
+    if (review !== undefined && review?.reviewComments?.length > 0) {
+      return (
+        <div className="flex flex-col items-center w-full my-8">
+          <div className="flex justify-start w-full p-4 mb-4 text-2xl font-bold ">
+            Comment
+          </div>
+          {review.reviewComments.map((el: ReviewComments, idx: number) => (
+            <Comment key={idx} reviewComments={el} />
+          ))}
+        </div>
+      );
+    } else return null;
   };
 
   return (
@@ -89,12 +102,6 @@ const RvDetail = () => {
           </div>
         </div>
         <section className="flex flex-col items-center border-b border-gray-200">
-          {/* {review?.thumbnail !== undefined ? (
-            <div className="flex justify-center">
-              <img className="w-1/2 my-16" src={review?.thumbnail} />
-            </div>
-          ) : null} */}
-
           <div id="viewer" className="p-4 my-16 whitespace-pre-wrap">
             <ConvertedContent markdown={review?.content} />
           </div>
@@ -104,18 +111,9 @@ const RvDetail = () => {
               reviewId={reviewId}
             />
           </div>
+          <CommentView />
+          <CommentInput />;
         </section>
-        {review !== undefined && review?.reviewComments?.length > 0 ? (
-          <div className="flex flex-col items-center w-full my-8">
-            <div className="flex justify-start w-full p-4 mb-4 text-2xl font-bold ">
-              Comment
-            </div>
-            <Comment comments={review.reviewComments} />
-            <CommentInput />
-          </div>
-        ) : (
-          <CommentInput />
-        )}
       </div>
     </div>
   );
