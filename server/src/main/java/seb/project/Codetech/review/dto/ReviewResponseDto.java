@@ -36,9 +36,11 @@ public class ReviewResponseDto {
 	public static class Comment {
 		private Long id;
 		private Long userId;
+		private String writer;
 		private String userImage;
 		private String content;
 		private Comment parent;
+		private LocalDateTime createdAt;
 		private List<Comment> child = new ArrayList<>();
 	}
 
