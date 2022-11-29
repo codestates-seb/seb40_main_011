@@ -32,7 +32,7 @@ const SnackReviewTab = () => {
   useEffect(() => {
     const params = `?page=${currentPage}&size=5&sort=createdAt`;
     const snackReviewData = async () => {
-      const { data } = await getUserReview('snack-reviews', params);
+      const { data }: any = await getUserReview('snack-reviews', params);
       setReviewData(data?.snackReviews.content);
       setTotalPages(data?.snackReviews.totalPages);
     };
