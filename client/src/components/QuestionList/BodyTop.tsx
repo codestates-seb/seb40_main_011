@@ -97,7 +97,7 @@ export default function BodyTop({
           <button
             onClick={() => {
               // if (editable || editable !== undefined) {
-              if (!editable) {
+              if (!editable && questionId !== undefined) {
                 setModalMsg('답변달린 질문은 수정할 수 없습니다.');
                 return setShowAlert(true);
               }
@@ -109,7 +109,7 @@ export default function BodyTop({
           <div className="h-3 border-l border border-gray-200 inline-block mx-1.5" />
           <button
             onClick={() => {
-              if (!editable) {
+              if (!editable && questionId !== undefined) {
                 setModalMsg('답변달린 질문은 삭제할 수 없습니다.');
                 return setShowAlert(true);
               }
