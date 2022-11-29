@@ -11,25 +11,68 @@ import {
 
 let initialToken: any = localStorage.getItem('authorization');
 
+const reissueToken = async (reqUrl: string, expired: string, req: any) => {
+  const data = '';
+  try {
+    const resReissue = await axios.post('/api/refresh', data, {
+      headers: {
+        'Content-Type': 'application/json',
+        Expired: expired,
+        Refresh: localStorage.getItem('refresh'),
+      },
+    });
+
+    initialToken = resReissue.headers.authorization;
+    localStorage.setItem('authorization', initialToken);
+
+    const originalResponse = await axios.post(reqUrl, req, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: initialToken,
+      },
+    });
+
+    return originalResponse;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
+export const postSnack = async (req: any) => {
+  const reqUrl = '/api/snack-reviews';
+  try {
+    const searchResponse = await axios.post(reqUrl, req, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: localStorage.getItem('authorization'),
+      },
+    });
+    return searchResponse;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
 export const getReview = async () =>
   await axios
     .get('/api/review')
     .then((data) => data)
     .catch((err) => err.response);
 
-export const getProduct = async () =>
-  await axios
-    .get('/api/product')
-    .then((data) => data)
-    .catch((err) => err.response);
+export const getProduct = async (productId: number) => {
+  try {
+    const response = await axios.get(`/api/reviews/best?size=${productId}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    return response;
+  } catch (err: any) {
+    return err.response;
+  }
+};
 
-// export const postProduct = async (data: any) =>
-//   await axios
-//     .post('/api/product', data)
-//     .then((data) => data)
-//     .catch((err) => err.response);
-
-export const getReviewDetail = async (params: string | undefined) =>
+export const getReviewDetail = async (params: number | undefined) =>
   await axios
     .get(`/api/reviews/${params}`)
     .then((data) => data)
@@ -52,6 +95,26 @@ export const postLogin = async (data: LoginInputs) => {
   try {
     const loginResponse = await axios.post('/api/login', data);
     return loginResponse;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
+export const postLike = async (reviewId: number) => {
+  try {
+    const likeResponse = await axios.post(
+      '/api/recommend',
+      {
+        reviewId,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: localStorage.getItem('authorization'),
+        },
+      }
+    );
+    return likeResponse;
   } catch (err: any) {
     return err.response;
   }
@@ -80,9 +143,13 @@ export const postGoogle = async () => {
   }
 };
 
-export const getSearchResult = async () => {
+export const getProductDetail = async (productId: number) => {
   try {
-    const searchResponse = await axios.get('/api/products/1');
+    const searchResponse = await axios.get(`/api/products/${productId}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
     return searchResponse;
   } catch (err: any) {
     return err.response;
@@ -125,49 +192,6 @@ export const editAccount = async () => {
   try {
     const editUserInfo = await axios.patch('/api/user/withdraw');
     return editUserInfo;
-  } catch (err: any) {
-    return err.response;
-  }
-};
-
-export const postSnack = async (req: any) => {
-  try {
-    const searchResponse = await axios.post('/api/snack-reviews', req, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: initialToken,
-      },
-    });
-    return searchResponse;
-  } catch (err: any) {
-    if (err.response.status === 412) {
-      console.log('reissue 진행중...');
-      reissueToken(initialToken, req);
-    } else return console.error(err.response);
-  }
-};
-
-const reissueToken = async (expired: any, req: any) => {
-  const data = '';
-  try {
-    const resReissue = await axios.post('/api/refresh', data, {
-      headers: {
-        'Content-Type': 'application/json',
-        Expired: expired,
-        Refresh: localStorage.getItem('refresh'),
-      },
-    });
-
-    initialToken = resReissue.headers.authorization;
-
-    const originalResponse = await axios.post('/api/snack-reviews', req, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: initialToken,
-      },
-    });
-    console.log(originalResponse);
-    return originalResponse;
   } catch (err: any) {
     return err.response;
   }
@@ -454,6 +478,34 @@ export const getProducts = async () => {
       },
     });
     return response;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
+export const postComment = async (req: any) => {
+  try {
+    const response = await axios.post('/api/review-comm', req, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: localStorage.getItem('authorization'),
+      },
+    });
+    return response;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
+export const deleteComment = async (id: number) => {
+  try {
+    const searchResponse = await axios.delete(`/api/review-comm/${id}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: localStorage.getItem('authorization'),
+      },
+    });
+    return searchResponse;
   } catch (err: any) {
     return err.response;
   }

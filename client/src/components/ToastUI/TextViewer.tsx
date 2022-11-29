@@ -14,11 +14,12 @@ import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
 
 const test = `#markdown test`; //잘 뜨나 테스트삼아 쓰는 것. 나중에 지워도 돼요
 
-export default function TextViewer() {
+const TextViewer = (initialValue: any) => {
   return (
-    <Viewer
-      initialValue={test}
-      plugins={[[codeSyntaxHighlight, { highlighter: Prism }]]}
-    />
+    <div id="viewer">
+      <Viewer initialValue={initialValue} />
+    </div>
   );
-}
+};
+
+export default TextViewer;

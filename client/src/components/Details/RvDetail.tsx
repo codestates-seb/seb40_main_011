@@ -3,28 +3,62 @@ import { getReviewDetail } from '../../util/apiCollection';
 import { useEffect, useState } from 'react';
 import { Review, ReviewComments } from '../../types/mainPageTypes';
 import { useNavigate, useParams } from 'react-router-dom';
-import { AiOutlineLike } from 'react-icons/ai';
 import { CommentInput } from './CommentInput';
-
+import { Viewer } from '@toast-ui/react-editor';
+import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 import Comment from './Comment';
+import HandleLike from './Like';
 
 const RvDetail = () => {
+  interface markdownProps {
+    markdown: string | undefined;
+  }
   const navigate = useNavigate();
   const params = useParams();
-  const [review, setReview] = useState<Review | undefined>();
+  const reviewId = Number(params.id);
+  const [review, setReview] = useState<Review>({
+    content: '',
+    createdAt: '',
+    productDetail: '',
+    productName: '',
+    recommendNumber: 0,
+    reviewComments: [],
+    title: '',
+    type: '',
+    userId: 0,
+    userImage: '',
+    view: 0,
+    writer: '',
+  });
   const [comments, setComments] = useState<ReviewComments[]>();
+
+  const getParsedDate = (createdAt: string) => {
+    return new Date(createdAt).toLocaleDateString('ko-KR');
+  };
 
   useEffect(() => {
     const getReviewData = async () => {
-      const { data } = await getReviewDetail(params.id);
+      const { data } = await getReviewDetail(reviewId);
       setReview(data);
-      setComments(data?.comments);
+      setComments(data?.reviewComments);
     };
     getReviewData();
   }, []);
 
   const onTypeClick = () => {
     navigate(`/categories/review/${params.id}`);
+  };
+
+  const ConvertedContent = ({ markdown = review?.content }: markdownProps) => {
+    return (
+      <>
+        {markdown && (
+          <div id="viewer">
+            <Viewer initialValue={markdown} />
+          </div>
+        )}
+      </>
+    );
   };
 
   return (
@@ -47,31 +81,36 @@ const RvDetail = () => {
         <div className="flex items-end justify-end w-full p-4 border-b border-gray-200">
           <img
             className="w-12 h-12 m-2 rounded-full"
-            src={review?.profileImg}
+            src={`https://codetech.nworld.dev${review?.userImage}`}
           />
           <div className="flex flex-col items-end p-2">
-            <div>{review?.nickname}</div>
-            <div>{review?.createdAt}</div>
+            <div>{review?.writer}</div>
+            <div>{getParsedDate(review?.createdAt)}</div>
           </div>
         </div>
         <section className="flex flex-col items-center border-b border-gray-200">
-          <div className="flex justify-center">
-            <img className="w-1/2 my-16" src={review?.thumbnail} />
+          {/* {review?.thumbnail !== undefined ? (
+            <div className="flex justify-center">
+              <img className="w-1/2 my-16" src={review?.thumbnail} />
+            </div>
+          ) : null} */}
+
+          <div id="viewer" className="p-4 my-16 whitespace-pre-wrap">
+            <ConvertedContent markdown={review?.content} />
           </div>
-          <div className="p-4 my-16 whitespace-pre-wrap">{review?.content}</div>
-          <div className="flex items-center justify-center my-8 ">
-            <div>{review?.likes}</div>
-            <button>
-              <AiOutlineLike size="60" />
-            </button>
+          <div className="flex items-end my-8 ">
+            <HandleLike
+              recommendNumber={review.recommendNumber}
+              reviewId={reviewId}
+            />
           </div>
         </section>
-        {review !== undefined && review?.comments?.length > 0 ? (
+        {review !== undefined && review?.reviewComments?.length > 0 ? (
           <div className="flex flex-col items-center w-full my-8">
             <div className="flex justify-start w-full p-4 mb-4 text-2xl font-bold ">
               Comment
             </div>
-            <Comment comments={comments} />
+            <Comment comments={review.reviewComments} />
             <CommentInput />
           </div>
         ) : (
@@ -81,4 +120,5 @@ const RvDetail = () => {
     </div>
   );
 };
+
 export default RvDetail;

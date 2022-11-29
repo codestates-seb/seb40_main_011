@@ -6,6 +6,7 @@ import { postSnack } from '../../util/apiCollection';
 import { useParams } from 'react-router-dom';
 import { useIsLogin } from '../../store/login';
 import { SnackReviewScore } from '../../types/mainPageTypes';
+import { loginRefresh } from '../../util/loginRefresh';
 const CreateSnackReview = ({ ratingCategory }: RatingCategory) => {
   const { isLogin } = useIsLogin();
   const params = useParams();
@@ -58,8 +59,25 @@ const CreateSnackReview = ({ ratingCategory }: RatingCategory) => {
       1
     );
     if (ratingValidation === 1) {
-      await postSnack({ score, content, productId: params.id });
-      // window.location.reload();
+      const response = await postSnack({
+        score,
+        content,
+        productId: params.id,
+      });
+      console.log(response);
+      switch (response.status) {
+        case 204:
+          location.reload();
+          break;
+        case 401:
+          alert('에러');
+          console.error(response.status + ' Error');
+          break;
+        case 412: {
+          loginRefresh();
+          // onCreateClick();
+        }
+      }
     } else {
       window.alert('별점을 매겨주세요!');
     }
