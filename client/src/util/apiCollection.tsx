@@ -304,7 +304,7 @@ export const deleteQuestion = async (questionId: number | undefined) => {
     const response = await axios.delete(`/api/questions/${questionId}`, {
       headers: { Authorization: localStorage.getItem('authorization') },
     });
-    // console.log(response);
+    console.log(response);
     return response;
   } catch (err: any) {
     return err.response;
