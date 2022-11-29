@@ -8,6 +8,7 @@ import WriteAnswer from '../Modal/WriteAnswer';
 import moment from 'moment';
 import { format } from 'timeago.js';
 import Confirm from '../Modal/Confirm';
+import { loginRefresh } from '../../util/loginRefresh';
 
 export default function BodyTop({
   nickname,
@@ -43,7 +44,10 @@ export default function BodyTop({
           alert('에러');
           console.error(Result.status + ' Error');
           break;
-        default:
+        case 412: {
+          loginRefresh();
+          handleDelete();
+        }
       }
     }
     if (answerId !== undefined) {
@@ -56,7 +60,10 @@ export default function BodyTop({
           alert('에러');
           console.error(Result.status + ' Error');
           break;
-        default:
+        case 412: {
+          loginRefresh();
+          handleDelete();
+        }
       }
     }
   };

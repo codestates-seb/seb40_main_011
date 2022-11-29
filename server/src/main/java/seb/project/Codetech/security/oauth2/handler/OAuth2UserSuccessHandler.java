@@ -75,11 +75,12 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 
 		return UriComponentsBuilder
 			.newInstance()
-			.scheme("https")
-//			.host("localhost")
-			.host("codetech.nworld.dev")
-//			.port(80)
+			.scheme("http")
+			.host("localhost")
+
+//			.host("codetech.nworld.dev")
 			.path("/receive-token.html")
+				.port(3000)
 			.queryParams(queryParams)
 			.build()
 			.toUri();

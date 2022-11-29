@@ -52,7 +52,7 @@ public class CustomReviewRepositoryImpl implements CustomReviewRepository {
 		var commentMap = new HashMap<Long, ReviewResponseDto.Comment>();
 
 		for (var comment : comments) {
-			//comment.setChild(new ArrayList<>());
+			comment.setChild(new ArrayList<>());
 			commentMap.put(comment.getId(), comment);
 		}
 

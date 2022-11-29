@@ -186,7 +186,8 @@ public class UserService {
         return userAndReviewsDto;
     }
 
-    public UserAndAnswersDto userAndAnswersDto(String email,int page, int size, String sort){
+    public UserAndAnswersDto userAndAnswersDto(String email, int page, int size, String sort,
+                                               int answerPage, int answerSize, String answerSort){
         User user = findUser(email);
         UserAndAnswersDto userAndAnswersDto = new UserAndAnswersDto();
         List<Answer> answers = user.getAnswers();
@@ -201,12 +202,12 @@ public class UserService {
             for (Answer answer : answerList) {
                 answerCards.add(new UserAndAnswersDto.MyAnsweredQuestionCard.QuestionAnswer(answer));
             }
-            PageRequest pageRequest = PageRequest.of(page,size, Sort.by(sort).descending());
+            PageRequest pageRequest = PageRequest.of(answerPage,answerSize, Sort.by(answerSort).descending());
             int start = (int)pageRequest.getOffset();
             int end = Math.min((start+pageRequest.getPageSize()),answerCards.size());
-            Page<UserAndAnswersDto.MyAnsweredQuestionCard.QuestionAnswer> answerPage = new PageImpl<>(
+            Page<UserAndAnswersDto.MyAnsweredQuestionCard.QuestionAnswer> answersPage = new PageImpl<>(
                     answerCards.subList(start,end),pageRequest,answerCards.size());
-            cards.add(new UserAndAnswersDto.MyAnsweredQuestionCard(question, answerPage));
+            cards.add(new UserAndAnswersDto.MyAnsweredQuestionCard(question, answersPage));
         }
         PageRequest pageRequest = PageRequest.of(page,size, Sort.by(sort).descending());
         int start = (int)pageRequest.getOffset();

@@ -34,6 +34,11 @@ spring:
             scope:
               - email
               - profile
+  mail:
+    host: smtp.naver.com
+    port: 465
+    username: ${SPRING_MAIL_USERNAME}
+    password: ${SPRING_MAIL_PASSWORD}
 
 jwt:
   secret-key: ${JWT_SECRET_KEY}

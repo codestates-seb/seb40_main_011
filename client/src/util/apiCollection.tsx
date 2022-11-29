@@ -71,6 +71,15 @@ export const postRefresh = async () => {
   }
 };
 
+export const postGoogle = async () => {
+  try {
+    const response = await axios.post('/oauth2/authorization/google');
+    console.log(response);
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
 export const getSearchResult = async () => {
   try {
     const searchResponse = await axios.get('/api/products/1');
@@ -419,6 +428,19 @@ export const uploadEditorImage = async (data: any) => {
   try {
     const editorImg = await axios.post('/api/upload', data);
     return editorImg;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
+export const postEditorContent = async (data: any) => {
+  try {
+    const editorContent = await axios.post('/api/reviews', data, {
+      headers: {
+        Authorization: initialToken,
+      },
+    });
+    return editorContent;
   } catch (err: any) {
     return err.response;
   }

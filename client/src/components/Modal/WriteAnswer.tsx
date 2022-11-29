@@ -1,8 +1,8 @@
-import { exit } from 'process';
 import { useState } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import { WriteAnswerProps } from '../../types/mainPageTypes';
 import { postAnswer, patchAnswer } from '../../util/apiCollection';
+import { loginRefresh } from '../../util/loginRefresh';
 
 export default function WriteAnswer({
   setShowModal,
@@ -56,7 +56,10 @@ export default function WriteAnswer({
           console.log('...');
           console.error(Result.status + ' Error');
           break;
-        default:
+        case 412: {
+          loginRefresh();
+          handleSubmit(e);
+        }
       }
     }
     if (answerId !== undefined) {
@@ -74,7 +77,10 @@ export default function WriteAnswer({
           console.log('...');
           console.error(Result.status + ' Error');
           break;
-        default:
+        case 412: {
+          loginRefresh();
+          handleSubmit(e);
+        }
       }
     }
   };

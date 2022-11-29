@@ -45,7 +45,7 @@ export default function QuestionLists() {
           <div className="w-full flex justify-between pb-4 px-2">
             <div className="flex items-center text-3xl text-slate-600">
               <span className="mr-2 font-bold tracking-tight">
-                {/* Somebody help me! */}저 좀 도와주세요 ㅠ_ㅠ
+                저 좀 도와주세요 ㅠ_ㅠ
               </span>
             </div>
             <SelectBox
