@@ -96,11 +96,13 @@ public class ReviewController {
 	}
 
 	@GetMapping("/search")
-	public ResponseEntity<?> getSearchReview(@RequestParam String keyword) {
+	public ResponseEntity<ReviewResponseDto.Slice> getSearchReview(@RequestParam String keyword,
+		@RequestParam Long offset,
+		@RequestParam int limit) {
 
-		List<ReviewResponseDto.Search> searchList = reviewService.searchReview(keyword);
+		ReviewResponseDto.Slice reviewSlice = reviewService.searchReview(keyword, offset, limit);
 
-		return ResponseEntity.ok(searchList);
+		return ResponseEntity.ok(reviewSlice);
 	}
 
 	@GetMapping("/product")
@@ -109,8 +111,8 @@ public class ReviewController {
 		@RequestParam Long offset,
 		@RequestParam int limit) {
 
-		ReviewResponseDto.Slice slices = reviewService.loadSliceReview(id, sort, offset, limit);
+		ReviewResponseDto.Slice productSlices = reviewService.loadSliceReview(id, sort, offset, limit);
 
-		return ResponseEntity.ok(slices);
+		return ResponseEntity.ok(productSlices);
 	}
 }
