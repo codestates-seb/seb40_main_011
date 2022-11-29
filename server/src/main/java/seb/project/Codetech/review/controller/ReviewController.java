@@ -101,4 +101,12 @@ public class ReviewController {
 
 		return ResponseEntity.ok(reviewLists);
 	}
+
+	@GetMapping("/search")
+	public ResponseEntity<?> getSearchReview(@RequestParam String keyword) {
+
+		List<ReviewResponseDto.Search> searchList = reviewService.searchReview(keyword);
+
+		return ResponseEntity.ok(searchList);
+	}
 }
