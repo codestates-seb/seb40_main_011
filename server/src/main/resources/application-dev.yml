@@ -29,10 +29,15 @@ spring:
             scope:
               - email
               - profile
+  mail:
+    host: smtp.naver.com
+    port: 465
+    username: ${SPRING_MAIL_USERNAME}
+    password: ${SPRING_MAIL_PASSWORD}
 
 jwt:
   secret-key: ${JWT_SECRET_KEY}
-  access-token-expiration-minutes: 1
-  refresh-token-expiration-minutes: 420
+  access-token-expiration-minutes: ${JWT_ACCESS_EXP_MINUTES}
+  refresh-token-expiration-minutes: ${JWT_REFRESH_EXP_MINUTES}
 
 filePath: /images/

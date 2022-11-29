@@ -93,4 +93,20 @@ public class ReviewController {
 
 		return ResponseEntity.ok(loadBestReview);
 	}
+
+	@GetMapping("/list")
+	public ResponseEntity<?> getListReview(@RequestBody ReviewRequestDto.Get get) {
+
+		List<ReviewResponseDto.ReviewList> reviewLists = reviewService.loadSliceReview(get);
+
+		return ResponseEntity.ok(reviewLists);
+	}
+
+	@GetMapping("/search")
+	public ResponseEntity<?> getSearchReview(@RequestParam String keyword) {
+
+		List<ReviewResponseDto.Search> searchList = reviewService.searchReview(keyword);
+
+		return ResponseEntity.ok(searchList);
+	}
 }

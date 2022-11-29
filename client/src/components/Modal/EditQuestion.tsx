@@ -2,6 +2,7 @@ import { useState } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import { EditQuestionProps } from '../../types/mainPageTypes';
 import { patchQuestion } from '../../util/apiCollection';
+import { loginRefresh } from '../../util/loginRefresh';
 
 export default function EditQuestion({
   setShowModal,
@@ -37,10 +38,12 @@ export default function EditQuestion({
           break;
         case 401:
           alert('에러');
-          console.log('...');
           console.error(Result.status + ' Error');
           break;
-        default:
+        case 412: {
+          loginRefresh();
+          handleSubmit(e);
+        }
       }
     }
   };

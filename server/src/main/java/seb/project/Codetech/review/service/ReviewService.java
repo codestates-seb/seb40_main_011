@@ -11,6 +11,7 @@ import seb.project.Codetech.global.exception.BusinessLogicException;
 import seb.project.Codetech.global.exception.ExceptionCode;
 import seb.project.Codetech.product.entity.Product;
 import seb.project.Codetech.product.service.ProductService;
+import seb.project.Codetech.review.dto.ReviewRequestDto;
 import seb.project.Codetech.review.dto.ReviewResponseDto;
 import seb.project.Codetech.review.entity.Review;
 import seb.project.Codetech.review.repository.ReviewRepository;
@@ -87,6 +88,14 @@ public class ReviewService {
 		review.setView(review.getView() + 1L);
 		Review saveReview = reviewRepository.save(review);
 		return reviewRepository.getReviewPageByReview(id, saveReview);
+	}
+
+	public List<ReviewResponseDto.Search> searchReview(String keyword) {
+		return reviewRepository.searchReviewByKeyword(keyword);
+	}
+
+	public List<ReviewResponseDto.ReviewList> loadSliceReview(ReviewRequestDto.Get get) {
+		return reviewRepository.loadSortReviewByProductId(get);
 	}
 
 	public List<ReviewResponseDto.Best> loadBestReview(Integer size) {

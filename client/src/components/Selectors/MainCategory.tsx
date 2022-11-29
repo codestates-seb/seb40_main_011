@@ -1,23 +1,23 @@
 import { GrCube } from 'react-icons/gr';
 import { FiMonitor } from 'react-icons/fi';
 import { BiMouseAlt } from 'react-icons/bi';
-import { BsKeyboard, BsLaptop, BsTablet, BsThreeDots } from 'react-icons/bs';
+import { BsKeyboard, BsLaptop, BsThreeDots } from 'react-icons/bs';
+import { TfiDesktop } from 'react-icons/tfi';
 import { CategoryProps } from '../../types/mainPageTypes';
 
 const MainCategory = ({ setCategory, setCurrentPage }: CategoryProps) => {
   const onClick = (e: React.MouseEvent<HTMLElement>) => {
     setCategory(e.currentTarget.id);
-    console.log(e.currentTarget.id);
     setCurrentPage(1);
   };
   const categoryList = [
-    { id: 'All', icon: <GrCube size="30" /> },
-    { id: 'Monitor', icon: <FiMonitor size="30" /> },
-    { id: 'Mouse', icon: <BiMouseAlt size="30" /> },
-    { id: 'keyboard', icon: <BsKeyboard size="30" /> },
-    { id: 'Laptop', icon: <BsLaptop size="30" /> },
-    { id: 'Tablet', icon: <BsTablet size="30" /> },
-    { id: 'etc', icon: <BsThreeDots size="30" /> },
+    { id: 'all', name: '전체 보기', icon: <GrCube size="30" /> },
+    { id: 'desktop', name: '데스크탑', icon: <TfiDesktop size="30" /> },
+    { id: 'laptop', name: '노트북', icon: <BsLaptop size="30" /> },
+    { id: 'monitor', name: '모니터', icon: <FiMonitor size="30" /> },
+    { id: 'keyboard', name: '키보드', icon: <BsKeyboard size="30" /> },
+    { id: 'mouse', name: '마우스', icon: <BiMouseAlt size="30" /> },
+    { id: 'etc', name: 'etc', icon: <BsThreeDots size="30" /> },
   ];
 
   return (
@@ -27,11 +27,11 @@ const MainCategory = ({ setCategory, setCurrentPage }: CategoryProps) => {
           <button
             key={idx}
             onClick={onClick}
-            id={el.id.toLowerCase()}
+            id={el.id}
             className="flex flex-col items-center justify-center w-24 p-4 ease-in-out duration-300 hover:bg-slate-300 hover:rounded-full"
           >
             <div>{el.icon}</div>
-            <div>{el.id}</div>
+            <div>{el.name}</div>
           </button>
         );
       })}

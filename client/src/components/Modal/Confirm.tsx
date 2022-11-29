@@ -12,7 +12,7 @@ export default function Confirm({ setShowModal, msg }: setShowModalProps) {
       className="fixed inset-0 h-screen w-full z-30 bg-black/30 backdrop-blur-sm flex justify-content justify-center items-center"
     >
       <div className="w-[28rem] z-40 rounded-xl overflow-hidden">
-        <div className="bg-white px-4 py-12 font-medium text-center text-lg">
+        <div className="bg-white px-4 py-12 font-medium text-center text-lg text-gray-600">
           <span>{msg}</span>
         </div>
         <button

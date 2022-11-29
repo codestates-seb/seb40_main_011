@@ -18,14 +18,16 @@ public class ReviewResponseDto {
 		private String title;
 		private String content;
 		private Long view;
+		private Long RecommendNumber;
 		private Type type;
 		private String writer;
+		private LocalDateTime createdAt;
 		private Long userId;
 		private String userImage;
 		private String productName;
 		private String productDetail;
 		@Setter
-		private List<Comment> reviewComments;
+		private List<Comment> reviewComments = new ArrayList<>();
 	}
 
 	@Getter
@@ -34,10 +36,22 @@ public class ReviewResponseDto {
 	public static class Comment {
 		private Long id;
 		private Long userId;
+		private String writer;
 		private String userImage;
 		private String content;
 		private Comment parent;
+		private LocalDateTime createdAt;
 		private List<Comment> child = new ArrayList<>();
+	}
+
+	@Getter
+	@NoArgsConstructor
+	public static class Search {
+		private String title;
+		private String content;
+		private Long RecommendNumber;
+		private String writer;
+		private String userImage;
 	}
 
 	@Getter
@@ -54,10 +68,28 @@ public class ReviewResponseDto {
 	}
 
 	@Getter
+	@Setter
+	@NoArgsConstructor
+	@AllArgsConstructor
+	public static class ReviewList {
+		private Long id;
+		private String title;
+		private String content;
+		private Long RecommendNumber;
+		private LocalDateTime createdAt;
+		private String writer;
+		private String userImage;
+		//private String thumbnail;
+		@Setter
+		private Long reviewCommCount;
+	}
+
+	@Getter
+	@Setter
 	@NoArgsConstructor
 	@AllArgsConstructor
 	public static class Slice {
+		private List<ReviewList> reviewLists;
 		private boolean hasNext;
-		private List<Page> pages;
 	}
 }

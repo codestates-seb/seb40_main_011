@@ -7,6 +7,7 @@ import { AiFillCaretDown } from 'react-icons/ai';
 import { AiFillCaretUp } from 'react-icons/ai';
 import axios, { AxiosError } from 'axios';
 import useCategorie from '../../store/categorie';
+import useReview from '../../store/review';
 
 interface ICategorieData {
   id: number;
@@ -15,11 +16,13 @@ interface ICategorieData {
 
 const ProductSelector = () => {
   const [spread, setSpread] = useState(false);
-  const { clickName, setClickName } = useCategorie();
+  const { clickName } = useCategorie();
   //get으로 받아온 데이터 저장
   const [categorie, setCategorie] = useState<ICategorieData[] | null>([]);
   //소분류 셀렉터에서 클릭한 버튼의 이름을 저장
   const [selectName, setSelectName] = useState('제품 선택');
+  //소분류에서 선택한 제품의 productId를 저장
+  const { setProductId } = useReview();
 
   const handleSelect = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
@@ -63,8 +66,11 @@ const ProductSelector = () => {
   //소분류 셀렉터에서 카테고리 클릭시 그 버튼의 id를 저장
   const handleButClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (e.currentTarget.textContent) {
-      setSelectName(e.currentTarget.textContent); //클릭한 버튼의 id값이 들어옴
+      setSelectName(e.currentTarget.textContent); //클릭한 버튼의 name값이 들어옴
       setSpread(!spread);
+    }
+    if (e.currentTarget.value) {
+      setProductId(e.currentTarget.value); //클릭한 버튼의 제품id값이 들어옴
     }
   };
 
@@ -94,6 +100,7 @@ const ProductSelector = () => {
                 <button
                   key={idx}
                   onClick={handleButClick}
+                  value={product.id}
                   className="flex items-center w-full px-4 pt-2 pb-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900"
                 >
                   {product.name}

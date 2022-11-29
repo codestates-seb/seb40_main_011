@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { Password } from '../components/Modal/EditPassword';
 import { blob } from 'stream/consumers';
+import { EditSncakReview } from '../components/Modal/SnackReviewModal';
 import {
   LoginInputs,
   SignupInputs,
@@ -8,7 +9,7 @@ import {
   AnswerContent,
 } from '../types/mainPageTypes';
 
-const initialToken = localStorage.getItem('authorization');
+let initialToken: any = localStorage.getItem('authorization');
 
 export const getReview = async () =>
   await axios
@@ -30,14 +31,50 @@ export const getProduct = async () =>
 
 export const getReviewDetail = async (params: string | undefined) =>
   await axios
-    .get(`/api/review/${params}`)
+    .get(`/api/reviews/${params}`)
     .then((data) => data)
     .catch((err) => err.response);
+
+export const getBestReview = async (size: number) => {
+  try {
+    const response = await axios.get(`/api/reviews/best?size=${size}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    return response;
+  } catch (err: any) {
+    return err.response;
+  }
+};
 
 export const postLogin = async (data: LoginInputs) => {
   try {
     const loginResponse = await axios.post('/api/login', data);
     return loginResponse;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
+export const postRefresh = async () => {
+  try {
+    const response = await axios.post('/api/refresh', '', {
+      headers: {
+        Expired: localStorage.getItem('authorization'),
+        Refresh: localStorage.getItem('refresh'),
+      },
+    });
+    return response;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
+export const postGoogle = async () => {
+  try {
+    const response = await axios.post('/oauth2/authorization/google');
+    console.log(response);
   } catch (err: any) {
     return err.response;
   }
@@ -98,10 +135,39 @@ export const postSnack = async (req: any) => {
     const searchResponse = await axios.post('/api/snack-reviews', req, {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: localStorage.getItem('authorization'),
+        Authorization: initialToken,
       },
     });
     return searchResponse;
+  } catch (err: any) {
+    if (err.response.status === 412) {
+      console.log('reissue 진행중...');
+      reissueToken(initialToken, req);
+    } else return console.error(err.response);
+  }
+};
+
+const reissueToken = async (expired: any, req: any) => {
+  const data = '';
+  try {
+    const resReissue = await axios.post('/api/refresh', data, {
+      headers: {
+        'Content-Type': 'application/json',
+        Expired: expired,
+        Refresh: localStorage.getItem('refresh'),
+      },
+    });
+
+    initialToken = resReissue.headers.authorization;
+
+    const originalResponse = await axios.post('/api/snack-reviews', req, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: initialToken,
+      },
+    });
+    console.log(originalResponse);
+    return originalResponse;
   } catch (err: any) {
     return err.response;
   }
@@ -141,14 +207,25 @@ export const getGoodSnack = async (productId: any, limit: number) => {
 
 export const getSnackStats = async (productId: number) => {
   try {
-    const response = await axios.get(
-      `/api/snack-reviews/stats?productId=${productId}`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    );
+    const response = await axios.get(`/api/product-stats/${productId}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    return response;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
+export const editSnack = async (snackId: number, data: EditSncakReview) => {
+  try {
+    const response = await axios.patch(`/api/snack-reviews/${snackId}`, data, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: localStorage.getItem('authorization'),
+      },
+    });
     return response;
   } catch (err: any) {
     return err.response;
@@ -250,7 +327,7 @@ export const deleteQuestion = async (questionId: number | undefined) => {
     const response = await axios.delete(`/api/questions/${questionId}`, {
       headers: { Authorization: localStorage.getItem('authorization') },
     });
-    // console.log(response);
+    console.log(response);
     return response;
   } catch (err: any) {
     return err.response;
@@ -302,7 +379,7 @@ export const editProfileImg = async (data: any) => {
 
 export const editNickname = async (data: any) => {
   try {
-    const submitImg = await axios.patch('/api/user', data, {
+    const submitImg = await axios.patch('/api/user/nickname', data, {
       headers: { Authorization: initialToken },
     });
     return submitImg;
@@ -310,10 +387,11 @@ export const editNickname = async (data: any) => {
     return err.response;
   }
 };
+479;
 
 export const editPassword = async (data: Password) => {
   try {
-    const submitImg = await axios.patch('/api/user', data, {
+    const submitImg = await axios.patch('/api/user/password', data, {
       headers: { Authorization: initialToken },
     });
     return submitImg;
@@ -350,6 +428,19 @@ export const uploadEditorImage = async (data: any) => {
   try {
     const editorImg = await axios.post('/api/upload', data);
     return editorImg;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
+export const postEditorContent = async (data: any) => {
+  try {
+    const editorContent = await axios.post('/api/reviews', data, {
+      headers: {
+        Authorization: initialToken,
+      },
+    });
+    return editorContent;
   } catch (err: any) {
     return err.response;
   }

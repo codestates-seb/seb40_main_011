@@ -9,6 +9,10 @@ export interface EditProfile {
   password: string | null;
 }
 
+interface NicknameType {
+  nickname: string;
+}
+
 const EditProfile = ({
   openEditProfileModalHandler,
 }: EditProfileModalHandler) => {
@@ -25,7 +29,7 @@ const EditProfile = ({
   };
 
   const handleEditNickName = async () => {
-    const data: any = { nickname: username };
+    const data: NicknameType = { nickname: username };
 
     if (!usernameError) {
       const submitEditNick = await editNickname(data);
