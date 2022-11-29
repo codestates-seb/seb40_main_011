@@ -170,7 +170,7 @@ public class CustomReviewRepositoryImpl implements CustomReviewRepository {
 	}
 
 	@Override
-	public List<ReviewResponseDto.Search> searchReviewByKeyword(String keyword) {
+	public List<ReviewResponseDto.Search> searchReviewByKeyword(String keyword, Long offset, int limit) {
 		return queryFactory
 			.select(Projections.fields(ReviewResponseDto.Search.class,
 					review.title,
@@ -185,6 +185,8 @@ public class CustomReviewRepositoryImpl implements CustomReviewRepository {
 				review.title.contains(keyword).or(review.content.contains(keyword)))
 			.leftJoin(review.user, user)
 			.orderBy(review.id.desc())
+			.leftJoin(review.user, user).offset(offset)
+			.limit(limit + 1)
 			.fetch();
 	}
 
@@ -218,9 +220,9 @@ public class CustomReviewRepositoryImpl implements CustomReviewRepository {
 			.fetch();
 	}
 
-	public boolean hasNext(List<ReviewResponseDto.ReviewList> reviewLists, int limit) {
-		if (reviewLists.size() > limit) {
-			reviewLists.remove(limit);
+	public boolean hasNext(List<?> responseList, int limit) {
+		if (responseList.size() > limit) {
+			responseList.remove(limit);
 			return true;
 		}
 

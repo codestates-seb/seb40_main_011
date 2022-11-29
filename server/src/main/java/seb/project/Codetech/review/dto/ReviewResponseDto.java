@@ -88,7 +88,7 @@ public class ReviewResponseDto {
 	@NoArgsConstructor
 	@AllArgsConstructor
 	public static class Slice {
-		private List<ReviewList> reviewLists;
+		private List<?> reviewLists;
 		private boolean hasNext;
 	}
 }

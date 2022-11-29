@@ -90,8 +90,12 @@ public class ReviewService {
 		return reviewRepository.getReviewPageByReview(id, saveFile);
 	}
 
-	public List<ReviewResponseDto.Search> searchReview(String keyword) {
-		return reviewRepository.searchReviewByKeyword(keyword);
+	public ReviewResponseDto.Slice searchReview(String keyword, Long offset, int limit) {
+
+		List<ReviewResponseDto.Search> searches = reviewRepository.searchReviewByKeyword(keyword, offset, limit);
+		boolean hasNext = reviewRepository.hasNext(searches, limit);
+
+		return new ReviewResponseDto.Slice(searches, hasNext);
 	}
 
 	public ReviewResponseDto.Slice loadSliceReview(Long id, Sort sort, Long offset, int limit) {
