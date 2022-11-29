@@ -5,8 +5,17 @@ import { Rating } from 'react-simple-star-rating';
 import DetailReview from '../components/Review/DetailReview';
 import SnackReview from '../components/Review/SnackReview';
 import CreateSnackReview from '../components/Review/CreateSnackReview';
-import { getSnack, getGoodSnack, getSnackStats } from '../util/apiCollection';
-import { SnackReviews, SnackReviewAvg } from '../types/mainPageTypes';
+import {
+  getSnack,
+  getGoodSnack,
+  getSnackStats,
+  getProductDetail,
+} from '../util/apiCollection';
+import {
+  SnackReviews,
+  SnackReviewAvg,
+  ProductDetail,
+} from '../types/mainPageTypes';
 import { useIsLogin } from '../store/login';
 import RvSelectBox from '../components/Review/RvSelectBox';
 
@@ -20,8 +29,17 @@ const ReviewLists = () => {
   const [limit, setLimit] = useState(6);
   const [spread, setSpread] = useState(false);
   const [selected, setSelected] = useState('최신 순');
+  const [productData, setProductData] = useState<ProductDetail>();
 
   const productId = Number(useParams().id);
+
+  useEffect(() => {
+    const getProductData = async () => {
+      const { data } = await getProductDetail(productId);
+      setProductData(data);
+    };
+    getProductData();
+  }, []);
 
   useEffect(() => {
     const getSnackData = async () => {
@@ -71,8 +89,8 @@ const ReviewLists = () => {
       onClick={handleBoxClose}
     >
       <div className="mt-10 w-[1060px] text-center">
-        <div className="mb-3 text-2xl font-bold">category</div>
-        <div className="text-5xl font-bold">product</div>
+        <div className="mb-3 text-2xl font-bold">{productData?.type}</div>
+        <div className="text-5xl font-bold">{productData?.name}</div>
         <div className="flex items-center justify-end">
           <button
             onClick={onReviewWrite}
@@ -94,14 +112,17 @@ const ReviewLists = () => {
             })}
           </div>
           <div>
-            <div className="mb-2 text-xl font-medium text-left">상세 리뷰</div>
-            <DetailReview />
-            <DetailReview />
-            <DetailReview />
-
-            <button className="px-10 py-2 my-5 rounded-xl bg-slate-200">
-              더보기
-            </button>
+            {productData?.reviews !== null ? (
+              <>
+                <div className="mb-2 text-xl font-medium text-left">
+                  상세 리뷰
+                </div>
+                <DetailReview productId={productId} />
+                <button className="px-10 py-2 my-5 rounded-xl bg-slate-200">
+                  더보기
+                </button>
+              </>
+            ) : null}
           </div>
         </div>
         {/* snack review */}

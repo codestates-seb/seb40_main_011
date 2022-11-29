@@ -1,11 +1,13 @@
 // [GET]
+import { useEffect, useState } from 'react';
+import { DetailReviewProps } from '../../types/mainPageTypes';
 
-const DetailReview = () => {
+const DetailReview = ({ productId }: DetailReviewProps) => {
   return (
     <div className="flex mb-3">
       <img src="" alt="" className="w-[300px] h-[250px] mr-3" />
       <div className="flex flex-col overflow-hidden text-left w-[760px]">
-        <div className="mb-1 text-2xl">review title</div>
+        <div className="mb-1 text-2xl">리뷰제목</div>
         <div className="pb-1 overflow-hidden text-xl text-justify whitespace-normal h-36 text-ellipsis line-clamp-5">
           At vero eos et accusamus et iusto odio dignissimos ducimus qui
           blanditiis praesentium voluptatum deleniti atque corrupti quos dolores
