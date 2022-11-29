@@ -21,16 +21,19 @@ import RvSelectBox from '../components/Review/RvSelectBox';
 
 const ReviewLists = () => {
   const navigate = useNavigate();
-  const { isLogin } = useIsLogin();
-  const sortReviews = ['등록순', '추천순', '댓글순'];
-  const ratingCategory = ['가성비', '품질', '만족감', '성능', '디자인'];
+
   const [snackReviewStats, setSnackReviewStats] = useState<SnackReviewAvg>();
   const [snackReviewData, setSnackReviewData] = useState<SnackReviews>();
   const [limit, setLimit] = useState(6);
+
   const [spread, setSpread] = useState(false);
   const [selected, setSelected] = useState('최신 순');
   const [productData, setProductData] = useState<ProductDetail>();
 
+  const ratingCategory = ['가성비', '품질', '만족감', '성능', '디자인'];
+  const menu = ['최신 순', '별점 순'];
+
+  const { isLogin } = useIsLogin();
   const productId = Number(useParams().id);
 
   useEffect(() => {
@@ -185,6 +188,7 @@ const ReviewLists = () => {
                 setSpread={setSpread}
                 selected={selected}
                 setSelected={setSelected}
+                menu={menu}
               />
             </div>
             <div className="grid justify-center grid-cols-3 mt-10 gap-x-20 gap-y-16">

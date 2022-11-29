@@ -22,7 +22,7 @@ const QuestionsTab = () => {
   useEffect(() => {
     const params = `?page=${currentPage}&size=5&sort=createdAt`;
     const DetailReviewData = async () => {
-      const { data } = await getUserReview('questions', params);
+      const { data }: any = await getUserReview('questions', params);
       setReviewData(data?.questions.content);
       setTotalPages(data?.questions.totalPages);
     };
