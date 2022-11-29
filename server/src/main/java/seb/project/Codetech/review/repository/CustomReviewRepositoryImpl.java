@@ -42,7 +42,9 @@ public class CustomReviewRepositoryImpl implements CustomReviewRepository {
 				Projections.fields(ReviewResponseDto.Comment.class,
 					reviewComment.id,
 					reviewComment.content,
+					reviewComment.createdAt,
 					user.id.as("userId"),
+					user.nickname.as("writer"),
 					user.image.as("userImage")
 				)
 			)
@@ -64,7 +66,9 @@ public class CustomReviewRepositoryImpl implements CustomReviewRepository {
 					Projections.fields(ReviewResponseDto.Comment.class,
 						reviewComment.id,
 						reviewComment.content,
+						reviewComment.createdAt,
 						user.id.as("userId"),
+						user.nickname.as("writer"),
 						user.image.as("userImage"),
 						Projections.fields(ReviewResponseDto.Comment.class,
 							reviewComment.parent.id.as("id")
