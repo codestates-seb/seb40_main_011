@@ -14,4 +14,6 @@ public interface CustomReviewRepository {
 	ReviewResponseDto.Page getReviewPageByReview(Long id, Review review);
 
 	List<ReviewResponseDto.ReviewList> loadSortReviewByProductId(ReviewRequestDto.Get get);
+
+	List<ReviewResponseDto.Search> searchReviewByKeyword(String keyword);
 }

@@ -90,6 +90,10 @@ public class ReviewService {
 		return reviewRepository.getReviewPageByReview(id, saveReview);
 	}
 
+	public List<ReviewResponseDto.Search> searchReview(String keyword) {
+		return reviewRepository.searchReviewByKeyword(keyword);
+	}
+
 	public List<ReviewResponseDto.ReviewList> loadSliceReview(ReviewRequestDto.Get get) {
 		return reviewRepository.loadSortReviewByProductId(get);
 	}

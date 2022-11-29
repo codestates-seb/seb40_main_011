@@ -44,6 +44,16 @@ public class ReviewResponseDto {
 
 	@Getter
 	@NoArgsConstructor
+	public static class Search {
+		private String title;
+		private String content;
+		private Long RecommendNumber;
+		private String writer;
+		private String userImage;
+	}
+
+	@Getter
+	@NoArgsConstructor
 	public static class Best {
 		private Long id;
 		private String title;
