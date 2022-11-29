@@ -55,7 +55,7 @@ public class UserController {
 
     @Transactional
     @PatchMapping("/user/nickname")
-    public ResponseEntity<UserResponseDto> patchUser(@AuthenticationPrincipal String email,
+    public ResponseEntity<UserResponseDto> patchUserNickname(@AuthenticationPrincipal String email,
                                                           @RequestBody @Valid UserPatchDto patch){
         User user = userService.updateUser(email,patch);
         return ResponseEntity.ok(mapper.userToUserResponseDto(user));
@@ -121,10 +121,14 @@ public class UserController {
     @Transactional(readOnly = true)
     @GetMapping("/user/answers")
     public ResponseEntity<UserAndAnswersDto> getAnswers(@AuthenticationPrincipal String email,
-                                                          @Positive @RequestParam(value = "page", defaultValue = "1") int page,
-                                                          @Positive @RequestParam(value = "size",defaultValue = "5") int size,
-                                                          @RequestParam(value = "sort",defaultValue = "createAt") String sort){
-        UserAndAnswersDto userAndAnswersDto = userService.userAndAnswersDto(email,page-1,size,sort);
+                                                        @Positive @RequestParam(value = "page", defaultValue = "1") int page,
+                                                        @Positive @RequestParam(value = "size",defaultValue = "5") int size,
+                                                        @RequestParam(value = "sort",defaultValue = "createAt") String sort,
+                                                        @Positive @RequestParam(value = "page", defaultValue = "1") int answerPage,
+                                                        @Positive @RequestParam(value = "size",defaultValue = "5") int answerSize,
+                                                        @RequestParam(value = "sort",defaultValue = "createAt") String answerSort){
+        UserAndAnswersDto userAndAnswersDto = userService.userAndAnswersDto(email,page-1, size, sort,
+                answerPage-1, answerSize, answerSort);
         return ResponseEntity.ok(userAndAnswersDto);
     }
 

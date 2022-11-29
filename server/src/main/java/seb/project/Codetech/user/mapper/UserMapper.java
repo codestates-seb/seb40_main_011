@@ -10,8 +10,6 @@ import seb.project.Codetech.user.entity.User;
 public interface UserMapper {
     User userRegisterToUser(UserPostDto register);
 
-    User userPatchDtoToUser(UserPatchDto userPatchDto);
-
     UserResponseDto userToUserResponseDto(User user);
 
 }

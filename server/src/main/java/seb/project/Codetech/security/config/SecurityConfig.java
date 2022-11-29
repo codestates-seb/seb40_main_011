@@ -53,7 +53,7 @@ public class SecurityConfig {
 	private final UserRepository userRepository;
 
 	public SecurityConfig(JwtTokenizer jwtTokenizer, UserAuthorityUtils authorityUtils,
-		RedisTemplate<String, String> redisTemplate, @Lazy UserService userService,
+		RedisTemplate<String, String> redisTemplate, UserService userService,
 		UserRepository userRepository) {
 		this.jwtTokenizer = jwtTokenizer;
 		this.authorityUtils = authorityUtils;
@@ -92,10 +92,7 @@ public class SecurityConfig {
 
 	}
 
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-	}
+
 
 	@Bean
 	CorsConfigurationSource corsConfigurationSource() {
