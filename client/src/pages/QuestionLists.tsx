@@ -85,8 +85,7 @@ export default function QuestionLists() {
                 className="w-full bg-slate-500 hover:bg-slate-400 rounded h-12 text-white pb-0.5 font-medium"
                 onClick={handleQuestionMore}
               >
-                <span className="font-bold underline">미채택</span>된 질문, 더
-                불러와 볼까?
+                더 불러와 볼까?
               </button>
             </div>
           )}
