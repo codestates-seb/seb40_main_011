@@ -58,6 +58,13 @@ const ReviewLists = () => {
     setSpread(!spread);
   };
 
+  const [isModal, setIsModal] = useState(false);
+  const openModalHandler = (
+    event: React.MouseEvent<HTMLElement, MouseEvent>
+  ) => {
+    setIsModal(!isModal);
+  };
+
   return (
     <div
       className="flex flex-col items-center justify-center"
@@ -91,6 +98,7 @@ const ReviewLists = () => {
             <DetailReview />
             <DetailReview />
             <DetailReview />
+
             <button className="px-10 py-2 my-5 rounded-xl bg-slate-200">
               더보기
             </button>
@@ -99,7 +107,7 @@ const ReviewLists = () => {
         {/* snack review */}
         <div className="mt-10">
           <div>
-            <div className="my-3 text-3xl">Total Reviews</div>
+            <div className="my-3 text-3xl">평균 별점</div>
             <div className="flex flex-col mb-5">
               <div className="flex items-center justify-center my-0.5">
                 <p className="pr-1.5 text-lg">가성비</p>
@@ -158,7 +166,7 @@ const ReviewLists = () => {
                 setSelected={setSelected}
               />
             </div>
-            <div className="grid justify-center grid-cols-3 gap-x-20 gap-y-16">
+            <div className="grid justify-center grid-cols-3 mt-10 gap-x-20 gap-y-16">
               <SnackReview snackReviewData={snackReviewData} />
             </div>
           </div>

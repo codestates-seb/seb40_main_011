@@ -18,6 +18,7 @@ import seb.project.Codetech.global.exception.BusinessLogicException;
 import seb.project.Codetech.global.exception.ExceptionCode;
 import seb.project.Codetech.question.entity.Answer;
 import seb.project.Codetech.question.entity.Question;
+import seb.project.Codetech.question.respository.AnswerRepository;
 import seb.project.Codetech.question.respository.QuestionRepository;
 import seb.project.Codetech.recommend.entity.Recommend;
 import seb.project.Codetech.review.entity.Review;
@@ -47,10 +48,12 @@ public class UserService {
     private final QuestionRepository questionRepository;
     private final ReviewRepository reviewRepository;
     private final JwtTokenizer jwtTokenizer;
+    private final AnswerRepository answerRepository;
 
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, UserAuthorityUtils authorityUtils,
                        ApplicationEventPublisher publisher, RedisTemplate<String,String> redisTemplate,
-                       QuestionRepository questionRepository, ReviewRepository reviewRepository, JwtTokenizer jwtTokenizer){
+                       QuestionRepository questionRepository, ReviewRepository reviewRepository, JwtTokenizer jwtTokenizer,
+                       AnswerRepository answerRepository){
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityUtils = authorityUtils;
@@ -59,6 +62,7 @@ public class UserService {
         this.questionRepository = questionRepository;
         this.reviewRepository = reviewRepository;
         this.jwtTokenizer = jwtTokenizer;
+        this.answerRepository = answerRepository;
     }
 
     public void logout(HttpServletRequest request, String email) {
@@ -182,19 +186,33 @@ public class UserService {
         return userAndReviewsDto;
     }
 
-    public UserAndQuestionsDto userAndAnswersDto(String email,int page, int size, String sort){
+    public UserAndAnswersDto userAndAnswersDto(String email,int page, int size, String sort){
         User user = findUser(email);
-        UserAndQuestionsDto userAndAnswersDto = new UserAndQuestionsDto();
+        UserAndAnswersDto userAndAnswersDto = new UserAndAnswersDto();
         List<Answer> answers = user.getAnswers();
         List<Question> questionList = questionRepository.findAllByAnswersIn(answers);
-        List<UserAndQuestionsDto.MyQuestionCard> cards = new ArrayList<>();
-        for (Question question : questionList){
-            cards.add(new UserAndQuestionsDto.MyQuestionCard(question));
+        for(int k = 1; k< questionList.size();k++){
+            if(questionList.get(k)==questionList.get(k-1)){questionList.remove(k);k=k-1;}
+        }
+        List<UserAndAnswersDto.MyAnsweredQuestionCard> cards = new ArrayList<>();
+        for (Question question : questionList) {
+            List<Answer> answerList = answerRepository.findAllByWriterAndQuestion(user, question);
+            List<UserAndAnswersDto.MyAnsweredQuestionCard.QuestionAnswer> answerCards = new ArrayList<>();
+            for (Answer answer : answerList) {
+                answerCards.add(new UserAndAnswersDto.MyAnsweredQuestionCard.QuestionAnswer(answer));
+            }
+            PageRequest pageRequest = PageRequest.of(page,size, Sort.by(sort).descending());
+            int start = (int)pageRequest.getOffset();
+            int end = Math.min((start+pageRequest.getPageSize()),answerCards.size());
+            Page<UserAndAnswersDto.MyAnsweredQuestionCard.QuestionAnswer> answerPage = new PageImpl<>(
+                    answerCards.subList(start,end),pageRequest,answerCards.size());
+            cards.add(new UserAndAnswersDto.MyAnsweredQuestionCard(question, answerPage));
         }
         PageRequest pageRequest = PageRequest.of(page,size, Sort.by(sort).descending());
         int start = (int)pageRequest.getOffset();
         int end = Math.min((start+pageRequest.getPageSize()),cards.size());
-        Page<UserAndQuestionsDto.MyQuestionCard> cardPage = new PageImpl<>(cards.subList(start,end),pageRequest,cards.size());
+        Page<UserAndAnswersDto.MyAnsweredQuestionCard> cardPage = new PageImpl<>(
+                cards.subList(start,end),pageRequest,cards.size());
         userAndAnswersDto.setEmail(user.getEmail());
         userAndAnswersDto.setNickname(user.getNickname());
         userAndAnswersDto.setPoint(user.getPoint());

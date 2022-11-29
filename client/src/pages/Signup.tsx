@@ -40,6 +40,22 @@ const Signup = () => {
     navigate('/login');
   };
 
+  // 랜덤 뽑기 (1~6)
+  const getNumber = () => {
+    return Math.floor(Math.random() * (6 - 1) + 1);
+  };
+
+  // 랜덤 img-placeholder
+  const imgPlaceholder = [
+    '/images/806e6c95-9a43-4429-bb85-39cbb41b1efd.blob',
+    '/images/070879f5-b47a-4442-b190-cc6c93ee30e1.blob',
+    '/images/7e7e58ce-a06f-4041-b07b-136663eda5b8.blob',
+    '/images/ed522189-3328-4c52-8036-570514053525.blob',
+    '/images/e65b65a3-6b96-494c-9f69-cfde15b630c6.blob',
+    '/images/745628a1-8a67-47c3-afe4-11bdba1491b2.blob',
+  ];
+  const image = imgPlaceholder[getNumber()];
+
   // 회원가입 submit
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -59,7 +75,7 @@ const Signup = () => {
       setMsg(errorMsg[3]);
       return setShowModal(true);
     }
-    const signupResult = await postSignup({ email, password, nickname });
+    const signupResult = await postSignup({ email, password, nickname, image });
     switch (signupResult.status) {
       case 200:
         alert('회원가입되었습니다.');
@@ -317,32 +333,6 @@ const Signup = () => {
               </span>
             )}
           </div>
-          {/* <div
-            className="group mb-4 py-1 flex items-center justify-center text-3xl text-gray-300 hover:text-gray-500 "
-            onClick={handlePasswordType}
-          >
-            {passwordType === 'password' ? (
-              <AiFillEyeInvisible
-                id="passwordShown"
-                onClick={handlePasswordType}
-                className=""
-              />
-            ) : (
-              <AiFillEye
-                id="passwordShown"
-                onClick={handlePasswordType}
-                className="text-3xl"
-              />
-            )}
-            <label
-              className="ml-2 pb-0.5 group-hover:font-medium cursor-pointer text-base text-gray-500 group-hover:text-gray-700"
-              htmlFor="passwordShown"
-            >
-              {passwordType === 'password'
-                ? '비밀번호 보기'
-                : '비밀번호 감추기'}
-            </label>
-          </div> */}
           <button
             type="submit"
             className="w-full bg-blue-600 h-16 rounded-md text-xl font-bold pb-1 text-white hover:bg-blue-500"

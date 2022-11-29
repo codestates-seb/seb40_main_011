@@ -25,9 +25,6 @@ const ReviewsTab = () => {
     const params = `?page=${currentPage}&size=5&sort=createdAt`;
     const DetailReviewData = async () => {
       const { data } = await getUserReview('reviews', params);
-      console.log(data);
-      console.log(data?.reviews.content);
-      console.log(data?.reviews.totalPages);
       setReviewData(data?.reviews.content);
       setTotalPages(data?.reviews.totalPages);
     };
@@ -88,7 +85,7 @@ const ReviewsTab = () => {
               </>
             );
           })}
-          {totalPages ? (
+          {totalPages > 1 ? (
             <ReviewTabPagenation
               currentPage={currentPage}
               totalPages={totalPages}

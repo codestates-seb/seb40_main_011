@@ -22,20 +22,13 @@ const ProductList = () => {
 
   useEffect(() => {
     const getProductData = async () => {
-      //인스턴스 데이터
       const { data } = await getProducts();
       setProducts(data.cards.reverse());
       setTotalPage(Math.ceil(data.cards.length / 9));
-      //카테고리 분기
+
       if (category === 'all') {
-        //all이 선택되면 전체에서 앞의 9개만 가지고 오기
         setProducts(data.cards);
-        //data.length / 9 round up 해서 정수만큼 페이지네이션 구현 2페이지로 갈땐 (start + 9, end + 9) > 버튼 눌렀을때도
-        //< 버튼누르면 반대로 뺴주기
-      }
-      //데이터에서 해당 카테고리에 맞는 친구 찾기
-      else {
-        //그 외 카테고리가 선택되면 카테고리명과 제품의 type을 비교해서 9개 가지고 오기
+      } else {
         setProducts(
           data.cards.filter((el: Product) => el.type.toLowerCase() === category)
         );
@@ -111,7 +104,7 @@ const ProductList = () => {
                       role="button"
                       onClick={onProductClick}
                       id={el.id.toString()}
-                      className="flex flex-col w-full bg-white rounded-b-lg "
+                      className="flex flex-col w-full bg-white rounded-b-lg aspect-1"
                     >
                       {el?.filePath === null ? (
                         <img

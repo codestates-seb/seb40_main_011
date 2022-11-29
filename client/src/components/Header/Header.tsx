@@ -3,11 +3,18 @@ import SearchBar from './SearchBar';
 import { BsFillSunFill } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 import { useIsLogin } from '../../store/login';
-
+import { GiHamburgerMenu } from '../../icons';
+import { useState } from 'react';
 export default function Header() {
+  const [menu, setMenu] = useState(false);
   const navigate = useNavigate();
   const handleHomeClick = () => {
     navigate('/');
+  };
+
+  const onBurgerClicked = (e: any) => {
+    setMenu(!menu);
+    console.log(menu);
   };
 
   const { isLogin } = useIsLogin();
@@ -24,22 +31,38 @@ export default function Header() {
         </button>
         <SearchBar />
         <div className="flex-none flex flex-row h-full">
-          <button className="h-full flex flex-row items-center mx-2">
+          <button className="h-full flex flex-row items-center mx-2 md:hidden">
             <span className="material-icons text-2xl w-14 h-14 rounded-full hover:bg-slate-100 flex items-center justify-center">
-              <BsFillSunFill />
+              <GiHamburgerMenu onClick={onBurgerClicked} />
             </span>
           </button>
-          {!isLogin ? (
-            <div>
-              <HeaderTextButton name="login" />
-              <HeaderTextButton name="signup" />
-            </div>
-          ) : (
-            <div>
-              <HeaderTextButton name="My Page" />
-              <HeaderTextButton name="logout" />
-            </div>
-          )}
+          <div className="max-md:hidden flex">
+            {!isLogin ? (
+              <>
+                <button className="h-full flex flex-row items-center mx-2">
+                  <span className="material-icons text-2xl w-14 h-14 rounded-full hover:bg-slate-100 flex items-center justify-center">
+                    <BsFillSunFill />
+                  </span>
+                </button>
+                <div>
+                  <HeaderTextButton name="login" />
+                  <HeaderTextButton name="signup" />
+                </div>
+              </>
+            ) : (
+              <>
+                <button className="h-full flex flex-row items-center mx-2">
+                  <span className="material-icons text-2xl w-14 h-14 rounded-full hover:bg-slate-100 flex items-center justify-center">
+                    <BsFillSunFill />
+                  </span>
+                </button>
+                <div>
+                  <HeaderTextButton name="My Page" />
+                  <HeaderTextButton name="logout" />
+                </div>
+              </>
+            )}
+          </div>
         </div>
       </div>
     </div>

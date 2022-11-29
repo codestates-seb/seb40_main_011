@@ -28,15 +28,15 @@
     @apply bg-red-600;
   }
   .modal-bg {
-    @apply w-[100vw] h-[100vh] bg-slate-500/50 absolute z-10;
+    @apply fixed inset-0 w-[100vw] h-[100vh] bg-black/30 backdrop-blur-sm absolute z-10;
   }
   .modal-window {
     @apply w-[630px] h-[560px] absolute z-20 bg-white top-1/2 left-1/2 translate-x-[-50%] translate-y-[-55%] flex flex-col;
   }
   .modal-font {
     @apply font-medium text-gray-500 text-base;
-    }
+  }
   .selector-font {
     @apply text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900;
-    }
+  }
 } ;

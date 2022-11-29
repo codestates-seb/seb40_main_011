@@ -92,7 +92,7 @@ const SnackReviewTab = () => {
               </>
             );
           })}
-          {totalPages ? (
+          {totalPages > 1 ? (
             <ReviewTabPagenation
               currentPage={currentPage}
               totalPages={totalPages}

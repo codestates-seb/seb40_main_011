@@ -7,6 +7,7 @@ import EditQuestion from '../Modal/EditQuestion';
 import WriteAnswer from '../Modal/WriteAnswer';
 import moment from 'moment';
 import { format } from 'timeago.js';
+import Confirm from '../Modal/Confirm';
 
 export default function BodyTop({
   nickname,
@@ -17,11 +18,18 @@ export default function BodyTop({
   content,
   questionContent,
   adoptedId,
+  editable,
 }: BodyTopProps) {
   const { loginId } = useIsLogin();
 
   // 질문수정 모달
   const [showModal, setShowModal] = useState(false);
+
+  // 알림 모달
+  const [showAlert, setShowAlert] = useState(false);
+  const [modalMsg, setModalMsg] = useState(
+    '답변달린 질문은 수정할 수 없습니다.'
+  );
 
   // // 질문,답변 삭제하기
   const handleDelete = async () => {
@@ -29,12 +37,10 @@ export default function BodyTop({
       const Result = await deleteQuestion(questionId);
       switch (Result.status) {
         case 204:
-          // console.log('Success');
           location.reload();
           break;
         case 401:
           alert('에러');
-          console.log('...');
           console.error(Result.status + ' Error');
           break;
         default:
@@ -44,12 +50,10 @@ export default function BodyTop({
       const Result = await deleteAnswer(answerId);
       switch (Result.status) {
         case 204:
-          // console.log('Success');
           location.reload();
           break;
         case 401:
           alert('에러');
-          console.log('...');
           console.error(Result.status + ' Error');
           break;
         default:
@@ -74,6 +78,7 @@ export default function BodyTop({
           questionContent={questionContent}
         />
       )}
+      {showAlert && <Confirm setShowModal={setShowAlert} msg={modalMsg} />}
       <span>
         <span className="font-bold text-gray-600">{nickname}</span>
         <span className="before:content-['•'] before:mr-1.5 before:ml-1.5 text-gray-500/60 before:text-gray-300 font-medium tracking-tight">
@@ -85,11 +90,28 @@ export default function BodyTop({
       </span>
       {loginId == writerId && adoptedId === undefined && (
         <div className="flex items-center">
-          <button onClick={() => setShowModal(true)}>
+          <button
+            onClick={() => {
+              // if (editable || editable !== undefined) {
+              if (!editable && questionId !== undefined) {
+                setModalMsg('답변달린 질문은 수정할 수 없습니다.');
+                return setShowAlert(true);
+              }
+              return setShowModal(true);
+            }}
+          >
             <XsRoundedButton name={'수정'} />
           </button>
           <div className="h-3 border-l border border-gray-200 inline-block mx-1.5" />
-          <button onClick={handleDelete}>
+          <button
+            onClick={() => {
+              if (!editable && questionId !== undefined) {
+                setModalMsg('답변달린 질문은 삭제할 수 없습니다.');
+                return setShowAlert(true);
+              }
+              return handleDelete();
+            }}
+          >
             <XsRoundedButton name={'삭제'} />
           </button>
         </div>
