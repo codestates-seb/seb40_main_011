@@ -40,6 +40,6 @@ public class MailController {
         if(!Objects.equals(redisTemplate.opsForValue().get(mailCheckDto.getCode()), mailCheckDto.getEmail())){
             throw new BusinessLogicException(ExceptionCode.CODE_IS_DIFFERENT);
         }
-        return ResponseEntity.ok("인증됨");
+        return ResponseEntity.ok("인증되었습니다.");
     }
 }
