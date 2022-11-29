@@ -3,6 +3,7 @@ package seb.project.Codetech.review.dto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import seb.project.Codetech.review.entity.Sort;
 
 public class ReviewRequestDto {
 
@@ -30,7 +31,7 @@ public class ReviewRequestDto {
 	@NoArgsConstructor
 	public static class Get {
 		private Long productId;
-		private int sort;
+		private Sort sort;
 		private long offset;
 		private int limit;
 	}

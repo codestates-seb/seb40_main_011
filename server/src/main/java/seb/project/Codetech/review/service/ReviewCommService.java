@@ -2,8 +2,12 @@ package seb.project.Codetech.review.service;
 
 import java.util.Optional;
 
+import javax.persistence.EntityManager;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import seb.project.Codetech.global.exception.BusinessLogicException;
 import seb.project.Codetech.global.exception.ExceptionCode;
@@ -19,12 +23,14 @@ public class ReviewCommService {
 	private final ReviewCommRepository reviewCommRepository;
 	private final ReviewService reviewService;
 	private final UserService userService;
+	private final JPAQueryFactory queryFactory;
 
 	public ReviewCommService(ReviewCommRepository reviewCommRepository, ReviewService reviewService,
-		UserService userService) {
+		UserService userService, EntityManager em) {
 		this.reviewCommRepository = reviewCommRepository;
 		this.reviewService = reviewService;
 		this.userService = userService;
+		this.queryFactory = new JPAQueryFactory(em);
 	}
 
 	@Transactional
@@ -46,7 +52,9 @@ public class ReviewCommService {
 			reviewComment.setParent(parentComm); // 맞으면 부모댓글 아이디를 삽입한다.
 		}
 
-		return reviewCommRepository.save(reviewComment).getReview().getId();
+		var saved = reviewCommRepository.save(reviewComment).getReview();
+		saved.updateCommentCount(queryFactory);
+		return saved.getId();
 	}
 
 	@Transactional
