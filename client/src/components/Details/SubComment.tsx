@@ -4,7 +4,7 @@ import EditComment from './EditComment';
 import { useState } from 'react';
 
 const SubComment = ({
-  subComments,
+  child,
   setMoreComment,
   moreComment,
   isEditSub,
@@ -30,7 +30,7 @@ const SubComment = ({
 
   return (
     <>
-      {subComments?.map((el: SubComments, idx: number) => (
+      {child?.map((el: SubComments, idx: number) => (
         <div className="w-full flex my-6 mr-16" key={idx}>
           <img
             src={el.profileImg}
@@ -50,6 +50,7 @@ const SubComment = ({
                   isEditMode={isEditSub}
                   setIsEditMode={setIsEditSub}
                   editedComment={editedComment}
+                  id={idx}
                 />
               </div>
             </div>

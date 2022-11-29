@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
-import { getSearchResult } from '../../util/apiCollection';
+// import { getSearchResult } from '../../util/apiCollection';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 
 const SearchReview = ({ keyword }: any) => {
   const [review, setReview] = useState();
 
-  useEffect(() => {
-    const getReviewData = async () => {
-      const { data } = await getSearchResult();
-      setReview(data);
-    };
-    getReviewData();
-  }, []);
+  // useEffect(() => {
+  //   const getReviewData = async () => {
+  //     const { data } = await getSearchResult();
+  //     setReview(data);
+  //   };
+  //   getReviewData();
+  // }, []);
 
   const onContentClick = () => {
     return console.log('content');
