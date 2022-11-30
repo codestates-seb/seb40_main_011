@@ -9,7 +9,7 @@ import {
   AnswerContent,
 } from '../types/mainPageTypes';
 
-let initialToken: any = localStorage.getItem('authorization');
+const initialToken: any = localStorage.getItem('authorization');
 
 export const postSnack = async (req: any) => {
   const reqUrl = '/api/snack-reviews';
@@ -460,32 +460,6 @@ export const getUserReview = async (url: string, params: string) => {
   }
 };
 
-const reissueTokenRecall = async (
-  expired: any,
-  url: string,
-  params: string
-) => {
-  const data = '';
-  try {
-    const resReissue = await axios.post('/api/refresh', data, {
-      headers: {
-        'Content-Type': 'application/json',
-        Expired: expired,
-        Refresh: localStorage.getItem('refresh'),
-      },
-    });
-
-    initialToken = resReissue.headers.authorization;
-
-    const originalResponse = await axios.get(`/api/user/${url}${params}`, {
-      headers: { Authorization: initialToken },
-    });
-    return originalResponse;
-  } catch (err: any) {
-    return err.response;
-  }
-};
-
 export const selectProductImg = async (data: any) => {
   try {
     const submitImg = await axios.post('/api/products', data, {
@@ -571,6 +545,17 @@ export const deleteComment = async (id: number) => {
       },
     });
     return searchResponse;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
+export const getDetailList = async (id: number, opt: string, limit: number) => {
+  try {
+    const getList = await axios.get(
+      `api/reviews/product?id=${id}&sort=${opt}&offset=0&limit=${limit}`
+    );
+    return getList;
   } catch (err: any) {
     return err.response;
   }

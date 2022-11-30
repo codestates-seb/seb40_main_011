@@ -1,10 +1,69 @@
 // [GET]
 import { useEffect, useState } from 'react';
 import { DetailReviewProps } from '../../types/mainPageTypes';
+import { getDetailList } from '../../util/apiCollection';
+import RvSelectBox from './RvSelectBox';
 
 const DetailReview = ({ productId }: DetailReviewProps) => {
+  const [reviewData, setReviewData] = useState();
+  const [limit, setLimit] = useState(6);
+
+  const [spread, setSpread] = useState(false);
+  const [selected, setSelected] = useState('최신 순');
+
+  const sortList = [
+    { sort: '최신 순', en: 'RECENT' },
+    { sort: '좋아요 순', en: 'MOST_LIKE' },
+    { sort: '댓글 순', en: 'TOP_COMMENT' },
+  ];
+
+  useEffect(() => {
+    const getSnackData = async () => {
+      // const { data } = await getDetailList(productId, 'RECENT', limit);
+      // console.log(data);
+      if (selected === '최신 순') {
+        const { data } = await getDetailList(productId, 'RECENT', limit);
+        setReviewData(data);
+      }
+      if (selected === '최신 순') {
+        const { data } = await getDetailList(productId, 'MOST_LIKE', limit);
+        setReviewData(data);
+      }
+      if (selected === '댓글 순') {
+        const { data } = await getDetailList(productId, 'TOP_COMMENT', limit);
+        setReviewData(data);
+      }
+    };
+    getSnackData();
+  }, [limit, selected]);
+
+  const menu = ['최신 순', '최신 순', '댓글 순'];
+  //   sortList.map((el) => {
+  //     return el.sort;
+  //   }),
+  // ];
+
+  const handleBoxClose = () => {
+    if (!spread) return null;
+    setSpread(!spread);
+  };
+
+  const onMoreClick = (e: React.MouseEvent<HTMLElement>) => {
+    setLimit(limit + 3);
+  };
+
   return (
     <>
+      <div className="flex justify-between mb-4 text-xl font-medium">
+        <div>상세 리뷰</div>
+        <RvSelectBox
+          spread={spread}
+          setSpread={setSpread}
+          selected={selected}
+          setSelected={setSelected}
+          menu={menu}
+        />
+      </div>
       <div className="flex mb-3">
         <img src="" alt="" className="w-[300px] h-[250px] mr-3" />
         <div className="flex flex-col overflow-hidden text-left w-[760px]">
@@ -39,10 +98,13 @@ const DetailReview = ({ productId }: DetailReviewProps) => {
             </div>
           </div>
         </div>
-        <button className="px-10 py-2 my-5 rounded-xl bg-slate-200">
-          더보기
-        </button>
       </div>
+      <button
+        className="px-10 py-2 my-5 rounded-xl bg-slate-200"
+        onClick={onMoreClick}
+      >
+        더보기
+      </button>
     </>
   );
 };
