@@ -38,13 +38,15 @@ public class ProductResponseDto {
 	@Getter
 	@NoArgsConstructor
 	public static class Get {
+		private Long id;
 		private String name;
 		private String detail;
 		private Type type;
 		private String writer;
 		private String modifier;
 		private LocalDateTime createdAt;
-		private FileEntity fileEntities;
+		@Setter
+		private List<FileEntity> fileEntities;
 	}
 
 	@Getter
