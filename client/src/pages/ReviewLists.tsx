@@ -19,11 +19,11 @@ import {
 } from '../types/mainPageTypes';
 import { useIsLogin } from '../store/login';
 import RvSelectBox from '../components/Review/RvSelectBox';
+import AvgRating from '../components/Review/AvgRating';
 
 const ReviewLists = () => {
   const navigate = useNavigate();
 
-  const [snackReviewStats, setSnackReviewStats] = useState<SnackReviewAvg>();
   const [snackReviewData, setSnackReviewData] = useState<SnackReviews>();
   const [limit, setLimit] = useState(6);
 
@@ -50,15 +50,11 @@ const ReviewLists = () => {
     const getSnackData = async () => {
       if (selected === '최신 순') {
         const { data } = await getSnack(productId, limit);
-        const stats = await getSnackStats(productId);
         setSnackReviewData(data);
-        setSnackReviewStats(stats.data);
       }
       if (selected === '별점 순') {
         const { data } = await getGoodSnack(productId, limit);
-        const stats = await getSnackStats(productId);
         setSnackReviewData(data);
-        setSnackReviewStats(stats.data);
       }
       if (selected === '낮은 별점 순') {
         const { data } = await getBadSnack(productId, limit);
@@ -113,81 +109,18 @@ const ReviewLists = () => {
 
         {/* detail review */}
         <div className="mt-6">
-          <div className="text-right">
-            {sortReviews.map((el, index) => {
-              return (
-                <button key={index} className="p-2">
-                  {el}
-                </button>
-              );
-            })}
-          </div>
           <div>
             {productData?.reviews !== null ? (
               <>
-                <div className="mb-2 text-xl font-medium text-left">
-                  상세 리뷰
-                </div>
                 <DetailReview productId={productId} />
-                <button className="px-10 py-2 my-5 rounded-xl bg-slate-200">
-                  더보기
-                </button>
               </>
             ) : null}
           </div>
         </div>
         {/* snack review */}
         <div className="mt-10">
-          <div>
-            <div className="my-3 text-3xl">평균 별점</div>
-            <div className="flex flex-col mb-5">
-              <div className="flex items-center justify-center my-0.5">
-                <p className="pr-1.5 text-lg">가성비</p>
-                <Rating
-                  allowFraction
-                  readonly
-                  initialValue={snackReviewStats?.avgCe}
-                  size={30}
-                />
-              </div>
-              <div className="flex items-center justify-center my-0.5">
-                <p className="pr-1.5 text-lg">품질</p>
-                <Rating
-                  allowFraction
-                  readonly
-                  initialValue={snackReviewStats?.avgQlt}
-                  size={30}
-                />
-              </div>
-              <div className="flex items-center justify-center my-0.5">
-                <p className="pr-1.5 text-lg">만족감</p>
-                <Rating
-                  allowFraction
-                  readonly
-                  initialValue={snackReviewStats?.avgStf}
-                  size={30}
-                />
-              </div>
-              <div className="flex items-center justify-center my-0.5">
-                <p className="pr-1.5 text-lg">성능</p>
-                <Rating
-                  allowFraction
-                  readonly
-                  initialValue={snackReviewStats?.avgPerf}
-                  size={30}
-                />
-              </div>
-              <div className="flex items-center justify-center my-0.5">
-                <p className="pr-1.5 text-lg">디자인</p>
-                <Rating
-                  allowFraction
-                  readonly
-                  initialValue={snackReviewStats?.avgDsn}
-                  size={30}
-                />
-              </div>
-            </div>
-          </div>
+          <AvgRating productId={productId} />
+
           <div>
             <div className="flex justify-between mb-2 text-xl font-medium">
               <div>한줄 리뷰</div>
@@ -199,7 +132,7 @@ const ReviewLists = () => {
                 menu={menu}
               />
             </div>
-            <div className="grid justify-center grid-cols-3 mt-10 gap-x-20 gap-y-16">
+            <div className="grid justify-center grid-cols-3 mt-6 gap-x-20 gap-y-16">
               <SnackReview snackReviewData={snackReviewData} />
             </div>
           </div>
