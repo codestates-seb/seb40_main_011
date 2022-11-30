@@ -10,6 +10,7 @@ import {
   getGoodSnack,
   getSnackStats,
   getProductDetail,
+  getBadSnack,
 } from '../util/apiCollection';
 import {
   SnackReviews,
@@ -31,7 +32,7 @@ const ReviewLists = () => {
   const [productData, setProductData] = useState<ProductDetail>();
 
   const ratingCategory = ['가성비', '품질', '만족감', '성능', '디자인'];
-  const menu = ['최신 순', '별점 순'];
+  const menu = ['최신 순', '별점 순', '낮은 별점 순'];
   const sortReviews = ['최신 순', '별점 순', '댓글 순'];
 
   const { isLogin } = useIsLogin();
@@ -45,8 +46,6 @@ const ReviewLists = () => {
     getProductData();
   }, []);
 
-  console.log(snackReviewStats);
-
   useEffect(() => {
     const getSnackData = async () => {
       if (selected === '최신 순') {
@@ -57,6 +56,12 @@ const ReviewLists = () => {
       }
       if (selected === '별점 순') {
         const { data } = await getGoodSnack(productId, limit);
+        const stats = await getSnackStats(productId);
+        setSnackReviewData(data);
+        setSnackReviewStats(stats.data);
+      }
+      if (selected === '낮은 별점 순') {
+        const { data } = await getBadSnack(productId, limit);
         const stats = await getSnackStats(productId);
         setSnackReviewData(data);
         setSnackReviewStats(stats.data);
