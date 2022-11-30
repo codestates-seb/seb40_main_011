@@ -164,6 +164,25 @@ export const postSignup = async (data: SignupInputs) => {
     return err.response;
   }
 };
+
+export const postEmail = async (data: any) => {
+  try {
+    const emailSubmit = await axios.post('/api/mail', data);
+    return emailSubmit;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
+export const postEmailCertificationCheck = async (data: any) => {
+  try {
+    const emailCheckRes = await axios.post('/api/mail/check', data);
+    return emailCheckRes;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
 export const getUserProfile = async () => {
   try {
     const optOut = await axios.get('/api/user', {

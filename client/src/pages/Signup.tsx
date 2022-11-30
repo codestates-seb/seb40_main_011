@@ -11,11 +11,13 @@ import {
 } from '../icons';
 import { emailRegex, passwordRegex } from '../util/Regex';
 import Confirm from '../components/Modal/Confirm';
+import { postEmailCertificationCheck, postEmail } from '../util/apiCollection';
 
 const Signup = () => {
-  //이름, 이메일, 비밀번호, 비밀번호 확인
+  //이름, 이메일, 인증번호, 비밀번호, 비밀번호 확인
   const [email, setEmail] = useState<string>('');
   const [nickname, setNickname] = useState<string>('');
+  const [certification, setCertification] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [passwordCheck, setPasswordCheck] = useState<string>('');
 
@@ -30,6 +32,9 @@ const Signup = () => {
   const [isEmail, setIsEmail] = useState<boolean>(false);
   const [isPassword, setIsPassword] = useState<boolean>(false);
   const [isPasswordCheck, setIsPasswordCheck] = useState<boolean>(false);
+
+  //인증메일 전송버튼 클릭 여부
+  const [emailBut, setIsEmailBut] = useState<boolean>(false);
 
   // navigate login & home
   const navigate = useNavigate();
@@ -113,6 +118,15 @@ const Signup = () => {
     }
   }, []);
 
+  //인증번호
+  const onChangeCertification = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const certificationCurrent = e.target.value;
+      setCertification(certificationCurrent);
+    },
+    []
+  );
+
   //비밀번호
   const onChangePassword = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -178,14 +192,50 @@ const Signup = () => {
   ];
   const [msg, setMsg] = useState(errorMsg[0]);
 
+  //이메일 인증 번호 받기 클릭시 post 요청
+  const emailButClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    setIsEmailBut(!emailBut);
+
+    const emailData = {
+      email: email,
+    };
+    const emailCheckReq = await postEmail(emailData);
+    switch (emailCheckReq.status) {
+      case 200:
+        alert('인증번호가 전송되었습니다');
+        break;
+      case 404:
+        alert('이메일이 유효하지 않습니다');
+        break;
+    }
+  };
+
+  //이메일 인증 번호 작성 후 post 요청
+  const emailNumCheckClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    const emailNumData = {
+      email: email,
+      code: certification,
+    };
+    const emailCheckReq = await postEmailCertificationCheck(emailNumData);
+    switch (emailCheckReq.status) {
+      case 200:
+        alert('이메일 인증이 완료되었습니다');
+        setIsEmailBut(!emailBut);
+        break;
+      case 404:
+        alert('인증번호가 일치하지 않습니다');
+        break;
+    }
+  };
+
   return (
-    <div className="w-full h-screen bg-slate-300 pt-8 max-md:pt-0 flex flex-col items-center justify-center  max-md:justify-start">
+    <div className="flex flex-col items-center justify-center w-full h-screen pt-8 bg-slate-300 max-md:pt-0 max-md:justify-start">
       {showModal && <Confirm msg={msg} setShowModal={setShowModal} />}
       <div className="max-md:w-full md:w-[32rem] bg-white flex justify-center flex-col p-16 rounded-3xl max-md:rounded-none shadow-2xl/30">
         <img
           src={require('../images/logo.png')}
           alt=""
-          className="pb-10 m-auto w-56 cursor-pointer"
+          className="w-56 pb-10 m-auto cursor-pointer"
           onClick={handleHomeClick}
         />
         <form
@@ -204,7 +254,7 @@ const Signup = () => {
           >
             <input
               type="text"
-              className="peer/email input-ani outline-none bg-transparent text-base absolute w-full pt-3 px-6 top-0 h-full font-medium"
+              className="absolute top-0 w-full h-full px-6 pt-3 text-base font-medium bg-transparent outline-none peer/email input-ani"
               value={nickname}
               name="email"
               onChange={onChangeName}
@@ -218,41 +268,104 @@ const Signup = () => {
               닉네임
             </label>
             {nickname.length > 5 && !isName && (
-              <span className="relative pointer-events-none top-16 text-sm text-red-600 flex items-center">
+              <span className="relative flex items-center text-sm text-red-600 pointer-events-none top-16">
                 <BsFillPatchExclamationFill className="inline mr-1 text-base mt-0.5" />
                 {nameMessage}
               </span>
             )}
           </div>
-          <div
-            className={`relative bg-gray-50 rounded h-14 ring-inset ring-1 ring-slate-200 hover:ring-slate-400 hover:ring-2 ${
-              email.length > 5 && !isEmail
-                ? 'mb-10 ring-red-500 ring-2'
-                : 'mb-4'
-            }`}
-          >
-            <input
-              type="text"
-              className="peer/email input-ani outline-none bg-transparent text-base absolute w-full pt-3 px-6 top-0 h-full font-medium"
-              value={email}
-              name="email"
-              onChange={onChangeEmail}
-            ></input>
-            <label
-              className={`absolute font-medium top-4 left-6 text-gray-500 duration-200 pointer-events-none peer-focus/email:-translate-y-2.5 peer-focus/email:text-xs ${
-                email.length !== 0 &&
-                'peer-valid/email:-translate-y-2.5 peer-valid/email:text-xs'
+          {/* 이메일 */}
+          {/* 이메일 */}
+          {/* 이메일 */}
+          {/* 이메일 */}
+          <div className="flex">
+            <div
+              className={`w-3/4 relative bg-gray-50 rounded h-14 ring-inset ring-1 ring-slate-200 hover:ring-slate-400 hover:ring-2 ${
+                email.length > 5 && !isEmail
+                  ? 'mb-10 ring-red-500 ring-2'
+                  : 'mb-4'
               }`}
             >
-              이메일
-            </label>
-            {email.length > 5 && !isEmail && (
-              <span className="relative pointer-events-none top-16 text-sm text-red-600 flex items-center">
-                <BsFillPatchExclamationFill className="inline mr-1 text-base mt-0.5" />
-                {emailMessage}
-              </span>
-            )}
+              <input
+                type="text"
+                className="absolute top-0 w-full h-full px-6 pt-3 text-base font-medium bg-transparent outline-none peer/email input-ani"
+                value={email}
+                name="email"
+                onChange={onChangeEmail}
+              ></input>
+              <label
+                className={`absolute font-medium top-4 left-6 text-gray-500 duration-200 pointer-events-none peer-focus/email:-translate-y-2.5 peer-focus/email:text-xs ${
+                  email.length !== 0 &&
+                  'peer-valid/email:-translate-y-2.5 peer-valid/email:text-xs'
+                }`}
+              >
+                이메일
+              </label>
+              {email.length > 5 && !isEmail && (
+                <span className="relative flex items-center text-sm text-red-600 pointer-events-none top-16">
+                  <BsFillPatchExclamationFill className="inline mr-1 text-base mt-0.5" />
+                  {emailMessage}
+                </span>
+              )}
+            </div>
+            {/* 인증번호 버튼 */}
+            {/* 인증번호 버튼 */}
+            <div className="relative w-1/4 ml-2 rounded h-14">
+              <button
+                className="w-full h-full pb-1 text-base font-medium text-white bg-blue-600 rounded-md hover:bg-blue-500"
+                onClick={emailButClick}
+              >
+                메일 전송
+              </button>
+            </div>
           </div>
+          {/* 이메일 검증 */}
+          {/* 이메일 검증 */}
+          {/* 이메일 검증 */}
+          {/* 이메일 검증 */}
+          {/* 인증 메일 전송 버튼 클릭했을 때만 뜨도록 만들기 */}
+          {!emailBut ? null : (
+            <div className="flex">
+              <div
+                className={`relative w-3/4 bg-gray-50 rounded h-14 ring-inset ring-1 ring-slate-200 hover:ring-slate-400 hover:ring-2 ${
+                  email.length > 5 && !isEmail
+                    ? 'mb-10 ring-red-500 ring-2'
+                    : 'mb-4'
+                }`}
+              >
+                <input
+                  type="text"
+                  className="absolute top-0 w-full h-full px-6 pt-3 text-base font-medium bg-transparent outline-none peer/email input-ani"
+                  value={certification}
+                  name="emailCertification"
+                  onChange={onChangeCertification}
+                ></input>
+                <label
+                  className={`absolute font-medium top-4 left-6 text-gray-500 duration-200 pointer-events-none peer-focus/email:-translate-y-2.5 peer-focus/email:text-xs ${
+                    email.length !== 0 &&
+                    'peer-valid/email:-translate-y-2.5 peer-valid/email:text-xs'
+                  }`}
+                >
+                  인증번호 입력
+                </label>
+              </div>
+              {/* 인증번호 완료버튼 */}
+              {/* 인증번호 완료버튼 */}
+              {/* 인증번호 완료버튼 */}
+              <div className="relative w-1/4 ml-2 rounded h-14">
+                <button
+                  className="w-full h-full pb-1 text-base font-medium text-white bg-blue-600 rounded-md hover:bg-blue-500"
+                  onClick={emailNumCheckClick}
+                >
+                  인증 완료
+                </button>
+              </div>
+            </div>
+          )}
+          {/* 비밀번호 */}
+          {/* 비밀번호 */}
+          {/* 비밀번호 */}
+          {/* 비밀번호 */}
           <div
             className={`relative bg-gray-50 rounded h-14 ring-inset ring-1 ring-slate-200 hover:ring-slate-400 hover:ring-2 ${
               password.length > 5 && !isPassword
@@ -262,7 +375,7 @@ const Signup = () => {
           >
             <input
               type={passwordType}
-              className="peer/password input-ani outline-none bg-transparent text-base absolute pt-3 px-6 top-0 w-full h-full font-medium"
+              className="absolute top-0 w-full h-full px-6 pt-3 text-base font-medium bg-transparent outline-none peer/password input-ani"
               value={password}
               name="password"
               onChange={onChangePassword}
@@ -287,12 +400,16 @@ const Signup = () => {
               )}
             </div>
             {password.length > 5 && !isPassword && (
-              <span className="relative pointer-events-none top-16 text-sm text-red-600 flex items-center">
+              <span className="relative flex items-center text-sm text-red-600 pointer-events-none top-16">
                 <BsFillPatchExclamationFill className="inline mr-1 text-base mt-0.5" />
                 {passwordMessage}
               </span>
             )}
           </div>
+          {/* 비밀번호 확인 */}
+          {/* 비밀번호 확인 */}
+          {/* 비밀번호 확인 */}
+          {/* 비밀번호 확인 */}
           <div
             className={`relative bg-gray-50 rounded-bl rounded-br h-14 ring-inset ring-1 ring-slate-200 hover:ring-slate-400 hover:ring-2 ${
               passwordCheck.length > 5 && !isPasswordCheck
@@ -302,7 +419,7 @@ const Signup = () => {
           >
             <input
               type={passwordCheckType}
-              className="peer/password input-ani outline-none bg-transparent text-base absolute pt-3 px-6 top-0 w-full h-full font-medium"
+              className="absolute top-0 w-full h-full px-6 pt-3 text-base font-medium bg-transparent outline-none peer/password input-ani"
               value={passwordCheck}
               name="password"
               onChange={onChangePasswordCheck}
@@ -327,7 +444,7 @@ const Signup = () => {
               )}
             </div>
             {passwordCheck.length > 5 && !isPasswordCheck && (
-              <span className="relative pointer-events-none top-16 text-sm text-red-600 flex items-center">
+              <span className="relative flex items-center text-sm text-red-600 pointer-events-none top-16">
                 <BsFillPatchExclamationFill className="inline mr-1 text-base mt-0.5" />
                 {passwordCheckMessage}
               </span>
@@ -335,18 +452,18 @@ const Signup = () => {
           </div>
           <button
             type="submit"
-            className="w-full bg-blue-600 h-16 rounded-md text-xl font-bold pb-1 text-white hover:bg-blue-500"
+            className="w-full h-16 pb-1 text-xl font-bold text-white bg-blue-600 rounded-md hover:bg-blue-500"
           >
             회원가입
           </button>
         </form>
       </div>
       <div className="my-4 pt-1.5 pb-2 px-8 hover:bg-white/20 rounded-full">
-        <label className="text-gray-500 font-medium" htmlFor="goLogin">
+        <label className="font-medium text-gray-500" htmlFor="goLogin">
           계정이 이미 있으시다구요?
         </label>
         <button
-          className="font-bold text-gray-700 hover:text-blue-600 ml-4"
+          className="ml-4 font-bold text-gray-700 hover:text-blue-600"
           onClick={goLogin}
           id="goLogin"
         >
