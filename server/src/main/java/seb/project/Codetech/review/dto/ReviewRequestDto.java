@@ -13,6 +13,7 @@ public class ReviewRequestDto {
 		private Long productId;
 		private String title;
 		private String content;
+		private String thumbnail;
 	}
 
 	@Getter
@@ -23,7 +24,7 @@ public class ReviewRequestDto {
 		private Long productId;
 		private String title;
 		private String content;
-
+		private String thumbnail;
 	}
 
 	@Getter

@@ -24,7 +24,18 @@ public class FileController {
 
 	@PostMapping("/upload")
 	public ResponseEntity<String> uploadFile(@RequestPart MultipartFile file) throws IOException {
+
 		FileEntity fileEntity = fileService.saveFile(file);
+
 		return ResponseEntity.status(HttpStatus.OK).body(fileEntity.getPath());
+	}
+
+	@PostMapping("/thumbnail")
+	public ResponseEntity<?> uploadThumbnail(@RequestPart MultipartFile file, int width, int height) throws
+		IOException {
+
+		String saveThumbnail = fileService.saveThumbnail(file, width, height);
+
+		return ResponseEntity.ok(saveThumbnail);
 	}
 }
