@@ -85,9 +85,10 @@ public class SecurityConfig {
 //				.antMatchers(HttpMethod.PATCH, "/api/user/**").hasRole("USER")
 //				.antMatchers(HttpMethod.GET, "/api/user").hasRole("USER")
 				.anyRequest().permitAll())
-			.oauth2Login(oauth2 -> oauth2
-				.successHandler(
-					new OAuth2UserSuccessHandler(jwtTokenizer, authorityUtils, userService, userRepository,redisTemplate)));
+			.oauth2Login(oauth2 -> {oauth2.authorizationEndpoint().baseUri("/api/oauth2/authorize");
+
+				oauth2.successHandler(
+					new OAuth2UserSuccessHandler(jwtTokenizer, authorityUtils, userService, userRepository,redisTemplate));});
 		return http.build();
 
 	}
