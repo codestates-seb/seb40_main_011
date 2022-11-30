@@ -3,6 +3,7 @@ import { BsCheckCircleFill } from 'react-icons/bs';
 
 import { getUserReview } from '../../util/apiCollection';
 import ReviewTabPagenation from './ReviewTabPagenation';
+import { loginRefresh } from '../../util/loginRefresh';
 
 interface ReviewType {
   adoptedId: null | number;
@@ -19,13 +20,23 @@ const QuestionsTab = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isUpdate, setIsUpdate] = useState(true);
 
+  const params = `?page=${currentPage}&size=5&sort=createdAt`;
+  const DetailReviewData = async () => {
+    const data: any = await getUserReview('questions', params);
+    switch (data.status) {
+      case 200:
+        setReviewData(data?.data.questions.content);
+        setTotalPages(data?.data.questions.totalPages);
+        break;
+      case 412:
+        loginRefresh();
+        DetailReviewData();
+        break;
+      default:
+    }
+  };
+
   useEffect(() => {
-    const params = `?page=${currentPage}&size=5&sort=createdAt`;
-    const DetailReviewData = async () => {
-      const { data }: any = await getUserReview('questions', params);
-      setReviewData(data?.questions.content);
-      setTotalPages(data?.questions.totalPages);
-    };
     DetailReviewData();
     setIsUpdate(false);
   }, [isUpdate]);

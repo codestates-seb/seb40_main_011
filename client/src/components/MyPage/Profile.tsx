@@ -5,6 +5,7 @@ import EditProfile from '../Modal/EditProfile';
 import EditPassword from '../Modal/EditPassword';
 import EditProfileImg from '../Modal/EditProfileImg';
 import { getUserProfile } from '../../util/apiCollection';
+import { loginRefresh } from '../../util/loginRefresh';
 
 export interface UserProfile {
   email: string | undefined;
@@ -28,11 +29,21 @@ const Profile = () => {
     UserProfile | undefined
   >();
 
+  const getUserProfileData = async () => {
+    const data = await getUserProfile();
+
+    switch (data.status) {
+      case 200:
+        setUserProfileData(data?.data);
+        break;
+      case 412:
+        loginRefresh();
+        getUserProfileData();
+        break;
+      default:
+    }
+  };
   useEffect(() => {
-    const getUserProfileData = async () => {
-      const { data } = await getUserProfile();
-      setUserProfileData(data);
-    };
     getUserProfileData();
   }, []);
 

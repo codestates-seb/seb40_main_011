@@ -3,11 +3,10 @@ import { useState } from 'react';
 import { Rating } from 'react-simple-star-rating';
 import TextareaAutosize from 'react-textarea-autosize';
 import { BsXLg } from 'react-icons/bs';
-import { SnackReviewScore, SnackReviewCards } from '../../types/mainPageTypes';
 import { deleteSnack } from '../../util/apiCollection';
 import { useIsLogin } from '../../store/login';
 import { editSnack } from '../../util/apiCollection';
-import { text } from 'stream/consumers';
+import { loginRefresh } from '../../util/loginRefresh';
 
 export interface EditSncakReview {
   score: ScoreType;
@@ -56,32 +55,36 @@ const SnackReviewModal = ({ selectedReview, openModalHandler }: any) => {
       newScore.costEfficiency = el;
       return newScore;
     });
+    console.log(score);
   };
   const handleRatingQ = (el: any) => {
     setScore((current: any) => {
       const newScore = { ...current };
-      newScore.costEfficiency = el;
+      newScore.quality = el;
       return newScore;
     });
+    console.log(score);
   };
   const handleRatingS = (el: any) => {
     setScore((current: any) => {
       const newScore = { ...current };
-      newScore.costEfficiency = el;
+      newScore.satisfaction = el;
       return newScore;
     });
+    console.log(score);
   };
   const handleRatingP = (el: any) => {
     setScore((current: any) => {
       const newScore = { ...current };
-      newScore.costEfficiency = el;
+      newScore.performance = el;
       return newScore;
     });
+    console.log(score);
   };
   const handleRatingD = (el: any) => {
     setScore((current: any) => {
       const newScore = { ...current };
-      newScore.costEfficiency = el;
+      newScore.design = el;
       return newScore;
     });
     console.log(score);
@@ -111,37 +114,25 @@ const SnackReviewModal = ({ selectedReview, openModalHandler }: any) => {
 
   const handleTextarea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
-    if (content.length > 100) {
+    if (content.length > 1500) {
       window.alert('최대 글자수에 맞춰주세요');
-      setContent(content.slice(0, 100));
+      setContent(content.slice(0, 500));
     }
   };
 
   const onSubmitClick = async () => {
-    // const arr = Object.keys(score).map((el) => (score[el] === 0 ? 0 : 1));
-    // const ratingValidation = arr.reduce(
-    //   (acc: number, cur: number) => acc * cur,
-    //   1
-    // );
-    // if (ratingValidation === 1) {
-    //   await editSnack(selectedReview.id, { score, content });
-    //   window.location.reload();
-    // } else {
-    //   console.log(ratingValidation);
-    //   window.alert('별점을 매겨주세요!');
-    // }
-
     delete score.grade;
-
     console.log({ score, content });
-    console.log(selectedReview.id);
-
-    const data: any = { score, content: content };
-    const editReview = await editSnack(selectedReview.id, data);
+    const editReview = await editSnack(selectedReview.id, { score, content });
     switch (editReview.status) {
       case 200:
-        location.reload();
+        // location.reload();
         break;
+      case 412: {
+        loginRefresh();
+        onSubmitClick();
+        break;
+      }
       default:
     }
   };
@@ -156,9 +147,9 @@ const SnackReviewModal = ({ selectedReview, openModalHandler }: any) => {
   return (
     <div className="fixed inset-0 z-30 flex items-center justify-center w-full h-screen overflow-hidden bg-black/30 backdrop-blur-sm justify-content">
       <div className="w-[40rem] z-40 rounded-xl overflow-hidden">
-        <div className="flex flex-col px-8 py-4 font-medium text-gray-600 bg-slate-100 border-slate-200">
+        <div className="flex flex-col px-6 py-4 font-medium text-gray-600 bg-slate-100 border-slate-200">
           <button className="ml-auto " onClick={openModalHandler}>
-            <BsXLg className="ml-auto" />
+            <BsXLg className="" />
           </button>
           <div className="flex items-center justify-start">
             <img
@@ -257,9 +248,7 @@ const SnackReviewModal = ({ selectedReview, openModalHandler }: any) => {
                   );
                 })}
               </div>
-              <div className="text-justify h-[110px] pt-2  overflow-hidden whitespace-normal text-ellipsis line-clamp-4">
-                {el.content}
-              </div>
+              <div className="pt-2 pb-2 text-lg text-justify">{el.content}</div>
             </>
           )}
           <div className="flex items-end justify-end text-sm">
@@ -268,7 +257,7 @@ const SnackReviewModal = ({ selectedReview, openModalHandler }: any) => {
                 <>
                   <div className="flex items-center justify-between w-full">
                     <span className="flex text-sm text-gray-400">
-                      현재 글자수 {content.length} / 최대 글자수 100자
+                      현재 글자수 {content.length} / 최대 글자수 500자
                     </span>
                     <div>
                       {' '}
