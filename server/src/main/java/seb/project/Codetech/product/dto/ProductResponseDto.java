@@ -61,4 +61,24 @@ public class ProductResponseDto {
 		private long snackCount;
 		private double avgScore;
 	}
+
+	@Getter
+	@Setter
+	@NoArgsConstructor
+	@AllArgsConstructor
+	public static class Search {
+		private Long id;
+		private String name;
+		private Type type;
+		private Long reviewCount;
+	}
+
+	@Getter
+	@Setter
+	@NoArgsConstructor
+	@AllArgsConstructor
+	public static class Slice {
+		private List<?> reviewLists;
+		private boolean hasNext;
+	}
 }
