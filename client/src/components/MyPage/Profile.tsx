@@ -93,7 +93,7 @@ const Profile = () => {
           <img
             src={`https://codetech.nworld.dev${userProfileData?.image}`}
             alt=""
-            className="mt-10 border-none rounded-full bg-gray-400/90 w-60 h-60"
+            className="object-cover mt-10 border-none rounded-full bg-gray-400/90 w-60 h-60"
           />
           <div className="flex justify-center">
             <button

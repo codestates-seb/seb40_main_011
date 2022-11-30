@@ -28,12 +28,14 @@ const ReviewLists = () => {
   const [limit, setLimit] = useState(6);
 
   const [spread, setSpread] = useState(false);
+
+  const [detailReviewspread, setdetailReviewSpread] = useState<any>(false);
+
   const [selected, setSelected] = useState('최신 순');
   const [productData, setProductData] = useState<ProductDetail>();
 
   const ratingCategory = ['가성비', '품질', '만족감', '성능', '디자인'];
   const menu = ['최신 순', '별점 순', '낮은 별점 순'];
-  const sortReviews = ['최신 순', '별점 순', '댓글 순'];
 
   const { isLogin } = useIsLogin();
   const productId = Number(useParams().id);
@@ -82,6 +84,10 @@ const ReviewLists = () => {
     if (!spread) return null;
     setSpread(!spread);
   };
+  const handleDetailBoxClose = () => {
+    if (!detailReviewspread) return null;
+    setdetailReviewSpread(!detailReviewspread);
+  };
 
   const [isModal, setIsModal] = useState(false);
   const openModalHandler = (
@@ -93,7 +99,11 @@ const ReviewLists = () => {
   return (
     <div
       className="flex flex-col items-center justify-center"
-      onClick={handleBoxClose}
+      // onClick={(handleBoxClose, handleDetailBoxClose)}
+      onClick={(e) => {
+        handleBoxClose();
+        handleDetailBoxClose();
+      }}
     >
       <div className="mt-10 w-[1060px] text-center">
         <div className="mb-3 text-2xl font-bold">{productData?.type}</div>
@@ -112,7 +122,11 @@ const ReviewLists = () => {
           <div>
             {productData?.reviews !== null ? (
               <>
-                <DetailReview productId={productId} />
+                <DetailReview
+                  productId={productId}
+                  detailReviewspread={detailReviewspread}
+                  setdetailReviewSpread={setdetailReviewSpread}
+                />
               </>
             ) : null}
           </div>
