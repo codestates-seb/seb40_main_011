@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.log4j.Log4j2;
 import seb.project.Codetech.event.dto.ReviewUpdateEvent;
+import seb.project.Codetech.file.service.FileService;
 import seb.project.Codetech.review.dto.ReviewRequestDto;
 import seb.project.Codetech.review.dto.ReviewResponseDto;
 import seb.project.Codetech.review.entity.Review;
@@ -34,12 +35,14 @@ import seb.project.Codetech.review.service.ReviewService;
 public class ReviewController {
 
 	private final ReviewService reviewService;
+	private final FileService fileService;
 	private final ApplicationEventPublisher applicationEventPublisher;
 	private final ReviewMapper mapper;
 
-	public ReviewController(ReviewService reviewService, ReviewMapper mapper,
+	public ReviewController(ReviewService reviewService, FileService fileService, ReviewMapper mapper,
 		ApplicationEventPublisher applicationEventPublisher) {
 		this.reviewService = reviewService;
+		this.fileService = fileService;
 		this.applicationEventPublisher = applicationEventPublisher;
 		this.mapper = mapper;
 	}
