@@ -102,4 +102,14 @@ public class ProductController {
 
 		return ResponseEntity.ok(mainPage);
 	}
+
+	@GetMapping("/search")
+	public ResponseEntity<ProductResponseDto.Slice> getSearchReview(@RequestParam String keyword,
+		@RequestParam Long offset,
+		@RequestParam int limit) {
+
+		ProductResponseDto.Slice searchProduct = productService.searchProduct(keyword, offset, limit);
+
+		return ResponseEntity.ok(searchProduct);
+	}
 }

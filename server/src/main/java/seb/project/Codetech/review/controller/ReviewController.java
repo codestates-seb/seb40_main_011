@@ -24,6 +24,7 @@ import seb.project.Codetech.event.dto.ReviewUpdateEvent;
 import seb.project.Codetech.review.dto.ReviewRequestDto;
 import seb.project.Codetech.review.dto.ReviewResponseDto;
 import seb.project.Codetech.review.entity.Review;
+import seb.project.Codetech.review.entity.Sort;
 import seb.project.Codetech.review.mapper.ReviewMapper;
 import seb.project.Codetech.review.service.ReviewService;
 
@@ -94,19 +95,24 @@ public class ReviewController {
 		return ResponseEntity.ok(loadBestReview);
 	}
 
-	@GetMapping("/list")
-	public ResponseEntity<?> getListReview(@RequestBody ReviewRequestDto.Get get) {
+	@GetMapping("/search")
+	public ResponseEntity<ReviewResponseDto.Slice> getSearchReview(@RequestParam String keyword,
+		@RequestParam Long offset,
+		@RequestParam int limit) {
 
-		List<ReviewResponseDto.ReviewList> reviewLists = reviewService.loadSliceReview(get);
+		ReviewResponseDto.Slice reviewSlice = reviewService.searchReview(keyword, offset, limit);
 
-		return ResponseEntity.ok(reviewLists);
+		return ResponseEntity.ok(reviewSlice);
 	}
 
-	@GetMapping("/search")
-	public ResponseEntity<?> getSearchReview(@RequestParam String keyword) {
+	@GetMapping("/product")
+	public ResponseEntity<ReviewResponseDto.Slice> getListReview(@RequestParam Long id,
+		@RequestParam Sort sort,
+		@RequestParam Long offset,
+		@RequestParam int limit) {
 
-		List<ReviewResponseDto.Search> searchList = reviewService.searchReview(keyword);
+		ReviewResponseDto.Slice productSlices = reviewService.loadSliceReview(id, sort, offset, limit);
 
-		return ResponseEntity.ok(searchList);
+		return ResponseEntity.ok(productSlices);
 	}
 }

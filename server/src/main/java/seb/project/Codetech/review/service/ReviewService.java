@@ -11,9 +11,9 @@ import seb.project.Codetech.global.exception.BusinessLogicException;
 import seb.project.Codetech.global.exception.ExceptionCode;
 import seb.project.Codetech.product.entity.Product;
 import seb.project.Codetech.product.service.ProductService;
-import seb.project.Codetech.review.dto.ReviewRequestDto;
 import seb.project.Codetech.review.dto.ReviewResponseDto;
 import seb.project.Codetech.review.entity.Review;
+import seb.project.Codetech.review.entity.Sort;
 import seb.project.Codetech.review.repository.ReviewRepository;
 import seb.project.Codetech.user.entity.User;
 import seb.project.Codetech.user.service.UserService;
@@ -86,16 +86,24 @@ public class ReviewService {
 		Review review = findVerificationReview(id);
 
 		review.setView(review.getView() + 1L);
-		Review saveReview = reviewRepository.save(review);
-		return reviewRepository.getReviewPageByReview(id, saveReview);
+		Review saveFile = reviewRepository.save(review);
+		return reviewRepository.getReviewPageByReview(id, saveFile);
 	}
 
-	public List<ReviewResponseDto.Search> searchReview(String keyword) {
-		return reviewRepository.searchReviewByKeyword(keyword);
+	public ReviewResponseDto.Slice searchReview(String keyword, Long offset, int limit) {
+
+		List<ReviewResponseDto.Search> searches = reviewRepository.searchReviewByKeyword(keyword, offset, limit);
+		boolean hasNext = reviewRepository.hasNext(searches, limit);
+
+		return new ReviewResponseDto.Slice(searches, hasNext);
 	}
 
-	public List<ReviewResponseDto.ReviewList> loadSliceReview(ReviewRequestDto.Get get) {
-		return reviewRepository.loadSortReviewByProductId(get);
+	public ReviewResponseDto.Slice loadSliceReview(Long id, Sort sort, Long offset, int limit) {
+		List<ReviewResponseDto.ReviewList> reviewLists = reviewRepository.loadSortReviewByProductId(id, sort, offset,
+			limit);
+		boolean hasNext = reviewRepository.hasNext(reviewLists, limit);
+
+		return new ReviewResponseDto.Slice(reviewLists, hasNext);
 	}
 
 	public List<ReviewResponseDto.Best> loadBestReview(Integer size) {

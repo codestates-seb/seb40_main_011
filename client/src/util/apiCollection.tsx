@@ -215,8 +215,9 @@ export const getSnackStats = async (productId: number) => {
   }
 };
 
-export const editSnack = async (snackId: number, data: EditSncakReview) => {
+export const editSnack = async (snackId: number, data: any) => {
   try {
+    console.log(data);
     const response = await axios.patch(`/api/snack-reviews/${snackId}`, data, {
       headers: {
         'Content-Type': 'application/json',
@@ -403,6 +404,35 @@ export const getUserReview = async (url: string, params: string) => {
       headers: { Authorization: initialToken },
     });
     return getReview;
+  } catch (err: any) {
+    if (err.response.status === 412) {
+      console.log('reissue 진행중...');
+      reissueTokenRecall(initialToken, url, params);
+    } else return console.error(err.response);
+  }
+};
+
+const reissueTokenRecall = async (
+  expired: any,
+  url: string,
+  params: string
+) => {
+  const data = '';
+  try {
+    const resReissue = await axios.post('/api/refresh', data, {
+      headers: {
+        'Content-Type': 'application/json',
+        Expired: expired,
+        Refresh: localStorage.getItem('refresh'),
+      },
+    });
+
+    initialToken = resReissue.headers.authorization;
+
+    const originalResponse = await axios.get(`/api/user/${url}${params}`, {
+      headers: { Authorization: initialToken },
+    });
+    return originalResponse;
   } catch (err: any) {
     return err.response;
   }

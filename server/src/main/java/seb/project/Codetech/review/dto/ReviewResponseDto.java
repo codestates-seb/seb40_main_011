@@ -80,8 +80,7 @@ public class ReviewResponseDto {
 		private String writer;
 		private String userImage;
 		//private String thumbnail;
-		@Setter
-		private Long reviewCommCount;
+		private Long commentCount;
 	}
 
 	@Getter
@@ -89,7 +88,7 @@ public class ReviewResponseDto {
 	@NoArgsConstructor
 	@AllArgsConstructor
 	public static class Slice {
-		private List<ReviewList> reviewLists;
+		private List<?> reviewLists;
 		private boolean hasNext;
 	}
 }

@@ -272,6 +272,7 @@ export interface SelectBoxProps {
   setSpread: Dispatch<SetStateAction<boolean>>;
   selected: string;
   setSelected: Dispatch<SetStateAction<string>>;
+  menu: string[];
 }
 
 export interface DetailReviewProps {

@@ -1,17 +1,9 @@
 import { useState } from 'react';
 import { Rating } from 'react-simple-star-rating';
 import { SnackReviewProps, SnackReviewCards } from '../../types/mainPageTypes';
-import { deleteSnack } from '../../util/apiCollection';
-import { useIsLogin } from '../../store/login';
 import SnackReviewModal from '../Modal/SnackReviewModal';
 
 const SnackReview = ({ snackReviewData }: SnackReviewProps) => {
-  const [isEditMode, setIsEditMode] = useState(false);
-  const [editedReview, setEditedReview] = useState('');
-  const getParsedDate = (createdAt: string) => {
-    return new Date(createdAt).toLocaleDateString('ko-KR');
-  };
-
   const [selectedReview, setSelectedReview] = useState<any>();
   const [isModal, setIsModal] = useState(false);
 

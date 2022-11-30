@@ -5,9 +5,7 @@ import static seb.project.Codetech.review.entity.QReview.*;
 import static seb.project.Codetech.review.entity.QReviewComment.*;
 import static seb.project.Codetech.user.entity.QUser.*;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,13 +14,12 @@ import javax.persistence.EntityManager;
 
 import org.springframework.stereotype.Repository;
 
-import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
-import seb.project.Codetech.review.dto.ReviewRequestDto;
 import seb.project.Codetech.review.dto.ReviewResponseDto;
 import seb.project.Codetech.review.entity.Review;
+import seb.project.Codetech.review.entity.Sort;
 
 @Repository
 public class CustomReviewRepositoryImpl implements CustomReviewRepository {
@@ -35,6 +32,9 @@ public class CustomReviewRepositoryImpl implements CustomReviewRepository {
 	@Override
 	public ReviewResponseDto.Page getReviewPageByReview(Long id, Review loadReview) {
 		// App-level join!
+
+		// 코멘트 개수 업데이트
+		loadReview.updateCommentCount(queryFactory);
 
 		// 1. 대댓글이 아닌 댓글만 먼저 가져옴.
 		var comments = queryFactory
@@ -119,10 +119,23 @@ public class CustomReviewRepositoryImpl implements CustomReviewRepository {
 	}
 
 	@Override
-	public List<ReviewResponseDto.ReviewList> loadSortReviewByProductId(ReviewRequestDto.Get get) {
+	public List<ReviewResponseDto.ReviewList> loadSortReviewByProductId(Long id, Sort sort, Long offset, int limit) {
+
+		// 댓글 많은 순 -> 댓글이 몇 갠지 알아야 함
+		// 세 가지 방법이 있음
+		// 1. 그때그때 count로 개수를 셈: 비효율적임 (read가 너무 잦아짐)
+		// 2. 댓글 하나 쓸 때마다 count를 1 올림: 이것도 비효율적임 (write가 많아짐)
+		// 3. (댓글 개수가 부정확해도 괜찮은 경우) 댓글을 쓸 때, 마지막으로 댓글 개수를 업데이트한 시점으로부터 일정 시간이 지났을 때만 개수 업데이트
+		// 지금은 3번을 써볼게요 (레디스 없이)
+
+		// 하는 절차
+		// 1. 칼럼을 두 개 추가한다: 댓글 개수, 마지막으로 댓글 개수가 업데이트된 시간
+		// 2. 댓글이 추가될 때, 댓글 개수가 업데이트된 시간을 가져와서, 일정 시간이 지났으면 댓글 개수 업데이트
+		// 3. profit!
 
 		// 1. 입력한 제품 아이디에 연관된 모든 리뷰를 조회한다
-		var reviewList = queryFactory
+
+		var reviewListQuery = queryFactory
 			.select(Projections.fields(ReviewResponseDto.ReviewList.class,
 					review.id,
 					review.title,
@@ -130,35 +143,34 @@ public class CustomReviewRepositoryImpl implements CustomReviewRepository {
 					review.writer,
 					review.RecommendNumber,
 					review.createdAt,
+					review.commentCount,
+					review.commentUpdatedAt,
 					user.image.as("userImage")
 				)
 			)
 			.from(review)
-			.where(review.product.id.eq(get.getProductId()))
-			.leftJoin(review.user, user)
-			.orderBy(checkSortBySlice(get.getSort()))
-			.offset(get.getOffset())
-			.limit(get.getLimit() + 1)
-			.fetch();
+			.where(review.product.id.eq(id))
+			.leftJoin(review.user, user).offset(offset)
+			.limit(limit + 1);
 
-		// 2. 각 리뷰글에 생성된 댓글의 수를 카운트해서 리스트 값에 넣는다.
-		for (ReviewResponseDto.ReviewList review : reviewList) {
+		if (sort.equals(Sort.RECENT)) // 최신 순 정렬
+			reviewListQuery.orderBy(review.createdAt.desc()); // 또는 review.modifiedAt.desc()
 
-			var reviewCount = queryFactory
-				.select(reviewComment.review.id.count())
-				.from(reviewComment)
-				.where(reviewComment.review.id.eq(review.getId()))
-				.fetchOne();
-
-			review.setReviewCommCount(reviewCount);
+		if (sort.equals(Sort.MOST_LIKE)) {
+			reviewListQuery.orderBy(review.RecommendNumber.desc()); // 좋아요 많은 순 정렬
+			reviewListQuery.orderBy(review.createdAt.desc()); // 만약에 같으면 최신 순으로 정렬한다.
 		}
 
-		// 3. 연산값을 반환한다.
-		return reviewList;
+		if (sort.equals(Sort.TOP_COMMENT)) {
+			reviewListQuery.orderBy(review.commentCount.desc()); // 댓글 많은 순 정렬
+			reviewListQuery.orderBy(review.createdAt.desc()); // 만약에 같으면 최신 순으로 정렬한다.
+		}
+
+		return reviewListQuery.fetch();
 	}
 
 	@Override
-	public List<ReviewResponseDto.Search> searchReviewByKeyword(String keyword) {
+	public List<ReviewResponseDto.Search> searchReviewByKeyword(String keyword, Long offset, int limit) {
 		return queryFactory
 			.select(Projections.fields(ReviewResponseDto.Search.class,
 					review.title,
@@ -173,6 +185,8 @@ public class CustomReviewRepositoryImpl implements CustomReviewRepository {
 				review.title.contains(keyword).or(review.content.contains(keyword)))
 			.leftJoin(review.user, user)
 			.orderBy(review.id.desc())
+			.leftJoin(review.user, user).offset(offset)
+			.limit(limit + 1)
 			.fetch();
 	}
 
@@ -206,28 +220,9 @@ public class CustomReviewRepositoryImpl implements CustomReviewRepository {
 			.fetch();
 	}
 
-	private OrderSpecifier<?>[] checkSortBySlice(int sort) {
-		Deque<OrderSpecifier<?>> orderSpecifiers = new ArrayDeque<>();
-		orderSpecifiers.add(review.id.desc());
-
-		if (sort == 1) { // 정렬 기준이 리뷰의 좋아요가 많은 순
-			orderSpecifiers.addFirst(review.RecommendNumber.desc());
-			return orderSpecifiers.toArray(new OrderSpecifier[0]);
-		}
-
-		if (sort == 2) { // 정렬 기준이 리뷰의 댓글이 많은 순 ->
-			orderSpecifiers.addFirst(review.view.desc());
-			return orderSpecifiers.toArray(new OrderSpecifier[0]);
-		}
-
-		// 기본 정렬은 리뷰의 최신 순
-		orderSpecifiers.addFirst(review.id.desc());
-		return orderSpecifiers.toArray(new OrderSpecifier[0]);
-	}
-
-	public boolean hasNext(List<ReviewResponseDto.ReviewList> lists, int limit) {
-		if (lists.size() > limit) {
-			lists.remove(limit);
+	public boolean hasNext(List<?> responseList, int limit) {
+		if (responseList.size() > limit) {
+			responseList.remove(limit);
 			return true;
 		}
 
