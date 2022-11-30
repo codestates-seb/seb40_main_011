@@ -46,11 +46,19 @@ export interface Review {
   userImage?: string;
   view: number;
   writer: string;
+  productId: number;
+}
+
+export interface ReviewProps {
+  review: Review;
+  setShowModal: Dispatch<SetStateAction<boolean>>;
+}
+export interface markdownProps {
+  markdown: string | undefined;
 }
 
 export interface LikeProps {
   recommendNumber: number;
-  reviewId: number;
 }
 
 export interface BestReview {
@@ -74,12 +82,12 @@ export interface SubComments {
 export interface ReviewComments {
   child: [];
   content: string;
+  createdAt: string;
   id: number;
   parent: any;
   userId: number;
   userImage: string;
   writer: string;
-  createdAt: string;
 }
 
 export interface SearchData {
@@ -99,6 +107,10 @@ export interface CommentProps {
   reviewComments: ReviewComments | undefined;
 }
 
+export interface CommentsProps {
+  comments: ReviewComments[] | undefined;
+}
+
 export interface CategoryProps {
   setCategory: Dispatch<SetStateAction<string>>;
   setCurrentPage: Dispatch<SetStateAction<number>>;
@@ -106,7 +118,7 @@ export interface CategoryProps {
 
 export interface SubCommentProps {
   setMoreComment: Dispatch<SetStateAction<boolean>>;
-  child: ReviewComments[];
+  child: ReviewComments;
   moreComment: boolean;
   isEditSub: boolean;
   setIsEditSub: Dispatch<SetStateAction<boolean>>;
@@ -117,6 +129,8 @@ export interface EditModeProps {
   setIsEditMode: Dispatch<SetStateAction<boolean>>;
   editedComment: string | undefined;
   id: number;
+  setComment: any;
+  userId: number;
 }
 
 export interface XsRoundedButtonProps {

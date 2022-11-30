@@ -11,7 +11,7 @@ import EditComment from './EditComment';
 import { useIsLogin } from '../../store/login';
 import { loginRefresh } from '../../util/loginRefresh';
 import { useParams } from 'react-router-dom';
-import { postComment } from '../../util/apiCollection';
+import { postComment, editComment } from '../../util/apiCollection';
 
 export interface count {
   count: number;
@@ -19,6 +19,7 @@ export interface count {
 
 export default function Comment({ reviewComments }: CommentProps) {
   const params = useParams();
+  const [comment, setComment] = useState(reviewComments?.content);
   const { isLogin } = useIsLogin();
   const [moreComment, setMoreComment] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -30,11 +31,27 @@ export default function Comment({ reviewComments }: CommentProps) {
     return new Date(createdAt).toLocaleDateString('ko-KR');
   };
 
-  const onEnterPress = () => {
+  const onEnterPress = async () => {
+    setComment(editedComment);
     setIsEditMode(!isEditMode);
     if (isEditMode === true && editedComment !== undefined) {
-      console.log(editedComment);
-      //여기에 댓글 api POST 메서드 관련 함수
+      if (comment !== '') {
+        const response = await editComment({
+          id: reviewComments?.id,
+          content: editedComment,
+        });
+        switch (response.status) {
+          default:
+            // location.reload();
+            break;
+          case 401:
+            alert('에러');
+            break;
+          case 412:
+            loginRefresh();
+            onEnterPress();
+        }
+      }
     }
   };
 
@@ -44,6 +61,7 @@ export default function Comment({ reviewComments }: CommentProps) {
   };
 
   const onCommentEdit = (e: { target: HTMLInputElement }) => {
+    setComment(e.target.value);
     setEditedComment(e.target.value);
   };
 
@@ -103,6 +121,44 @@ export default function Comment({ reviewComments }: CommentProps) {
     );
   };
 
+  const SubCommentHide = () => {
+    if (!moreComment) {
+      return null;
+    } else {
+      return (
+        <button
+          onClick={() => setMoreComment(!moreComment)}
+          className="w-full text-gray-400 font-medium text-sm px-2 pb-0.5 rounded hover:bg-slate-200 hover:text-gray-500 group"
+        >
+          <div className="pr-0.5 text-base group-hover:text-gray-800">접기</div>
+        </button>
+      );
+    }
+  };
+
+  const HandleSubComment: any = () => {
+    if (reviewComments !== undefined) {
+      if (
+        moreComment &&
+        reviewComments.child.filter(
+          (el: ReviewComments) => el.content !== '작성자가 삭제한 댓글입니다.'
+        ).length > 0
+      ) {
+        return reviewComments?.child.map((el: ReviewComments, idx) => (
+          <div key={idx}>
+            <SubComment
+              isEditSub={isEditSub}
+              setIsEditSub={setIsEditSub}
+              moreComment={moreComment}
+              child={el}
+              setMoreComment={setMoreComment}
+            />
+          </div>
+        ));
+      } else return <PendingMoreButton />;
+    }
+  };
+
   return (
     <>
       {reviewComments &&
@@ -127,6 +183,8 @@ export default function Comment({ reviewComments }: CommentProps) {
                   setIsEditMode={setIsEditMode}
                   editedComment={editedComment}
                   id={reviewComments.id}
+                  setComment={setComment}
+                  userId={reviewComments.userId}
                 />
               </div>
             </div>
@@ -135,7 +193,7 @@ export default function Comment({ reviewComments }: CommentProps) {
                 <>
                   <input
                     autoFocus
-                    defaultValue={reviewComments.content}
+                    defaultValue={comment}
                     className="w-full px-6 pt-3 pb-4 rounded-t-xl border-b border-gray-200"
                     onChange={onCommentEdit}
                     onKeyUp={(comment) =>
@@ -167,7 +225,7 @@ export default function Comment({ reviewComments }: CommentProps) {
               ) : (
                 <>
                   <div className="px-6 pt-3 pb-4 border-b border-gray-200">
-                    {reviewComments.content}
+                    {comment}
                   </div>
                   <form
                     action=""
@@ -193,21 +251,27 @@ export default function Comment({ reviewComments }: CommentProps) {
                 </>
               )}
             </div>
-            {moreComment &&
+            <HandleSubComment />
+            {/* {moreComment &&
             reviewComments.child.filter(
               (el: ReviewComments) =>
                 el.content !== '작성자가 삭제한 댓글입니다.'
             ).length > 0 ? (
-              <SubComment
-                isEditSub={isEditSub}
-                setIsEditSub={setIsEditSub}
-                moreComment={moreComment}
-                child={reviewComments.child}
-                setMoreComment={setMoreComment}
-              />
+              reviewComments.child.map((el, idx) => (
+                <div key={idx}>
+                  <SubComment
+                    isEditSub={isEditSub}
+                    setIsEditSub={setIsEditSub}
+                    moreComment={moreComment}
+                    child={el}
+                    setMoreComment={setMoreComment}
+                  />
+                </div>
+              ))
             ) : (
               <PendingMoreButton />
-            )}
+            )} */}
+            <SubCommentHide />
           </div>
         </div>
       ) : null}

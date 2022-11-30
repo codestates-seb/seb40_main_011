@@ -21,8 +21,13 @@ const BestReviewList = () => {
     getReviewData();
   }, []);
 
+  const regex =
+    /(((\|)([a-zA-Z\d+\s#!@'"():;\\/.[\]^<={$}>?(?!-))]+))+(\|))(?:\n)?((\|)(-+))+(\|)(\n)((\|)(\W+|\w+|\S+))+(\|$)/;
+
   const onlyText = (data: string) => {
-    return data.replace(/[^ㄱ-ㅎ가-힣a-zA-Z]/g, ' ');
+    return data
+      .replace(/(\[.*\])(\((http)(?:s)?(:\/\/).*\))/g, ' ')
+      .replace(/[^ㄱ-ㅎ가-힣a-zA-Z0-9]/g, ' ');
   };
 
   const onClick = () => {
