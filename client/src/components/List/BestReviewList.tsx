@@ -15,7 +15,7 @@ const BestReviewList = () => {
 
   useEffect(() => {
     const getReviewData = async () => {
-      const { data } = await getBestReview(99);
+      const { data } = await getBestReview(3);
       setSortedReviews(data);
     };
     getReviewData();

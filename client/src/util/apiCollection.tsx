@@ -9,7 +9,7 @@ import {
   AnswerContent,
 } from '../types/mainPageTypes';
 
-const initialToken: any = localStorage.getItem('authorization');
+let initialToken: any = localStorage.getItem('authorization');
 
 export const postSnack = async (req: any) => {
   const reqUrl = '/api/snack-reviews';
@@ -123,6 +123,22 @@ export const getProductDetail = async (productId: number) => {
         'Content-Type': 'application/json',
       },
     });
+    return searchResponse;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
+export const getSearchReview = async (keyword: string) => {
+  try {
+    const searchResponse = await axios.get(
+      `/api/reviews/search?keyword=${keyword}&offset=0&limit=3`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
     return searchResponse;
   } catch (err: any) {
     return err.response;
@@ -458,7 +474,7 @@ export const selectProductImg = async (data: any) => {
   try {
     const submitImg = await axios.post('/api/products', data, {
       headers: {
-        Authorization: initialToken,
+        Authorization: localStorage.getItem('authorization'),
       },
     });
     return submitImg;
@@ -480,7 +496,7 @@ export const postEditorContent = async (data: any) => {
   try {
     const editorContent = await axios.post('/api/reviews', data, {
       headers: {
-        Authorization: initialToken,
+        Authorization: localStorage.getItem('authorization'),
       },
     });
     return editorContent;

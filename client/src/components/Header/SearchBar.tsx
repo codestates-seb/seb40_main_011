@@ -8,8 +8,8 @@ export default function SearchBar() {
   const onKeyPress = (e: KeyboardEvent) => {
     if (e.key == 'Enter') {
       e.preventDefault();
-      console.log(`검색어: ${keywords}`);
       navigate({ pathname: `/search`, search: `?search=${keywords}` });
+      setKeywords('');
     }
   };
   return (

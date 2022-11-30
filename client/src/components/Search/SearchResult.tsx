@@ -5,7 +5,9 @@ import SearchReview from './SearchReview';
 const SearchResult = () => {
   const location = useLocation();
   const idx = location.search.indexOf('=');
-  const keyword = decodeURI(location.search).slice(idx + 1);
+  const keyword = decodeURI(location.search)
+    .slice(idx + 1)
+    .toLocaleLowerCase();
 
   return (
     <div className="flex flex-col justify-center">

@@ -92,34 +92,34 @@ const ProductList = () => {
               />
             </div>
           </div>
-          <div className="flex items-center justify-center">
-            <div className="m-16 flex flex-wrap w-4/5">
+          <div className="flex items-center justify-center ">
+            <div className="m-16 flex flex-wrap w-4/5 ">
               {products.slice(offset, offset + 9).map((el, idx) => {
                 return (
                   <div
                     key={idx}
-                    className="mb-12 flex lg:w-1/3 md:w-1/2 justify-center drop-shadow-productList p-4 lg:px-16 hover:-translate-y-1 transition ease-in-out hover:scale-110"
+                    className="mb-12 flex w-full lg:w-1/3 md:w-1/2 justify-center drop-shadow-productList p-4 lg:px-16 hover:-translate-y-1 transition ease-in-out hover:scale-110"
                   >
                     <div
                       role="button"
                       onClick={onProductClick}
                       id={el.id.toString()}
-                      className="flex flex-col w-full bg-white rounded-b-lg aspect-1"
+                      className="flex flex-col w-full bg-white rounded-b-lg"
                     >
                       {el?.filePath === null ? (
                         <img
                           src={require('../../images/Image-null.png')}
-                          className="object-cover rounded-t-lg h-48"
+                          className="object-contain rounded-t-lg h-48"
                         />
                       ) : (
                         <img
-                          className="object-cover rounded-t-lg h-48"
+                          className="object-contain w-full rounded-t-lg h-48"
                           src={`https://codetech.nworld.dev${el?.filePath}`}
                         />
                       )}
 
                       <div className="h-full flex flex-col justify-between">
-                        <div className="p-2 border-t-2 border-slate-300">
+                        <div className="p-2 border-t-2 w-full border-slate-300">
                           {el.name}
                         </div>
                         <div className="flex p-2 justify-between items-center">

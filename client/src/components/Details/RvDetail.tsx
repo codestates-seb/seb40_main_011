@@ -8,8 +8,10 @@ import { Viewer } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 import Comment from './Comment';
 import HandleLike from './Like';
+import { useRef } from 'react';
 
 const RvDetail = () => {
+  const shortCutRef = useRef(null);
   interface markdownProps {
     markdown: string | undefined;
   }
@@ -74,6 +76,42 @@ const RvDetail = () => {
     } else return null;
   };
 
+  const ShortCut = () => {
+    const h1 = Array.prototype.slice.call(document.querySelectorAll('h1'));
+    const h2 = Array.prototype.slice.call(document.querySelectorAll('h2'));
+    const element = document.getElementById('h1');
+
+    const handleScroll = () => {
+      console.log(element);
+      document.getElementById('h1')?.scrollIntoView({ behavior: 'smooth' });
+    };
+
+    return (
+      <div className="max-sm:hidden">
+        <div className="absolute left-3/4 ">
+          <div className="text-slate-600 max-lg:ml-[3rem] ml-[6rem] border-l-2 leading-normal text-sm overflow-hidden fixed top-112">
+            {h1.map((el, idx: number) => (
+              <div
+                ref={shortCutRef}
+                role="button"
+                className="ml-4"
+                key={idx}
+                id="h1"
+              >
+                {el.innerText}
+              </div>
+            ))}
+            {h2.map((el, idx: number) => (
+              <div className="ml-8 mt-4" key={idx}>
+                {el.innerText}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="flex justify-center">
       <div className="flex flex-col items-center w-3/5">
@@ -87,7 +125,8 @@ const RvDetail = () => {
               {review?.type.toLocaleLowerCase()}
             </div>
           </div>
-          <div className="flex justify-center p-4 m-4 text-2xl font-bold">
+          <ShortCut />
+          <div className="flex justify-center p-4 mx-4 text-[3rem] font-bold">
             {review?.title}
           </div>
         </div>

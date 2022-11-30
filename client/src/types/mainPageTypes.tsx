@@ -82,6 +82,19 @@ export interface ReviewComments {
   createdAt: string;
 }
 
+export interface SearchData {
+  hasNext: boolean;
+  reviewLists: ReviewLists[];
+}
+
+export interface ReviewLists {
+  content: string;
+  recommendNumber: number;
+  title: string;
+  userImage: string;
+  writer: string;
+}
+
 export interface CommentProps {
   reviewComments: ReviewComments | undefined;
 }

@@ -45,6 +45,8 @@ const ReviewLists = () => {
     getProductData();
   }, []);
 
+  console.log(snackReviewStats);
+
   useEffect(() => {
     const getSnackData = async () => {
       if (selected === '최신 순') {
