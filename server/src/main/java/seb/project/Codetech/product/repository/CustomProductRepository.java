@@ -8,6 +8,12 @@ import seb.project.Codetech.product.entity.Type;
 
 public interface CustomProductRepository {
 	List<ProductResponseDto.Select> findByProductType(Type type);
+
 	List<ProductResponseDto.Card> searchMainPage();
+
 	Map<Long, String> searchFileSByProductIds(List<Long> productIds);
+
+	List<ProductResponseDto.Search> searchProductByKeyword(String keyword, Long offset, int limit);
+
+	boolean hasNext(List<?> responseList, int limit);
 }

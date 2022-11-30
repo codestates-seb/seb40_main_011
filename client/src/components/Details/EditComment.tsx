@@ -1,20 +1,47 @@
 import { EditModeProps } from '../../types/mainPageTypes';
-
+import { deleteComment, editComment } from '../../util/apiCollection';
+import { loginRefresh } from '../../util/loginRefresh';
 const EditComment = ({
   isEditMode,
   setIsEditMode,
   editedComment,
+  id,
 }: EditModeProps) => {
-  const onEditClick = () => {
+  const onEditClick = async () => {
     setIsEditMode(!isEditMode);
     if (isEditMode === true) {
-      console.log(editedComment);
-      //여기에 댓글 api POST 메서드 관련 함수
+      const response = await editComment({ id, content: editedComment });
+      switch (response.status) {
+        default:
+          location.reload();
+          break;
+        case 401:
+          alert('에러');
+          break;
+        case 412:
+          loginRefresh();
+          onEditClick();
+      }
     }
   };
 
-  const onDeleteClick = () => {
-    console.log('구현중~');
+  const onDeleteClick = async () => {
+    if (id) {
+      const response = await deleteComment(id);
+      switch (response.status) {
+        default:
+          location.reload();
+          break;
+        case 401:
+          alert('에러');
+          console.error(response.status + ' Error');
+          break;
+        case 412: {
+          loginRefresh();
+          onDeleteClick();
+        }
+      }
+    }
   };
 
   return (

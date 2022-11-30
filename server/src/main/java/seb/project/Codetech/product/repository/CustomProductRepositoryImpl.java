@@ -2,6 +2,7 @@ package seb.project.Codetech.product.repository;
 
 import static seb.project.Codetech.file.entity.QFileEntity.*;
 import static seb.project.Codetech.product.entity.QProduct.*;
+import static seb.project.Codetech.review.entity.QReview.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -74,5 +75,50 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
 		);
 
 		return fileMap;
+	}
+
+	@Override
+	public List<ProductResponseDto.Search> searchProductByKeyword(String keyword, Long offset, int limit) {
+
+		// 1. 입력한 키워드를 기준으로 제품의 목록을 조회한다.
+		List<ProductResponseDto.Search> productSearchs = queryFactory
+			.select(Projections.fields(
+					ProductResponseDto.Search.class,
+					product.id,
+					product.name,
+					product.type
+				)
+			)
+			.from(product)
+			.where(product.name.contains(keyword) // Search: 제품의 이름이나 디테일에서 관련 키워드를 조회한다.
+				.or(product.detail.contains(keyword)))
+			.orderBy(product.createdAt.desc())
+			.offset(offset)
+			.limit(limit)
+			.fetch();
+
+		// 2. 조회된 제품의 목록이 가지고 있는 리뷰의 갯수를 조회해서 값을 넣는다.
+		for (ProductResponseDto.Search product : productSearchs) {
+
+			Long reviewCount = queryFactory
+				.select(review.count())
+				.from(review)
+				.where(review.product.id.eq(product.getId()))
+				.fetchOne();
+
+			product.setReviewCount(reviewCount);
+		}
+
+		// 3. 연산된 쿼리를 반환한다.
+		return productSearchs;
+	}
+
+	public boolean hasNext(List<?> responseList, int limit) {
+		if (responseList.size() > limit) {
+			responseList.remove(limit);
+			return true;
+		}
+
+		return false;
 	}
 }

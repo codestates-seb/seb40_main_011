@@ -4,6 +4,7 @@ import { BsXLg, BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
 import { EditPasswordModalHandler } from '../MyPage/Profile';
 import { editPassword } from '../../util/apiCollection';
 import { passwordRegex } from '../../util/Regex';
+import { loginRefresh } from '../../util/loginRefresh';
 
 export interface Password {
   oldPassword: string;
@@ -17,9 +18,9 @@ const EditPassword = ({
   const [password, setPassword] = useState('');
   const [passwordCheck, setPasswordCheck] = useState('');
 
-  const [prePasswordError, setPrePasswordError] = useState(true);
-  const [passwordError, setPasswordError] = useState(true);
-  const [passwordCheckError, setPasswordCheckError] = useState(true);
+  const [prePasswordError, setPrePasswordError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const [passwordCheckError, setPasswordCheckError] = useState(false);
 
   const [viewPrePassword, setViewPrePassword] = useState(false);
   const [viewPassword, setViewPassword] = useState(false);
@@ -44,35 +45,54 @@ const EditPassword = ({
     // }
   };
   const handlePassword = (e: any) => {
-    setPassword(e.target.value);
-    if (!passwordRegex.test(password)) {
+    const passwordCurrent = e.target.value;
+    setPassword(passwordCurrent);
+    if (!passwordRegex.test(passwordCurrent)) {
       setPasswordError(true);
     } else {
       setPasswordError(false);
     }
+
+    if (passwordCheck !== e.target.value) {
+      setPasswordCheckError(true);
+    } else {
+      setPasswordCheckError(false);
+    }
   };
   const handlePasswordCheck = (e: any) => {
     setPasswordCheck(e.target.value);
-    // if (password !== passwordCheck) {
-    //   setPasswordCheckError(true);
-    // } else {
-    //   setPasswordCheckError(false);
-    // }
+    if (password !== e.target.value) {
+      setPasswordCheckError(true);
+    } else {
+      setPasswordCheckError(false);
+    }
   };
 
   const handleSubmitPassword = async () => {
-    if (!prePasswordError && !passwordError && !passwordCheckError) {
+    if (!passwordError && !passwordCheckError) {
       const data: Password = {
         oldPassword: prePassword,
         newPassword: password,
         newCheckPassword: passwordCheck,
       };
       const submitEditPassword = await editPassword(data);
+      // console.log(submitEditPassword);
       switch (submitEditPassword.status) {
-        case 200:
+        // case 200:
+        //   location.reload();
+        //   break;
+        case 404:
+          setPrePasswordError(true);
+          alert('비밀번호가 일치하지 않습니다');
+          break;
+        case 412: {
+          loginRefresh;
+          handleSubmitPassword();
+          break;
+        }
+        default:
           location.reload();
           break;
-        default:
       }
     }
     // else if (passwordError) {

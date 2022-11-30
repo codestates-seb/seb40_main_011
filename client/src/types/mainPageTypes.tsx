@@ -34,21 +34,34 @@ export interface Product {
   type: string;
 }
 export interface Review {
-  id: number;
-  nickname: string;
-  productName: number;
-  type: string;
-  title: string;
   content: string;
-  view: number;
-  thumbnail: string;
-  reviewImg: string;
   createdAt: string;
-  modifedAt: string;
-  likes: number;
+  productDetail: string;
+  productName: string;
+  recommendNumber: number;
+  reviewComments: ReviewComments[];
+  title: string;
+  type: string;
+  userId: number;
+  userImage?: string;
+  view: number;
+  writer: string;
+}
+
+export interface LikeProps {
+  recommendNumber: number;
+  reviewId: number;
+}
+
+export interface BestReview {
+  content: string;
+  createdAt: string;
+  id: number;
   image?: string;
-  profileImg?: string;
-  comments: ReviewComments[];
+  recommendNumber: number;
+  title: string;
+  type: string;
+  writer: string;
 }
 
 export interface SubComments {
@@ -59,16 +72,31 @@ export interface SubComments {
   subComment: string;
 }
 export interface ReviewComments {
+  child: [];
+  content: string;
   id: number;
-  nickname: string;
+  parent: any;
+  userId: number;
+  userImage: string;
+  writer: string;
   createdAt: string;
-  profileImg: string;
-  comment: string;
-  subComments: SubComments[];
+}
+
+export interface SearchData {
+  hasNext: boolean;
+  reviewLists: ReviewLists[];
+}
+
+export interface ReviewLists {
+  content: string;
+  recommendNumber: number;
+  title: string;
+  userImage: string;
+  writer: string;
 }
 
 export interface CommentProps {
-  comments: ReviewComments[] | undefined;
+  reviewComments: ReviewComments | undefined;
 }
 
 export interface CategoryProps {
@@ -78,7 +106,7 @@ export interface CategoryProps {
 
 export interface SubCommentProps {
   setMoreComment: Dispatch<SetStateAction<boolean>>;
-  subComments: SubComments[];
+  child: ReviewComments[];
   moreComment: boolean;
   isEditSub: boolean;
   setIsEditSub: Dispatch<SetStateAction<boolean>>;
@@ -88,6 +116,7 @@ export interface EditModeProps {
   isEditMode: boolean;
   setIsEditMode: Dispatch<SetStateAction<boolean>>;
   editedComment: string | undefined;
+  id: number;
 }
 
 export interface XsRoundedButtonProps {
@@ -256,4 +285,23 @@ export interface SelectBoxProps {
   setSpread: Dispatch<SetStateAction<boolean>>;
   selected: string;
   setSelected: Dispatch<SetStateAction<string>>;
+  menu: string[];
+}
+
+export interface DetailReviewProps {
+  productId: number;
+}
+
+export interface ProductDetail {
+  createdAt: string;
+  detail: string;
+  fileEntities: string | null;
+  id: number;
+  modifiedAt: string;
+  modifier: string;
+  name: string;
+  reviews: Review[] | null;
+  snackReviews: SnackReviewCards[] | null;
+  type: string;
+  writer: string;
 }

@@ -1,5 +1,9 @@
 package seb.project.Codetech.review.entity;
 
+import static seb.project.Codetech.review.entity.QReview.*;
+import static seb.project.Codetech.review.entity.QReviewComment.*;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +19,7 @@ import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -55,6 +60,12 @@ public class Review extends BaseTime {
 	@Column(nullable = false)
 	private Long RecommendNumber = 0L;
 
+	@Column(nullable = false)
+	private Long commentCount = 0L;
+
+	@Column(nullable = false)
+	private LocalDateTime commentUpdatedAt = LocalDateTime.now(); // commentCount가 마지막으로 업데이트된 시간
+
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
@@ -87,5 +98,29 @@ public class Review extends BaseTime {
 		}
 		this.product = product;
 		product.getReviews().add(this);
+	}
+
+	public void updateCommentCount(JPAQueryFactory queryFactory) {
+		if (LocalDateTime.now()
+			.minusMinutes(30) // 댓글이 자주 업데이트될 것이 예상되면 시간을 줄이는 등 조치를 취해야 함.
+			.isBefore(this.commentUpdatedAt)) {
+			return;
+		}
+
+		var commentCount = queryFactory.select(reviewComment.count())
+			.from(reviewComment)
+			.where(reviewComment.review.id.eq(this.id)).fetchOne();
+		var commentUpdatedAt = LocalDateTime.now();
+
+		queryFactory.update(
+				review
+			)
+			.set(review.commentCount, commentCount)
+			.set(review.commentUpdatedAt, commentUpdatedAt)
+			.where(review.id.eq(this.id))
+			.execute();
+
+		this.commentCount = commentCount;
+		this.commentUpdatedAt = commentUpdatedAt;
 	}
 }

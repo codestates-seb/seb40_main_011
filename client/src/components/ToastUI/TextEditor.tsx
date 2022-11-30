@@ -13,6 +13,7 @@ import useReview from '../../store/review';
 import { uploadEditorImage } from '../../util/apiCollection';
 import { postEditorContent } from '../../util/apiCollection';
 import { useNavigate } from 'react-router-dom';
+import { loginRefresh } from '../../util/loginRefresh';
 
 function TextEditor() {
   const editorRef = useRef<Editor>(null);
@@ -33,7 +34,7 @@ function TextEditor() {
     const submit = await postEditorContent(editorData);
     console.log(`submit`, submit);
     switch (submit.status) {
-      case 201:
+      default:
         console.log('Success');
         navigate('/');
         break;
@@ -41,7 +42,11 @@ function TextEditor() {
         alert('에러');
         console.error(submit.status + 'Error');
         break;
-      default:
+      case 412: {
+        loginRefresh();
+        handleClick();
+        break;
+      }
     }
   };
 

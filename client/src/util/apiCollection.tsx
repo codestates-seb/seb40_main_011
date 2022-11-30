@@ -11,25 +11,41 @@ import {
 
 let initialToken: any = localStorage.getItem('authorization');
 
+export const postSnack = async (req: any) => {
+  const reqUrl = '/api/snack-reviews';
+  try {
+    const searchResponse = await axios.post(reqUrl, req, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: localStorage.getItem('authorization'),
+      },
+    });
+    return searchResponse;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
 export const getReview = async () =>
   await axios
     .get('/api/review')
     .then((data) => data)
     .catch((err) => err.response);
 
-export const getProduct = async () =>
-  await axios
-    .get('/api/product')
-    .then((data) => data)
-    .catch((err) => err.response);
+export const getProduct = async (productId: number) => {
+  try {
+    const response = await axios.get(`/api/reviews/best?size=${productId}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    return response;
+  } catch (err: any) {
+    return err.response;
+  }
+};
 
-// export const postProduct = async (data: any) =>
-//   await axios
-//     .post('/api/product', data)
-//     .then((data) => data)
-//     .catch((err) => err.response);
-
-export const getReviewDetail = async (params: string | undefined) =>
+export const getReviewDetail = async (params: number | undefined) =>
   await axios
     .get(`/api/reviews/${params}`)
     .then((data) => data)
@@ -52,6 +68,26 @@ export const postLogin = async (data: LoginInputs) => {
   try {
     const loginResponse = await axios.post('/api/login', data);
     return loginResponse;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
+export const postLike = async (reviewId: number) => {
+  try {
+    const likeResponse = await axios.post(
+      '/api/recommend',
+      {
+        reviewId,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: localStorage.getItem('authorization'),
+        },
+      }
+    );
+    return likeResponse;
   } catch (err: any) {
     return err.response;
   }
@@ -80,9 +116,29 @@ export const postGoogle = async () => {
   }
 };
 
-export const getSearchResult = async () => {
+export const getProductDetail = async (productId: number) => {
   try {
-    const searchResponse = await axios.get('/api/products/1');
+    const searchResponse = await axios.get(`/api/products/${productId}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    return searchResponse;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
+export const getSearchReview = async (keyword: string) => {
+  try {
+    const searchResponse = await axios.get(
+      `/api/reviews/search?keyword=${keyword}&offset=0&limit=3`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
     return searchResponse;
   } catch (err: any) {
     return err.response;
@@ -97,14 +153,33 @@ export const postSignup = async (data: SignupInputs) => {
     return err.response;
   }
 };
+
+export const postEmail = async (data: any) => {
+  try {
+    const emailSubmit = await axios.post('/api/mail', data);
+    return emailSubmit;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
+export const postEmailCertificationCheck = async (data: any) => {
+  try {
+    const emailCheckRes = await axios.post('/api/mail/check', data);
+    return emailCheckRes;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
 export const getUserProfile = async () => {
   try {
-    const optOut = await axios.get('/api/user', {
+    const getUserData = await axios.get('/api/user', {
       headers: {
         Authorization: localStorage.getItem('authorization'),
       },
     });
-    return optOut;
+    return getUserData;
   } catch (err: any) {
     return err.response;
   }
@@ -125,49 +200,6 @@ export const editAccount = async () => {
   try {
     const editUserInfo = await axios.patch('/api/user/withdraw');
     return editUserInfo;
-  } catch (err: any) {
-    return err.response;
-  }
-};
-
-export const postSnack = async (req: any) => {
-  try {
-    const searchResponse = await axios.post('/api/snack-reviews', req, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: initialToken,
-      },
-    });
-    return searchResponse;
-  } catch (err: any) {
-    if (err.response.status === 412) {
-      console.log('reissue 진행중...');
-      reissueToken(initialToken, req);
-    } else return console.error(err.response);
-  }
-};
-
-const reissueToken = async (expired: any, req: any) => {
-  const data = '';
-  try {
-    const resReissue = await axios.post('/api/refresh', data, {
-      headers: {
-        'Content-Type': 'application/json',
-        Expired: expired,
-        Refresh: localStorage.getItem('refresh'),
-      },
-    });
-
-    initialToken = resReissue.headers.authorization;
-
-    const originalResponse = await axios.post('/api/snack-reviews', req, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: initialToken,
-      },
-    });
-    console.log(originalResponse);
-    return originalResponse;
   } catch (err: any) {
     return err.response;
   }
@@ -218,8 +250,9 @@ export const getSnackStats = async (productId: number) => {
   }
 };
 
-export const editSnack = async (snackId: number, data: EditSncakReview) => {
+export const editSnack = async (snackId: number, data: any) => {
   try {
+    console.log(data);
     const response = await axios.patch(`/api/snack-reviews/${snackId}`, data, {
       headers: {
         'Content-Type': 'application/json',
@@ -365,7 +398,7 @@ export const editProfileImg = async (data: any) => {
   try {
     const submitImg = await axios.patch('/api/user/image', data, {
       headers: {
-        Authorization: initialToken,
+        Authorization: localStorage.getItem('authorization'),
         // 'Content-type': 'application/json',
         // 'Content-type': 'multipart/form-data',
       },
@@ -380,7 +413,7 @@ export const editProfileImg = async (data: any) => {
 export const editNickname = async (data: any) => {
   try {
     const submitImg = await axios.patch('/api/user/nickname', data, {
-      headers: { Authorization: initialToken },
+      headers: { Authorization: localStorage.getItem('authorization') },
     });
     return submitImg;
   } catch (err: any) {
@@ -391,10 +424,10 @@ export const editNickname = async (data: any) => {
 
 export const editPassword = async (data: Password) => {
   try {
-    const submitImg = await axios.patch('/api/user/password', data, {
-      headers: { Authorization: initialToken },
+    const editNewPassword = await axios.patch('/api/user/password', data, {
+      headers: { Authorization: localStorage.getItem('authorization') },
     });
-    return submitImg;
+    return editNewPassword;
   } catch (err: any) {
     return err.response;
   }
@@ -403,9 +436,35 @@ export const editPassword = async (data: Password) => {
 export const getUserReview = async (url: string, params: string) => {
   try {
     const getReview = await axios.get(`/api/user/${url}${params}`, {
-      headers: { Authorization: initialToken },
+      headers: { Authorization: localStorage.getItem('authorization') },
     });
     return getReview;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
+const reissueTokenRecall = async (
+  expired: any,
+  url: string,
+  params: string
+) => {
+  const data = '';
+  try {
+    const resReissue = await axios.post('/api/refresh', data, {
+      headers: {
+        'Content-Type': 'application/json',
+        Expired: expired,
+        Refresh: localStorage.getItem('refresh'),
+      },
+    });
+
+    initialToken = resReissue.headers.authorization;
+
+    const originalResponse = await axios.get(`/api/user/${url}${params}`, {
+      headers: { Authorization: initialToken },
+    });
+    return originalResponse;
   } catch (err: any) {
     return err.response;
   }
@@ -415,7 +474,7 @@ export const selectProductImg = async (data: any) => {
   try {
     const submitImg = await axios.post('/api/products', data, {
       headers: {
-        Authorization: initialToken,
+        Authorization: localStorage.getItem('authorization'),
       },
     });
     return submitImg;
@@ -437,7 +496,7 @@ export const postEditorContent = async (data: any) => {
   try {
     const editorContent = await axios.post('/api/reviews', data, {
       headers: {
-        Authorization: initialToken,
+        Authorization: localStorage.getItem('authorization'),
       },
     });
     return editorContent;
@@ -454,6 +513,48 @@ export const getProducts = async () => {
       },
     });
     return response;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
+export const postComment = async (req: any) => {
+  try {
+    const response = await axios.post('/api/review-comm', req, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: localStorage.getItem('authorization'),
+      },
+    });
+    return response;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
+export const editComment = async (req: any) => {
+  try {
+    const response = await axios.patch('/api/review-comm', req, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: localStorage.getItem('authorization'),
+      },
+    });
+    return response;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
+export const deleteComment = async (id: number) => {
+  try {
+    const searchResponse = await axios.delete(`/api/review-comm/${id}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: localStorage.getItem('authorization'),
+      },
+    });
+    return searchResponse;
   } catch (err: any) {
     return err.response;
   }
