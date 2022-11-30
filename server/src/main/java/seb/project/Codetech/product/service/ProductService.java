@@ -5,15 +5,11 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import seb.project.Codetech.global.exception.BusinessLogicException;
 import seb.project.Codetech.global.exception.ExceptionCode;
-import seb.project.Codetech.global.page.PageInfo;
 import seb.project.Codetech.product.dto.ProductResponseDto;
 import seb.project.Codetech.product.entity.Product;
 import seb.project.Codetech.product.entity.Type;
@@ -64,16 +60,6 @@ public class ProductService {
 		return productRepository.save(findProduct);
 	}
 
-	public Product findProduct(Long id) {
-		return productRepository.findById(id)
-			.orElseThrow(() -> new BusinessLogicException(ExceptionCode.PRODUCT_NOT_FOUND));
-	}
-
-	public Page<Product> findAllProduct(PageInfo.Request request) {
-		return productRepository.findAll(
-			PageRequest.of(request.getPage(), request.getSize(), Sort.by("id").descending()));
-	}
-
 	@Transactional
 	public void removeProduct(String email, Long id) {
 
@@ -83,6 +69,10 @@ public class ProductService {
 
 		Product findProduct = findProductId(id);
 		productRepository.delete(findProduct);
+	}
+
+	public ProductResponseDto.Get findProduct(Long id) {
+		return productRepository.getSearchProductById(id);
 	}
 
 	public List<ProductResponseDto.Select> searchTypeProduct(Type type) {
