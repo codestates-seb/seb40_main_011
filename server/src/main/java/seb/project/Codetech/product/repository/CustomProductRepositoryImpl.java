@@ -17,6 +17,7 @@ import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
+import seb.project.Codetech.file.entity.FileEntity;
 import seb.project.Codetech.product.dto.ProductResponseDto;
 import seb.project.Codetech.product.entity.Type;
 
@@ -40,6 +41,33 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
 			.from(product)
 			.where(product.type.eq(type))
 			.fetch();
+	}
+
+	@Override
+	public ProductResponseDto.Get getSearchProductById(Long productId) {
+		ProductResponseDto.Get searchProduct = queryFactory
+			.select(Projections.fields(ProductResponseDto.Get.class,
+				product.id,
+				product.name,
+				product.detail,
+				product.type,
+				product.writer,
+				product.modifier,
+				product.createdAt
+			))
+			.from(product)
+			.where(product.id.eq(productId))
+			.fetchOne();
+
+		assert searchProduct != null;
+		List<FileEntity> fileEntities = queryFactory
+			.selectFrom(fileEntity)
+			.where(fileEntity.product.id.eq(searchProduct.getId()))
+			.fetch();
+
+		searchProduct.setFileEntities(fileEntities);
+
+		return searchProduct;
 	}
 
 	@Override
