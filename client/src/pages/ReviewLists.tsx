@@ -58,9 +58,9 @@ const ReviewLists = () => {
       }
       if (selected === '낮은 별점 순') {
         const { data } = await getBadSnack(productId, limit);
-        const stats = await getSnackStats(productId);
+        // const stats = await getSnackStats(productId);
         setSnackReviewData(data);
-        setSnackReviewStats(stats.data);
+        // setSnackReviewStats(stats.data);
       }
     };
     getSnackData();
