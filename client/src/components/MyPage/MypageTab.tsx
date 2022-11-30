@@ -69,7 +69,7 @@ const MypageTab = (): JSX.Element => {
                 key={index}
                 className={
                   currentTab === index
-                    ? ' border-b border-black flex justify-evenly items-center w-1/4 pb-3 px-8'
+                    ? 'font-medium border-b border-black flex justify-evenly items-center w-1/4 py-3 px-8'
                     : 'border-b hover:bg-slate-200 flex justify-evenly items-center w-1/4 py-3 px-8'
                 }
                 onClick={() => selectMenuHandler(index)}

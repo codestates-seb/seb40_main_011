@@ -77,7 +77,7 @@ const LikeReviewTab = () => {
                 >
                   <div className="mb-2 text-xl">{el.title}</div>
                   <div className="mb-2 overflow-hidden text-ellipsis line-clamp-2">
-                    {el.content}
+                    {el.content.replace(/"/g, '').replace(/<[^>]*>?/g, '')}
                   </div>
                   <div className="flex text-sm">
                     <div className="px-3 py-0.5 bg-slate-300 rounded-lg">

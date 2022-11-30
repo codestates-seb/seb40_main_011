@@ -25,7 +25,7 @@ const ReviewsTab = () => {
   const params = `?page=${currentPage}&size=5&sort=createdAt`;
   const DetailReviewData = async () => {
     const data: any = await getUserReview('reviews', params);
-    console.log(data?.data.reviews.content);
+
     switch (data.status) {
       case 200:
         setReviewData(data?.data.reviews.content);
@@ -76,7 +76,7 @@ const ReviewsTab = () => {
                 >
                   <div className="mb-2 text-xl">{el.title}</div>
                   <div className="mb-2 overflow-hidden text-ellipsis line-clamp-2">
-                    {el.content}
+                    {el.content.replace(/"/g, '').replace(/<[^>]*>?/g, '')}
                   </div>
                   <div className="flex text-sm">
                     <div className="px-3 py-0.5 bg-slate-300 rounded-lg">
