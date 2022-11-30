@@ -82,9 +82,9 @@ public class ProductController {
 	}
 
 	@GetMapping("/{id}") // 등록된 제품을 조회한다.
-	public ResponseEntity<Product> getProduct(@PathVariable @Positive Long id) {
+	public ResponseEntity<ProductResponseDto.Get> getProduct(@PathVariable @Positive Long id) {
 
-		Product serviceProduct = productService.findProduct(id);
+		ProductResponseDto.Get serviceProduct = productService.findProduct(id);
 
 		return ResponseEntity.ok(serviceProduct);
 	}

@@ -37,6 +37,18 @@ public class ProductResponseDto {
 
 	@Getter
 	@NoArgsConstructor
+	public static class Get {
+		private String name;
+		private String detail;
+		private Type type;
+		private String writer;
+		private String modifier;
+		private LocalDateTime createdAt;
+		private FileEntity fileEntities;
+	}
+
+	@Getter
+	@NoArgsConstructor
 	public static class Select {
 		private Long id;
 		private String name;

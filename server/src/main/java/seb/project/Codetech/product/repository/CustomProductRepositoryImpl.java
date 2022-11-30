@@ -43,6 +43,24 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
 	}
 
 	@Override
+	public ProductResponseDto.Get getSearchProductById(Long productId) {
+		return queryFactory
+			.select(Projections.fields(ProductResponseDto.Get.class,
+				product.name,
+				product.detail,
+				product.type,
+				product.writer,
+				product.modifier,
+				product.createdAt,
+				fileEntity.as("fileEntities")
+			))
+			.from(product)
+			.where(product.id.eq(productId))
+			.leftJoin(product.fileEntities, fileEntity)
+			.fetchOne();
+	}
+
+	@Override
 	public List<ProductResponseDto.Card> searchMainPage() {
 
 		return queryFactory

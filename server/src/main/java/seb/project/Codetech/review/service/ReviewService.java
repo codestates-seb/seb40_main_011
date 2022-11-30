@@ -36,7 +36,7 @@ public class ReviewService {
 	@Transactional
 	public Review createReview(String email, Long productId, Review review) {
 		User user = userService.findUser(email);
-		Product product = productService.findProduct(productId);
+		Product product = productService.findProductId(productId);
 		review.setUser(user); // 작성자 정보를 삽입한다.
 		review.setProduct(product); // 등록된 리뷰의 제품 정보를 삽입한다.
 		review.setType(product.getType()); // 제품 정보에서 타입 유형을 가져와서 삽입한다.
@@ -52,7 +52,7 @@ public class ReviewService {
 	public Review modifyReview(String email, Long productId, Review review) {
 		Review findReview = findVerificationReview(review.getId());
 		User findUser = userService.findUser(email);
-		Product findProduct = productService.findProduct(productId);
+		Product findProduct = productService.findProductId(productId);
 
 		if (!findReview.getUser().getId().equals(findUser.getId())) {
 			throw new BusinessLogicException(ExceptionCode.REVIEW_NOT_MODIFY); // 작성자가 아니라면 상세리뷰를 수정할 수 없다.
