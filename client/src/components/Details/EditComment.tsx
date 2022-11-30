@@ -1,5 +1,5 @@
 import { EditModeProps } from '../../types/mainPageTypes';
-import { deleteComment } from '../../util/apiCollection';
+import { deleteComment, editComment } from '../../util/apiCollection';
 import { loginRefresh } from '../../util/loginRefresh';
 const EditComment = ({
   isEditMode,
@@ -7,22 +7,29 @@ const EditComment = ({
   editedComment,
   id,
 }: EditModeProps) => {
-  const onEditClick = () => {
+  const onEditClick = async () => {
     setIsEditMode(!isEditMode);
-    console.log(isEditMode);
     if (isEditMode === true) {
-      console.log(editedComment);
-      console.log(id);
-      //여기에 댓글 api POST 메서드 관련 함수
+      const response = await editComment({ id, content: editedComment });
+      switch (response.status) {
+        default:
+          location.reload();
+          break;
+        case 401:
+          alert('에러');
+          break;
+        case 412:
+          loginRefresh();
+          onEditClick();
+      }
     }
   };
 
   const onDeleteClick = async () => {
     if (id) {
       const response = await deleteComment(id);
-      console.log(response);
       switch (response.status) {
-        case 204:
+        default:
           location.reload();
           break;
         case 401:
@@ -34,8 +41,6 @@ const EditComment = ({
           onDeleteClick();
         }
       }
-    } else {
-      window.alert('별점을 매겨주세요!');
     }
   };
 

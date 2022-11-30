@@ -7,6 +7,7 @@ import '../common.css';
 import { useNavigate } from 'react-router-dom';
 import useCategorie from '../../store/categorie';
 import { selectProductImg } from '../../util/apiCollection';
+import { loginRefresh } from '../../util/loginRefresh';
 
 interface ModalProps {
   isModal: boolean;
@@ -67,7 +68,8 @@ const AddProduct = ({ isModal, setIsModal }: ModalProps) => {
     detail: detail,
   };
 
-  const handleSubmitImg = async () => {
+  const handleSubmitImg = async (e: any) => {
+    e.preventDefault();
     const formData = new FormData();
     formData.append(
       'file',
@@ -83,12 +85,16 @@ const AddProduct = ({ isModal, setIsModal }: ModalProps) => {
     //api 요청
     const submitForm = await selectProductImg(formData);
     switch (submitForm.status) {
-      case 200:
-        navigate('/review/write');
-        location.reload();
+      default:
+        console.log(submitForm);
+        // navigate('/review/write');
+        // location.reload();
         break;
-      case 415:
+      case 412:
+        loginRefresh();
+        // handleSubmitImg(e);
         console.log('실패');
+        break;
     }
   };
 
@@ -175,7 +181,6 @@ const AddProduct = ({ isModal, setIsModal }: ModalProps) => {
                     취소
                   </button>
                   <button
-                    type="submit"
                     className="w-1/3 py-3 mx-5 border rounded-3xl bg-slate-300"
                     onClick={handleSubmitImg}
                   >

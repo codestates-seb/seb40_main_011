@@ -82,8 +82,21 @@ export interface ReviewComments {
   createdAt: string;
 }
 
+export interface SearchData {
+  hasNext: boolean;
+  reviewLists: ReviewLists[];
+}
+
+export interface ReviewLists {
+  content: string;
+  recommendNumber: number;
+  title: string;
+  userImage: string;
+  writer: string;
+}
+
 export interface CommentProps {
-  comments: ReviewComments[] | undefined;
+  reviewComments: ReviewComments | undefined;
 }
 
 export interface CategoryProps {
@@ -93,7 +106,7 @@ export interface CategoryProps {
 
 export interface SubCommentProps {
   setMoreComment: Dispatch<SetStateAction<boolean>>;
-  child: SubComments[];
+  child: ReviewComments[];
   moreComment: boolean;
   isEditSub: boolean;
   setIsEditSub: Dispatch<SetStateAction<boolean>>;

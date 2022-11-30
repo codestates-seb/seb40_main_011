@@ -8,8 +8,10 @@ import { Viewer } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 import Comment from './Comment';
 import HandleLike from './Like';
+import { useRef } from 'react';
 
 const RvDetail = () => {
+  const shortCutRef = useRef(null);
   interface markdownProps {
     markdown: string | undefined;
   }
@@ -30,8 +32,7 @@ const RvDetail = () => {
     view: 0,
     writer: '',
   });
-  const [comments, setComments] = useState<ReviewComments[]>();
-
+  const [comments, setComments] = useState<ReviewComments[]>([]);
   const getParsedDate = (createdAt: string) => {
     return new Date(createdAt).toLocaleDateString('ko-KR');
   };
@@ -60,6 +61,56 @@ const RvDetail = () => {
       </>
     );
   };
+  const CommentView = () => {
+    if (review !== undefined && review?.reviewComments?.length > 0) {
+      return (
+        <div className="flex flex-col items-center w-full my-8">
+          <div className="flex justify-start w-full p-4 mb-4 text-2xl font-bold ">
+            Comment
+          </div>
+          {review.reviewComments.map((el: ReviewComments, idx: number) => (
+            <Comment key={idx} reviewComments={el} />
+          ))}
+        </div>
+      );
+    } else return null;
+  };
+
+  const ShortCut = () => {
+    const h1 = Array.prototype.slice.call(document.querySelectorAll('h1'));
+    const h2 = Array.prototype.slice.call(document.querySelectorAll('h2'));
+    const element = document.getElementById('h1');
+
+    const handleScroll = () => {
+      console.log(element);
+      document.getElementById('h1')?.scrollIntoView({ behavior: 'smooth' });
+    };
+
+    return (
+      <div className="max-sm:hidden">
+        <div className="absolute left-3/4 ">
+          <div className="text-slate-600 max-lg:ml-[3rem] ml-[6rem] border-l-2 leading-normal text-sm overflow-hidden fixed top-112">
+            {h1.map((el, idx: number) => (
+              <div
+                ref={shortCutRef}
+                role="button"
+                className="ml-4"
+                key={idx}
+                id="h1"
+              >
+                {el.innerText}
+              </div>
+            ))}
+            {h2.map((el, idx: number) => (
+              <div className="ml-8 mt-4" key={idx}>
+                {el.innerText}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className="flex justify-center">
@@ -74,7 +125,8 @@ const RvDetail = () => {
               {review?.type.toLocaleLowerCase()}
             </div>
           </div>
-          <div className="flex justify-center p-4 m-4 text-2xl font-bold">
+          <ShortCut />
+          <div className="flex justify-center p-4 mx-4 text-[3rem] font-bold">
             {review?.title}
           </div>
         </div>
@@ -89,12 +141,6 @@ const RvDetail = () => {
           </div>
         </div>
         <section className="flex flex-col items-center border-b border-gray-200">
-          {/* {review?.thumbnail !== undefined ? (
-            <div className="flex justify-center">
-              <img className="w-1/2 my-16" src={review?.thumbnail} />
-            </div>
-          ) : null} */}
-
           <div id="viewer" className="p-4 my-16 whitespace-pre-wrap">
             <ConvertedContent markdown={review?.content} />
           </div>
@@ -104,18 +150,9 @@ const RvDetail = () => {
               reviewId={reviewId}
             />
           </div>
+          <CommentView />
+          <CommentInput />;
         </section>
-        {review !== undefined && review?.reviewComments?.length > 0 ? (
-          <div className="flex flex-col items-center w-full my-8">
-            <div className="flex justify-start w-full p-4 mb-4 text-2xl font-bold ">
-              Comment
-            </div>
-            <Comment comments={review.reviewComments} />
-            <CommentInput />
-          </div>
-        ) : (
-          <CommentInput />
-        )}
       </div>
     </div>
   );

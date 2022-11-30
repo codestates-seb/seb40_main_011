@@ -34,7 +34,7 @@ function TextEditor() {
     const submit = await postEditorContent(editorData);
     console.log(`submit`, submit);
     switch (submit.status) {
-      case 201:
+      default:
         console.log('Success');
         navigate('/');
         break;
@@ -42,7 +42,11 @@ function TextEditor() {
         alert('에러');
         console.error(submit.status + 'Error');
         break;
-      default:
+      case 412: {
+        loginRefresh();
+        handleClick();
+        break;
+      }
     }
   };
 
