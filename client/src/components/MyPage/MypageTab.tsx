@@ -62,15 +62,15 @@ const MypageTab = (): JSX.Element => {
   return (
     <div className="">
       <div className="flex justify-center border-b">
-        <ul className="flex flex-row justify-between w-[850px] mt-3">
+        <ul className="flex flex-row justify-between w-[850px]">
           {menuArr.map((ele, index) => {
             return (
               <button
                 key={index}
                 className={
                   currentTab === index
-                    ? ' border-b border-black flex justify-evenly items-center w-1/4 pb-3 px-8'
-                    : 'bordet-b hover:bg-slate-100 flex justify-evenly items-center w-1/4 pb-3 px-8'
+                    ? 'font-medium border-b border-black flex justify-evenly items-center w-1/4 py-3 px-8'
+                    : 'border-b hover:bg-slate-200 flex justify-evenly items-center w-1/4 py-3 px-8'
                 }
                 onClick={() => selectMenuHandler(index)}
               >

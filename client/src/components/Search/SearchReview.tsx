@@ -1,20 +1,29 @@
 import { useEffect, useState } from 'react';
-// import { getSearchResult } from '../../util/apiCollection';
+import { getSearchReview } from '../../util/apiCollection';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
+import { ReviewLists } from '../../types/mainPageTypes';
+import { useNavigate } from 'react-router-dom';
 
 const SearchReview = ({ keyword }: any) => {
-  const [review, setReview] = useState();
+  const navigate = useNavigate();
+  const [searchData, setSearchData] = useState<ReviewLists[]>([]);
 
-  // useEffect(() => {
-  //   const getReviewData = async () => {
-  //     const { data } = await getSearchResult();
-  //     setReview(data);
-  //   };
-  //   getReviewData();
-  // }, []);
+  const onlyText = (data: string) => {
+    return data.replace(/[^ㄱ-ㅎ가-힣a-zA-Z]/g, ' ');
+  };
+
+  useEffect(() => {
+    const getSearchData = async () => {
+      const { data } = await getSearchReview(keyword);
+      setSearchData(data.reviewLists);
+    };
+    getSearchData();
+  }, []);
+
+  console.log(searchData);
 
   const onContentClick = () => {
-    return console.log('content');
+    // navigate("/")
   };
 
   const onLikeClick = () => {
@@ -25,47 +34,57 @@ const SearchReview = ({ keyword }: any) => {
     return console.log('bye');
   };
 
+  const SearchResultView = () => {
+    return (
+      <>
+        {searchData?.map((el, idx) => (
+          <div
+            key={idx}
+            className="flex flex-wrap flex-row w-2/3 mb-8 mx-16 rounded-lg border border-slate-900  items-center"
+          >
+            <div className="h-48 w-1/4 border-r-2">
+              <img
+                role="button"
+                onClick={onContentClick}
+                className="rounded-l-lg h-full w-full"
+                src="https://img2.quasarzone.com/editor/2022/11/11/75f9d1f0e49980190d3967e19b0458e5.jpg"
+              ></img>
+            </div>
+            <div className="flex flex-col p-3 w-3/4">
+              <div className="text-xl font-bold p-2">{el.title}</div>
+              <div
+                className="ease-in-out duration-150 line-clamp-2 hover:bg-slate-300 hover:rounded-md p-1.5 text-slate-600 hover:text-cyan-900"
+                role="button"
+                onClick={onContentClick}
+              >
+                {onlyText(el.content)}
+              </div>
+              <div className="flex justify-between items-center mt-4">
+                <div className="flex w-1/8">
+                  <AiOutlineHeart size="30" className="p-1 text-slate-500" />
+                  <div className="p-1 text-slate-500">{el.recommendNumber}</div>
+                </div>
+                <div className="flex items-end">
+                  <div className="p-2">{el.writer}</div>
+                  <img
+                    className="rounded-full w-10 h-10 m-2"
+                    src={`https://codetech.nworld.dev${el.userImage}`}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </>
+    );
+  };
+
   return (
     <div className="flex flex-col items-center">
       <div className="mt-16 mb-4 mx-16 justify-start w-2/3 text-xl font-bold">
         # {keyword} 에 대한 리뷰 검색 결과
       </div>
-      <div className="flex flex-wrap flex-row w-2/3 mb-8 mx-16 rounded-lg border border-slate-900  items-center">
-        <div className="h-48 w-1/4 border-r-2">
-          <img
-            role="button"
-            onClick={onContentClick}
-            className="rounded-l-lg h-full w-full"
-            src="https://img2.quasarzone.com/editor/2022/11/11/75f9d1f0e49980190d3967e19b0458e5.jpg"
-          ></img>
-        </div>
-        <div className="flex flex-col p-3 w-3/4">
-          <div className="text-xl font-bold p-2">Review Title</div>
-          <div
-            className="ease-in-out duration-150 line-clamp-2 hover:bg-slate-300 hover:rounded-md p-1.5 text-slate-600 hover:text-cyan-900"
-            role="button"
-            onClick={onContentClick}
-          >
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the standard dummy text ever since
-            the 1500s, when an unknown printer took a galley of type and
-            scrambled it to make a type specimen book. It has survived not only
-            five centuries, but also the leap into electronic typesetting,
-            remaining essentially unchanged. It was popularised in the 1960s
-            with the release of Letraset sheets containing Lorem Ipsum passages,
-            and more recently with desktop
-          </div>
-          <div className="flex justify-between items-center mt-4">
-            <div className="flex w-1/8">
-              <button onClick={onLikeClick}>
-                <AiOutlineHeart size="30" className="p-1" />
-              </button>
-              <div className="p-1">123</div>
-            </div>
-            <div>Author</div>
-          </div>
-        </div>
-      </div>
+      <SearchResultView />
       <button onClick={onMoreClick}>더보기</button>
     </div>
   );

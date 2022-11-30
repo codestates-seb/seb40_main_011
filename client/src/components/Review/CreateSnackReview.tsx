@@ -21,9 +21,9 @@ const CreateSnackReview = ({ ratingCategory }: RatingCategory) => {
 
   const handleTextarea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
-    if (content.length > 100) {
+    if (content.length > 500) {
       window.alert('최대 글자수에 맞춰주세요');
-      setContent(content.slice(0, 100));
+      setContent(content.slice(0, 500));
     }
   };
 
@@ -32,6 +32,47 @@ const CreateSnackReview = ({ ratingCategory }: RatingCategory) => {
       window.alert('로그인을 해주세요');
       (document.activeElement as HTMLElement).blur();
     }
+  };
+
+  const handleRatingC = (el: any) => {
+    setScore((current: any) => {
+      const newScore = { ...current };
+      newScore.costEfficiency = el;
+      return newScore;
+    });
+    console.log(score);
+  };
+  const handleRatingQ = (el: any) => {
+    setScore((current: any) => {
+      const newScore = { ...current };
+      newScore.quality = el;
+      return newScore;
+    });
+    console.log(score);
+  };
+  const handleRatingS = (el: any) => {
+    setScore((current: any) => {
+      const newScore = { ...current };
+      newScore.satisfaction = el;
+      return newScore;
+    });
+    console.log(score);
+  };
+  const handleRatingP = (el: any) => {
+    setScore((current: any) => {
+      const newScore = { ...current };
+      newScore.performance = el;
+      return newScore;
+    });
+    console.log(score);
+  };
+  const handleRatingD = (el: any) => {
+    setScore((current: any) => {
+      const newScore = { ...current };
+      newScore.design = el;
+      return newScore;
+    });
+    console.log(score);
   };
 
   const handleRating = (
@@ -66,7 +107,7 @@ const CreateSnackReview = ({ ratingCategory }: RatingCategory) => {
       });
       console.log(response);
       switch (response.status) {
-        case 204:
+        default:
           location.reload();
           break;
         case 401:
@@ -75,7 +116,7 @@ const CreateSnackReview = ({ ratingCategory }: RatingCategory) => {
           break;
         case 412: {
           loginRefresh();
-          // onCreateClick();
+          onCreateClick();
         }
       }
     } else {
@@ -85,7 +126,7 @@ const CreateSnackReview = ({ ratingCategory }: RatingCategory) => {
   return (
     <>
       <div className="flex items-center justify-between">
-        {ratingCategory.map((el: string, index: number) => {
+        {/* {ratingCategory.map((el: string, index: number) => {
           return (
             <div className="flex items-center" key={index}>
               <p className={`${el} pr-1.5 text-lg`}>{el}</p>
@@ -99,7 +140,28 @@ const CreateSnackReview = ({ ratingCategory }: RatingCategory) => {
               />
             </div>
           );
-        })}
+        })} */}
+
+        <div className="flex items-center justify-between px-1">
+          <p className="pr-0.5 text-xl">가성비</p>
+          <Rating allowFraction size={25} onClick={handleRatingC} />
+        </div>
+        <div className="flex items-center justify-between px-1">
+          <p className="pr-0.5 text-xl">품질</p>
+          <Rating allowFraction size={25} onClick={handleRatingQ} />
+        </div>
+        <div className="flex items-center justify-between px-1">
+          <p className="pr-0.5 text-xl">만족감</p>
+          <Rating allowFraction size={25} onClick={handleRatingS} />
+        </div>
+        <div className="flex items-center justify-between px-1">
+          <p className="pr-0.5 text-xl">성능</p>
+          <Rating allowFraction size={25} onClick={handleRatingP} />
+        </div>
+        <div className="flex items-center justify-between px-1">
+          <p className="pr-0.5 text-xl">디자인</p>
+          <Rating allowFraction size={25} onClick={handleRatingD} />
+        </div>
       </div>
       <div className="bg-slate-200">
         <div className="flex justify-center bg-white border-b border-gray-200">
@@ -117,7 +179,7 @@ const CreateSnackReview = ({ ratingCategory }: RatingCategory) => {
             />
             <div className="flex items-center justify-between">
               <span className="text-sm text-gray-400">
-                현재 글자수 {content.length} / 최대 글자수 100자
+                현재 글자수 {content.length} / 최대 글자수 500자
               </span>
               <button
                 onClick={onCreateClick}

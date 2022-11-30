@@ -8,6 +8,7 @@ import { Viewer } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 import Comment from './Comment';
 import HandleLike from './Like';
+import { useIsLogin } from '../../store/login';
 
 const RvDetail = () => {
   interface markdownProps {
@@ -30,8 +31,8 @@ const RvDetail = () => {
     view: 0,
     writer: '',
   });
-  const [comments, setComments] = useState<ReviewComments[]>();
-
+  const { loginId } = useIsLogin();
+  const [comments, setComments] = useState<ReviewComments[]>([]);
   const getParsedDate = (createdAt: string) => {
     return new Date(createdAt).toLocaleDateString('ko-KR');
   };
@@ -60,6 +61,37 @@ const RvDetail = () => {
       </>
     );
   };
+  const CommentView = () => {
+    if (review !== undefined && review?.reviewComments?.length > 0) {
+      return (
+        <div className="flex flex-col items-center w-full my-8">
+          <div className="flex justify-start w-full p-4 mb-4 text-2xl font-bold ">
+            Comment
+          </div>
+          {review.reviewComments.map((el: ReviewComments, idx: number) => (
+            <Comment key={idx} reviewComments={el} />
+          ))}
+        </div>
+      );
+    } else return null;
+  };
+
+  const DeleteReview = () => {
+    const handleDeleteReview = () => {
+      console.log(reviewId);
+      console.log(review);
+    };
+    if (review.userId === Number(loginId)) {
+      return (
+        <button
+          onClick={handleDeleteReview}
+          className="text-xs border border-gray-300 font-medium px-3 bg-white rounded-full mx-0.5 py-0.5 text-gray-400 hover:text-gray-500 hover:font-bold hover:bg-gray-200"
+        >
+          삭제
+        </button>
+      );
+    } else return null;
+  };
 
   return (
     <div className="flex justify-center">
@@ -74,27 +106,25 @@ const RvDetail = () => {
               {review?.type.toLocaleLowerCase()}
             </div>
           </div>
-          <div className="flex justify-center p-4 m-4 text-2xl font-bold">
+
+          <div className="flex justify-center p-4 mx-4 text-[3rem] font-bold">
             {review?.title}
           </div>
         </div>
-        <div className="flex items-end justify-end w-full p-4 border-b border-gray-200">
-          <img
-            className="w-12 h-12 m-2 rounded-full"
-            src={`https://codetech.nworld.dev${review?.userImage}`}
-          />
-          <div className="flex flex-col items-end p-2">
-            <div>{review?.writer}</div>
-            <div>{getParsedDate(review?.createdAt)}</div>
+        <div className="flex items-end justify-between w-full p-4 border-b border-gray-200">
+          <DeleteReview />
+          <div className="flex">
+            <img
+              className="w-12 h-12 m-2 rounded-full"
+              src={`https://codetech.nworld.dev${review?.userImage}`}
+            />
+            <div className="flex flex-col items-end p-2">
+              <div>{review?.writer}</div>
+              <div>{getParsedDate(review?.createdAt)}</div>
+            </div>
           </div>
         </div>
         <section className="flex flex-col items-center border-b border-gray-200">
-          {/* {review?.thumbnail !== undefined ? (
-            <div className="flex justify-center">
-              <img className="w-1/2 my-16" src={review?.thumbnail} />
-            </div>
-          ) : null} */}
-
           <div id="viewer" className="p-4 my-16 whitespace-pre-wrap">
             <ConvertedContent markdown={review?.content} />
           </div>
@@ -104,18 +134,9 @@ const RvDetail = () => {
               reviewId={reviewId}
             />
           </div>
+          <CommentView />
+          <CommentInput />;
         </section>
-        {review !== undefined && review?.reviewComments?.length > 0 ? (
-          <div className="flex flex-col items-center w-full my-8">
-            <div className="flex justify-start w-full p-4 mb-4 text-2xl font-bold ">
-              Comment
-            </div>
-            <Comment comments={review.reviewComments} />
-            <CommentInput />
-          </div>
-        ) : (
-          <CommentInput />
-        )}
       </div>
     </div>
   );

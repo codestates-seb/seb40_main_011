@@ -1,6 +1,7 @@
 import { useEffect, useState, SetStateAction } from 'react';
 import { getUserReview } from '../../util/apiCollection';
 import ReviewTabPagenation from './ReviewTabPagenation';
+import { loginRefresh } from '../../util/loginRefresh';
 
 interface ReviewType {
   id: number;
@@ -21,13 +22,24 @@ const ReviewsTab = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isUpdate, setIsUpdate] = useState(true);
 
+  const params = `?page=${currentPage}&size=5&sort=createdAt`;
+  const DetailReviewData = async () => {
+    const data: any = await getUserReview('reviews', params);
+
+    switch (data.status) {
+      case 200:
+        setReviewData(data?.data.reviews.content);
+        setTotalPages(data?.data.reviews.totalPages);
+        break;
+      case 412:
+        loginRefresh();
+        DetailReviewData();
+        break;
+      default:
+    }
+  };
+
   useEffect(() => {
-    const params = `?page=${currentPage}&size=5&sort=createdAt`;
-    const DetailReviewData = async () => {
-      const { data }: any = await getUserReview('reviews', params);
-      setReviewData(data?.reviews.content);
-      setTotalPages(data?.reviews.totalPages);
-    };
     DetailReviewData();
     setIsUpdate(false);
   }, [isUpdate]);
@@ -64,7 +76,7 @@ const ReviewsTab = () => {
                 >
                   <div className="mb-2 text-xl">{el.title}</div>
                   <div className="mb-2 overflow-hidden text-ellipsis line-clamp-2">
-                    {el.content}
+                    {el.content.replace(/"/g, '').replace(/<[^>]*>?/g, '')}
                   </div>
                   <div className="flex text-sm">
                     <div className="px-3 py-0.5 bg-slate-300 rounded-lg">

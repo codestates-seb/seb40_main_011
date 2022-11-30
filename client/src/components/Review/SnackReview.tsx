@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Rating } from 'react-simple-star-rating';
 import { SnackReviewProps, SnackReviewCards } from '../../types/mainPageTypes';
+import Avatar from '../Avatar/Avatar';
 import SnackReviewModal from '../Modal/SnackReviewModal';
 
 const SnackReview = ({ snackReviewData }: SnackReviewProps) => {
@@ -34,16 +35,17 @@ const SnackReview = ({ snackReviewData }: SnackReviewProps) => {
               setSelectedReview(el);
             }}
           >
-            <div className="border w-[300px] h-[330px] p-4 bg-white rounded-3xl shadow-md hover:-translate-y-1 transition ease-in-out hover:scale-110">
+            <div className="border w-[300px] h-[330px] px-2 py-1.5 bg-white rounded-3xl shadow-md hover:-translate-y-1 transition ease-in-out hover:scale-110">
               <div className="flex items-center justify-between">
-                <img
+                <Avatar image={el.image} />
+                {/* <img
                   src={`https://codetech.nworld.dev${el?.image}`}
                   alt=""
                   className="w-16 w-full h-16 rounded-full bg-slate-200"
-                />
-                <div className="flex flex-col items-start justify-start w-[190px]">
+                /> */}
+                <div className="flex flex-col items-start justify-start w-[205px] pt-2.5">
                   <div>{el.nickname}</div>
-                  <div className="ml-auto text-xs text-gray-400">
+                  <div className="pt-1 ml-auto text-xs text-gray-400">
                     {' '}
                     {new Date(el.createdAt).toLocaleDateString('kr-KO', {
                       month: 'short',
@@ -53,7 +55,7 @@ const SnackReview = ({ snackReviewData }: SnackReviewProps) => {
                   </div>
                 </div>
               </div>
-              <div className="grid grid-cols-2 my-1.5">
+              <div className="grid grid-cols-2 mt-2.5 mb-1 px-1">
                 <div className="flex items-center justify-center ">
                   <p className="pr-0.5 text-sm">가성비</p>
                   <Rating
@@ -100,7 +102,7 @@ const SnackReview = ({ snackReviewData }: SnackReviewProps) => {
                   />
                 </div>
               </div>
-              <div className="pt-1.5 overflow-hidden text-justify whitespace-normal text-ellipsis line-clamp-6">
+              <div className="pt-1.5 px-2 overflow-hidden text-justify whitespace-normal text-ellipsis line-clamp-6">
                 {el.content}
               </div>
 
