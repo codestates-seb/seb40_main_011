@@ -60,6 +60,7 @@ public class ReviewService {
 
 		Optional.ofNullable(review.getTitle()).ifPresent(findReview::setTitle); // 넘겨받은 값이 있으면 그 값으로 아니면 기존값으로 다시 저장한다.
 		Optional.ofNullable(review.getContent()).ifPresent(findReview::setContent);
+		Optional.ofNullable(review.getThumbnail()).ifPresent(findReview::setThumbnail);
 		Optional.ofNullable(findProduct).ifPresent(findReview::setProduct); // 회원이 제품을 변경하면 변경되도록 설정
 		findUser.updatePoint(1);
 

@@ -64,6 +64,9 @@ public class Review extends BaseTime {
 	private Long commentCount = 0L;
 
 	@Column(nullable = false)
+	private String thumbnail;
+
+	@Column(nullable = false)
 	private LocalDateTime commentUpdatedAt = LocalDateTime.now(); // commentCount가 마지막으로 업데이트된 시간
 
 	@ManyToOne
