@@ -38,18 +38,6 @@ public class FileService {
 		this.fileRepository = fileRepository;
 	}
 
-	public List<FileEntity> insertFiles(List<MultipartFile> files) throws IOException {
-
-		List<FileEntity> fileEntities = new ArrayList<>();
-
-		for (MultipartFile file : files) {
-			FileEntity saved = saveFile(file);
-			fileEntities.add(saved);
-		}
-
-		return fileEntities;
-	}
-
 	public FileEntity saveFile(MultipartFile uploadFile) throws IOException {
 
 		if (uploadFile.getSize() > 0) { // 너 파일이 실존해 ?
@@ -122,6 +110,18 @@ public class FileService {
 			return filePath + "thumbnail_" + uuidName + "." + ext;
 		}
 		throw new BusinessLogicException(ExceptionCode.FILE_NOT_FOUND);
+	}
+
+	public List<FileEntity> insertFiles(List<MultipartFile> files) throws IOException {
+
+		List<FileEntity> fileEntities = new ArrayList<>();
+
+		for (MultipartFile file : files) {
+			FileEntity saved = saveFile(file);
+			fileEntities.add(saved);
+		}
+
+		return fileEntities;
 	}
 
 	public void setUploadProduct(Product product, List<FileEntity> fileEntities) {

@@ -12,6 +12,7 @@ public class ProductDto {
 		private String name;
 		private Type type;
 		private String detail;
+		private String thumbnail;
 	}
 
 	@Getter
@@ -20,6 +21,7 @@ public class ProductDto {
 		private Long id;
 		private String name;
 		private String detail;
+		private String thumbnail;
 	}
 
 	public static class Search {
