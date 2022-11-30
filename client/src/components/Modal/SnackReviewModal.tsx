@@ -7,6 +7,7 @@ import { deleteSnack } from '../../util/apiCollection';
 import { useIsLogin } from '../../store/login';
 import { editSnack } from '../../util/apiCollection';
 import { loginRefresh } from '../../util/loginRefresh';
+import Avatar from '../Avatar/Avatar';
 
 export interface EditSncakReview {
   score: ScoreType;
@@ -126,7 +127,7 @@ const SnackReviewModal = ({ selectedReview, openModalHandler }: any) => {
     const editReview = await editSnack(selectedReview.id, { score, content });
     switch (editReview.status) {
       case 200:
-        // location.reload();
+        location.reload();
         break;
       case 412: {
         loginRefresh();
@@ -147,19 +148,17 @@ const SnackReviewModal = ({ selectedReview, openModalHandler }: any) => {
   return (
     <div className="fixed inset-0 z-30 flex items-center justify-center w-full h-screen overflow-hidden bg-black/30 backdrop-blur-sm justify-content">
       <div className="w-[40rem] z-40 rounded-xl overflow-hidden">
-        <div className="flex flex-col px-6 py-4 font-medium text-gray-600 bg-slate-100 border-slate-200">
-          <button className="ml-auto " onClick={openModalHandler}>
-            <BsXLg className="" />
-          </button>
-          <div className="flex items-center justify-start">
-            <img
+        <div className="flex flex-col p-3 font-medium text-gray-600 bg-slate-100 border-slate-200">
+          <div className="flex justify-start items-top">
+            <Avatar image={el.image} />
+            {/* <img
               src={`https://codetech.nworld.dev${el?.image}`}
               alt=""
               className="w-16 h-16 rounded-full bg-slate-200"
-            />
-            <div className="flex flex-col items-start justify-start ml-8">
-              <div>{el.nickname}</div>
-              <div className="ml-auto text-xs text-gray-400">
+            /> */}
+            <div className="flex flex-col items-start justify-start pt-1.5 ml-8">
+              <div className="pt-1.5">{el.nickname}</div>
+              <div className="pt-1 ml-auto text-xs text-gray-400 ">
                 {' '}
                 {new Date(el.createdAt).toLocaleDateString('kr-KO', {
                   month: 'short',
@@ -168,11 +167,14 @@ const SnackReviewModal = ({ selectedReview, openModalHandler }: any) => {
                 })}
               </div>
             </div>
+            <button className="h-full ml-auto" onClick={openModalHandler}>
+              <BsXLg className="flex flex-col justify-start" />
+            </button>
           </div>
 
           {editStus ? (
             <>
-              <div className="grid grid-cols-3 my-1.5">
+              <div className="grid grid-cols-3 px-2 mt-4">
                 <div className="flex items-center justify-between px-1">
                   <p className="pr-0.5 text-xl">가성비</p>
                   <Rating
@@ -220,7 +222,7 @@ const SnackReviewModal = ({ selectedReview, openModalHandler }: any) => {
                 </div>
               </div>
               <TextareaAutosize
-                className={`w-full mt-1.5 bg-transparent outline-none text-gray-300 font-medium resize-none focus:text-gray-700 text-lg ${
+                className={`p-2 w-full bg-transparent outline-none text-gray-300 font-medium resize-none focus:text-gray-700 text-lg ${
                   content.length !== 0 && `text-gray-700`
                 }`}
                 minRows={7}
@@ -230,7 +232,7 @@ const SnackReviewModal = ({ selectedReview, openModalHandler }: any) => {
             </>
           ) : (
             <>
-              <div className="grid grid-cols-3 my-1.5">
+              <div className="grid grid-cols-3 px-2 mt-4">
                 {ratingArr.map((ele, idx) => {
                   return (
                     <div
@@ -248,7 +250,9 @@ const SnackReviewModal = ({ selectedReview, openModalHandler }: any) => {
                   );
                 })}
               </div>
-              <div className="pt-2 pb-2 text-lg text-justify">{el.content}</div>
+              <div className="p-2 text-lg text-justify min-h-[150px]">
+                {el.content}
+              </div>
             </>
           )}
           <div className="flex items-end justify-end text-sm">

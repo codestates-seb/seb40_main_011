@@ -1,4 +1,4 @@
-export default function Avatar(data: { image: string }) {
+export default function Avatar(data: { image: string | undefined }) {
   const { image } = data;
   return (
     <img
@@ -8,7 +8,7 @@ export default function Avatar(data: { image: string }) {
           : `https://codetech.nworld.dev${image}`
       }
       alt="user-image"
-      className="w-12 h-12 rounded-2xl mx-3 mt-3 drop-shadow-xl"
+      className="w-12 h-12 mx-3 mt-3 rounded-2xl drop-shadow-xl"
     />
   );
 }
