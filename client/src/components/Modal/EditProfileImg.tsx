@@ -5,6 +5,7 @@ import { BsXLg } from 'react-icons/bs';
 import { EditProfileImgModalHandler } from '../MyPage/Profile';
 import { UserProfile } from '../MyPage/Profile';
 import { editProfileImg } from '../../util/apiCollection';
+import { loginRefresh } from '../../util/loginRefresh';
 
 const EditProgileImg = (
   // { openEditProfileImgModalHandler }: EditProfileImgModalHandler,
@@ -55,6 +56,11 @@ const EditProgileImg = (
         navigate('/mypage');
         location.reload();
         break;
+      case 412: {
+        loginRefresh();
+        handleSubmitImg();
+        break;
+      }
       case 415:
         alert('이미지를 선택 해주세요');
         break;

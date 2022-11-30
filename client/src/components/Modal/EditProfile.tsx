@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { BsXLg } from 'react-icons/bs';
 import { EditProfileModalHandler } from '../MyPage/Profile';
 import { editNickname } from '../../util/apiCollection';
+import { loginRefresh } from '../../util/loginRefresh';
 
 export interface EditProfile {
   nickname: string | null;
@@ -37,6 +38,11 @@ const EditProfile = ({
         case 200:
           location.reload();
           break;
+        case 412: {
+          loginRefresh();
+          handleEditNickName();
+          break;
+        }
         default:
       }
     } else {
