@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import net.coobird.thumbnailator.Thumbnails;
+import net.coobird.thumbnailator.name.Rename;
 
 import lombok.extern.log4j.Log4j2;
 import seb.project.Codetech.file.entity.FileEntity;
@@ -72,44 +73,15 @@ public class FileService {
 		throw new BusinessLogicException(ExceptionCode.FILE_NOT_FOUND);
 	}
 
-	public String saveThumbnail(MultipartFile uploadFile, int width, int height) throws IOException {
+	public String convertThumbnail(MultipartFile file, Integer width, Integer height) throws IOException {
 
-		if (uploadFile.getSize() > 0) {
+		FileEntity saveFile = saveFile(file);
 
-			if (!checkFile(uploadFile))
-				throw new BusinessLogicException(ExceptionCode.FILE_NOT_ALLOW);
+		Thumbnails.of(new File(rootPath + saveFile.getPath()))
+			.size(width, height)
+			.toFiles(Rename.PREFIX_HYPHEN_THUMBNAIL);
 
-			checkDir(rootPath, filePath); // 파일을 업로드 처리하기 전에 폴더가 있는지 검사한다.
-
-			FileEntity file = new FileEntity();
-
-			String orgName = uploadFile.getOriginalFilename(); // 파일 이름 추출
-			String uuidName = UUID.randomUUID().toString(); // UUID 이름 생성
-			assert orgName != null;
-			String ext = orgName.substring(orgName.lastIndexOf(".") + 1); // 확장자 추출
-
-			// 원본 파일이름을 설정한다.
-			file.setOrgName(orgName);
-
-			// uuid 파일 이름을 설정한다.
-			file.setUuidName(uuidName + "." + ext);
-
-			// 설정한 저장경로(filePath)와 파일 이름을 통해 저장 경로를 데이터로 삽입한다.
-			file.setPath(filePath + uuidName + "." + ext);
-
-			// 로컬에 파일을 저장한다 파일 이름은 uuid로 저장.
-			uploadFile.transferTo(new File(rootPath + filePath + uuidName + "." + ext));
-
-			// 데이터베이스에 파일 정보를 저장한다.
-			fileRepository.save(file);
-
-			Thumbnails.of(new File(rootPath + filePath + uuidName + "." + ext)) // 생성된 파일의 섬네일을 생성한다.
-				.size(width, height)
-				.toFile(new File(rootPath + filePath + "thumbnail_" + uuidName + "." + ext));
-
-			return filePath + "thumbnail_" + uuidName + "." + ext;
-		}
-		throw new BusinessLogicException(ExceptionCode.FILE_NOT_FOUND);
+		return filePath + "thumbnail-" + saveFile.getUuidName();
 	}
 
 	public List<FileEntity> insertFiles(List<MultipartFile> files) throws IOException {
