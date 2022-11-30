@@ -8,10 +8,9 @@ import { Viewer } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 import Comment from './Comment';
 import HandleLike from './Like';
-import { useRef } from 'react';
+import { useIsLogin } from '../../store/login';
 
 const RvDetail = () => {
-  const shortCutRef = useRef(null);
   interface markdownProps {
     markdown: string | undefined;
   }
@@ -32,6 +31,7 @@ const RvDetail = () => {
     view: 0,
     writer: '',
   });
+  const { loginId } = useIsLogin();
   const [comments, setComments] = useState<ReviewComments[]>([]);
   const getParsedDate = (createdAt: string) => {
     return new Date(createdAt).toLocaleDateString('ko-KR');
@@ -76,40 +76,21 @@ const RvDetail = () => {
     } else return null;
   };
 
-  const ShortCut = () => {
-    const h1 = Array.prototype.slice.call(document.querySelectorAll('h1'));
-    const h2 = Array.prototype.slice.call(document.querySelectorAll('h2'));
-    const element = document.getElementById('h1');
-
-    const handleScroll = () => {
-      console.log(element);
-      document.getElementById('h1')?.scrollIntoView({ behavior: 'smooth' });
+  const DeleteReview = () => {
+    const handleDeleteReview = () => {
+      console.log(reviewId);
+      console.log(review);
     };
-
-    return (
-      <div className="max-sm:hidden">
-        <div className="absolute left-3/4 ">
-          <div className="text-slate-600 max-lg:ml-[3rem] ml-[6rem] border-l-2 leading-normal text-sm overflow-hidden fixed top-112">
-            {h1.map((el, idx: number) => (
-              <div
-                ref={shortCutRef}
-                role="button"
-                className="ml-4"
-                key={idx}
-                id="h1"
-              >
-                {el.innerText}
-              </div>
-            ))}
-            {h2.map((el, idx: number) => (
-              <div className="ml-8 mt-4" key={idx}>
-                {el.innerText}
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    );
+    if (review.userId === Number(loginId)) {
+      return (
+        <button
+          onClick={handleDeleteReview}
+          className="text-xs border border-gray-300 font-medium px-3 bg-white rounded-full mx-0.5 py-0.5 text-gray-400 hover:text-gray-500 hover:font-bold hover:bg-gray-200"
+        >
+          삭제
+        </button>
+      );
+    } else return null;
   };
 
   return (
@@ -125,19 +106,22 @@ const RvDetail = () => {
               {review?.type.toLocaleLowerCase()}
             </div>
           </div>
-          <ShortCut />
+
           <div className="flex justify-center p-4 mx-4 text-[3rem] font-bold">
             {review?.title}
           </div>
         </div>
-        <div className="flex items-end justify-end w-full p-4 border-b border-gray-200">
-          <img
-            className="w-12 h-12 m-2 rounded-full"
-            src={`https://codetech.nworld.dev${review?.userImage}`}
-          />
-          <div className="flex flex-col items-end p-2">
-            <div>{review?.writer}</div>
-            <div>{getParsedDate(review?.createdAt)}</div>
+        <div className="flex items-end justify-between w-full p-4 border-b border-gray-200">
+          <DeleteReview />
+          <div className="flex">
+            <img
+              className="w-12 h-12 m-2 rounded-full"
+              src={`https://codetech.nworld.dev${review?.userImage}`}
+            />
+            <div className="flex flex-col items-end p-2">
+              <div>{review?.writer}</div>
+              <div>{getParsedDate(review?.createdAt)}</div>
+            </div>
           </div>
         </div>
         <section className="flex flex-col items-center border-b border-gray-200">

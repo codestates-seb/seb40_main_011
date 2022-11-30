@@ -18,3 +18,17 @@
   transform: translateY(-12px);
   font-size: 0.75rem;
 } */
+
+.toastui-editor-contents h1 {
+  font-size: 24px !important;
+}
+
+.toastui-editor-contents h2 {
+  font-size: 20px !important;
+}
+
+.toastui-editor-contents h3,
+.toastui-editor-contents code,
+.toastui-editor-contents p {
+  font-size: 16px !important;
+}
