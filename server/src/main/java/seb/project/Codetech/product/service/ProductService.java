@@ -98,6 +98,13 @@ public class ProductService {
 		return new ProductResponseDto.MainPage(cards);
 	}
 
+	public ProductResponseDto.Slice searchProduct(String keyword, Long offset, int limit) {
+		List<ProductResponseDto.Search> searches = productRepository.searchProductByKeyword(keyword, offset, limit);
+		boolean hasNext = productRepository.hasNext(searches, limit);
+
+		return new ProductResponseDto.Slice(searches, hasNext);
+	}
+
 	public Product findProductId(Long id) { // 제품 정보를 가져오기 위한 메소드
 		return productRepository.findById(id)
 			.orElseThrow(() -> new BusinessLogicException(ExceptionCode.PRODUCT_NOT_FOUND));
