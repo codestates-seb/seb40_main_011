@@ -26,6 +26,7 @@ const QuestionsTab = () => {
     switch (data.status) {
       case 200:
         setReviewData(data?.data.questions.content);
+        console.log(data?.data.questions);
         setTotalPages(data?.data.questions.totalPages);
         break;
       case 412:
@@ -69,26 +70,25 @@ const QuestionsTab = () => {
                   className="flex flex-col justify-center w-[850px] p-5"
                   key={index}
                 >
-                  <div className="mb-2 overflow-hidden text-ellipsis line-clamp-2">
-                    {el.content}
-                  </div>
-                  {el.adoptedId ? (
-                    <BsCheckCircleFill className=" w-[20px] h-[20px] ml-auto mb-1" />
-                  ) : (
-                    <></>
-                  )}
-
                   <div className="flex text-sm">
-                    <div className="px-3 py-0.5"> </div>
-                    <div className="ml-auto text-slate-600">
-                      {new Date(el.createdAt).toLocaleDateString('en-US', {
+                    <div className=" text-slate-600">
+                      {new Date(el.createdAt).toLocaleDateString('kr-KO', {
                         month: 'short',
                         day: 'numeric',
                         year: 'numeric',
-                        hour: 'numeric',
-                        minute: 'numeric',
                       })}
                     </div>
+                    {el.adoptedId ? (
+                      <>
+                        <BsCheckCircleFill className=" w-[20px] h-[20px] mb-1 ml-1.5 text-emerald-500" />
+                        <p className="ml-1 text-slate-600">채택완료</p>
+                      </>
+                    ) : (
+                      <></>
+                    )}
+                  </div>
+                  <div className="mb-2 overflow-hidden text-ellipsis line-clamp-2">
+                    {el.content}
                   </div>
                 </div>
               </>

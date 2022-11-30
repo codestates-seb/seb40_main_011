@@ -19,13 +19,17 @@ export const AnswersTab = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isUpdate, setIsUpdate] = useState(true);
 
+  const [more, setMore] = useState(false);
+
   const params = `?page=${currentPage}&size=5&sort=createdAt`;
   const DetailReviewData = async () => {
     const data: any = await getUserReview('answers', params);
     switch (data.status) {
       case 200:
-        setReviewData(data?.questions.content);
-        setTotalPages(data?.questions.totalPages);
+        console.log(data);
+        setReviewData(data?.data.questions.content);
+        console.log(data?.data.questions.content[0].answers.content[0].content);
+        setTotalPages(data?.data.questions.totalPages);
         break;
       case 412:
         loginRefresh();
@@ -40,6 +44,9 @@ export const AnswersTab = () => {
     setIsUpdate(false);
   }, [isUpdate]);
 
+  const handleMore = (e: any) => {
+    setMore(!more);
+  };
   const onClickPage = (
     target: SetStateAction<string> | SetStateAction<number>
   ) => {
@@ -61,34 +68,43 @@ export const AnswersTab = () => {
         </div>
       ) : (
         <>
-          {reviewData?.map((el: ReviewType, index: number) => {
+          {reviewData?.map((el: any, index: number) => {
             return (
               <>
                 <div
                   className="flex flex-col justify-center w-[850px] p-5"
                   key={index}
                 >
-                  <div className="mb-2 overflow-hidden text-ellipsis line-clamp-2">
-                    {el.content}
-                  </div>
-                  {el.adoptedId ? (
-                    <BsCheckCircleFill className=" w-[20px] h-[20px] ml-auto mb-1" />
-                  ) : (
-                    <></>
-                  )}
-
                   <div className="flex text-sm">
-                    <div className="px-3 py-0.5"> </div>
-                    <div className="ml-auto text-slate-600">
-                      {new Date(el.createdAt).toLocaleDateString('en-US', {
+                    <div className=" text-slate-500">
+                      {new Date(el.createdAt).toLocaleDateString('kr-KO', {
                         month: 'short',
                         day: 'numeric',
                         year: 'numeric',
-                        hour: 'numeric',
-                        minute: 'numeric',
                       })}
                     </div>
+                    {el.adoptedId ? (
+                      <>
+                        <BsCheckCircleFill className=" w-[20px] h-[20px] mb-1 ml-1.5 text-emerald-500" />
+                        <p className="ml-1 text-slate-500">채택됨</p>
+                      </>
+                    ) : (
+                      <></>
+                    )}
                   </div>
+                  <div className="mb-0.5 overflow-hidden text-sm text-ellipsis line-clamp-2  text-slate-700">
+                    {el.content}
+                  </div>
+
+                  {el.answers.content.map((ele: any, idx: number) => {
+                    return (
+                      <>
+                        <div className="mb-1 overflow-hidden text-lg text-ellipsis line-clamp-2">
+                          {ele.content}
+                        </div>
+                      </>
+                    );
+                  })}
                 </div>
               </>
             );
