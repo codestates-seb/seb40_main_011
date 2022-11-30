@@ -77,7 +77,6 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 			.newInstance()
 			.scheme("https")
 //			.host("localhost")
-
 			.host("codetech.nworld.dev")
 			.path("/receive-token.html")
 //				.port(3000)
