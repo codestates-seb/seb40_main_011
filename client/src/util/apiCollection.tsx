@@ -166,12 +166,12 @@ export const postSignup = async (data: SignupInputs) => {
 };
 export const getUserProfile = async () => {
   try {
-    const optOut = await axios.get('/api/user', {
+    const getUserData = await axios.get('/api/user', {
       headers: {
         Authorization: localStorage.getItem('authorization'),
       },
     });
-    return optOut;
+    return getUserData;
   } catch (err: any) {
     return err.response;
   }
@@ -390,7 +390,7 @@ export const editProfileImg = async (data: any) => {
   try {
     const submitImg = await axios.patch('/api/user/image', data, {
       headers: {
-        Authorization: initialToken,
+        Authorization: localStorage.getItem('authorization'),
         // 'Content-type': 'application/json',
         // 'Content-type': 'multipart/form-data',
       },
@@ -405,7 +405,7 @@ export const editProfileImg = async (data: any) => {
 export const editNickname = async (data: any) => {
   try {
     const submitImg = await axios.patch('/api/user/nickname', data, {
-      headers: { Authorization: initialToken },
+      headers: { Authorization: localStorage.getItem('authorization') },
     });
     return submitImg;
   } catch (err: any) {
@@ -416,10 +416,10 @@ export const editNickname = async (data: any) => {
 
 export const editPassword = async (data: Password) => {
   try {
-    const submitImg = await axios.patch('/api/user/password', data, {
-      headers: { Authorization: initialToken },
+    const editNewPassword = await axios.patch('/api/user/password', data, {
+      headers: { Authorization: localStorage.getItem('authorization') },
     });
-    return submitImg;
+    return editNewPassword;
   } catch (err: any) {
     return err.response;
   }
@@ -428,14 +428,11 @@ export const editPassword = async (data: Password) => {
 export const getUserReview = async (url: string, params: string) => {
   try {
     const getReview = await axios.get(`/api/user/${url}${params}`, {
-      headers: { Authorization: initialToken },
+      headers: { Authorization: localStorage.getItem('authorization') },
     });
     return getReview;
   } catch (err: any) {
-    if (err.response.status === 412) {
-      console.log('reissue 진행중...');
-      reissueTokenRecall(initialToken, url, params);
-    } else return console.error(err.response);
+    return err.response;
   }
 };
 

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { BsXLg, BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
 import { OptOutModalHandler } from '../../pages/MyPage';
 import { delAccount } from '../../util/apiCollection';
+import { loginRefresh } from '../../util/loginRefresh';
 
 export interface OptOutInputs {
   headers: Header;
@@ -39,6 +40,11 @@ const OptOut = ({ openOptOutModalHandler }: OptOutModalHandler) => {
         localStorage.clear();
         navigate('/');
         break;
+      case 412: {
+        loginRefresh();
+        accountResult(e);
+        break;
+      }
       case 500:
         alert('비밀번호가 일치하지 않습니다.');
         break;
