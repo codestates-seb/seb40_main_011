@@ -100,6 +100,7 @@ public class CustomReviewRepositoryImpl implements CustomReviewRepository {
 					review.createdAt,
 					user.id.as("userId"),
 					user.image.as("userImage"),
+					review.product.id.as("productId"),
 					product.name.as("productName"),
 					product.detail.as("productDetail")
 				)
@@ -173,6 +174,7 @@ public class CustomReviewRepositoryImpl implements CustomReviewRepository {
 	public List<ReviewResponseDto.Search> searchReviewByKeyword(String keyword, Long offset, int limit) {
 		return queryFactory
 			.select(Projections.fields(ReviewResponseDto.Search.class,
+					review.id,
 					review.title,
 					review.content,
 					review.writer,
@@ -185,7 +187,8 @@ public class CustomReviewRepositoryImpl implements CustomReviewRepository {
 				review.title.contains(keyword).or(review.content.contains(keyword)))
 			.leftJoin(review.user, user)
 			.orderBy(review.id.desc())
-			.leftJoin(review.user, user).offset(offset)
+			.leftJoin(review.user, user)
+			.offset(offset)
 			.limit(limit + 1)
 			.fetch();
 	}

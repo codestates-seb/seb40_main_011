@@ -24,6 +24,7 @@ public class ReviewResponseDto {
 		private LocalDateTime createdAt;
 		private Long userId;
 		private String userImage;
+		private Long productId;
 		private String productName;
 		private String productDetail;
 		@Setter
@@ -47,6 +48,7 @@ public class ReviewResponseDto {
 	@Getter
 	@NoArgsConstructor
 	public static class Search {
+		private Long id;
 		private String title;
 		private String content;
 		private Long RecommendNumber;
