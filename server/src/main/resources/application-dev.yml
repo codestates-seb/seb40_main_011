@@ -45,6 +45,9 @@ spring:
               - profile_image
               - email
             clientName: Naver
+#          kakao:
+#            client-id: ${OAUTH2_KAKAO_CLIENT_ID}
+#            clientSecret: ${OAUTH2_KAKAO_SECRET}
   mail:
     host: smtp.naver.com
     port: 465
