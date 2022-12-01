@@ -32,6 +32,7 @@ import seb.project.Codetech.user.entity.User;
 public class FileService {
 	private final FileRepository fileRepository;
 	private final String rootPath = System.getProperty("user.dir"); // 현재 실행되고 있는 서버의 경로를 가져온다.
+	private final Tika tika = new Tika(); // 파일 위변조 체크를 위한 Apache Tika 라이브러리 사용
 	@Value("${filePath}")
 	private String filePath;
 
@@ -70,12 +71,18 @@ public class FileService {
 	public String convertThumbnail(MultipartFile file, Integer width, Integer height) throws IOException {
 
 		FileEntity saveFile = saveFile(file);
+		final String[] PERMISSION_FILE_MIME_TYPE = {"image/jpg", "image/jpeg", "image/png"};
 
-		Thumbnails.of(new File(rootPath + saveFile.getPath()))
-			.size(width, height)
-			.toFiles(Rename.PREFIX_HYPHEN_THUMBNAIL);
+		for (String s : PERMISSION_FILE_MIME_TYPE) {
+			if (tika.detect(file.getInputStream()).equals(s)) {
+				Thumbnails.of(new File(rootPath + saveFile.getPath()))
+					.size(width, height)
+					.toFiles(Rename.PREFIX_HYPHEN_THUMBNAIL);
 
-		return filePath + "thumbnail-" + saveFile.getUuidName();
+				return filePath + "thumbnail-" + saveFile.getUuidName();
+			}
+		}
+		throw new BusinessLogicException(ExceptionCode.FILE_NOT_ALLOW);
 	}
 
 	public List<FileEntity> insertFiles(List<MultipartFile> files) throws IOException {
@@ -114,7 +121,6 @@ public class FileService {
 	public void verificationFile(MultipartFile file) throws IOException {
 		if (file.getSize() < 0) // 파일이 비어 있지 않은지 검증
 			throw new BusinessLogicException(ExceptionCode.FILE_NOT_FOUND);
-		Tika tika = new Tika(); // 파일이 이미지 파일인지 검증
 		if (!tika.detect(file.getInputStream()).startsWith("image"))
 			throw new BusinessLogicException(ExceptionCode.FILE_NOT_ALLOW);
 	}
