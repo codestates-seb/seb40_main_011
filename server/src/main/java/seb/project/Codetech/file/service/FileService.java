@@ -41,36 +41,30 @@ public class FileService {
 
 	public FileEntity saveFile(MultipartFile uploadFile) throws IOException {
 
-		if (uploadFile.getSize() > 0) { // 너 파일이 실존해 ?
+		verificationFile(uploadFile);
+		verificationDir(rootPath, filePath); // 파일을 업로드 처리하기 전에 폴더가 있는지 검사한다.
 
-			if (!checkFile(uploadFile))
-				throw new BusinessLogicException(ExceptionCode.FILE_NOT_ALLOW);
+		String orgName = uploadFile.getOriginalFilename(); // 파일 이름 추출
+		String uuidName = UUID.randomUUID().toString(); // UUID 이름 생성
+		assert orgName != null;
+		String ext = orgName.substring(orgName.lastIndexOf(".") + 1); // 확장자 추출
 
-			checkDir(rootPath, filePath); // 파일을 업로드 처리하기 전에 폴더가 있는지 검사한다.
+		FileEntity file = new FileEntity();
 
-			FileEntity file = new FileEntity();
+		// 원본 파일이름을 설정한다.
+		file.setOrgName(orgName);
 
-			String orgName = uploadFile.getOriginalFilename(); // 파일 이름 추출
-			String uuidName = UUID.randomUUID().toString(); // UUID 이름 생성
-			assert orgName != null;
-			String ext = orgName.substring(orgName.lastIndexOf(".") + 1); // 확장자 추출
+		// uuid 파일 이름을 설정한다.
+		file.setUuidName(uuidName + "." + ext);
 
-			// 원본 파일이름을 설정한다.
-			file.setOrgName(orgName);
+		// 설정한 저장경로(filePath)와 파일 이름을 통해 저장 경로를 데이터로 삽입한다.
+		file.setPath(filePath + uuidName + "." + ext);
 
-			// uuid 파일 이름을 설정한다.
-			file.setUuidName(uuidName + "." + ext);
+		// 로컬에 파일을 저장한다 파일 이름은 uuid로 저장.
+		uploadFile.transferTo(new File(rootPath + filePath + uuidName + "." + ext));
 
-			// 설정한 저장경로(filePath)와 파일 이름을 통해 저장 경로를 데이터로 삽입한다.
-			file.setPath(filePath + uuidName + "." + ext);
-
-			// 로컬에 파일을 저장한다 파일 이름은 uuid로 저장.
-			uploadFile.transferTo(new File(rootPath + filePath + uuidName + "." + ext));
-
-			// 데이터베이스에 파일 정보를 저장한다.
-			return fileRepository.save(file);
-		}
-		throw new BusinessLogicException(ExceptionCode.FILE_NOT_FOUND);
+		// 데이터베이스에 파일 정보를 저장한다.
+		return fileRepository.save(file);
 	}
 
 	public String convertThumbnail(MultipartFile file, Integer width, Integer height) throws IOException {
@@ -108,25 +102,20 @@ public class FileService {
 		return fileRepository.save(file);
 	}
 
-	public void checkDir(String root, String path) {
-
-		Path dir = Paths.get(root + path);
-
+	public void verificationDir(String root, String path) {
+		Path dir = Paths.get(root + path); // 경로를 가져온다
 		try {
-			// 디렉토리 생성
-			Files.createDirectories(dir); // 폴더가 없으면 생성한다 폴더나 부모 폴더도 없으면 같이 생성해준다 다만 예외를 주지는 않는다.
+			Files.createDirectories(dir); // 경로가 없으면 생성한다.
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 	}
 
-	public boolean checkFile(MultipartFile file) throws IOException {
-
-		Tika tika = new Tika();
-		String fileType = tika.detect(file.getInputStream());
-		// getByte로 돌리게 된다면 문제가 생긴다, getInputStream을 통해서 헤더만 보내서 검사한다.
-
-		return fileType.startsWith("image");
+	public void verificationFile(MultipartFile file) throws IOException {
+		if (file.getSize() < 0) // 파일이 비어 있지 않은지 검증
+			throw new BusinessLogicException(ExceptionCode.FILE_NOT_FOUND);
+		Tika tika = new Tika(); // 파일이 이미지 파일인지 검증
+		if (!tika.detect(file.getInputStream()).startsWith("image"))
+			throw new BusinessLogicException(ExceptionCode.FILE_NOT_ALLOW);
 	}
 }
