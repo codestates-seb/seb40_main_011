@@ -122,7 +122,7 @@ const BestReviewList = () => {
           </div>
         )}
       </div>
-      <div className="w-full lg:w-[64rem] mx-auto py-4 px-2 flex justify-between items-center font-medium">
+      <div className="w-full lg:w-[64rem] mx-auto py-6 px-2 flex justify-between items-center font-medium">
         <div className="flex items-center">
           <button
             className={`${
