@@ -22,11 +22,11 @@ spring:
             tokenUri: https://kauth.kakao.com/oauth/token
             userInfoUri: https://kapi.kakao.com/v2/user/me
             userNameAttribute: id
-#          naver:
-#            authorizationUri: https://nid.naver.com/oauth2.0/authorize
-#            tokenUri: https://nid.naver.com/oauth2.0/token
-#            userInfoUri: https://openapi.naver.com/v1/nid/me
-#            userNameAttribute: response
+          naver:
+            authorizationUri: https://nid.naver.com/oauth2.0/authorize
+            tokenUri: https://nid.naver.com/oauth2.0/token
+            userInfoUri: https://openapi.naver.com/v1/nid/me
+            userNameAttribute: response
         registration:
           google:
             clientId: ${OAUTH2_GOOGLE_CLIENT_ID}
@@ -34,17 +34,17 @@ spring:
             scope:
               - email
               - profile
-#          naver:
-#            clientId: ${OAUTH2_NAVER_CLIENT_ID}
-#            clientSercret: ${OAUTH2_NAVER_SECRET}
-#            clientAuthenticationMethod: post
-#            authorizationGrantType: authorization_code
-#            redirectUri: "http://localhost:8080/login/oauth2/code/naver"
-#            scope:
-#              - nickname
-#              - profile_image
-#              - email
-#            clientName: Naver
+          naver:
+            clientId: ${OAUTH2_NAVER_CLIENT_ID}
+            clientSecret: ${OAUTH2_NAVER_SECRET}
+            clientAuthenticationMethod: post
+            authorizationGrantType: authorization_code
+            redirectUri: "http://codetech.nworld.dev/login/oauth2/code/naver"
+            scope:
+              - nickname
+              - profile_image
+              - email
+            clientName: Naver
   mail:
     host: smtp.naver.com
     port: 465
