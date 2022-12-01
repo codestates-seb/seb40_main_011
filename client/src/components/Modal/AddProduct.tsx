@@ -4,7 +4,7 @@
 import React, { ChangeEvent, useState } from 'react';
 import CategorieSelector from '../Selectors/CategorieSelector';
 import '../common.css';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import useCategorie from '../../store/categorie';
 import { selectProductImg } from '../../util/apiCollection';
 import { loginRefresh } from '../../util/loginRefresh';
@@ -16,7 +16,7 @@ interface ModalProps {
 
 const AddProduct = ({ isModal, setIsModal }: ModalProps) => {
   const { clickName } = useCategorie();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   //clickName 대문자로 변경
   const encoded = encodeURI(clickName);
@@ -42,7 +42,8 @@ const AddProduct = ({ isModal, setIsModal }: ModalProps) => {
   };
 
   const [productImg, setproductImg] = useState('/img');
-  const [uploadImg, setUploadImg] = useState(false);
+  const [img, setImg] = useState(false);
+  const [uploadImg, setUploadImg] = useState('');
   //이미지 올리는 함수
   const handleChangeImg = async (e: any) => {
     const reader = new FileReader();
@@ -52,13 +53,15 @@ const AddProduct = ({ isModal, setIsModal }: ModalProps) => {
     reader.onloadend = () => {
       const resultImage: any = reader.result;
       setproductImg(resultImage);
-      setUploadImg(true);
+      setImg(true);
+      setUploadImg(e.target.files[0]);
+      console.log(e.target.files[0]);
     };
   };
 
   //이미지 삭제하는 함수
   const handleDeletImg = async (e: any) => {
-    setUploadImg(!uploadImg);
+    setImg(!img);
   };
 
   //request 타입으로 보낼 객체
@@ -71,10 +74,7 @@ const AddProduct = ({ isModal, setIsModal }: ModalProps) => {
   const handleSubmitImg = async (e: any) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append(
-      'file',
-      new Blob([uploadImg] as any, { type: 'application/json' })
-    );
+    formData.append('file', uploadImg);
     formData.append(
       'request',
       new Blob([JSON.stringify(productData)] as any, {
@@ -86,13 +86,11 @@ const AddProduct = ({ isModal, setIsModal }: ModalProps) => {
     const submitForm = await selectProductImg(formData);
     switch (submitForm.status) {
       default:
-        console.log(submitForm);
-        // navigate('/review/write');
-        // location.reload();
+        location.reload();
+        loginRefresh();
         break;
       case 412:
         loginRefresh();
-        // handleSubmitImg(e);
         console.log('실패');
         break;
     }
@@ -136,7 +134,7 @@ const AddProduct = ({ isModal, setIsModal }: ModalProps) => {
                 </div>
                 <div className="pb-5">
                   <p className="modal-font">이미지 업로드</p>
-                  {uploadImg === false ? (
+                  {img === false ? (
                     <div className="flex rounded-lg w-[418px] bg-slate-200 h-28">
                       <div className="m-auto">
                         <input

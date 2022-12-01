@@ -76,7 +76,9 @@ const ReviewsTab = () => {
                 >
                   <div className="mb-2 text-xl">{el.title}</div>
                   <div className="mb-2 overflow-hidden text-ellipsis line-clamp-2">
-                    {el.content.replace(/"/g, '').replace(/<[^>]*>?/g, '')}
+                    {el.content
+                      .replace(/(\[.*\])(\((http)(?:s)?(:\/\/).*\))/g, ' ')
+                      .replace(/[^ㄱ-ㅎ가-힣a-zA-Z0-9]/g, ' ')}
                   </div>
                   <div className="flex text-sm">
                     <div className="px-3 py-0.5 bg-slate-300 rounded-lg">

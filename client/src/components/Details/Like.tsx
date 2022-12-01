@@ -2,11 +2,14 @@ import { AiOutlineLike } from 'react-icons/ai';
 import { LikeProps } from '../../types/mainPageTypes';
 import { postLike } from '../../util/apiCollection';
 import { loginRefresh } from '../../util/loginRefresh';
-const HandleLike = ({ recommendNumber, reviewId }: LikeProps) => {
+import { useParams } from 'react-router-dom';
+import { useIsLogin } from '../../store/login';
+const HandleLike = ({ recommendNumber }: LikeProps) => {
+  const params = useParams();
+  const { loginId } = useIsLogin();
   const handleLikeClick = async () => {
-    console.log(reviewId);
-    if (reviewId !== null) {
-      const response = await postLike(reviewId);
+    if (loginId) {
+      const response = await postLike(Number(params.id));
       switch (response.status) {
         case 201:
           location.reload();
