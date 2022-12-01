@@ -5,7 +5,6 @@ import static org.springframework.security.config.Customizer.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,8 +13,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.config.oauth2.client.CommonOAuth2Provider;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
@@ -40,12 +37,15 @@ import seb.project.Codetech.user.service.UserService;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-	@Value("${spring.security.oauth2.client.registration.google.clientId}")  // (1)
-	private String clientId;
+	@Value("${spring.security.oauth2.client.registration.google.clientId}")
+	private String googleClientId;
+	@Value("${spring.security.oauth2.client.registration.google.clientSecret}")
+	private String googleClientSecret;
 
-	@Value("${spring.security.oauth2.client.registration.google.clientSecret}") // (2)
-	private String clientSecret;
-
+//	@Value("${spring.security.oauth2.client.registration.naver.clientId}")
+//	private String naverClientId;
+//	@Value("${spring.security.oauth2.client.registration.naver.clientSecret}")
+//	private String naverClientSecret;
 	private final JwtTokenizer jwtTokenizer;
 	private final UserAuthorityUtils authorityUtils;
 	private final RedisTemplate<String, String> redisTemplate;
@@ -142,8 +142,8 @@ public class SecurityConfig {
 		return CommonOAuth2Provider
 			.GOOGLE
 			.getBuilder("google")
-			.clientId(clientId)
-			.clientSecret(clientSecret)
+			.clientId(googleClientId)
+			.clientSecret(googleClientSecret)
 			.build();
 	}
 }

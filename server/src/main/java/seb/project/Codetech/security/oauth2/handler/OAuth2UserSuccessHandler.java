@@ -50,9 +50,10 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 		String nickname = String.valueOf(oAuth2User.getAttributes().get("name"));
 		String provider = "oauth";
 		String password = String.valueOf(oAuth2User.getAttributes().get("providerId"));
+		String image = String.valueOf(oAuth2User.getAttributes().get("picture"));
 		List<String> authorities = authorityUtils.createRoles(username);
 		if (userRepository.findByEmail(username).isEmpty()) {
-			saveUser(nickname, username, password,provider);
+			saveUser(nickname, username, password,provider,image);
 		}
 		redirect(request, response, username, provider, authorities);
 	}
@@ -104,10 +105,10 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 		return jwtTokenizer.generateAccessToken(claims, email, expiration, base64EncodedSecretKey);
 	}
 
-	private void saveUser(String nickname, String email, String password, String provider) {
-		User user = new User(nickname, email, password,provider);
+	private void saveUser(String nickname, String email, String password, String provider, String image) {
+		User user = new User(nickname, email, password, provider, image);
 		userService.registerUser(user);
-		user.setProvider("google");
+		user.setProvider("oauth");
 		userRepository.save(user);
 	}
 }
