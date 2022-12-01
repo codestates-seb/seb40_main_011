@@ -2,40 +2,41 @@ import { SubCommentProps } from '../../types/mainPageTypes';
 import { ReviewComments } from '../../types/mainPageTypes';
 import EditComment from './EditComment';
 import { useState } from 'react';
+import { loginRefresh } from '../../util/loginRefresh';
+import { editComment } from '../../util/apiCollection';
 
-const SubComment = ({
-  child,
-  setMoreComment,
-  moreComment,
-  isEditSub,
-  setIsEditSub,
-}: SubCommentProps) => {
+const SubComment = ({ child }: SubCommentProps) => {
   const [editedComment, setEditedComment] = useState('');
-  const onEnterPress = () => {
+  const [comment, setComment] = useState(child.content);
+  const [isEditSub, setIsEditSub] = useState(false);
+
+  const onEnterPress = async () => {
+    setComment(editedComment);
     setIsEditSub(!isEditSub);
     if (isEditSub === true && editedComment !== undefined) {
-      console.log(editedComment);
-      //여기에 댓글 api POST 메서드 관련 함수
+      if (comment !== '') {
+        const response = await editComment({
+          id: child?.id,
+          content: editedComment,
+        });
+        switch (response.status) {
+          default:
+            // location.reload();
+            setIsEditSub(false);
+            break;
+          case 401:
+            alert('에러');
+            break;
+          case 412:
+            loginRefresh();
+            onEnterPress();
+        }
+      }
     }
   };
 
   const getParsedDate = (createdAt: string) => {
     return new Date(createdAt).toLocaleDateString('ko-KR');
-  };
-
-  const SubCommentHide = () => {
-    if (child.length < 1) {
-      return <></>;
-    } else {
-      return (
-        <button
-          onClick={() => setMoreComment(!moreComment)}
-          className="mt-1.5 text-gray-400 font-medium text-sm px-2 pb-0.5 rounded hover:bg-slate-200 hover:text-gray-500 group"
-        >
-          <div className="pr-0.5 text-base group-hover:text-gray-800">접기</div>
-        </button>
-      );
-    }
   };
 
   const onCommentEdit = (e: { target: HTMLInputElement }) => {
@@ -44,53 +45,50 @@ const SubComment = ({
 
   return (
     <>
-      {child
-        .filter((el) => el.content !== '작성자가 삭제한 댓글입니다.')
-        .map((el: ReviewComments, idx: number) => (
-          <div className="w-full flex my-6 mr-16" key={idx}>
-            <img
-              src={`https://codetech.nworld.dev${el?.userImage}`}
-              alt=""
-              className="w-12 h-12 rounded-full mx-2 ring ring-slate-200"
-            />
-            <div className="w-2/3">
-              <div className="flex justify-between mb-1.5 items-center">
-                <span>
-                  <span className="font-semibold">{el.writer}</span>
-                  <span className="text-sm font-medium before:content-['•'] before:mr-1.5 before:ml-1.5 before:text-gray-400 font-medium text-gray-400">
-                    {getParsedDate(el.createdAt)}
-                  </span>
-                </span>
-                <div>
-                  <EditComment
-                    isEditMode={isEditSub}
-                    setIsEditMode={setIsEditSub}
-                    editedComment={editedComment}
-                    id={el.id}
-                  />
-                </div>
-              </div>
-              {isEditSub ? (
-                <input
-                  autoFocus
-                  defaultValue={el.content}
-                  className="w-full px-6 pt-3 pb-4 rounded-xl border-b border-gray-200"
-                  onChange={onCommentEdit}
-                  onKeyUp={(comment) =>
-                    comment.key === 'Enter' ? onEnterPress() : null
-                  }
-                ></input>
-              ) : (
-                <div className="ring-1 ring-gray-200 rounded-xl overflow-hidden bg-white">
-                  <div className="px-6 pt-3 pb-4 border-b border-gray-200">
-                    {el.content}
-                  </div>
-                </div>
-              )}
-              <SubCommentHide />
+      <div className="w-full flex my-6 mr-16">
+        <img
+          src={`https://codetech.nworld.dev${child?.userImage}`}
+          alt=""
+          className="w-12 h-12 rounded-full mx-2 ring ring-slate-200"
+        />
+        <div className="w-2/3">
+          <div className="flex justify-between mb-1.5 items-center">
+            <span>
+              <span className="font-semibold">{child.writer}</span>
+              <span className="text-sm font-medium before:content-['•'] before:mr-1.5 before:ml-1.5 before:text-gray-400 font-medium text-gray-400">
+                {getParsedDate(child.createdAt)}
+              </span>
+            </span>
+            <div>
+              <EditComment
+                isEditMode={isEditSub}
+                setIsEditMode={setIsEditSub}
+                editedComment={editedComment}
+                id={child.id}
+                setComment={setComment}
+                userId={child.userId}
+              />
             </div>
           </div>
-        ))}
+          {isEditSub ? (
+            <input
+              autoFocus
+              defaultValue={comment}
+              className="w-full px-6 pt-3 pb-4 rounded-xl border-b border-gray-200"
+              onChange={onCommentEdit}
+              onKeyUp={(comment) =>
+                comment.key === 'Enter' ? onEnterPress() : null
+              }
+            ></input>
+          ) : (
+            <div className="ring-1 ring-gray-200 rounded-xl overflow-hidden bg-white">
+              <div className="px-6 pt-3 pb-4 border-b border-gray-200">
+                {comment}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
     </>
   );
 };

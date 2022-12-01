@@ -6,11 +6,13 @@ import create from 'zustand';
 type Categories = {
   clickName: string;
   setClickName: (clickName: string) => void;
+  clearClickName: (clickName: string) => void;
 };
 
 const useCategorie = create<Categories>((set) => ({
   clickName: '대분류 선택',
   setClickName: (input) => set(() => ({ clickName: input })),
+  clearClickName: (input) => set(() => ({ clickName: '대분류 선택' })),
 }));
 
 export default useCategorie;

@@ -18,7 +18,7 @@ const SearchReview = ({ keyword }: any) => {
       setSearchData(data.reviewLists);
     };
     getSearchData();
-  }, []);
+  }, [keyword]);
 
   console.log(searchData);
 

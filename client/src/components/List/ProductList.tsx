@@ -104,7 +104,7 @@ const ProductList = () => {
                       role="button"
                       onClick={onProductClick}
                       id={el.id.toString()}
-                      className="flex flex-col w-full bg-white rounded-b-lg"
+                      className="flex flex-col w-full bg-white rounded-b-lg aspect-auto"
                     >
                       {el?.filePath === null ? (
                         <img

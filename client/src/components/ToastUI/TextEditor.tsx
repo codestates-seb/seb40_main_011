@@ -17,25 +17,30 @@ import { loginRefresh } from '../../util/loginRefresh';
 
 function TextEditor() {
   const editorRef = useRef<Editor>(null);
-  const { productId, title, content, setContent } = useReview();
+  const { productId, title, content, setContent, thumbnailImg } = useReview();
   const navigate = useNavigate();
+
+  console.log(`thumbnailImg`, thumbnailImg);
 
   const handleClick = async () => {
     const data = editorRef.current?.getInstance().getMarkdown();
     if (typeof data === 'string') {
       setContent(data);
     }
-    const editorData: any = {
+    const editorData = {
       productId: productId,
       title: title,
       content: data,
+      thumbnail: thumbnailImg,
     };
 
+    //api 요청
     const submit = await postEditorContent(editorData);
     console.log(`submit`, submit);
     switch (submit.status) {
       default:
         console.log('Success');
+        console.log(`submit.status`, submit.status);
         navigate('/');
         break;
       case 401:

@@ -508,6 +508,17 @@ export const getProducts = async () => {
   }
 };
 
+export const selectThumnailImg = async (data: any) => {
+  try {
+    const thumbnailImg = await axios.post('/api/thumbnail', data, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+    return thumbnailImg;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
 export const postComment = async (req: any) => {
   try {
     const response = await axios.post('/api/review-comm', req, {
