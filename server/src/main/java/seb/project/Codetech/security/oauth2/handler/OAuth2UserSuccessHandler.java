@@ -48,7 +48,7 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 		var oAuth2User = (OAuth2User)authentication.getPrincipal();
 		String username = String.valueOf(oAuth2User.getAttributes().get("email"));
 		String nickname = String.valueOf(oAuth2User.getAttributes().get("name"));
-		String provider = "google";
+		String provider = "oauth";
 		String password = String.valueOf(oAuth2User.getAttributes().get("providerId"));
 		List<String> authorities = authorityUtils.createRoles(username);
 		if (userRepository.findByEmail(username).isEmpty()) {
@@ -78,7 +78,7 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 			.scheme("https")
 //			.host("localhost")
 			.host("codetech.nworld.dev")
-			.path("/receive-token.html")
+			.path("/receive-token")
 //				.port(3000)
 			.queryParams(queryParams)
 			.build()
@@ -107,7 +107,7 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 	private void saveUser(String nickname, String email, String password, String provider) {
 		User user = new User(nickname, email, password,provider);
 		userService.registerUser(user);
-		user.setProvider("google");
+		user.setProvider("oauth");
 		userRepository.save(user);
 	}
 }

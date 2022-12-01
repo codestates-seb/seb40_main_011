@@ -16,7 +16,6 @@ spring:
   security:
     oauth2:
       client:
-        preEstablishedRedirectUri: https://codetech.nworld.dev/login/oauth2/code/google
         provider:
           kakao:
             authorizationUri: https://kauth.kakao.com/oauth/authorize
