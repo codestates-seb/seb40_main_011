@@ -35,6 +35,9 @@ const Signup = () => {
 
   //인증메일 전송버튼 클릭 여부
   const [emailBut, setIsEmailBut] = useState<boolean>(false);
+  //이메일 인증 완료 여부
+  const [emailCheckCompletion, setEmailCheckCompletion] =
+    useState<boolean>(false);
 
   // navigate login & home
   const navigate = useNavigate();
@@ -62,33 +65,44 @@ const Signup = () => {
   const image = imgPlaceholder[getNumber()];
 
   // 회원가입 submit
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (nickname.length === 0) {
-      setMsg(errorMsg[0]);
-      return setShowModal(true);
-    }
-    if (email.length === 0) {
-      setMsg(errorMsg[1]);
+      setMsg(modalMsg[0]);
       return setShowModal(true);
     }
     if (password.length === 0) {
-      setMsg(errorMsg[2]);
+      setMsg(modalMsg[2]);
       return setShowModal(true);
     }
     if (passwordCheck.length === 0) {
-      setMsg(errorMsg[3]);
+      setMsg(modalMsg[3]);
       return setShowModal(true);
     }
-    const signupResult = await postSignup({ email, password, nickname, image });
-    switch (signupResult.status) {
-      case 200:
-        alert('회원가입되었습니다.');
-        navigate('/login');
-        break;
-      case 401:
-        console.error(signupResult.status + ' Error');
-        break;
+
+    if (
+      nickname.length !== 0 &&
+      email.length !== 0 &&
+      password.length !== 0 &&
+      passwordCheck.length !== 0
+    ) {
+      const signupResult = await postSignup({
+        email,
+        password,
+        nickname,
+        image,
+      });
+      switch (signupResult.status) {
+        case 200:
+          setMsg(modalMsg[9]);
+          setShowModal(true);
+          navigate('/login');
+          break;
+        case 401:
+          setMsg(modalMsg[10]);
+          setShowModal(true);
+          break;
+      }
     }
   };
 
@@ -184,47 +198,82 @@ const Signup = () => {
 
   // error modal
   const [showModal, setShowModal] = useState(false);
-  const errorMsg: [string, string, string, string] = [
+  const modalMsg: string[] = [
     '닉네임을 입력하지 않았습니다.',
     '이메일을 입력하지 않았습니다.',
     '비밀번호를 입력하지 않았습니다.',
     '비밀번호 확인을 입력하지 않았습니다.',
+    '이메일로 인증번호가 전송되었습니다',
+    '이메일이 유효하지 않습니다',
+    '인증번호를 입력하지 않았습니다',
+    '이메일 인증이 완료되었습니다 :)',
+    '인증번호가 유효하지 않습니다',
+    '회원가입이 완료되었습니다',
+    '회원가입 실패 ㅜㅜ 고객센터로 문의해주세요',
+    '가입이 되어있는 이메일입니다 ㅜㅜ',
   ];
-  const [msg, setMsg] = useState(errorMsg[0]);
+  const [msg, setMsg] = useState(modalMsg[0]);
 
   //이메일 인증 번호 받기 클릭시 post 요청
   const emailButClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    setIsEmailBut(!emailBut);
+    e.preventDefault();
 
     const emailData = {
       email: email,
     };
-    const emailCheckReq = await postEmail(emailData);
-    switch (emailCheckReq.status) {
-      case 200:
-        alert('인증번호가 전송되었습니다');
-        break;
-      case 404:
-        alert('이메일이 유효하지 않습니다');
-        break;
+
+    if (email.length === 0) {
+      setMsg(modalMsg[1]);
+      setIsEmailBut(emailBut);
+      return setShowModal(true);
+    } else {
+      const emailCheckReq = await postEmail(emailData);
+      switch (emailCheckReq.status) {
+        case 200:
+          setMsg(modalMsg[4]);
+          setShowModal(true);
+          setIsEmailBut(!emailBut);
+          break;
+        case 404:
+          setMsg(modalMsg[5]);
+          setShowModal(true);
+          break;
+        case 409:
+          setMsg(modalMsg[11]);
+          setShowModal(true);
+          break;
+      }
     }
   };
 
   //이메일 인증 번호 작성 후 post 요청
   const emailNumCheckClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
     const emailNumData = {
       email: email,
       code: certification,
     };
-    const emailCheckReq = await postEmailCertificationCheck(emailNumData);
-    switch (emailCheckReq.status) {
-      case 200:
-        alert('이메일 인증이 완료되었습니다');
-        setIsEmailBut(!emailBut);
-        break;
-      case 404:
-        alert('인증번호가 일치하지 않습니다');
-        break;
+
+    if (certification.length === 0) {
+      setMsg(modalMsg[6]);
+      setIsEmailBut(emailBut);
+      return setShowModal(true);
+    } else {
+      const emailCheckReq = await postEmailCertificationCheck(emailNumData);
+      switch (emailCheckReq.status) {
+        case 200:
+          setMsg(modalMsg[7]);
+          setShowModal(true);
+          setEmailCheckCompletion(true);
+          setIsEmailBut(!emailBut);
+          break;
+        case 404:
+          setMsg(modalMsg[8]);
+          setShowModal(true);
+          console.log(emailCheckCompletion);
+          break;
+      }
     }
   };
 
@@ -238,13 +287,7 @@ const Signup = () => {
           className="w-56 pb-10 m-auto cursor-pointer"
           onClick={handleHomeClick}
         />
-        <form
-          name="signup"
-          action="https://codetech.nworld.dev/api/register"
-          method="POST"
-          className="flex flex-col justify-center"
-          onSubmit={onSubmit}
-        >
+        <form name="signup" className="flex flex-col justify-center">
           <div
             className={`relative bg-gray-50 rounded h-14 ring-inset ring-1 ring-slate-200 hover:ring-slate-400 hover:ring-2 ${
               nickname.length > 5 && !isName
@@ -299,7 +342,7 @@ const Signup = () => {
                   'peer-valid/email:-translate-y-2.5 peer-valid/email:text-xs'
                 }`}
               >
-                이메일
+                {emailCheckCompletion === false ? `이메일` : `이메일 인증완료`}
               </label>
               {email.length > 5 && !isEmail && (
                 <span className="relative flex items-center text-sm text-red-600 pointer-events-none top-16">
@@ -452,6 +495,7 @@ const Signup = () => {
           </div>
           <button
             type="submit"
+            onClick={onSubmit}
             className="w-full h-16 pb-1 text-xl font-bold text-white bg-blue-600 rounded-md hover:bg-blue-500"
           >
             회원가입

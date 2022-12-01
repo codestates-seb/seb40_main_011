@@ -63,7 +63,7 @@ const ProductList = () => {
                   role="button"
                   onClick={onProductClick}
                   id={el.id.toString()}
-                  className="relative group flex flex-col sm:flex-[1_1_40%] lg:flex-[1_1_30%] flex-[1_1_50%] my-5 mx-3 hover:bg-white rounded-3xl hover:drop-shadow-2xl"
+                  className="relative group flex flex-col sm:flex-[1_1_40%] lg:flex-[1_1_30%] flex-[1_1_50%] my-5 mx-3 hover:bg-white rounded-3xl"
                 >
                   <img
                     src={
