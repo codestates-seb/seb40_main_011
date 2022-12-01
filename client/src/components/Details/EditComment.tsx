@@ -7,32 +7,29 @@ const EditComment = ({
   setIsEditMode,
   editedComment,
   id,
-  setComment,
   userId,
+  setComment,
 }: EditModeProps) => {
   const { loginId } = useIsLogin();
 
   const onEditClick = async (e: any) => {
     if (e.target.innerText === '수정 취소' || e.target.innerText === '수정') {
-      setComment(editedComment);
       setIsEditMode(!isEditMode);
-    }
-
-    if (e.target.innerText === '수정 완료') {
-      setIsEditMode(false);
-      // const response = await editComment({ id, content: editedComment });
-      // switch (response.status) {
-      //   default:
-      //     // location.reload();
-      //
-      //     break;
-      //   case 401:
-      //     alert('에러');
-      //     break;
-      //   case 412:
-      //     loginRefresh();
-      //     onEditClick(e);
-      // }
+    } else {
+      const response = await editComment({ id, content: editedComment });
+      switch (response.status) {
+        default:
+          setIsEditMode(false);
+          setComment(editedComment);
+          // location.reload();
+          break;
+        case 401:
+          alert('에러');
+          break;
+        case 412:
+          loginRefresh();
+          onEditClick(e);
+      }
     }
   };
 

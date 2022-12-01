@@ -120,8 +120,6 @@ export interface SubCommentProps {
   setMoreComment: Dispatch<SetStateAction<boolean>>;
   child: ReviewComments;
   moreComment: boolean;
-  isEditSub: boolean;
-  setIsEditSub: Dispatch<SetStateAction<boolean>>;
 }
 
 export interface EditModeProps {
@@ -129,7 +127,7 @@ export interface EditModeProps {
   setIsEditMode: Dispatch<SetStateAction<boolean>>;
   editedComment: string | undefined;
   id: number;
-  setComment: any;
+  setComment?: any;
   userId: number;
 }
 

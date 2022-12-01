@@ -2,21 +2,36 @@ import { SubCommentProps } from '../../types/mainPageTypes';
 import { ReviewComments } from '../../types/mainPageTypes';
 import EditComment from './EditComment';
 import { useState } from 'react';
+import { loginRefresh } from '../../util/loginRefresh';
+import { editComment } from '../../util/apiCollection';
 
-const SubComment = ({
-  child,
-  setMoreComment,
-  moreComment,
-  isEditSub,
-  setIsEditSub,
-}: SubCommentProps) => {
-  const [editedComment, setEditedComment] = useState<string | undefined>();
-  const [comment, setComment] = useState('');
-  const onEnterPress = () => {
+const SubComment = ({ child }: SubCommentProps) => {
+  const [editedComment, setEditedComment] = useState('');
+  const [comment, setComment] = useState(child.content);
+  const [isEditSub, setIsEditSub] = useState(false);
+
+  const onEnterPress = async () => {
+    setComment(editedComment);
     setIsEditSub(!isEditSub);
     if (isEditSub === true && editedComment !== undefined) {
-      console.log(editedComment);
-      //여기에 댓글 api POST 메서드 관련 함수
+      if (comment !== '') {
+        const response = await editComment({
+          id: child?.id,
+          content: editedComment,
+        });
+        switch (response.status) {
+          default:
+            // location.reload();
+            setIsEditSub(false);
+            break;
+          case 401:
+            alert('에러');
+            break;
+          case 412:
+            loginRefresh();
+            onEnterPress();
+        }
+      }
     }
   };
 
@@ -58,7 +73,7 @@ const SubComment = ({
           {isEditSub ? (
             <input
               autoFocus
-              defaultValue={child.content}
+              defaultValue={comment}
               className="w-full px-6 pt-3 pb-4 rounded-xl border-b border-gray-200"
               onChange={onCommentEdit}
               onKeyUp={(comment) =>
@@ -68,7 +83,7 @@ const SubComment = ({
           ) : (
             <div className="ring-1 ring-gray-200 rounded-xl overflow-hidden bg-white">
               <div className="px-6 pt-3 pb-4 border-b border-gray-200">
-                {child.content}
+                {comment}
               </div>
             </div>
           )}

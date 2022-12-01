@@ -6,6 +6,7 @@ import EditPassword from '../Modal/EditPassword';
 import EditProfileImg from '../Modal/EditProfileImg';
 import { getUserProfile } from '../../util/apiCollection';
 import { loginRefresh } from '../../util/loginRefresh';
+import { useNavigate } from 'react-router-dom';
 
 export interface UserProfile {
   email: string | undefined;
@@ -29,12 +30,17 @@ const Profile = () => {
     UserProfile | undefined
   >();
 
+  const navigate = useNavigate();
   const getUserProfileData = async () => {
     const data = await getUserProfile();
 
     switch (data.status) {
       case 200:
         setUserProfileData(data?.data);
+        break;
+      case 404:
+        alert('다시 로그인 해 주세요');
+        navigate('/login');
         break;
       case 412:
         loginRefresh();

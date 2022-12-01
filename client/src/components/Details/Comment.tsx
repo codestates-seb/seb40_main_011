@@ -24,7 +24,6 @@ export default function Comment({ reviewComments }: CommentProps) {
   const [moreComment, setMoreComment] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
   const [editedComment, setEditedComment] = useState('');
-  const [isEditSub, setIsEditSub] = useState(false);
   const [subComment, setSubComment] = useState('');
 
   const getParsedDate = (createdAt: string) => {
@@ -43,6 +42,7 @@ export default function Comment({ reviewComments }: CommentProps) {
         switch (response.status) {
           default:
             // location.reload();
+            setIsEditMode(false);
             break;
           case 401:
             alert('에러');
@@ -57,11 +57,9 @@ export default function Comment({ reviewComments }: CommentProps) {
 
   const onMoreCommentClicked = () => {
     setMoreComment(!moreComment);
-    console.log(moreComment);
   };
 
   const onCommentEdit = (e: { target: HTMLInputElement }) => {
-    setComment(e.target.value);
     setEditedComment(e.target.value);
   };
 
@@ -147,8 +145,6 @@ export default function Comment({ reviewComments }: CommentProps) {
         return reviewComments?.child.map((el: ReviewComments, idx) => (
           <div key={idx}>
             <SubComment
-              isEditSub={isEditSub}
-              setIsEditSub={setIsEditSub}
               moreComment={moreComment}
               child={el}
               setMoreComment={setMoreComment}
@@ -183,8 +179,8 @@ export default function Comment({ reviewComments }: CommentProps) {
                   setIsEditMode={setIsEditMode}
                   editedComment={editedComment}
                   id={reviewComments.id}
-                  setComment={setComment}
                   userId={reviewComments.userId}
+                  setComment={setComment}
                 />
               </div>
             </div>
@@ -252,25 +248,6 @@ export default function Comment({ reviewComments }: CommentProps) {
               )}
             </div>
             <HandleSubComment />
-            {/* {moreComment &&
-            reviewComments.child.filter(
-              (el: ReviewComments) =>
-                el.content !== '작성자가 삭제한 댓글입니다.'
-            ).length > 0 ? (
-              reviewComments.child.map((el, idx) => (
-                <div key={idx}>
-                  <SubComment
-                    isEditSub={isEditSub}
-                    setIsEditSub={setIsEditSub}
-                    moreComment={moreComment}
-                    child={el}
-                    setMoreComment={setMoreComment}
-                  />
-                </div>
-              ))
-            ) : (
-              <PendingMoreButton />
-            )} */}
             <SubCommentHide />
           </div>
         </div>
