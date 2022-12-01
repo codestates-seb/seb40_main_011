@@ -29,8 +29,8 @@ spring:
             userNameAttribute: response
         registration:
           google:
-            clientId: ${OAUTH2_CLIENT_ID}
-            clientSecret: ${OAUTH2_SECRET}
+            clientId: ${OAUTH2_GOOGLE_CLIENT_ID}
+            clientSecret: ${OAUTH2_GOOGLE_SECRET}
             scope:
               - email
               - profile
