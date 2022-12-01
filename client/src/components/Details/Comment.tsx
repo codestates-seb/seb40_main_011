@@ -168,7 +168,9 @@ export default function Comment({ reviewComments }: CommentProps) {
           <div className="w-2/3">
             <div className="flex justify-between mb-1.5 items-center">
               <span>
-                <span className="font-semibold">{reviewComments.writer}</span>
+                <span className="ml-1 font-semibold">
+                  {reviewComments.writer}
+                </span>
                 <span className="text-sm font-medium before:content-['•'] before:mr-1.5 before:ml-1.5 before:text-gray-400 font-medium text-gray-400">
                   {getParsedDate(reviewComments.createdAt)}
                 </span>
@@ -220,7 +222,7 @@ export default function Comment({ reviewComments }: CommentProps) {
                 </>
               ) : (
                 <>
-                  <div className="px-6 pt-3 pb-4 border-b border-gray-200">
+                  <div className="px-6 pt-3 pb-4 border-b border-gray-200 bg-white text-gray-600 font-medium">
                     {comment}
                   </div>
                   <form

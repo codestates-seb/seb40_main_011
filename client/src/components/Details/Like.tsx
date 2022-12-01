@@ -1,10 +1,12 @@
-import { AiOutlineLike } from 'react-icons/ai';
-import { LikeProps } from '../../types/mainPageTypes';
+import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
+import { useState } from 'react';
 import { postLike } from '../../util/apiCollection';
 import { loginRefresh } from '../../util/loginRefresh';
 import { useParams } from 'react-router-dom';
 import { useIsLogin } from '../../store/login';
-const HandleLike = ({ recommendNumber }: LikeProps) => {
+const HandleLike = () => {
+  const [isHover, setIsHover] = useState(false);
+
   const params = useParams();
   const { loginId } = useIsLogin();
   const handleLikeClick = async () => {
@@ -23,11 +25,32 @@ const HandleLike = ({ recommendNumber }: LikeProps) => {
       }
     }
   };
+  const HandleHover = () => {
+    if (isHover) {
+      return (
+        <AiFillHeart
+          color="blue"
+          size="40"
+          className="animate-ping absolute inline-flex opacity-75"
+        />
+      );
+    }
+    return null;
+  };
   return (
     <>
-      <div className="p-2">{recommendNumber}</div>
-      <button onClick={handleLikeClick}>
-        <AiOutlineLike className="p-2" size="60" />
+      <button
+        className="flex "
+        onClick={handleLikeClick}
+        onMouseEnter={() => setIsHover(true)}
+        onMouseLeave={() => setIsHover(false)}
+      >
+        <AiOutlineHeart
+          color="2962F6"
+          size="40"
+          className="relative inline-flex"
+        />
+        <HandleHover />
       </button>
     </>
   );

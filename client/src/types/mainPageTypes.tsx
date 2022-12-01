@@ -57,10 +57,6 @@ export interface markdownProps {
   markdown: string | undefined;
 }
 
-export interface LikeProps {
-  recommendNumber: number;
-}
-
 export interface BestReview {
   content: string;
   createdAt: string;

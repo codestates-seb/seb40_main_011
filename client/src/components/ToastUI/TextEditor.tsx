@@ -36,7 +36,6 @@ function TextEditor() {
 
   //리뷰수정부분 준일 작성
   if (params.id !== undefined) {
-    console.log(content);
     const handleEditClick = async () => {
       const data = editorRef.current?.getInstance().getMarkdown();
       if (typeof data === 'string') {
