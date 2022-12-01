@@ -15,7 +15,7 @@ public interface CustomProductRepository {
 
 	Map<Long, String> searchFileSByProductIds(List<Long> productIds);
 
-	List<ProductResponseDto.Search> searchProductByKeyword(String keyword, Long offset, int limit);
+	List<ProductResponseDto.Search> searchProductByKeyword(String keyword, Long offset, Integer limit);
 
-	boolean hasNext(List<?> responseList, int limit);
+	boolean hasNext(List<?> responseList, Integer limit);
 }

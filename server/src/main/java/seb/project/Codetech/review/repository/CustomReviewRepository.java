@@ -13,9 +13,9 @@ public interface CustomReviewRepository {
 
 	ReviewResponseDto.Page getReviewPageByReview(Long id, Review review);
 
-	List<ReviewResponseDto.ReviewList> loadSortReviewByProductId(Long id, Sort sort, Long offset, int limit);
+	List<ReviewResponseDto.ReviewList> loadSortReviewByProductId(Long id, Sort sort, Long offset, Integer limit);
 
-	List<ReviewResponseDto.Search> searchReviewByKeyword(String keyword, Long offset, int limit);
+	List<ReviewResponseDto.Search> searchReviewByKeyword(String keyword, Long offset, Integer limit);
 
-	boolean hasNext(List<?> responseList, int limit);
+	boolean hasNext(List<?> responseList, Integer limit);
 }

@@ -121,7 +121,8 @@ public class CustomReviewRepositoryImpl implements CustomReviewRepository {
 	}
 
 	@Override
-	public List<ReviewResponseDto.ReviewList> loadSortReviewByProductId(Long id, Sort sort, Long offset, int limit) {
+	public List<ReviewResponseDto.ReviewList> loadSortReviewByProductId(Long id, Sort sort, Long offset,
+		Integer limit) {
 
 		// 댓글 많은 순 -> 댓글이 몇 갠지 알아야 함
 		// 세 가지 방법이 있음
@@ -173,7 +174,7 @@ public class CustomReviewRepositoryImpl implements CustomReviewRepository {
 	}
 
 	@Override
-	public List<ReviewResponseDto.Search> searchReviewByKeyword(String keyword, Long offset, int limit) {
+	public List<ReviewResponseDto.Search> searchReviewByKeyword(String keyword, Long offset, Integer limit) {
 		return queryFactory
 			.select(Projections.fields(ReviewResponseDto.Search.class,
 					review.id,
@@ -227,7 +228,7 @@ public class CustomReviewRepositoryImpl implements CustomReviewRepository {
 			.fetch();
 	}
 
-	public boolean hasNext(List<?> responseList, int limit) {
+	public boolean hasNext(List<?> responseList, Integer limit) {
 		if (responseList.size() > limit) {
 			responseList.remove(limit);
 			return true;
