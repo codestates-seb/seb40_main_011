@@ -105,6 +105,13 @@ export default function Login() {
     }
   };
 
+  // naver.com login
+  const handleNaver = () => {
+    window.location.href =
+      'https://codetech.nworld.dev/api/oauth2/authorize/naver';
+    return;
+  };
+
   // google login
   const handleGoogle = () => {
     window.location.href =
@@ -225,7 +232,13 @@ export default function Login() {
             />
           </div>
           <button className="flex justify-center items-center text-[34px] hover:text-[40px] font-black pb-1 w-16 h-16 rounded-full bg-white border hover:border-0 overflow-hidden text-gray-400 hover:text-white hover:bg-green-500 mx-8 duration-300">
-            <div className="pointer-events-none">N</div>
+            <div
+              role="button"
+              onClick={() => handleNaver()}
+              // className="pointer-events-none"
+            >
+              N
+            </div>
           </button>
         </div>
       </div>

@@ -1,4 +1,5 @@
 import { useEffect, useState, SetStateAction } from 'react';
+import { Link } from 'react-router-dom';
 import { getUserReview } from '../../util/apiCollection';
 import ReviewTabPagenation from './ReviewTabPagenation';
 import { loginRefresh } from '../../util/loginRefresh';
@@ -77,29 +78,28 @@ const SnackReviewTab = () => {
           {reviewData?.map((el: ReviewType, index: number) => {
             return (
               <>
-                <div
-                  className="flex flex-col justify-center w-[850px] p-5"
-                  key={index}
-                >
-                  <div className="mb-2 overflow-hidden text-ellipsis line-clamp-2">
-                    {el.content}
-                  </div>
-                  <div className="flex text-sm">
-                    <div className="px-3 py-0.5 bg-slate-300 rounded-lg">
-                      {el.type}
+                <Link to={`../categories/review/${el.productId}`} key={index}>
+                  <div className="flex flex-col justify-center w-[850px] p-5">
+                    <div className="mb-2 overflow-hidden text-ellipsis line-clamp-2">
+                      {el.content}
                     </div>
-                    <div className="px-3 py-0.5">{el.productName}</div>
-                    <div className="ml-auto text-slate-600">
-                      {new Date(el.createdAt).toLocaleDateString('en-US', {
-                        month: 'short',
-                        day: 'numeric',
-                        year: 'numeric',
-                        hour: 'numeric',
-                        minute: 'numeric',
-                      })}
+                    <div className="flex text-sm">
+                      <div className="px-3 py-0.5 bg-slate-300 rounded-lg">
+                        {el.type}
+                      </div>
+                      <div className="px-3 py-0.5">{el.productName}</div>
+                      <div className="ml-auto text-slate-600">
+                        {new Date(el.createdAt).toLocaleDateString('en-US', {
+                          month: 'short',
+                          day: 'numeric',
+                          year: 'numeric',
+                          hour: 'numeric',
+                          minute: 'numeric',
+                        })}
+                      </div>
                     </div>
                   </div>
-                </div>
+                </Link>
               </>
             );
           })}

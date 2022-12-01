@@ -4,7 +4,7 @@ import {
   BsFillHandThumbsUpFill,
   BsFillChatSquareTextFill,
 } from 'react-icons/bs';
-
+import { Link } from 'react-router-dom';
 import { DetailReviewProps } from '../../types/mainPageTypes';
 import { getDetailList } from '../../util/apiCollection';
 import RvSelectBox from './RvSelectBox';
@@ -21,7 +21,7 @@ const DetailReview = ({
   setdetailReviewSpread,
 }: any) => {
   const [reviewData, setReviewData] = useState<ReviewDataType>();
-  const [limit, setLimit] = useState(6);
+  const [limit, setLimit] = useState(3);
   const [selected, setSelected] = useState('최신 순');
 
   const onlyText = (data: string) => {
@@ -42,6 +42,7 @@ const DetailReview = ({
       if (selected === '최신 순') {
         const { data } = await getDetailList(productId, 'RECENT', limit);
         setReviewData(data);
+        console.log(data);
       }
       if (selected === '좋아요 순') {
         const { data } = await getDetailList(productId, 'MOST_LIKE', limit);
@@ -80,40 +81,46 @@ const DetailReview = ({
 
       {reviewData?.reviewLists.map((el: any, idx: number) => {
         return (
-          <div className="flex mb-3" key={idx}>
-            <img src="" alt="" className="w-[300px] h-[250px] mr-3 rouned" />
-            <div className="flex flex-col overflow-hidden text-left w-[760px]">
-              <div className="mb-1 text-2xl">{el.title}</div>
-              <div className="pb-1 overflow-hidden text-xl text-justify whitespace-normal h-36 text-ellipsis line-clamp-5">
-                {onlyText(el.content)}
-              </div>
-
-              <div className="flex flex-row items-center w-full ">
-                <div className="mx-1 mt-4">좋아요 {el.recommendNumber}</div>
-                <div className="mx-1 mt-4">댓글 {el.commentCount}</div>
-                <div className="flex flex-row items-start ml-auto">
-                  <Avatar image={el.userImage} />
-                  <div className="mx-1 mt-3">
-                    <div>{el.writer}</div>
-                    <div className="ml-auto text-sm text-gray-400">
-                      {' '}
-                      {new Date(el.createdAt).toLocaleDateString('kr-KO', {
-                        month: 'short',
-                        day: 'numeric',
-                        year: 'numeric',
-                      })}
-                    </div>
-                  </div>
+          <Link to={`/review/${el.id}`} key={idx}>
+            <div className="flex mb-3">
+              <img
+                src={`https://codetech.nworld.dev${el.thumbnail}`}
+                alt=""
+                className="w-[300px] h-[250px] mr-3 rouned object-cover "
+              />
+              <div className="flex flex-col overflow-hidden text-left w-[760px]">
+                <div className="mb-1 text-2xl">{el.title}</div>
+                <div className="pb-1 overflow-hidden text-xl text-justify whitespace-normal h-36 text-ellipsis line-clamp-5">
+                  {onlyText(el.content)}
                 </div>
 
-                {/* <img
+                <div className="flex flex-row items-center w-full ">
+                  <div className="mx-1 mt-4">좋아요 {el.recommendNumber}</div>
+                  <div className="mx-1 mt-4">댓글 {el.commentCount}</div>
+                  <div className="flex flex-row items-start ml-auto">
+                    <Avatar image={el.userImage} />
+                    <div className="mx-1 mt-3">
+                      <div>{el.writer}</div>
+                      <div className="ml-auto text-sm text-gray-400">
+                        {' '}
+                        {new Date(el.createdAt).toLocaleDateString('kr-KO', {
+                          month: 'short',
+                          day: 'numeric',
+                          year: 'numeric',
+                        })}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* <img
                     src=
                     alt=""
                     className="w-16 h-16 rounded-full bg-slate-200"
                   /> */}
+                </div>
               </div>
             </div>
-          </div>
+          </Link>
         );
       })}
 

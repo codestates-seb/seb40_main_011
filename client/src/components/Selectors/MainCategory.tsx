@@ -21,7 +21,7 @@ const MainCategory = ({ setCategory, category }: CategoryProps) => {
   };
 
   return (
-    <div className="w-full flex flex-nowrap overflow-x-scroll overflow-hidden bg-white rounded-full">
+    <div className="w-full flex flex-nowrap overflow-x-auto overflow-hidden bg-white rounded-full">
       {categoryList.map((el, idx) => {
         return (
           <button

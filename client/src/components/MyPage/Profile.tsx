@@ -94,7 +94,7 @@ const Profile = () => {
         />
       )}
 
-      <div className="flex items-center justify-center bg-slate-100">
+      <div className="flex items-center justify-center pt-2 bg-zinc-100">
         <div className="mx-10">
           <img
             src={`https://codetech.nworld.dev${userProfileData?.image}`}
