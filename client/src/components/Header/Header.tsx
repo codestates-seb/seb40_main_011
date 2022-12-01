@@ -37,12 +37,12 @@ export default function Header() {
           <img
             src={require('../../images/logo.png')}
             alt=""
-            className="inline-block w-40 mb-1"
+            className="inline-block w-40 mb-1 mr-2"
           />
         </button>
         <SearchBar />
         <div className="flex-none flex flex-row h-full">
-          <button className="h-full flex flex-row items-center mx-2 md:hidden">
+          <button className="h-full flex flex-row items-center md:hidden">
             <span className="material-icons text-2xl w-14 h-14 rounded-full hover:bg-slate-100 flex items-center justify-center">
               <GiHamburgerMenu onClick={onBurgerClicked} />
             </span>
