@@ -80,7 +80,7 @@ const BestReviewList = () => {
             role="button"
             onClick={onContentClick}
             id={sortedReviews[selectedIdx]?.id.toString()}
-            className="mx-4 group px-8 lg:px-12 pt-8 pb-6 bg-white rounded-3xl hover:drop-shadow-2xl"
+            className="mx-4 group px-8 lg:px-12 pt-8 pb-6 bg-white rounded-3xl"
           >
             <span className="left-40 rounded-full pt-0.5 pb-1 font-medium tracking-tight text-slate-500 mr-2">
               {sortedReviews[selectedIdx]?.type.toLocaleLowerCase()}
@@ -113,7 +113,7 @@ const BestReviewList = () => {
                   </div>
                 </div>
               </div>
-              <div className="invisible lg:visible flex items-center text-gray-300 group-hover:text-gray-600 font-medium group-hover:bg-slate-100 pl-5 pr-4 py-3 rounded-full">
+              <div className="invisible sm:visible flex items-center text-gray-300 group-hover:text-gray-600 font-medium group-hover:bg-slate-100 pl-5 pr-4 py-3 rounded-full">
                 <span className="mr-2">자세히 보기</span>
                 <BsArrowRight className="text-2xl" />
               </div>

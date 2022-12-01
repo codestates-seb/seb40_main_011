@@ -13,6 +13,8 @@ import RvDetail from './components/Details/RvDetail';
 import SearchResult from './components/Search/SearchResult';
 import Layout from './layout/Layout';
 import NotFound from './pages/NotFound';
+import EditReviewDetail from './components/Details/EditReviewDetail';
+// import Header from './components/Header/Header';
 
 function App() {
   return (
@@ -28,6 +30,7 @@ function App() {
           <Route path="review/write" element={<WriteReview />} />
           <Route path="question-lists" element={<QuestionLists />} />
           <Route path="review/:id" element={<RvDetail />} />
+          <Route path="/review/edit/:id" element={<EditReviewDetail />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

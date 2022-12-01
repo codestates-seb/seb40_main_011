@@ -30,8 +30,8 @@ const QuestionList = () => {
   };
 
   return (
-    <div className="mx-auto w-full lg:w-[64rem] flex flex-col lg:flex-row items-start mx-auto py-8">
-      <div className="grow flex flex-col m-4">
+    <div className="mx-auto w-full lg:w-[64rem] py-8 flex md:flex-row flex-col">
+      <div className="md:w-1/2 flex flex-col m-4">
         <div
           role="button"
           onClick={handleOnClick}
@@ -56,11 +56,11 @@ const QuestionList = () => {
           ))}
         </div>
       </div>
-      <div className="grow flex flex-col m-4">
+      <div className="md:w-1/2 flex flex-col m-4">
         <div
           role="button"
           onClick={handleOnClick}
-          className="bg-zinc-100 rounded-2xl py-5 px-8 flex items-center justify-between w-full group hover:bg-green-500"
+          className="bg-zinc-100 rounded-2xl py-5 px-8 flex items-center justify-between group hover:bg-green-500"
         >
           <div className="font-bold text-xl text-green-600 group-hover:text-gray-800">
             채택이 완료된 질문

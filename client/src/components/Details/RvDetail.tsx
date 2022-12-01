@@ -10,11 +10,13 @@ import Comment from './Comment';
 import HandleLike from './Like';
 import { useIsLogin } from '../../store/login';
 import Confirm from '../Modal/Confirm';
+import useReview from '../../store/review';
 
 const RvDetail = () => {
   interface markdownProps {
     markdown: string | undefined;
   }
+  const { setContent } = useReview();
   const navigate = useNavigate();
   const params = useParams();
   const reviewId = Number(params.id);
@@ -40,16 +42,16 @@ const RvDetail = () => {
     return new Date(createdAt).toLocaleDateString('ko-KR');
   };
 
-  const myRef = useRef(null);
-
   useEffect(() => {
     const getReviewData = async () => {
       const { data } = await getReviewDetail(reviewId);
       setReview(data);
       setComments(data?.reviewComments);
+      setContent(data.content);
     };
     getReviewData();
   }, []);
+
   const onTypeClick = () => {
     navigate(`/categories/review/${review.productId}`);
   };
@@ -59,7 +61,7 @@ const RvDetail = () => {
       <>
         {markdown && (
           <div id="viewer">
-            <Viewer initialValue={markdown} ref={myRef} />
+            <Viewer initialValue={markdown} />
           </div>
         )}
       </>
@@ -81,6 +83,10 @@ const RvDetail = () => {
     } else return null;
   };
 
+  const onEditClick = () => {
+    navigate(`/review/edit/${params.id}`);
+  };
+
   const ReviewInfo = () => {
     const handleDeleteReview = () => {
       console.log(reviewId);
@@ -89,12 +95,20 @@ const RvDetail = () => {
     if (review.userId === Number(loginId)) {
       return (
         <div className="flex items-end justify-between w-full p-4 border-b border-gray-200">
-          <button
-            onClick={handleDeleteReview}
-            className="text-xs border border-gray-300 font-medium px-3 bg-white rounded-full mx-0.5 py-0.5 text-gray-400 hover:text-gray-500 hover:font-bold hover:bg-gray-200"
-          >
-            삭제
-          </button>
+          <div>
+            <button
+              onClick={handleDeleteReview}
+              className="text-xs border border-gray-300 font-medium px-3 bg-white rounded-full mx-0.5 py-0.5 text-gray-400 hover:text-gray-500 hover:font-bold hover:bg-gray-200"
+            >
+              삭제
+            </button>
+            <button
+              onClick={onEditClick}
+              className="text-xs border border-gray-300 font-medium px-3 bg-white rounded-full mx-0.5 py-0.5 text-gray-400 hover:text-gray-500 hover:font-bold hover:bg-gray-200"
+            >
+              수정
+            </button>
+          </div>
           <div className="flex">
             <img
               className="w-12 h-12 m-2 rounded-full"
