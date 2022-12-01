@@ -10,11 +10,13 @@ import Comment from './Comment';
 import HandleLike from './Like';
 import { useIsLogin } from '../../store/login';
 import Confirm from '../Modal/Confirm';
+import useReview from '../../store/review';
 
 const RvDetail = () => {
   interface markdownProps {
     markdown: string | undefined;
   }
+  const { setContent } = useReview();
   const navigate = useNavigate();
   const params = useParams();
   const reviewId = Number(params.id);
@@ -45,9 +47,11 @@ const RvDetail = () => {
       const { data } = await getReviewDetail(reviewId);
       setReview(data);
       setComments(data?.reviewComments);
+      setContent(data.content);
     };
     getReviewData();
   }, []);
+
   const onTypeClick = () => {
     navigate(`/categories/review/${review.productId}`);
   };
