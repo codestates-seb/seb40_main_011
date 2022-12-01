@@ -6,6 +6,7 @@ import MainCategory from '../Selectors/MainCategory';
 import { useNavigate } from 'react-router-dom';
 import moment from 'moment';
 import { format } from 'timeago.js';
+import { categoryList } from '../Selectors/MainCategory';
 
 const ProductList = () => {
   const navigate = useNavigate();
@@ -30,7 +31,6 @@ const ProductList = () => {
     getProductData();
   }, [category]);
 
-  console.log(products);
   const getMoreData = () => {
     if (viewMore < products.length) {
       console.log(products.length);
@@ -40,6 +40,10 @@ const ProductList = () => {
 
   const onProductClick = (e: React.MouseEvent<HTMLElement>) => {
     navigate(`/categories/review/${e.currentTarget.id}`);
+  };
+
+  const convertToKR: any = (type: string) => {
+    return categoryList.filter((el) => el.id === type).map((el) => el.name);
   };
 
   return (
@@ -70,7 +74,7 @@ const ProductList = () => {
                     className="object-cover h-48 bg-slate-200 rounded-3xl group-hover:rounded-b-none"
                   />
                   <div className="absolute -top-6 w-fit px-3 pt-0.5 pb-1 my-3 rounded-full bg-slate-300 text-slate-600 text-sm font-medium">
-                    {el.type.toLowerCase()}
+                    {convertToKR(el.type.toLowerCase())}
                   </div>
                   <div className="p-4 font-medium pb-6">
                     <div className="">{el.name}</div>
