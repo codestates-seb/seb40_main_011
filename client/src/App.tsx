@@ -12,6 +12,7 @@ import {
 import RvDetail from './components/Details/RvDetail';
 import SearchResult from './components/Search/SearchResult';
 import Layout from './layout/Layout';
+import NotFound from './pages/NotFound';
 // import Header from './components/Header/Header';
 
 function App() {
@@ -28,7 +29,7 @@ function App() {
           <Route path="review/write" element={<WriteReview />} />
           <Route path="question-lists" element={<QuestionLists />} />
           <Route path="review/:id" element={<RvDetail />} />
-          {/* <Route path="/*" element={<Main />} /> */}
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </BrowserRouter>

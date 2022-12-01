@@ -45,7 +45,7 @@ const SnackReview = ({ snackReviewData }: SnackReviewProps) => {
                 /> */}
                 <div className="flex flex-col items-start justify-start w-[205px] pt-2.5">
                   <div>{el.nickname}</div>
-                  <div className="pt-1 ml-auto text-xs text-gray-400">
+                  <div className="pt-1 ml-auto text-sm text-gray-400">
                     {' '}
                     {new Date(el.createdAt).toLocaleDateString('kr-KO', {
                       month: 'short',
