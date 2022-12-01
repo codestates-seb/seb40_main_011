@@ -80,7 +80,7 @@ const BestReviewList = () => {
             role="button"
             onClick={onContentClick}
             id={sortedReviews[selectedIdx]?.id.toString()}
-            className="mx-4 group px-6 md:px-8 lg:px-12 pt-6 md:pt-8 pb-4 md:pb-6 bg-white rounded-3xl"
+            className="mx-4 group px-6 md:px-8 lg:px-12 pt-6 md:pt-8 pb-4 md:pb-6 bg-white rounded-3xl h-[18.5rem]"
           >
             <span className="left-40 rounded-full pt-0.5 pb-1 font-medium tracking-tight text-slate-500 mr-2">
               {sortedReviews[selectedIdx]?.type.toLocaleLowerCase()}
