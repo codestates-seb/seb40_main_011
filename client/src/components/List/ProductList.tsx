@@ -45,7 +45,19 @@ const ProductList = () => {
   const convertToKR: any = (type: string) => {
     return categoryList.filter((el) => el.id === type).map((el) => el.name);
   };
-
+  const NoElement = () => {
+    if (products.length === 0) {
+      return (
+        <div className="flex w-full justify-center">
+          <img
+            className="object-fit"
+            src={require('../../images/sryIcon2.png')}
+          />
+        </div>
+      );
+    }
+    return null;
+  };
   return (
     <>
       {products === undefined ? (
@@ -56,6 +68,7 @@ const ProductList = () => {
             <MainCategory setCategory={setCategory} category={category} />
           </div>
           <div className="mx-auto w-full lg:w-[64rem] flex flex-wrap pt-4 px-1 pb-4">
+            <NoElement />
             {products.slice(0, viewMore).map((el, idx) => {
               return (
                 <div
