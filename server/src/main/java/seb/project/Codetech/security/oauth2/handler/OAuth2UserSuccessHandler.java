@@ -48,11 +48,12 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 		var oAuth2User = (OAuth2User)authentication.getPrincipal();
 		String username = String.valueOf(oAuth2User.getAttributes().get("email"));
 		String nickname = String.valueOf(oAuth2User.getAttributes().get("name"));
-		String provider = "google";
+		String provider = "oauth";
 		String password = String.valueOf(oAuth2User.getAttributes().get("providerId"));
+		String image = String.valueOf(oAuth2User.getAttributes().get("picture"));
 		List<String> authorities = authorityUtils.createRoles(username);
 		if (userRepository.findByEmail(username).isEmpty()) {
-			saveUser(nickname, username, password,provider);
+			saveUser(nickname, username, password,provider,image);
 		}
 		redirect(request, response, username, provider, authorities);
 	}
@@ -78,7 +79,7 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 			.scheme("https")
 //			.host("localhost")
 			.host("codetech.nworld.dev")
-			.path("/receive-token.html")
+			.path("/receive-token")
 //				.port(3000)
 			.queryParams(queryParams)
 			.build()
@@ -104,10 +105,10 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 		return jwtTokenizer.generateAccessToken(claims, email, expiration, base64EncodedSecretKey);
 	}
 
-	private void saveUser(String nickname, String email, String password, String provider) {
-		User user = new User(nickname, email, password,provider);
+	private void saveUser(String nickname, String email, String password, String provider, String image) {
+		User user = new User(nickname, email, password, provider, image);
 		userService.registerUser(user);
-		user.setProvider("google");
+		user.setProvider("oauth");
 		userRepository.save(user);
 	}
 }
