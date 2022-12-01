@@ -80,7 +80,7 @@ const BestReviewList = () => {
             role="button"
             onClick={onContentClick}
             id={sortedReviews[selectedIdx]?.id.toString()}
-            className="mx-4 group px-8 lg:px-12 pt-8 pb-6 bg-white rounded-3xl"
+            className="mx-4 group px-6 md:px-8 lg:px-12 pt-6 md:pt-8 pb-4 md:pb-6 bg-white rounded-3xl"
           >
             <span className="left-40 rounded-full pt-0.5 pb-1 font-medium tracking-tight text-slate-500 mr-2">
               {sortedReviews[selectedIdx]?.type.toLocaleLowerCase()}
@@ -88,7 +88,7 @@ const BestReviewList = () => {
             <div className="line-clamp-1 font-medium my-4 text-3xl tracking-tight">
               {sortedReviews[selectedIdx]?.title}
             </div>
-            <div className="line-clamp-2 text-gray-500 font-medium mb-8">
+            <div className="line-clamp-2 text-gray-500 font-medium mb-8 h-12">
               {onlyText(sortedReviews[selectedIdx]?.content)}
             </div>
             <div className="flex items-center justify-between">
@@ -113,7 +113,7 @@ const BestReviewList = () => {
                   </div>
                 </div>
               </div>
-              <div className="invisible sm:visible flex items-center text-gray-300 group-hover:text-gray-600 font-medium group-hover:bg-slate-100 pl-5 pr-4 py-3 rounded-full">
+              <div className="hidden md:inline-flex flex items-center text-gray-300 group-hover:text-gray-600 font-medium group-hover:bg-slate-100 pl-5 pr-4 py-3 rounded-full">
                 <span className="mr-2">자세히 보기</span>
                 <BsArrowRight className="text-2xl" />
               </div>
@@ -129,13 +129,13 @@ const BestReviewList = () => {
               selectedIdx === 0
                 ? `text-zinc-400 cursor-default`
                 : `bg-white hover:bg-slate-300 hover:text-slate-700`
-            } mx-2 flex items-center h-12 rounded-full ease-in-out duration-150 pl-5 pr-6`}
+            } mx-2 flex items-center h-12 rounded-full ease-in-out duration-150 pl-4 pr-5`}
             onClick={onClickPrev}
           >
             <FaChevronRight className="text-xl mr-2 rotate-180" />
             <span className="mb-0.5">이전</span>
           </button>
-          <div className="text-xl text-gray-600 mx-6">
+          <div className="text-xl text-gray-600 mx-6 hidden md:inline-block">
             <span>{selectedIdx + 1}</span>
             <span className="text-gray-400 before:content-['/'] before:text-gray-300 before:mr-3 before:ml-3 ">
               {bestReviewCount}
@@ -148,7 +148,7 @@ const BestReviewList = () => {
                 ? `text-zinc-400 cursor-default`
                 : `bg-white hover:bg-slate-300 hover:text-slate-700`
             }
-            mx-2 flex items-center h-12 rounded-full ease-in-out duration-150 pl-6 pr-5`}
+            mx-2 flex items-center h-12 rounded-full ease-in-out duration-150 pl-5 pr-4`}
             onClick={onClickNext}
           >
             <span className="mb-0.5">다음</span>

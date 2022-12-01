@@ -77,7 +77,7 @@ const ProductList = () => {
                     {convertToKR(el.type.toLowerCase())}
                   </div>
                   <div className="p-4 font-medium pb-6">
-                    <div className="">{el.name}</div>
+                    <div className="line-clamp-1">{el.name}</div>
                     <span>
                       <span className="text-gray-500/60 before:text-gray-300 text-sm tracking-tight">
                         {moment(el.createdAt).format('MM월 DD일')}
