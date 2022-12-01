@@ -501,6 +501,19 @@ export const postEditorContent = async (data: any) => {
   }
 };
 
+export const editReview = async (data: any) => {
+  try {
+    const editorContent = await axios.patch('/api/reviews', data, {
+      headers: {
+        Authorization: localStorage.getItem('authorization'),
+      },
+    });
+    return editorContent;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
 // export const getProducts = async () => {
 //   try {
 //     const response = await axios.get(`/api/products/main-search`, {
