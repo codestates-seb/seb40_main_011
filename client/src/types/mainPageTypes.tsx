@@ -98,6 +98,7 @@ export interface ReviewLists {
   title: string;
   userImage: string;
   writer: string;
+  thumbnail?: string;
 }
 
 export interface CommentProps {
