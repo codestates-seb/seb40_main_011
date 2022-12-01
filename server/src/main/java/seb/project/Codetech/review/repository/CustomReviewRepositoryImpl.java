@@ -97,6 +97,7 @@ public class CustomReviewRepositoryImpl implements CustomReviewRepository {
 					review.view,
 					review.RecommendNumber,
 					review.writer,
+					review.thumbnail,
 					review.createdAt,
 					user.id.as("userId"),
 					user.image.as("userImage"),
@@ -142,6 +143,7 @@ public class CustomReviewRepositoryImpl implements CustomReviewRepository {
 					review.title,
 					review.content,
 					review.writer,
+					review.thumbnail,
 					review.RecommendNumber,
 					review.createdAt,
 					review.commentCount,
@@ -178,6 +180,7 @@ public class CustomReviewRepositoryImpl implements CustomReviewRepository {
 					review.title,
 					review.content,
 					review.writer,
+					review.thumbnail,
 					review.RecommendNumber,
 					user.image.as("userImage")
 				)
@@ -213,6 +216,7 @@ public class CustomReviewRepositoryImpl implements CustomReviewRepository {
 					review.RecommendNumber,
 					review.type,
 					review.writer,
+					review.thumbnail,
 					review.createdAt,
 					user.image))
 			.from(review)

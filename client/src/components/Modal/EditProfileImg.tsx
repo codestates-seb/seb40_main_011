@@ -82,7 +82,7 @@ const EditProgileImg = (
           <div className="my-2 text-xl text-slate-500">
             새로운 프로필을 업로드해주세요
           </div>
-          <div className="flex flex-col items-center justify-center mt-5">
+          <div className="flex flex-col items-center justify-center object-cover mt-5">
             <img
               src={userImg}
               alt=""

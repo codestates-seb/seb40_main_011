@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import seb.project.Codetech.file.entity.FileDto;
 import seb.project.Codetech.file.entity.FileEntity;
 import seb.project.Codetech.file.service.FileService;
 
@@ -31,10 +32,11 @@ public class FileController {
 	}
 
 	@PostMapping("/thumbnail")
-	public ResponseEntity<?> uploadThumbnail(@RequestPart MultipartFile file, int width, int height) throws
+	public ResponseEntity<?> uploadThumbnail(@RequestPart MultipartFile file,
+		@RequestPart FileDto request) throws
 		IOException {
 
-		String saveThumbnail = fileService.saveThumbnail(file, width, height);
+		String saveThumbnail = fileService.convertThumbnail(file, request.getWidth(), request.getHeight());
 
 		return ResponseEntity.ok(saveThumbnail);
 	}

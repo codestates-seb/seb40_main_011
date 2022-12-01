@@ -21,6 +21,7 @@ public class ReviewResponseDto {
 		private Long RecommendNumber;
 		private Type type;
 		private String writer;
+		private String thumbnail;
 		private LocalDateTime createdAt;
 		private Long userId;
 		private String userImage;
@@ -53,6 +54,7 @@ public class ReviewResponseDto {
 		private String content;
 		private Long RecommendNumber;
 		private String writer;
+		private String thumbnail;
 		private String userImage;
 	}
 
@@ -65,6 +67,7 @@ public class ReviewResponseDto {
 		private Long RecommendNumber;
 		private Type type;
 		private String writer;
+		private String thumbnail;
 		private LocalDateTime createdAt;
 		private String image;
 	}
@@ -81,7 +84,7 @@ public class ReviewResponseDto {
 		private LocalDateTime createdAt;
 		private String writer;
 		private String userImage;
-		//private String thumbnail;
+		private String thumbnail;
 		private Long commentCount;
 	}
 

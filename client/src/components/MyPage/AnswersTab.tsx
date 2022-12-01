@@ -26,9 +26,7 @@ export const AnswersTab = () => {
     const data: any = await getUserReview('answers', params);
     switch (data.status) {
       case 200:
-        console.log(data);
         setReviewData(data?.data.questions.content);
-        console.log(data?.data.questions.content[0].answers.content[0].content);
         setTotalPages(data?.data.questions.totalPages);
         break;
       case 412:
