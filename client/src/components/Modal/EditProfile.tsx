@@ -31,22 +31,30 @@ const EditProfile = ({
 
   const handleEditNickName = async () => {
     const data: NicknameType = { nickname: username };
-
-    if (!usernameError) {
-      const submitEditNick = await editNickname(data);
-      switch (submitEditNick.status) {
-        case 200:
-          location.reload();
-          break;
-        case 412: {
-          loginRefresh();
-          handleEditNickName();
-          break;
-        }
-        default:
-      }
+    console.log(data.nickname.length);
+    if (data.nickname.length === 0) {
+      alert('새로운 닉네임을 입력 해주세요');
     } else {
-      alert('닉네임은 2글자 이상 20글자 미만으로 해주세요');
+      if (!usernameError) {
+        const submitEditNick = await editNickname(data);
+        console.log(submitEditNick);
+        switch (submitEditNick.status) {
+          case 200:
+            location.reload();
+            break;
+          case 400:
+            alert('닉네임은 2글자 이상 20글자 미만으로 해주세요');
+            break;
+          case 412: {
+            loginRefresh();
+            handleEditNickName();
+            break;
+          }
+          default:
+        }
+      } else {
+        alert('닉네임은 2글자 이상 20글자 미만으로 해주세요');
+      }
     }
   };
 
