@@ -3,7 +3,9 @@ package seb.project.Codetech.review.controller;
 import java.util.List;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
@@ -21,7 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.log4j.Log4j2;
 import seb.project.Codetech.event.dto.ReviewUpdateEvent;
-import seb.project.Codetech.file.service.FileService;
 import seb.project.Codetech.review.dto.ReviewRequestDto;
 import seb.project.Codetech.review.dto.ReviewResponseDto;
 import seb.project.Codetech.review.entity.Review;
@@ -35,20 +36,19 @@ import seb.project.Codetech.review.service.ReviewService;
 public class ReviewController {
 
 	private final ReviewService reviewService;
-	private final FileService fileService;
 	private final ApplicationEventPublisher applicationEventPublisher;
 	private final ReviewMapper mapper;
 
-	public ReviewController(ReviewService reviewService, FileService fileService, ReviewMapper mapper,
+	public ReviewController(ReviewService reviewService, ReviewMapper mapper,
 		ApplicationEventPublisher applicationEventPublisher) {
 		this.reviewService = reviewService;
-		this.fileService = fileService;
 		this.applicationEventPublisher = applicationEventPublisher;
 		this.mapper = mapper;
 	}
 
 	@PostMapping
-	public ResponseEntity<Long> postReview(@AuthenticationPrincipal String email,
+	public ResponseEntity<Long> postReview(
+		@AuthenticationPrincipal String email,
 		@RequestBody @Valid ReviewRequestDto.Post request) {
 
 		Review postReview = mapper.reviewRequestDtoToPostReview(request);
@@ -61,7 +61,8 @@ public class ReviewController {
 	}
 
 	@PatchMapping
-	public ResponseEntity<Long> patchReview(@AuthenticationPrincipal String email,
+	public ResponseEntity<Long> patchReview(
+		@AuthenticationPrincipal String email,
 		@RequestBody @Valid ReviewRequestDto.Patch request) {
 
 		Review patchReview = mapper.reviewRequestDtoToPatchReview(request);
@@ -74,7 +75,8 @@ public class ReviewController {
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Review> deleteReview(@AuthenticationPrincipal String email,
+	public ResponseEntity<Review> deleteReview(
+		@AuthenticationPrincipal String email,
 		@PathVariable @Positive Long id) {
 
 		Long productId = reviewService.removeReview(email, id);
@@ -84,14 +86,16 @@ public class ReviewController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<ReviewResponseDto.Page> getReview(@PathVariable Long id) {
+	public ResponseEntity<ReviewResponseDto.Page> getReview(
+		@PathVariable @Positive Long id) {
 		ReviewResponseDto.Page loadReview = reviewService.loadReview(id);
 
 		return ResponseEntity.ok(loadReview);
 	}
 
 	@GetMapping("/best")
-	public ResponseEntity<List<ReviewResponseDto.Best>> getBestReview(@RequestParam Integer size) {
+	public ResponseEntity<List<ReviewResponseDto.Best>> getBestReview(
+		@RequestParam @Positive Integer size) {
 
 		List<ReviewResponseDto.Best> loadBestReview = reviewService.loadBestReview(size);
 
@@ -99,22 +103,26 @@ public class ReviewController {
 	}
 
 	@GetMapping("/search")
-	public ResponseEntity<ReviewResponseDto.Slice> getSearchReview(@RequestParam String keyword,
-		@RequestParam Long offset,
-		@RequestParam int limit) {
+	public ResponseEntity<ReviewResponseDto.Slice> getSearchReview(
+		@RequestParam @NotBlank String keyword,
+		@RequestParam @PositiveOrZero Long offset,
+		@RequestParam @Positive Integer limit) {
 
-		ReviewResponseDto.Slice reviewSlice = reviewService.searchReview(keyword, offset, limit);
+		ReviewResponseDto.Slice reviewSlice = reviewService
+			.searchReview(keyword, offset, limit);
 
 		return ResponseEntity.ok(reviewSlice);
 	}
 
 	@GetMapping("/product")
-	public ResponseEntity<ReviewResponseDto.Slice> getListReview(@RequestParam Long id,
-		@RequestParam Sort sort,
-		@RequestParam Long offset,
-		@RequestParam int limit) {
+	public ResponseEntity<ReviewResponseDto.Slice> getListReview(
+		@RequestParam @Positive Long id,
+		@RequestParam @NotBlank Sort sort,
+		@RequestParam @PositiveOrZero Long offset,
+		@RequestParam @Positive int limit) {
 
-		ReviewResponseDto.Slice productSlices = reviewService.loadSliceReview(id, sort, offset, limit);
+		ReviewResponseDto.Slice productSlices = reviewService
+			.loadSliceReview(id, sort, offset, limit);
 
 		return ResponseEntity.ok(productSlices);
 	}

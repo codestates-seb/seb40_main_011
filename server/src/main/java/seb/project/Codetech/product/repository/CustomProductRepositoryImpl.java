@@ -106,7 +106,7 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
 	}
 
 	@Override
-	public List<ProductResponseDto.Search> searchProductByKeyword(String keyword, Long offset, int limit) {
+	public List<ProductResponseDto.Search> searchProductByKeyword(String keyword, Long offset, Integer limit) {
 
 		// 1. 입력한 키워드를 기준으로 제품의 목록을 조회한다.
 		List<ProductResponseDto.Search> productSearchs = queryFactory
@@ -141,7 +141,7 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
 		return productSearchs;
 	}
 
-	public boolean hasNext(List<?> responseList, int limit) {
+	public boolean hasNext(List<?> responseList, Integer limit) {
 		if (responseList.size() > limit) {
 			responseList.remove(limit);
 			return true;

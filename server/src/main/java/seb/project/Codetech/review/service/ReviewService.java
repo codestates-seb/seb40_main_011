@@ -91,7 +91,7 @@ public class ReviewService {
 		return reviewRepository.getReviewPageByReview(id, saveFile);
 	}
 
-	public ReviewResponseDto.Slice searchReview(String keyword, Long offset, int limit) {
+	public ReviewResponseDto.Slice searchReview(String keyword, Long offset, Integer limit) {
 
 		List<ReviewResponseDto.Search> searches = reviewRepository.searchReviewByKeyword(keyword, offset, limit);
 		boolean hasNext = reviewRepository.hasNext(searches, limit);
@@ -99,7 +99,7 @@ public class ReviewService {
 		return new ReviewResponseDto.Slice(searches, hasNext);
 	}
 
-	public ReviewResponseDto.Slice loadSliceReview(Long id, Sort sort, Long offset, int limit) {
+	public ReviewResponseDto.Slice loadSliceReview(Long id, Sort sort, Long offset, Integer limit) {
 		List<ReviewResponseDto.ReviewList> reviewLists = reviewRepository.loadSortReviewByProductId(id, sort, offset,
 			limit);
 		boolean hasNext = reviewRepository.hasNext(reviewLists, limit);

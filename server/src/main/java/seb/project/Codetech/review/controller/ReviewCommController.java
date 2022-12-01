@@ -1,6 +1,7 @@
 package seb.project.Codetech.review.controller;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Positive;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -54,7 +55,7 @@ public class ReviewCommController {
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<ReviewComment> deleteReviewComm(@AuthenticationPrincipal String email,
-		@PathVariable Long id) {
+		@PathVariable @Positive Long id) {
 
 		reviewCommService.disableReviewComm(email, id);
 
