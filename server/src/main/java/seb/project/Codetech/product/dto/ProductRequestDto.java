@@ -1,6 +1,6 @@
 package seb.project.Codetech.product.dto;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
@@ -15,7 +15,7 @@ public class ProductRequestDto {
 	public static class Post {
 		@Size(max = 50)
 		private String name;
-		@NotBlank
+		@NotNull
 		private Type type;
 		@Size(max = 200)
 		private String detail;
@@ -28,6 +28,7 @@ public class ProductRequestDto {
 		private Long id;
 		@Size(max = 50)
 		private String name;
+		private Type type;
 		@Size(max = 200)
 		private String detail;
 	}
