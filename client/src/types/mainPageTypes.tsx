@@ -96,6 +96,7 @@ export interface SearchData {
 }
 
 export interface ReviewLists {
+  id: string | undefined;
   content: string;
   recommendNumber: number;
   title: string;
@@ -113,7 +114,7 @@ export interface CommentsProps {
 
 export interface CategoryProps {
   setCategory: Dispatch<SetStateAction<string>>;
-  setCurrentPage: Dispatch<SetStateAction<number>>;
+  category: string;
 }
 
 export interface SubCommentProps {
