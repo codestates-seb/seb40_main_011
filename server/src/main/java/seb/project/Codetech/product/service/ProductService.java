@@ -88,7 +88,7 @@ public class ProductService {
 		return new ProductResponseDto.MainPage(cards);
 	}
 
-	public ProductResponseDto.Slice searchProduct(String keyword, Long offset, int limit) {
+	public ProductResponseDto.Slice searchProduct(String keyword, Long offset, Integer limit) {
 		List<ProductResponseDto.Search> searches = productRepository.searchProductByKeyword(keyword, offset, limit);
 		boolean hasNext = productRepository.hasNext(searches, limit);
 
