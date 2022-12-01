@@ -129,10 +129,25 @@ export const getProductDetail = async (productId: number) => {
   }
 };
 
-export const getSearchReview = async (keyword: string) => {
+export const getSearchReview = async (keyword: string, limit: number) => {
   try {
     const searchResponse = await axios.get(
-      `/api/reviews/search?keyword=${keyword}&offset=0&limit=3`,
+      `/api/reviews/search?keyword=${keyword}&offset=0&limit=${limit}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    return searchResponse;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+export const getSearchProduct = async (keyword: string) => {
+  try {
+    const searchResponse = await axios.get(
+      `/api/products/search?keyword=${keyword}&offset=0&limit=3`,
       {
         headers: {
           'Content-Type': 'application/json',

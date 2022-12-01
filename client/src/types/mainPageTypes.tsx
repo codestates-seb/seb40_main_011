@@ -96,6 +96,7 @@ export interface SearchData {
 }
 
 export interface ReviewLists {
+  id: string | undefined;
   content: string;
   recommendNumber: number;
   title: string;
