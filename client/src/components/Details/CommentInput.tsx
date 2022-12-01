@@ -21,7 +21,7 @@ export const CommentInput = () => {
       });
       console.log(response);
       switch (response.status) {
-        case 201:
+        default:
           location.reload();
           break;
         case 401:
