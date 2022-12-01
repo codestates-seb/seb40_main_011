@@ -107,7 +107,7 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 	private void saveUser(String nickname, String email, String password, String provider) {
 		User user = new User(nickname, email, password,provider);
 		userService.registerUser(user);
-		user.setProvider("oauth");
+		user.setProvider("google");
 		userRepository.save(user);
 	}
 }
