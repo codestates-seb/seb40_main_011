@@ -48,7 +48,7 @@ const QuestionList = () => {
         <div className="my-4">
           {answerNeed.map((el, idx) => (
             <div key={idx} className="flex justify-between p-2 ">
-              <span className="line-clamp-1 grow mr-2">{el.content}</span>
+              <span className="line-clamp-1 grow break-all">{el.content}</span>
               <span className="line-clamp-1 text-right text-gray-500/70 tracking-tight flex-none w-20">
                 {el.nickname}
               </span>
@@ -73,7 +73,7 @@ const QuestionList = () => {
         <div className="my-4">
           {questions.map((el, idx) => (
             <div key={idx} className="flex justify-between p-2 ">
-              <span className="line-clamp-1 grow">{el.content}</span>
+              <span className="line-clamp-1 grow break-all">{el.content}</span>
               <span className="line-clamp-1 text-right text-gray-500/70 tracking-tight flex-none w-20">
                 {el.nickname}
               </span>
