@@ -107,6 +107,8 @@ export default function Login() {
 
   // google login
   const handleGoogle = () => {
+    window.location.href =
+      'https://codetech.nworld.dev/api/oauth2/authorize/google';
     return;
   };
 
@@ -217,6 +219,7 @@ export default function Login() {
           </button>
           <div className="mx-8">
             <AiOutlineGoogle
+              role="button"
               onClick={() => handleGoogle()}
               className="w-16 h-16 p-3 overflow-hidden text-gray-400 duration-300 bg-white border rounded-full hover:p-2 hover:border-0 hover:text-white hover:bg-red-500 bg-border-0"
             />
