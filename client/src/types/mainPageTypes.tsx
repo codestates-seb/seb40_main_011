@@ -114,7 +114,7 @@ export interface CommentsProps {
 
 export interface CategoryProps {
   setCategory: Dispatch<SetStateAction<string>>;
-  setCurrentPage: Dispatch<SetStateAction<number>>;
+  category: string;
 }
 
 export interface SubCommentProps {

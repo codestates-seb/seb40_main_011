@@ -13,7 +13,6 @@ import RvDetail from './components/Details/RvDetail';
 import SearchResult from './components/Search/SearchResult';
 import Layout from './layout/Layout';
 import NotFound from './pages/NotFound';
-// import Header from './components/Header/Header';
 
 function App() {
   return (
