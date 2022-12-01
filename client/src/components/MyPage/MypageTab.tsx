@@ -60,9 +60,9 @@ const MypageTab = (): JSX.Element => {
   };
 
   return (
-    <div className="">
+    <div className="lg:w-[850px] mx-auto">
       <div className="flex justify-center border-b">
-        <ul className="flex flex-row justify-between w-[850px]">
+        <ul className="flex flex-row justify-between ">
           {menuArr.map((ele, index) => {
             return (
               <button

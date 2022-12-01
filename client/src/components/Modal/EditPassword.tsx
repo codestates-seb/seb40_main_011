@@ -69,7 +69,13 @@ const EditPassword = ({
   };
 
   const handleSubmitPassword = async () => {
-    if (!passwordError && !passwordCheckError) {
+    if (prePassword.length === 0) {
+      alert('이전 비밀번호를 입력해 주세요');
+    } else if (password.length === 0) {
+      alert('새로운 비밀번호를 입력해 주세요');
+    } else if (passwordCheck.length === 0) {
+      alert('이전 비밀번호 확인을 입력해 주세요');
+    } else if (!passwordError && !passwordCheckError) {
       const data: Password = {
         oldPassword: prePassword,
         newPassword: password,

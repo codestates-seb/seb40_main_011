@@ -5,6 +5,7 @@ import { BsXLg, BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
 import { OptOutModalHandler } from '../../pages/MyPage';
 import { delAccount } from '../../util/apiCollection';
 import { loginRefresh } from '../../util/loginRefresh';
+import { useIsLogin } from '../../store/login';
 
 export interface OptOutInputs {
   headers: Header;
@@ -17,8 +18,8 @@ interface Header {
 
 const OptOut = ({ openOptOutModalHandler }: OptOutModalHandler) => {
   const navigate = useNavigate();
-
-  const [password, setPassword] = useState();
+  const { Logout } = useIsLogin();
+  const [password, setPassword] = useState('');
 
   const [viewPassword, setViewPassword] = useState(false);
   const viewPasswordHandler = (e: React.MouseEvent<HTMLElement>) => {
@@ -29,26 +30,29 @@ const OptOut = ({ openOptOutModalHandler }: OptOutModalHandler) => {
     setPassword(e.target.value);
   };
 
-  const handleOptOut = async (e: React.MouseEvent<HTMLElement>) => {
-    e.preventDefault();
+  const handleOptOut = async () => {
+    if (password.length === 0) {
+      alert('비밀번호를 입략해 주세요');
+    } else {
+      const data = { password: password };
 
-    const data = { password: password };
-
-    const accountResult = await delAccount(data);
-    switch (accountResult.status) {
-      case 200:
-        localStorage.clear();
-        navigate('/');
-        break;
-      case 412: {
-        loginRefresh();
-        accountResult(e);
-        break;
+      const accountResult = await delAccount(data);
+      switch (accountResult.status) {
+        case 200:
+          localStorage.clear();
+          Logout();
+          navigate('/');
+          break;
+        case 412: {
+          loginRefresh();
+          accountResult();
+          break;
+        }
+        case 404:
+          alert('비밀번호가 일치하지 않습니다.');
+          break;
+        default:
       }
-      case 500:
-        alert('비밀번호가 일치하지 않습니다.');
-        break;
-      default:
     }
   };
 
@@ -95,7 +99,7 @@ const OptOut = ({ openOptOutModalHandler }: OptOutModalHandler) => {
           </div>
         </div>
 
-        <div className="flex justify-center pt-20">
+        <div className="flex justify-center pt-12">
           <button
             className="w-1/3 py-3 mx-5 border rounded-3xl"
             onClick={openOptOutModalHandler}
