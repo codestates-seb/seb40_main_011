@@ -113,7 +113,7 @@ const BestReviewList = () => {
                   </div>
                 </div>
               </div>
-              <div className="invisible lg:visible flex items-center text-gray-300 group-hover:text-gray-600 font-medium group-hover:bg-slate-100 pl-5 pr-4 py-3 rounded-full">
+              <div className="invisible sm:visible flex items-center text-gray-300 group-hover:text-gray-600 font-medium group-hover:bg-slate-100 pl-5 pr-4 py-3 rounded-full">
                 <span className="mr-2">자세히 보기</span>
                 <BsArrowRight className="text-2xl" />
               </div>
