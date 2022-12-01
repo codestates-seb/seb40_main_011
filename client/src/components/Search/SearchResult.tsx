@@ -10,7 +10,7 @@ const SearchResult = () => {
     .toLocaleLowerCase();
 
   return (
-    <div className="flex flex-col justify-center">
+    <div className="flex flex-col justify-center items-center">
       <SearchReview keyword={keyword} />
       <SearchProduct keyword={keyword} />
     </div>

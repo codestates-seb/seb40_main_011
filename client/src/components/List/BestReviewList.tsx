@@ -21,9 +21,6 @@ const BestReviewList = () => {
     getReviewData();
   }, []);
 
-  const regex =
-    /(((\|)([a-zA-Z\d+\s#!@'"():;\\/.[\]^<={$}>?(?!-))]+))+(\|))(?:\n)?((\|)(-+))+(\|)(\n)((\|)(\W+|\w+|\S+))+(\|$)/;
-
   const onlyText = (data: string) => {
     return data
       .replace(/(\[.*\])(\((http)(?:s)?(:\/\/).*\))/g, ' ')

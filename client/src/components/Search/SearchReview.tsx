@@ -7,59 +7,72 @@ import { useNavigate } from 'react-router-dom';
 const SearchReview = ({ keyword }: any) => {
   const navigate = useNavigate();
   const [searchData, setSearchData] = useState<ReviewLists[]>([]);
+  const [hasNext, setHasNext] = useState(false);
+  const [limit, setLimit] = useState(3);
 
   const onlyText = (data: string) => {
-    return data.replace(/[^ㄱ-ㅎ가-힣a-zA-Z]/g, ' ');
+    return data
+      .replace(/(\[.*\])(\((http)(?:s)?(:\/\/).*\))/g, ' ')
+      .replace(/[^ㄱ-ㅎ가-힣a-zA-Z0-9]/g, ' ');
   };
 
   useEffect(() => {
     const getSearchData = async () => {
-      const { data } = await getSearchReview(keyword);
+      const { data } = await getSearchReview(keyword, limit);
       setSearchData(data.reviewLists);
+      setHasNext(data.hasNext);
     };
     getSearchData();
-  }, [keyword]);
+  }, [keyword, limit]);
 
   console.log(searchData);
 
-  const onContentClick = () => {
-    // navigate("/")
+  const onContentClick = (e: React.MouseEvent) => {
+    navigate(`/review/${e.currentTarget.id}`);
   };
 
-  const onLikeClick = () => {
-    return console.log('hi');
-  };
-
-  const onMoreClick = () => {
-    return console.log('bye');
+  const MoreBtn = () => {
+    const onMoreClick = () => {
+      setLimit(limit + 3);
+    };
+    if (hasNext) {
+      return (
+        <button
+          className="ease-in-out duration-150 font-medium text-white pb-0.5 px-5 h-10 rounded-full bg-blue-500 hover:bg-blue-400"
+          onClick={onMoreClick}
+        >
+          더보기
+        </button>
+      );
+    }
+    return null;
   };
 
   const SearchResultView = () => {
     return (
       <>
         {searchData?.map((el, idx) => (
-          <div
-            key={idx}
-            className="flex flex-wrap flex-row w-2/3 mb-8 mx-16 rounded-lg border border-slate-900  items-center"
-          >
-            <div className="h-48 w-1/4 border-r-2">
+          <div key={idx} className="flex mb-3 w-full items-center">
+            <div className="flex w-1/3 h-full border-r-2 items-center pr-2">
               <img
                 role="button"
                 onClick={onContentClick}
-                className="rounded-l-lg h-full w-full"
+                className="w-full object-contain mr-3 rounded-lg"
                 src="https://img2.quasarzone.com/editor/2022/11/11/75f9d1f0e49980190d3967e19b0458e5.jpg"
+                id={el.id}
               ></img>
             </div>
-            <div className="flex flex-col p-3 w-3/4">
-              <div className="text-xl font-bold p-2">{el.title}</div>
+            <div className="pl-2 flex flex-col text-left w-full justify-center">
+              <div className="pb-2 text-3xl">{el.title}</div>
               <div
-                className="ease-in-out duration-150 line-clamp-2 hover:bg-slate-300 hover:rounded-md p-1.5 text-slate-600 hover:text-cyan-900"
+                className="pb-1 text-xl ease-in-out duration-150 line-clamp-3 hover:bg-slate-300 hover:rounded-md p-1.5 text-slate-600 hover:text-cyan-900"
                 role="button"
                 onClick={onContentClick}
+                id={el.id}
               >
                 {onlyText(el.content)}
               </div>
-              <div className="flex justify-between items-center mt-4">
+              <div className="flex flex-row justify-between items-center w-full ">
                 <div className="flex w-1/8">
                   <AiOutlineHeart size="30" className="p-1 text-slate-500" />
                   <div className="p-1 text-slate-500">{el.recommendNumber}</div>
@@ -80,12 +93,12 @@ const SearchReview = ({ keyword }: any) => {
   };
 
   return (
-    <div className="flex flex-col items-center">
-      <div className="mt-16 mb-4 mx-16 justify-start w-2/3 text-xl font-bold">
+    <div className="flex flex-col items-center justify-center w-[64rem]">
+      <div className="mt-16 mb-4 justify-start w-full text-xl font-bold">
         # {keyword} 에 대한 리뷰 검색 결과
       </div>
       <SearchResultView />
-      <button onClick={onMoreClick}>더보기</button>
+      <MoreBtn />
     </div>
   );
 };

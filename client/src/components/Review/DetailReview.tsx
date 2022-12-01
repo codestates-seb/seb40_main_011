@@ -22,9 +22,13 @@ const DetailReview = ({
 }: any) => {
   const [reviewData, setReviewData] = useState<ReviewDataType>();
   const [limit, setLimit] = useState(6);
-
   const [selected, setSelected] = useState('최신 순');
 
+  const onlyText = (data: string) => {
+    return data
+      .replace(/(\[.*\])(\((http)(?:s)?(:\/\/).*\))/g, ' ')
+      .replace(/[^ㄱ-ㅎ가-힣a-zA-Z0-9]/g, ' ');
+  };
   const sortList = [
     { sort: '최신 순', en: 'RECENT' },
     { sort: '좋아요 순', en: 'MOST_LIKE' },
@@ -76,42 +80,40 @@ const DetailReview = ({
 
       {reviewData?.reviewLists.map((el: any, idx: number) => {
         return (
-          <>
-            <div className="flex mb-3" key={idx}>
-              <img src="" alt="" className="w-[300px] h-[250px] mr-3 rouned" />
-              <div className="flex flex-col overflow-hidden text-left w-[760px]">
-                <div className="mb-1 text-2xl">{el.title}</div>
-                <div className="pb-1 overflow-hidden text-xl text-justify whitespace-normal h-36 text-ellipsis line-clamp-5">
-                  {el.content}
-                </div>
+          <div className="flex mb-3" key={idx}>
+            <img src="" alt="" className="w-[300px] h-[250px] mr-3 rouned" />
+            <div className="flex flex-col overflow-hidden text-left w-[760px]">
+              <div className="mb-1 text-2xl">{el.title}</div>
+              <div className="pb-1 overflow-hidden text-xl text-justify whitespace-normal h-36 text-ellipsis line-clamp-5">
+                {onlyText(el.content)}
+              </div>
 
-                <div className="flex flex-row items-center w-full ">
-                  <div className="mx-1 mt-4">좋아요 {el.recommendNumber}</div>
-                  <div className="mx-1 mt-4">댓글 {el.commentCount}</div>
-                  <div className="flex flex-row items-start ml-auto">
-                    <Avatar image={el.userImage} />
-                    <div className="mx-1 mt-3">
-                      <div>{el.writer}</div>
-                      <div className="ml-auto text-sm text-gray-400">
-                        {' '}
-                        {new Date(el.createdAt).toLocaleDateString('kr-KO', {
-                          month: 'short',
-                          day: 'numeric',
-                          year: 'numeric',
-                        })}
-                      </div>
+              <div className="flex flex-row items-center w-full ">
+                <div className="mx-1 mt-4">좋아요 {el.recommendNumber}</div>
+                <div className="mx-1 mt-4">댓글 {el.commentCount}</div>
+                <div className="flex flex-row items-start ml-auto">
+                  <Avatar image={el.userImage} />
+                  <div className="mx-1 mt-3">
+                    <div>{el.writer}</div>
+                    <div className="ml-auto text-sm text-gray-400">
+                      {' '}
+                      {new Date(el.createdAt).toLocaleDateString('kr-KO', {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric',
+                      })}
                     </div>
                   </div>
+                </div>
 
-                  {/* <img
+                {/* <img
                     src=
                     alt=""
                     className="w-16 h-16 rounded-full bg-slate-200"
                   /> */}
-                </div>
               </div>
             </div>
-          </>
+          </div>
         );
       })}
 
