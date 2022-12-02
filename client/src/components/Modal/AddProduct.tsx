@@ -122,7 +122,13 @@ const AddProduct = ({ isModal, setIsModal }: ModalProps) => {
                 />
               </div>
               <div className="pb-5">
-                <p className="modal-font">디테일</p>
+                <div className="flex">
+                  <p className="modal-font">디테일</p>
+                  <p className="ml-1 text-sm text-red-600 font-nomal mt-[0.15rem]">
+                    {' '}
+                    &#33;필수
+                  </p>
+                </div>
                 <input
                   className="justify-between alsolute t-0 text-sm bg-white h-10 rounded border border-slate-200 flex items-center px-4 pb-0.5 font-medium text-gray-500 w-full"
                   type="text"
