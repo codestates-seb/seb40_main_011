@@ -12,7 +12,7 @@ const SearchResult = () => {
   return (
     <div className="bg-zinc-100">
       <SearchReview keyword={keyword} />
-      {/* <SearchProduct keyword={keyword} /> */}
+      <SearchProduct keyword={keyword} />
     </div>
   );
 };

@@ -23,6 +23,7 @@ const EditReviewDetail = () => {
     writer: '',
     productId: 0,
     thumbnail: '',
+    recommends: [],
   });
 
   const params = useParams();
