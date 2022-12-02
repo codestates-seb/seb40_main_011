@@ -63,7 +63,7 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 		String accessToken = delegateAccessToken(email, authorities,provider);
 		String refreshToken = delegateRefreshToken(email);
 		redisTemplate.opsForValue()
-				.set(email,refreshToken, 7 * 60 * 60 * 1000L, TimeUnit.MILLISECONDS);
+				.set(email,refreshToken, 168 * 60 * 60 * 1000L, TimeUnit.MILLISECONDS);
 
 		String uri = createURI("Bearer " +accessToken, refreshToken).toString();
 		getRedirectStrategy().sendRedirect(request, response, uri);
