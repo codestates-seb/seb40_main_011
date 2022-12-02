@@ -4,10 +4,10 @@ import { getReviewDetail } from '../../util/apiCollection';
 import { useParams } from 'react-router-dom';
 import useReview from '../../store/review';
 import { Review } from '../../types/mainPageTypes';
-import useCategorie from '../../store/categorie';
+import useCategories from '../../store/categories';
 
 const EditReviewDetail = () => {
-  const { clickName, setClickName } = useCategorie();
+  const { clickName, setClickName } = useCategories();
   const [review, setReview] = useState<Review>({
     content: '',
     createdAt: '',
