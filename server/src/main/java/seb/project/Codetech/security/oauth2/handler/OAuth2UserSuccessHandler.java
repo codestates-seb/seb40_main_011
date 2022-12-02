@@ -79,7 +79,7 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 			.scheme("https")
 //			.host("localhost")
 			.host("codetech.nworld.dev")
-			.path("/api/token")
+//			.path("/api/token")
 //				.port(3000)
 			.queryParams(queryParams)
 			.build()
@@ -111,5 +111,4 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 		user.setProvider("oauth");
 		userRepository.save(user);
 	}
-
 }
