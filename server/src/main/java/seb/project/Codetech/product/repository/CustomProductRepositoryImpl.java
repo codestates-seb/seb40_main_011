@@ -17,7 +17,6 @@ import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
-import seb.project.Codetech.file.entity.FileEntity;
 import seb.project.Codetech.product.dto.ProductResponseDto;
 import seb.project.Codetech.product.entity.Type;
 
@@ -45,11 +44,12 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
 
 	@Override
 	public ProductResponseDto.Get getSearchProductById(Long productId) {
-		ProductResponseDto.Get searchProduct = queryFactory
+		return queryFactory
 			.select(Projections.fields(ProductResponseDto.Get.class,
 				product.id,
 				product.name,
 				product.detail,
+				product.thumbnail,
 				product.type,
 				product.writer,
 				product.modifier,
@@ -58,16 +58,6 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
 			.from(product)
 			.where(product.id.eq(productId))
 			.fetchOne();
-
-		assert searchProduct != null;
-		List<FileEntity> fileEntities = queryFactory
-			.selectFrom(fileEntity)
-			.where(fileEntity.product.id.eq(searchProduct.getId()))
-			.fetch();
-
-		searchProduct.setFileEntities(fileEntities);
-
-		return searchProduct;
 	}
 
 	@Override
@@ -77,6 +67,7 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
 			.select(Projections.bean(ProductResponseDto.Card.class,
 				product.id,
 				product.name,
+				product.thumbnail,
 				product.type,
 				product.createdAt
 			))
@@ -114,7 +105,8 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
 					ProductResponseDto.Search.class,
 					product.id,
 					product.name,
-					product.type
+					product.type,
+					product.thumbnail
 				)
 			)
 			.from(product)

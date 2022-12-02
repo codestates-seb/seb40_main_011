@@ -61,7 +61,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 			redisTemplate.delete(user.getEmail());
 		}
 		redisTemplate.opsForValue()
-				.set(user.getEmail(),refreshToken, 7 * 60 * 60 * 1000L, TimeUnit.MILLISECONDS);
+				.set(user.getEmail(),refreshToken, 168 * 60 * 60 * 1000L, TimeUnit.MILLISECONDS);
 
 		response.setHeader("Authorization", "Bearer " + accessToken);
 		response.setHeader("Refresh", refreshToken);

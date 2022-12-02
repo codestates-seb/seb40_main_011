@@ -9,9 +9,18 @@ import TextEditor from '../components/ToastUI/TextEditor';
 import useReview from '../store/review';
 import AddProduct from '../components/Modal/AddProduct';
 import ThumbnailModal from '../components/Modal/ThumbnailModal';
+import useCategories from '../store/categories';
+// import { useIsLogin } from '../store/login';
 
 const WriteReview = () => {
   const { title, setTitle, thumbnailImg } = useReview();
+  // const { isLogin } = useIsLogin();
+  const {
+    mainCategorySpread,
+    setMainCategorySpread,
+    productCategorySpread,
+    setProductCategorySpread,
+  } = useCategories();
 
   //제품 추가 모달 열고 닫기 이벤트
   const [isModal, setIsModal] = useState(false);
@@ -52,7 +61,17 @@ const WriteReview = () => {
                 <CategorySelector />
               </div>
               <div className="inline-flex w-1/3 ml-5 ">
-                <ProductSelector />
+                {mainCategorySpread && productCategorySpread ? (
+                  <ProductSelector
+                    productCategorySpread={!productCategorySpread}
+                    setProductCategorySpread={setProductCategorySpread}
+                  />
+                ) : (
+                  <ProductSelector
+                    productCategorySpread={productCategorySpread}
+                    setProductCategorySpread={setProductCategorySpread}
+                  />
+                )}
               </div>
             </div>
             <button

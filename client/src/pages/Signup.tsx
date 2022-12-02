@@ -1,6 +1,11 @@
 //회원가입 페이지
 //안지은, 김광민 작성
-import React, { ChangeEvent, useCallback, useState } from 'react';
+import React, {
+  ChangeEvent,
+  useCallback,
+  useState,
+  KeyboardEvent,
+} from 'react';
 import '../components/common.css';
 import { useNavigate } from 'react-router-dom';
 import { postSignup } from '../util/apiCollection';
@@ -64,58 +69,17 @@ const Signup = () => {
   ];
   const image = imgPlaceholder[getNumber()];
 
-  // 회원가입 submit
-  const onSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    if (nickname.length === 0) {
-      setMsg(modalMsg[0]);
-      return setShowModal(true);
-    }
-    if (password.length === 0) {
-      setMsg(modalMsg[2]);
-      return setShowModal(true);
-    }
-    if (passwordCheck.length === 0) {
-      setMsg(modalMsg[3]);
-      return setShowModal(true);
-    }
-
-    if (
-      nickname.length !== 0 &&
-      email.length !== 0 &&
-      password.length !== 0 &&
-      passwordCheck.length !== 0
-    ) {
-      const signupResult = await postSignup({
-        email,
-        password,
-        nickname,
-        image,
-      });
-      switch (signupResult.status) {
-        case 200:
-          setMsg(modalMsg[9]);
-          setShowModal(true);
-          navigate('/login');
-          break;
-        case 401:
-          setMsg(modalMsg[10]);
-          setShowModal(true);
-          break;
-      }
-    }
-  };
-
   //이름
   const onChangeName = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setNickname(e.target.value);
-    if (e.target.value.length < 2 || e.target.value.length > 20) {
-      setNameMessage('닉네임은 2글자 이상 20글자 미만으로 입력해주세요');
+    if (e.target.value.length < 2 || e.target.value.length > 10) {
+      setNameMessage('닉네임은 2글자 이상 10글자 미만으로 입력해주세요');
       setIsName(false);
     } else {
       setNameMessage('사용 가능한 닉네임입니다');
       setIsName(true);
     }
+    console.log(`e.target.value`, e);
   }, []);
 
   //이메일
@@ -142,27 +106,24 @@ const Signup = () => {
   );
 
   //비밀번호
-  const onChangePassword = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const passwordCurrent = e.target.value;
-      setPassword(passwordCurrent);
+  const onChangePassword = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    const passwordCurrent = e.target.value;
+    setPassword(passwordCurrent);
 
-      if (!passwordRegex.test(passwordCurrent)) {
-        setPasswordMessage(
-          '숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요'
-        );
-        setIsPassword(false);
-      } else {
-        setPasswordMessage('안전한 비밀번호입니다)');
-        setIsPassword(true);
-      }
-    },
-    []
-  );
+    if (!passwordRegex.test(passwordCurrent)) {
+      setPasswordMessage(
+        '숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요'
+      );
+      setIsPassword(false);
+    } else {
+      setPasswordMessage('안전한 비밀번호입니다)');
+      setIsPassword(true);
+    }
+  }, []);
 
   //비밀번호 확인
   const onChangePasswordCheck = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+    (e: ChangeEvent<HTMLInputElement>) => {
       const passwordCheckCurrent = e.target.value;
       setPasswordCheck(passwordCheckCurrent);
 
@@ -190,9 +151,17 @@ const Signup = () => {
   };
 
   // handleEnter
-  const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.code === 'Enter') {
-      onSubmit;
+  const handleEnter = (
+    e: KeyboardEvent<HTMLInputElement | HTMLButtonElement>,
+    next: string
+  ) => {
+    const key = e.key || e.keyCode;
+    if (key === 'Enter' || key === 13) {
+      if (next === 'signUpSubmit') {
+        onSubmit;
+      } else {
+        document.getElementById(next)?.focus();
+      }
     }
   };
 
@@ -214,7 +183,7 @@ const Signup = () => {
   ];
   const [msg, setMsg] = useState(modalMsg[0]);
 
-  //이메일 인증 번호 받기 클릭시 post 요청
+  //이메일 인증 => 메일 전송 클릭시 post 요청
   const emailButClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
@@ -228,11 +197,13 @@ const Signup = () => {
       return setShowModal(true);
     } else {
       const emailCheckReq = await postEmail(emailData);
+      console.log(emailCheckReq);
+      console.log(emailCheckReq.data.message);
       switch (emailCheckReq.status) {
         case 200:
           setMsg(modalMsg[4]);
           setShowModal(true);
-          setIsEmailBut(!emailBut);
+          setIsEmailBut(true);
           break;
         case 404:
           setMsg(modalMsg[5]);
@@ -277,6 +248,48 @@ const Signup = () => {
     }
   };
 
+  // 회원가입 submit
+  const onSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    if (nickname.length === 0) {
+      setMsg(modalMsg[0]);
+      return setShowModal(true);
+    }
+    if (password.length === 0) {
+      setMsg(modalMsg[2]);
+      return setShowModal(true);
+    }
+    if (passwordCheck.length === 0) {
+      setMsg(modalMsg[3]);
+      return setShowModal(true);
+    }
+
+    if (
+      nickname.length !== 0 &&
+      email.length !== 0 &&
+      password.length !== 0 &&
+      passwordCheck.length !== 0
+    ) {
+      const signupResult = await postSignup({
+        email,
+        password,
+        nickname,
+        image,
+      });
+      switch (signupResult.status) {
+        case 200:
+          setMsg(modalMsg[9]);
+          setShowModal(true);
+          navigate('/login');
+          break;
+        case 401:
+          setMsg(modalMsg[10]);
+          setShowModal(true);
+          break;
+      }
+    }
+  };
+
   return (
     <div className="flex flex-col items-center justify-center w-full h-screen pt-8 bg-slate-300 max-md:pt-0 max-md:justify-start">
       {showModal && <Confirm msg={msg} setShowModal={setShowModal} />}
@@ -297,10 +310,12 @@ const Signup = () => {
           >
             <input
               type="text"
+              id="nickname"
               className="absolute top-0 w-full h-full px-6 pt-3 text-base font-medium bg-transparent outline-none peer/email input-ani"
               value={nickname}
-              name="email"
+              name="nicmname"
               onChange={onChangeName}
+              onKeyDown={(e) => handleEnter(e, 'email')}
             ></input>
             <label
               className={`absolute font-medium top-4 left-6 text-gray-500 duration-200 pointer-events-none peer-focus/email:-translate-y-2.5 peer-focus/email:text-xs ${
@@ -331,10 +346,12 @@ const Signup = () => {
             >
               <input
                 type="text"
+                id="email"
                 className="absolute top-0 w-full h-full px-6 pt-3 text-base font-medium bg-transparent outline-none peer/email input-ani"
                 value={email}
                 name="email"
                 onChange={onChangeEmail}
+                onKeyDown={(e) => handleEnter(e, 'but01')}
               ></input>
               <label
                 className={`absolute font-medium top-4 left-6 text-gray-500 duration-200 pointer-events-none peer-focus/email:-translate-y-2.5 peer-focus/email:text-xs ${
@@ -355,8 +372,11 @@ const Signup = () => {
             {/* 인증번호 버튼 */}
             <div className="relative w-1/4 ml-2 rounded h-14">
               <button
+                type="button"
+                id="but01"
                 className="w-full h-full pb-1 text-base font-medium text-white bg-blue-600 rounded-md hover:bg-blue-500"
                 onClick={emailButClick}
+                onKeyDown={(e) => handleEnter(e, 'emailCertification')}
               >
                 메일 전송
               </button>
@@ -378,10 +398,12 @@ const Signup = () => {
               >
                 <input
                   type="text"
+                  id="emailCertification"
                   className="absolute top-0 w-full h-full px-6 pt-3 text-base font-medium bg-transparent outline-none peer/email input-ani"
                   value={certification}
                   name="emailCertification"
                   onChange={onChangeCertification}
+                  onKeyDown={(e) => handleEnter(e, 'but02')}
                 ></input>
                 <label
                   className={`absolute font-medium top-4 left-6 text-gray-500 duration-200 pointer-events-none peer-focus/email:-translate-y-2.5 peer-focus/email:text-xs ${
@@ -397,8 +419,11 @@ const Signup = () => {
               {/* 인증번호 완료버튼 */}
               <div className="relative w-1/4 ml-2 rounded h-14">
                 <button
+                  type="button"
+                  id="but02"
                   className="w-full h-full pb-1 text-base font-medium text-white bg-blue-600 rounded-md hover:bg-blue-500"
                   onClick={emailNumCheckClick}
+                  onKeyDown={(e) => handleEnter(e, 'password')}
                 >
                   인증 완료
                 </button>
@@ -418,11 +443,12 @@ const Signup = () => {
           >
             <input
               type={passwordType}
+              id="password"
               className="absolute top-0 w-full h-full px-6 pt-3 text-base font-medium bg-transparent outline-none peer/password input-ani"
               value={password}
               name="password"
               onChange={onChangePassword}
-              onKeyDown={handleEnter}
+              onKeyDown={(e) => handleEnter(e, 'passwordCheck')}
             ></input>
             <label
               className={`absolute font-medium top-4 left-6 text-gray-500 duration-200 pointer-events-none peer-focus/password:-translate-y-2.5 peer-focus/password:text-xs ${
@@ -462,11 +488,12 @@ const Signup = () => {
           >
             <input
               type={passwordCheckType}
+              id="passwordCheck"
               className="absolute top-0 w-full h-full px-6 pt-3 text-base font-medium bg-transparent outline-none peer/password input-ani"
               value={passwordCheck}
               name="password"
               onChange={onChangePasswordCheck}
-              onKeyDown={handleEnter}
+              onKeyDown={(e) => handleEnter(e, 'signUpSubmit')}
             ></input>
             <label
               className={`absolute font-medium top-4 left-6 text-gray-500 duration-200 pointer-events-none peer-focus/password:-translate-y-2.5 peer-focus/password:text-xs ${
@@ -494,13 +521,22 @@ const Signup = () => {
             )}
           </div>
           <button
-            type="submit"
+            id="signUpSubmit"
+            type="button"
             onClick={onSubmit}
             className="w-full h-16 pb-1 text-xl font-bold text-white bg-blue-600 rounded-md hover:bg-blue-500"
           >
             회원가입
           </button>
         </form>
+        {/* <button
+          id="signUpSubmit"
+          type="submit"
+          onClick={onSubmit}
+          className="w-full h-16 pb-1 text-xl font-bold text-white bg-blue-600 rounded-md hover:bg-blue-500"
+        >
+          회원가입
+        </button> */}
       </div>
       <div className="my-4 pt-1.5 pb-2 px-8 hover:bg-white/20 rounded-full">
         <label className="font-medium text-gray-500" htmlFor="goLogin">
