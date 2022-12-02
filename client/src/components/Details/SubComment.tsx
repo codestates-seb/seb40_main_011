@@ -1,5 +1,4 @@
 import { SubCommentProps } from '../../types/mainPageTypes';
-import { ReviewComments } from '../../types/mainPageTypes';
 import EditComment from './EditComment';
 import { useState } from 'react';
 import { loginRefresh } from '../../util/loginRefresh';

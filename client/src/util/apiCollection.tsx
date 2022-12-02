@@ -513,6 +513,18 @@ export const editReview = async (data: any) => {
     return err.response;
   }
 };
+export const deleteReview = async (reviewId: number) => {
+  try {
+    const response = await axios.delete(`/api/reviews/${reviewId}`, {
+      headers: {
+        Authorization: localStorage.getItem('authorization'),
+      },
+    });
+    return response;
+  } catch (err: any) {
+    return err.response;
+  }
+};
 
 // export const getProducts = async () => {
 //   try {

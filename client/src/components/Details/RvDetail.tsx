@@ -9,9 +9,9 @@ import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 import Comment from './Comment';
 import HandleLike from './Like';
 import { useIsLogin } from '../../store/login';
-import Confirm from '../Modal/Confirm';
 import useReview from '../../store/review';
 import { AiOutlineHeart } from 'react-icons/ai';
+import CheckModal from './DeleteModal';
 
 const RvDetail = () => {
   interface markdownProps {
@@ -164,7 +164,11 @@ const RvDetail = () => {
   return (
     <>
       {showModal && (
-        <Confirm setShowModal={setShowModal} msg="정말 삭제하시겠습니까?" />
+        <CheckModal
+          setShowModal={setShowModal}
+          msg="정말 삭제하시겠습니까?"
+          productId={review.productId}
+        />
       )}
       <div className="bg-zinc-100">
         <div className="flex flex-col justify-center mx-auto w-full lg:w-[64rem] ">

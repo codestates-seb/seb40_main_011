@@ -167,7 +167,7 @@ export default function Comment({ reviewComments }: CommentProps) {
           />
           <div className="w-2/3">
             <div className="flex justify-between mb-1.5 items-center">
-              <span>
+              <span className="max-sm:flex flex-col items-start">
                 <span className="ml-1 font-semibold">
                   {reviewComments.writer}
                 </span>
@@ -175,7 +175,7 @@ export default function Comment({ reviewComments }: CommentProps) {
                   {getParsedDate(reviewComments.createdAt)}
                 </span>
               </span>
-              <div>
+              <div className="flex items-center">
                 <EditComment
                   isEditMode={isEditMode}
                   setIsEditMode={setIsEditMode}

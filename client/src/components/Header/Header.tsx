@@ -14,7 +14,6 @@ export default function Header() {
 
   const onBurgerClicked = (e: any) => {
     setMenu(!menu);
-    console.log(menu);
   };
 
   const { isLogin } = useIsLogin();
@@ -22,8 +21,11 @@ export default function Header() {
   const BurgurDropDown = () => {
     if (menu) {
       return (
-        <div>
-          <div>hi</div>
+        <div
+          className={`drop-shadow-xl p-2 md:hidden items-center justify-evenly rounded-b-lg bg-white fixed top-20 right-1 h-24 w-24 flex flex-col`}
+        >
+          <div className="border-b-2">마이페이지</div>
+          <div>로그아웃</div>
         </div>
       );
     }
@@ -47,6 +49,14 @@ export default function Header() {
               <GiHamburgerMenu onClick={onBurgerClicked} />
             </span>
           </button>
+          {menu ? (
+            <div
+              onClick={onBurgerClicked}
+              className="fixed inset-0 h-screen w-full flex justify-content justify-center items-center"
+            >
+              <BurgurDropDown />
+            </div>
+          ) : null}
           <div className="max-md:hidden flex">
             {!isLogin ? (
               <>

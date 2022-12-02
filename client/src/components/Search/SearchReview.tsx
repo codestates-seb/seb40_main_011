@@ -36,7 +36,7 @@ const SearchReview = ({ keyword }: any) => {
     if (hasNext) {
       return (
         <button
-          className="ease-in-out duration-150 font-medium text-white pb-0.5 px-5 h-10 rounded-full bg-blue-500 hover:bg-blue-400"
+          className="my-10 ease-in-out duration-150 font-medium text-white pb-0.5 px-5 h-10 rounded-full bg-blue-500 hover:bg-blue-400"
           onClick={onMoreClick}
         >
           더보기
@@ -50,9 +50,12 @@ const SearchReview = ({ keyword }: any) => {
     return (
       <>
         {searchData?.map((el, idx) => (
-          <div key={idx} className="flex mb-3 w-full items-center">
+          <div
+            key={idx}
+            className="flex w-full items-center m-4 rounded-3xl p-4 bg-white"
+          >
             {el.thumbnail !== undefined && el.thumbnail.length !== 0 ? (
-              <div className="flex w-1/3 h-full border-r-2 items-center pr-2">
+              <div className="flex w-1/3 items-center pr-2">
                 <img
                   role="button"
                   onClick={onContentClick}
@@ -62,17 +65,19 @@ const SearchReview = ({ keyword }: any) => {
                 ></img>
               </div>
             ) : null}
-            <div className="pl-2 flex flex-col text-left w-full justify-center">
-              <div className="pb-2 text-3xl">{el.title}</div>
+            <div className="pl-2 flex flex-col text-left w-full h-[16rem] justify-evenly">
+              <div className="pb-2 flex text-[1.5rem] font-bold max-md:text-[1rem]">
+                {el.title}
+              </div>
               <div
-                className="pb-1 text-xl ease-in-out duration-150 line-clamp-3 hover:bg-slate-300 hover:rounded-md p-1.5 text-slate-600 hover:text-cyan-900"
+                className="pb-1 text-md ease-in-out duration-150 line-clamp-3 hover:bg-slate-300 hover:rounded-md p-1.5 text-slate-600 hover:text-cyan-900"
                 role="button"
                 onClick={onContentClick}
                 id={el.id}
               >
                 {onlyText(el.content)}
               </div>
-              <div className="flex flex-row justify-between items-center w-full ">
+              <div className="flex flex-row justify-between items-center w-full">
                 <div className="flex w-1/8">
                   <AiOutlineHeart size="30" className="p-1 text-slate-500" />
                   <div className="p-1 text-slate-500">{el.recommendNumber}</div>
@@ -95,7 +100,7 @@ const SearchReview = ({ keyword }: any) => {
   const NoResult = () => {
     if (searchData.length < 1) {
       return (
-        <div className="flex w-full justify-center">
+        <div className="flex w-full justify-center my-36">
           <img
             className="object-fit"
             src={require('../../images/noSearchResult.png')}
@@ -107,7 +112,7 @@ const SearchReview = ({ keyword }: any) => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-[64rem]">
+    <div className="flex flex-col items-center justify-center w-full lg:w-[64rem] mx-auto">
       <div className="mt-16 mb-4 justify-start w-full text-xl font-bold">
         # {keyword} 에 대한 리뷰 검색 결과
       </div>
