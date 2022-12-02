@@ -47,6 +47,7 @@ export interface Review {
   view: number;
   writer: string;
   productId: number;
+  thumbnail: string;
 }
 
 export interface ReviewProps {

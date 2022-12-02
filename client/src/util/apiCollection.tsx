@@ -246,7 +246,7 @@ export const getGoodSnack = async (productId: any, limit: number) => {
 export const getBadSnack = async (productId: any, limit: number) => {
   try {
     const response = await axios.get(
-      `/api/snack-reviews?productId=${productId}&offset=0&limit=${limit}&sortByGrade=false&asc=false`,
+      `/api/snack-reviews?productId=${productId}&offset=0&limit=${limit}&sortByGrade=true&asc=true`,
       {
         headers: {
           'Content-Type': 'application/json',

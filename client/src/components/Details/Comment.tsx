@@ -159,7 +159,7 @@ export default function Comment({ reviewComments }: CommentProps) {
     <>
       {reviewComments &&
       reviewComments.content !== '작성자가 삭제한 댓글입니다.' ? (
-        <div className="w-full flex my-6 ">
+        <div className="w-full flex my-6">
           <img
             src={`https://codetech.nworld.dev${reviewComments?.userImage}`}
             alt=""

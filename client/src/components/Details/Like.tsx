@@ -4,7 +4,12 @@ import { postLike } from '../../util/apiCollection';
 import { loginRefresh } from '../../util/loginRefresh';
 import { useParams } from 'react-router-dom';
 import { useIsLogin } from '../../store/login';
-const HandleLike = () => {
+
+interface LikeProps {
+  userId: number;
+}
+
+const HandleLike = ({ userId }: LikeProps) => {
   const [isHover, setIsHover] = useState(false);
 
   const params = useParams();
@@ -13,7 +18,7 @@ const HandleLike = () => {
     if (loginId) {
       const response = await postLike(Number(params.id));
       switch (response.status) {
-        case 201:
+        case 200:
           location.reload();
           break;
         case 412:
@@ -39,19 +44,21 @@ const HandleLike = () => {
   };
   return (
     <>
-      <button
-        className="flex "
-        onClick={handleLikeClick}
-        onMouseEnter={() => setIsHover(true)}
-        onMouseLeave={() => setIsHover(false)}
-      >
-        <AiOutlineHeart
-          color="2962F6"
-          size="40"
-          className="relative inline-flex"
-        />
-        <HandleHover />
-      </button>
+      {userId === Number(loginId) ? null : (
+        <button
+          className="flex "
+          onClick={handleLikeClick}
+          onMouseEnter={() => setIsHover(true)}
+          onMouseLeave={() => setIsHover(false)}
+        >
+          <AiOutlineHeart
+            color="2962F6"
+            size="40"
+            className="relative inline-flex"
+          />
+          <HandleHover />
+        </button>
+      )}
     </>
   );
 };

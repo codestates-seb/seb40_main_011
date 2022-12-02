@@ -35,6 +35,7 @@ const RvDetail = () => {
     view: 0,
     writer: '',
     productId: 0,
+    thumbnail: '',
   });
   const { loginId } = useIsLogin();
   const [comments, setComments] = useState<ReviewComments[]>([]);
@@ -52,6 +53,12 @@ const RvDetail = () => {
     };
     getReviewData();
   }, []);
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+    });
+  }, [review]);
 
   const onTypeClick = () => {
     navigate(`/categories/review/${review.productId}`);
@@ -72,8 +79,8 @@ const RvDetail = () => {
   const CommentView = () => {
     if (review !== undefined && review?.reviewComments?.length > 0) {
       return (
-        <div className="flex flex-col items-center w-full my-8">
-          <div className="flex justify-start w-full p-4 mb-4 text-2xl font-bold ">
+        <div className="flex flex-col h-full w-full my-8 border-t-2">
+          <div className="flex justify-start w-full p-4 mb-4 mt-6 text-2xl font-bold">
             Comment
           </div>
           {review.reviewComments.map((el: ReviewComments, idx: number) => (
@@ -90,7 +97,6 @@ const RvDetail = () => {
 
   const ReviewInfo = () => {
     const handleDeleteReview = () => {
-      console.log(reviewId);
       setShowModal(!showModal);
     };
     if (review.userId === Number(loginId)) {
@@ -192,7 +198,7 @@ const RvDetail = () => {
             <div id="viewer" className="p-4 my-16 whitespace-pre-wrap">
               <ConvertedContent markdown={review.content} />
             </div>
-            <HandleLike />
+            <HandleLike userId={review.userId} />
             <CommentView />
             <CommentInput />
           </section>
