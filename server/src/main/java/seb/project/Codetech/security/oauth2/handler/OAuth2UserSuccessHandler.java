@@ -111,5 +111,4 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 		user.setProvider("oauth");
 		userRepository.save(user);
 	}
-
 }
