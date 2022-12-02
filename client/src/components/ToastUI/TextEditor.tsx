@@ -129,6 +129,10 @@ function TextEditor() {
         alert('에러');
         console.error(submit.status + 'Error');
         break;
+      case 400:
+        alert('에러');
+        console.error(submit.status + 'Error');
+        break;
       case 412: {
         loginRefresh();
         handleClick();
