@@ -50,12 +50,11 @@ public class ProductController {
 	@PostMapping // 제품을 생성한다.
 	public ResponseEntity<Long> postProduct(@AuthenticationPrincipal String email,
 		@RequestPart @Valid ProductRequestDto.Post request,
-		@RequestPart List<MultipartFile> file) throws IOException {
+		@RequestPart MultipartFile file) throws IOException {
 
 		Product dtoToProduct = mapper.productPostDtoToProduct(request);
-		Product serviceProduct = productService.createProduct(email, dtoToProduct); // 제품 정보를 등록한다.
-		List<FileEntity> fileEntities = fileService.insertFiles(file); // 파일 정보를 등록하고 파일을 로컬에 저장한다.
-		fileService.setUploadProduct(serviceProduct, fileEntities); // 파일 정보를 제품에 등록한다.
+		FileEntity saveFile = fileService.saveFile(file);
+		Product serviceProduct = productService.createProduct(email, dtoToProduct, saveFile); // 제품 정보를 등록한다.
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(serviceProduct.getId());
 	}
@@ -64,12 +63,11 @@ public class ProductController {
 	public ResponseEntity<Long> patchProduct(@AuthenticationPrincipal String email,
 		@PathVariable @Positive Long id,
 		@RequestPart @Valid ProductRequestDto.Patch request,
-		@RequestPart List<MultipartFile> file) throws IOException {
+		@RequestPart MultipartFile file) throws IOException {
 
 		Product dtoToProduct = mapper.productPatchDtoToProduct(id, request);
-		Product serviceProduct = productService.modifyProduct(email, id, dtoToProduct);
-		List<FileEntity> fileEntities = fileService.insertFiles(file);
-		fileService.setUploadProduct(serviceProduct, fileEntities);
+		FileEntity saveFile = fileService.saveFile(file);
+		Product serviceProduct = productService.modifyProduct(email, id, dtoToProduct, saveFile);
 
 		return ResponseEntity.ok(serviceProduct.getId());
 	}
