@@ -12,6 +12,7 @@ import { useIsLogin } from '../../store/login';
 import useReview from '../../store/review';
 import { AiOutlineHeart } from 'react-icons/ai';
 import CheckModal from './DeleteModal';
+import Spinner from '../../util/Spinner';
 
 const RvDetail = () => {
   interface markdownProps {
@@ -75,7 +76,7 @@ const RvDetail = () => {
       </>
     );
   };
-
+  console.log(review);
   const CommentView = () => {
     if (review !== undefined && review?.reviewComments?.length > 0) {
       return (
@@ -167,6 +168,13 @@ const RvDetail = () => {
       );
   };
 
+  const HandleSpinner = () => {
+    if (review.content === '') {
+      return <Spinner />;
+    }
+    return null;
+  };
+
   return (
     <>
       {showModal && (
@@ -176,6 +184,7 @@ const RvDetail = () => {
           productId={review.productId}
         />
       )}
+      <HandleSpinner />
       <div className="bg-zinc-100">
         <div className="flex flex-col justify-center mx-auto w-full lg:w-[64rem] ">
           <div className="w-full">

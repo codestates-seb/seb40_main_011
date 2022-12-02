@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import moment from 'moment';
 import { format } from 'timeago.js';
 import { categoryList } from '../Selectors/MainCategory';
+import Spinner from '../../util/Spinner';
 
 const ProductList = () => {
   const navigate = useNavigate();
@@ -45,6 +46,7 @@ const ProductList = () => {
   const convertToKR: any = (type: string) => {
     return categoryList.filter((el) => el.id === type).map((el) => el.name);
   };
+
   const NoElement = () => {
     if (products.length === 0) {
       return (
@@ -58,10 +60,16 @@ const ProductList = () => {
     }
     return null;
   };
+
+  const [spinner, setSpinner] = useState(true);
+  setTimeout(() => {
+    setSpinner(false);
+  }, 1000);
+
   return (
     <>
-      {products === undefined ? (
-        <div>loading</div>
+      {spinner ? (
+        <Spinner />
       ) : (
         <div className="bg-zinc-100">
           <div className="mx-auto w-full lg:w-[64rem] flex flex-col items-center px-4">

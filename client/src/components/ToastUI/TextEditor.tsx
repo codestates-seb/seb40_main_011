@@ -163,7 +163,7 @@ function TextEditor() {
       thumbnailImg.length !== 0
     ) {
       const submit = await postEditorContent(editorData);
-      console.log(`submit`, submit);
+      console.log(`submit`, submit.data);
       switch (submit.status) {
         case 200:
           setReviewMsg(modalMsg[7]);
