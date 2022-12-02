@@ -22,6 +22,7 @@ const EditReviewDetail = () => {
     view: 0,
     writer: '',
     productId: 0,
+    thumbnail: '',
   });
 
   const params = useParams();
@@ -36,6 +37,7 @@ const EditReviewDetail = () => {
       setTitle(data.title);
       setClickName(data.type);
       setProductId(data.productId);
+      setThumnailImg(data.thumbnail);
     };
     getReviewData();
   }, []);

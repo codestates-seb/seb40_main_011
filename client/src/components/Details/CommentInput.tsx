@@ -20,7 +20,7 @@ export const CommentInput = () => {
         parentId: 0,
         content: comment,
       });
-      console.log(response);
+
       switch (response.status) {
         default:
           location.reload();
