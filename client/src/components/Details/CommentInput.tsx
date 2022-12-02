@@ -14,7 +14,7 @@ export const CommentInput = () => {
   };
 
   const onCommentClick = async () => {
-    if (comment !== undefined && comment !== '') {
+    if (comment !== undefined && comment !== '' && comment.length <= 100) {
       const response = await postComment({
         reviewId: params.id,
         parentId: 0,
@@ -37,10 +37,22 @@ export const CommentInput = () => {
     }
   };
 
+  const HandleValidation = () => {
+    if (comment.length > 100) {
+      return (
+        <div className="text-red-500 font-medium text-sm mx-4 bg-red-100 rounded px-2 pt-2 pb-2 mb-3">
+          최대 글자수를 초과했습니다.
+        </div>
+      );
+    }
+    return null;
+  };
+
   return (
     <>
       <div className="w-full bg-zinc-100 flex justify-center m-4">
         <div className="py-10 w-full border-t-2">
+          <HandleValidation />
           <TextareaAutosize
             minRows={3}
             maxRows={6}
