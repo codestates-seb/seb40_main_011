@@ -197,6 +197,8 @@ const Signup = () => {
       return setShowModal(true);
     } else {
       const emailCheckReq = await postEmail(emailData);
+      console.log(emailCheckReq);
+      console.log(emailCheckReq.data.message);
       switch (emailCheckReq.status) {
         case 200:
           setMsg(modalMsg[4]);
@@ -518,15 +520,23 @@ const Signup = () => {
               </span>
             )}
           </div>
+          <button
+            id="signUpSubmit"
+            type="button"
+            onClick={onSubmit}
+            className="w-full h-16 pb-1 text-xl font-bold text-white bg-blue-600 rounded-md hover:bg-blue-500"
+          >
+            회원가입
+          </button>
         </form>
-        <button
+        {/* <button
           id="signUpSubmit"
           type="submit"
           onClick={onSubmit}
           className="w-full h-16 pb-1 text-xl font-bold text-white bg-blue-600 rounded-md hover:bg-blue-500"
         >
           회원가입
-        </button>
+        </button> */}
       </div>
       <div className="my-4 pt-1.5 pb-2 px-8 hover:bg-white/20 rounded-full">
         <label className="font-medium text-gray-500" htmlFor="goLogin">
