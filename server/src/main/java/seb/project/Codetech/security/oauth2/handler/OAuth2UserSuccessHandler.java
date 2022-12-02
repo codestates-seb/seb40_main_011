@@ -79,7 +79,7 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 			.scheme("https")
 //			.host("localhost")
 			.host("codetech.nworld.dev")
-			.path("/receive-token")
+			.path("/api/token")
 //				.port(3000)
 			.queryParams(queryParams)
 			.build()
