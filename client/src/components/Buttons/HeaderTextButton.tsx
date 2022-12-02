@@ -15,7 +15,7 @@ export default function HeaderTextButton({ name }: { name: string }) {
       case 'My Page':
         navigate('/mypage');
         break;
-      case 'logout':
+      case 'logout' || 'hamburgerLogout':
         localStorage.removeItem('refresh');
         localStorage.removeItem('authorization');
         Logout();
