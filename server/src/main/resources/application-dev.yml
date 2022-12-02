@@ -45,9 +45,9 @@ spring:
               - profile_image
               - email
             clientName: Naver
-#          kakao:
-#            client-id: ${OAUTH2_KAKAO_CLIENT_ID}
-#            clientSecret: ${OAUTH2_KAKAO_SECRET}
+  #          kakao:
+  #            client-id: ${OAUTH2_KAKAO_CLIENT_ID}
+  #            clientSecret: ${OAUTH2_KAKAO_SECRET}
   mail:
     host: smtp.naver.com
     port: 465
@@ -58,5 +58,12 @@ jwt:
   secret-key: ${JWT_SECRET_KEY}
   access-token-expiration-minutes: 300
   refresh-token-expiration-minutes: 420
+
+server:
+  ssl:
+    key-store: keystore.p12
+    key-store-type: PKCS12
+    key-password: newworld1107
+    key-alias: ttp
 
 filePath: /images/

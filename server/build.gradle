@@ -51,6 +51,7 @@ dependencies { // 시큐리티의 경우는 시큐리티 전담자가 기본 설
     implementation 'org.apache.tika:tika-parsers:2.6.0'
     implementation 'org.springframework.boot:spring-boot-starter-mail'//이메일 인증
     implementation 'net.coobird:thumbnailator:0.4.18' // 섬네일 라이브러리
+    implementation 'org.sejda.imageio:webp-imageio:0.1.6' // imageIo webp 라이브러리.
 
 //    querydsl 의존성
     implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
