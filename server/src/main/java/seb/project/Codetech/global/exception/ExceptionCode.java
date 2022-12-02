@@ -11,6 +11,7 @@ public enum ExceptionCode {
 	NEW_PASSWORD_NOT_MATCH(404,"두 새로운 비밀번호가 일치하지 않습니다."),
 	NEED_LOGIN(404,"다시 로그인 해 주세요"),
 	CODE_IS_DIFFERENT(404,"코드가 일치하지 않습니다."),
+	WITHDRAWN_USER(400,"탈퇴한 회원입니다."),
 
 	// 상세리뷰 예외처리
 	REVIEW_NOT_MODIFY(401, "작성자만 상세리뷰를 수정할 수 있습니다."),

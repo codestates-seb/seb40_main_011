@@ -1,10 +1,10 @@
 // Snack Review List fetching & boxing comp
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import BestReviewList from '../components/List/BestReviewList';
 import ProductList from '../components/List/ProductList';
 import QuestionList from '../components/List/QuestionList';
 import useReview from '../store/review';
-import useCategorie from '../store/categorie';
+import useCategories from '../store/categories';
 
 const Main = () => {
   const {
@@ -15,7 +15,7 @@ const Main = () => {
     setThumnailImg,
   } = useReview();
 
-  const { clearClickName } = useCategorie();
+  const { clearClickName } = useCategories();
 
   useEffect(() => {
     setTitle('');
@@ -27,9 +27,11 @@ const Main = () => {
   }, []);
   return (
     <>
-      <BestReviewList />
-      <ProductList />
-      <QuestionList />
+      <Suspense fallback={<div>loading...</div>}>
+        <BestReviewList />
+        <ProductList />
+        <QuestionList />
+      </Suspense>
     </>
   );
 };

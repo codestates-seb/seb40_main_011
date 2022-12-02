@@ -47,6 +47,7 @@ export interface Review {
   view: number;
   writer: string;
   productId: number;
+  thumbnail: string;
 }
 
 export interface ReviewProps {
@@ -98,6 +99,7 @@ export interface ReviewLists {
   title: string;
   userImage: string;
   writer: string;
+  thumbnail: string;
 }
 
 export interface CommentProps {
@@ -243,6 +245,7 @@ export interface WriteAnswerProps {
 export interface setShowModalProps {
   setShowModal(state: boolean): void;
   msg: string;
+  productId?: number;
 }
 
 export interface EditQuestionProps {

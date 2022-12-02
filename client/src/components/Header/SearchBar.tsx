@@ -21,7 +21,6 @@ export default function SearchBar() {
         value={keywords}
         placeholder="리뷰...리뷰를 남기자!"
         onChange={(e) => {
-          console.log(e.target.value);
           setKeywords(e.target.value);
         }}
         onKeyPress={onKeyPress}

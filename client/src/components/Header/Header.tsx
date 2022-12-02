@@ -14,7 +14,6 @@ export default function Header() {
 
   const onBurgerClicked = (e: any) => {
     setMenu(!menu);
-    console.log(menu);
   };
 
   const { isLogin } = useIsLogin();
@@ -22,8 +21,24 @@ export default function Header() {
   const BurgurDropDown = () => {
     if (menu) {
       return (
-        <div>
-          <div>hi</div>
+        <div
+          className={`drop-shadow-xl m-1 p-2 md:hidden items-center justify-evenly rounded-lg bg-white fixed top-20 right-1 h-[12rem] w-[12rem] flex flex-col`}
+        >
+          <button
+            onClick={() => {
+              navigate('/mypage');
+            }}
+            className="p-2 w-full text-lg hover:bg-slate-100"
+          >
+            My Page
+          </button>
+          <button className="p-2 w-full text-lg hover:bg-slate-100">
+            Logout
+          </button>
+          <div className="p-2 text-sm text-slate-400">
+            <div>문의</div>
+            <div>contact@codetech.com</div>
+          </div>
         </div>
       );
     }
@@ -37,16 +52,24 @@ export default function Header() {
           <img
             src={require('../../images/logo.png')}
             alt=""
-            className="inline-block w-40 mb-1"
+            className="inline-block w-40 mb-1 mr-2"
           />
         </button>
         <SearchBar />
         <div className="flex-none flex flex-row h-full">
-          <button className="h-full flex flex-row items-center mx-2 md:hidden">
+          <button className="h-full flex flex-row items-center md:hidden">
             <span className="material-icons text-2xl w-14 h-14 rounded-full hover:bg-slate-100 flex items-center justify-center">
               <GiHamburgerMenu onClick={onBurgerClicked} />
             </span>
           </button>
+          {menu ? (
+            <div
+              onClick={onBurgerClicked}
+              className="fixed inset-0 h-screen w-full flex justify-content justify-center items-center"
+            >
+              <BurgurDropDown />
+            </div>
+          ) : null}
           <div className="max-md:hidden flex">
             {!isLogin ? (
               <>

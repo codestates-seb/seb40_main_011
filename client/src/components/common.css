@@ -39,4 +39,10 @@
   .selector-font {
     @apply text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900;
   }
+  .select-div-style {
+    @apply absolute z-10 w-full overflow-y-scroll bg-white top-10 rounded-bl-xl rounded-br-xl drop-shadow-md
+  }
+  .select-but-style {
+    @apply flex items-center w-full px-4 pt-2 pb-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900
+  }
 } ;

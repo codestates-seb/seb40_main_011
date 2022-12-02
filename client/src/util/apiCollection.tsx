@@ -246,7 +246,7 @@ export const getGoodSnack = async (productId: any, limit: number) => {
 export const getBadSnack = async (productId: any, limit: number) => {
   try {
     const response = await axios.get(
-      `/api/snack-reviews?productId=${productId}&offset=0&limit=${limit}&sortByGrade=false&asc=false`,
+      `/api/snack-reviews?productId=${productId}&offset=0&limit=${limit}&sortByGrade=true&asc=true`,
       {
         headers: {
           'Content-Type': 'application/json',
@@ -509,6 +509,18 @@ export const editReview = async (data: any) => {
       },
     });
     return editorContent;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+export const deleteReview = async (reviewId: number) => {
+  try {
+    const response = await axios.delete(`/api/reviews/${reviewId}`, {
+      headers: {
+        Authorization: localStorage.getItem('authorization'),
+      },
+    });
+    return response;
   } catch (err: any) {
     return err.response;
   }

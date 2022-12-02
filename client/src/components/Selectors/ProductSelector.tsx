@@ -6,19 +6,22 @@ import React, { useState } from 'react';
 import { AiFillCaretDown } from 'react-icons/ai';
 import { AiFillCaretUp } from 'react-icons/ai';
 import axios, { AxiosError } from 'axios';
-import useCategorie from '../../store/categorie';
+import useCategories from '../../store/categories';
 import useReview from '../../store/review';
+import '../common.css';
+import Confirm from '../Modal/Confirm';
 
-interface ICategorieData {
+interface ICategoriesData {
   id: number;
   name: string;
 }
 
 const ProductSelector = () => {
   const [spread, setSpread] = useState(false);
-  const { clickName } = useCategorie();
+  //대분류 셀렉터에서 클릭한 값이 저장된
+  const { clickName } = useCategories();
   //get으로 받아온 데이터 저장
-  const [categorie, setCategorie] = useState<ICategorieData[] | null>([]);
+  const [categories, setCategories] = useState<ICategoriesData[] | []>([]);
   //소분류 셀렉터에서 클릭한 버튼의 이름을 저장
   const [selectName, setSelectName] = useState('제품 선택');
   //소분류에서 선택한 제품의 productId를 저장
@@ -34,18 +37,29 @@ const ProductSelector = () => {
   //대문자로 변환
   const upperText = encoded.toUpperCase();
 
+  //메세지 모달창
+  const [showModal, setShowModal] = useState(false);
+  const modalMsg: string[] = ['대분류를 선택해주세요 ㅜㅜ'];
+  //모달 메세지 저장
+  const [selectorMsg, setSelectorMsg] = useState(modalMsg[0]);
+
   //소분류 셀렉터 클릭시 대분류에서 선택한 text 값과 일치하는 type의 data list 를 가져옴
   const handleSelectClick = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
-    setSpread(!spread);
+    if (clickName === '대분류 선택') {
+      setSelectorMsg(modalMsg[0]);
+      return setShowModal(true);
+    }
+
     try {
       const res = await axios.get(`/api/products/review-search`, {
         params: { type: upperText },
       });
-      setCategorie(res.data);
+      setCategories(res.data);
     } catch (error: unknown) {
       handleError(error);
     }
+    setSpread(!spread); //여기 있어야 데이터 다 들어온 후 드롭다운이 뜸
   };
 
   //에러 핸들러
@@ -76,6 +90,7 @@ const ProductSelector = () => {
 
   return (
     <div className="relative flex flex-col w-full">
+      {showModal && <Confirm msg={selectorMsg} setShowModal={setShowModal} />}
       <button
         onClick={handleSelectClick}
         className={`justify-between alsolute t-0 text-sm bg-white h-10 rounded border border-slate-200 flex items-center px-4 pb-0.5 font-medium text-gray-500 ${
@@ -88,20 +103,22 @@ const ProductSelector = () => {
       {spread && (
         <div
           onClick={handleSelect}
-          className="absolute z-10 w-full overflow-hidden bg-white border top-10 rounded-bl-xl rounded-br-xl drop-shadow-md"
+          className={
+            categories.length === 0
+              ? `select-div-style`
+              : `select-div-style h-60`
+          }
         >
-          {categorie === null ? (
-            <button className="flex items-center w-full px-4 pt-2 pb-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900">
-              제품이 없습니다
-            </button>
+          {categories.length === 0 ? (
+            <button className="select-but-style">제품이 없습니다</button>
           ) : (
-            categorie.map((product, idx) => {
+            categories.map((product, idx) => {
               return (
                 <button
                   key={idx}
                   onClick={handleButClick}
                   value={product.id}
-                  className="flex items-center w-full px-4 pt-2 pb-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900"
+                  className="truncate select-but-style "
                 >
                   {product.name}
                 </button>

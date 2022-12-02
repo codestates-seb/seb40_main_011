@@ -17,7 +17,7 @@ public class UserPostDto {
     private String email;
 
     @NotBlank
-    @Size(min = 2,max = 20)
+    @Size(min = 2,max = 10)
     private String nickname;
 
     @NotBlank

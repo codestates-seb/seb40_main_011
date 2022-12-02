@@ -39,7 +39,7 @@ spring:
             clientSecret: ${OAUTH2_NAVER_SECRET}
             clientAuthenticationMethod: post
             authorizationGrantType: authorization_code
-            redirectUri: "http://codetech.nworld.dev/login/oauth2/code/naver"
+            redirectUri: https://codetech.nworld.dev/login/oauth2/code/naver
             scope:
               - nickname
               - profile_image

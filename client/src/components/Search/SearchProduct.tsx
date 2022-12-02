@@ -6,7 +6,7 @@ import { FaChevronRight, FaChevronLeft } from 'react-icons/fa';
 
 const SearchProduct = ({ keyword }: any) => {
   const navigate = useNavigate();
-  const [products, setProducts] = useState<Product[]>();
+  const [products, setProducts] = useState<Product[]>([]);
   const [category, setCategory] = useState('all');
   const [totalPage, setTotalPage] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
@@ -16,7 +16,6 @@ const SearchProduct = ({ keyword }: any) => {
     size: '9',
   };
 
-  console.log(products);
   useEffect(() => {
     const getProductData = async () => {
       const { data } = await getSearchProduct(keyword);
@@ -38,12 +37,27 @@ const SearchProduct = ({ keyword }: any) => {
       setCurrentPage(currentPage + 1);
     }
   };
+  const NoResult = () => {
+    if (products.length < 1) {
+      return (
+        <div className="flex w-full justify-center">
+          <img
+            className="object-fit"
+            src={require('../../images/noSearchResult.png')}
+          />
+        </div>
+      );
+    }
+    return null;
+  };
 
+  console.log(products);
   return (
-    <div className="flex flex-col items-center justify-center w-[64rem]">
+    <div className="flex flex-col items-center justify-center w-full lg:w-[64rem] mx-auto bg-zinc-100">
       <div className="mt-16 mb-4 justify-start w-full text-xl font-bold">
         # {keyword} 에 대한 제품 검색 결과
       </div>
+      <NoResult />
       <div className="my-16 flex flex-row w-full">
         {products?.map((el, idx) => {
           return (

@@ -14,6 +14,7 @@ import SearchResult from './components/Search/SearchResult';
 import Layout from './layout/Layout';
 import NotFound from './pages/NotFound';
 import EditReviewDetail from './components/Details/EditReviewDetail';
+
 // import Header from './components/Header/Header';
 
 function App() {
@@ -24,7 +25,7 @@ function App() {
         <Route path="signup" element={<Signup />} />
         <Route path="/" element={<Layout />}>
           <Route path="" element={<Main />} />
-          <Route path="mypage/*" element={<MyPage />} />
+          <Route path="/mypage" element={<MyPage />} />
           <Route path="/search" element={<SearchResult />} />
           <Route path="categories/review/:id" element={<ReviewLists />} />
           <Route path="review/write" element={<WriteReview />} />

@@ -73,7 +73,6 @@ public class UserService {
 
     public User registerUser(User user) {
         verifyExistsEmail(user.getEmail());
-        verifyExistsNickname(user.getNickname());
 
         String encryptPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encryptPassword);
@@ -89,12 +88,8 @@ public class UserService {
 
     private void verifyExistsEmail(String email) {
         Optional<User> user = userRepository.findByEmail(email);
+        if(user.isPresent() && user.get().getStatus()) throw new BusinessLogicException(ExceptionCode.WITHDRAWN_USER);
         if(user.isPresent()) throw new BusinessLogicException(ExceptionCode.USER_EXISTS);
-    }
-
-    private void verifyExistsNickname(String nickname) {
-        List<User> users = userRepository.findByNickname(nickname);
-        if(users!=null) throw new BusinessLogicException(ExceptionCode.USER_EXISTS);
     }
 
     public User updateUser( String email,UserPatchDto patchDto){
@@ -127,8 +122,6 @@ public class UserService {
             throw new BusinessLogicException(ExceptionCode.PASSWORD_NOT_MATCH);
         }
         findUser.setStatus(true);
-//        findUser.setEmail("null");
-//        findUser.setNickname("탈퇴한 회원");
         userRepository.save(findUser);
     }
 
