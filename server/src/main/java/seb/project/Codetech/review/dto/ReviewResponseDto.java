@@ -29,11 +29,12 @@ public class ReviewResponseDto {
 		private String productName;
 		private String productDetail;
 		@Setter
+		private List<Long> recommends = new ArrayList<>();
+		@Setter
 		private List<Comment> reviewComments = new ArrayList<>();
 	}
 
 	@Getter
-	@Setter
 	@NoArgsConstructor
 	public static class Comment {
 		private Long id;
@@ -43,6 +44,7 @@ public class ReviewResponseDto {
 		private String content;
 		private Comment parent;
 		private LocalDateTime createdAt;
+		@Setter
 		private List<Comment> child = new ArrayList<>();
 	}
 
