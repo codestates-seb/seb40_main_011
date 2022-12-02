@@ -67,16 +67,14 @@ function TextEditor() {
       const submit = await editReview(editorData);
       switch (submit.status) {
         default:
-          console.log('Success');
-          console.log(`submit.status`, submit.status);
           setTitle('');
           setContent('');
           setProductId('');
-          setThumbnailBase64('');
           setThumnailImg('');
+          window.scrollTo(0, 0);
           navigate(`/review/${params.id}`);
           break;
-        case 401:
+        case 401 || 400:
           alert('에러');
           console.error(submit.status + 'Error');
           break;
