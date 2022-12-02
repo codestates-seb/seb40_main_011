@@ -4,7 +4,7 @@ import BestReviewList from '../components/List/BestReviewList';
 import ProductList from '../components/List/ProductList';
 import QuestionList from '../components/List/QuestionList';
 import useReview from '../store/review';
-import useCategorie from '../store/categorie';
+import useCategories from '../store/categories';
 
 const Main = () => {
   const {
@@ -15,7 +15,7 @@ const Main = () => {
     setThumnailImg,
   } = useReview();
 
-  const { clearClickName } = useCategorie();
+  const { clearClickName } = useCategories();
 
   useEffect(() => {
     setTitle('');
