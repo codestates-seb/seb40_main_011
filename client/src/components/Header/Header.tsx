@@ -22,10 +22,23 @@ export default function Header() {
     if (menu) {
       return (
         <div
-          className={`drop-shadow-xl p-2 md:hidden items-center justify-evenly rounded-b-lg bg-white fixed top-20 right-1 h-24 w-24 flex flex-col`}
+          className={`drop-shadow-xl m-1 p-2 md:hidden items-center justify-evenly rounded-lg bg-white fixed top-20 right-1 h-[12rem] w-[12rem] flex flex-col`}
         >
-          <div className="border-b-2">마이페이지</div>
-          <div>로그아웃</div>
+          <button
+            onClick={() => {
+              navigate('/mypage');
+            }}
+            className="p-2 w-full text-lg hover:bg-slate-100"
+          >
+            My Page
+          </button>
+          <button className="p-2 w-full text-lg hover:bg-slate-100">
+            Logout
+          </button>
+          <div className="p-2 text-sm text-slate-400">
+            <div>문의</div>
+            <div>contact@codetech.com</div>
+          </div>
         </div>
       );
     }
