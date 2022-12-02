@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import seb.project.Codetech.file.entity.FileEntity;
 import seb.project.Codetech.product.entity.Type;
 
 public class ProductResponseDto {
@@ -19,8 +18,8 @@ public class ProductResponseDto {
 		private String name;
 		private Type type;
 		private String detail;
+		private String thumbnail;
 		private String modifier;
-		private List<FileEntity> fileEntities;
 	}
 
 	@Getter
@@ -30,9 +29,9 @@ public class ProductResponseDto {
 		private String name;
 		private Type type;
 		private String detail;
+		private String thumbnail;
 		private String writer;
 		private String modifier;
-		private List<FileEntity> fileEntities;
 	}
 
 	@Getter
@@ -41,12 +40,11 @@ public class ProductResponseDto {
 		private Long id;
 		private String name;
 		private String detail;
+		private String thumbnail;
 		private Type type;
 		private String writer;
 		private String modifier;
 		private LocalDateTime createdAt;
-		@Setter
-		private List<FileEntity> fileEntities;
 	}
 
 	@Getter
@@ -68,6 +66,7 @@ public class ProductResponseDto {
 	public static class Card {
 		private Long id;
 		private String name;
+		private String thumbnail;
 		private Type type;
 		private LocalDateTime createdAt;
 		private String filePath;
@@ -83,6 +82,7 @@ public class ProductResponseDto {
 	public static class Search {
 		private Long id;
 		private String name;
+		private String thumbnail;
 		private Type type;
 		private Long reviewCount;
 	}
