@@ -62,9 +62,11 @@ const ProductList = () => {
   };
 
   const [spinner, setSpinner] = useState(true);
-  setTimeout(() => {
-    setSpinner(false);
-  }, 1000);
+  useEffect(() => {
+    setTimeout(() => {
+      setSpinner(false);
+    }, 1200);
+  }, []);
 
   return (
     <>

@@ -48,6 +48,7 @@ export interface Review {
   writer: string;
   productId: number;
   thumbnail: string;
+  recommends: number[];
 }
 
 export interface ReviewProps {
