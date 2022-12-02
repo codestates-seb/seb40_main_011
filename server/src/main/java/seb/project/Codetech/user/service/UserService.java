@@ -88,6 +88,7 @@ public class UserService {
 
     private void verifyExistsEmail(String email) {
         Optional<User> user = userRepository.findByEmail(email);
+        if(user.isPresent() && user.get().getStatus()) throw new BusinessLogicException(ExceptionCode.WITHDRAWN_USER);
         if(user.isPresent()) throw new BusinessLogicException(ExceptionCode.USER_EXISTS);
     }
 
@@ -121,8 +122,6 @@ public class UserService {
             throw new BusinessLogicException(ExceptionCode.PASSWORD_NOT_MATCH);
         }
         findUser.setStatus(true);
-//        findUser.setEmail("null");
-//        findUser.setNickname("탈퇴한 회원");
         userRepository.save(findUser);
     }
 
