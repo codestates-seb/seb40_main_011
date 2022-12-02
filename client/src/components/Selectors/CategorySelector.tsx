@@ -6,13 +6,13 @@ import '../common.css';
 import React, { useState } from 'react';
 import { AiFillCaretDown } from 'react-icons/ai';
 import { AiFillCaretUp } from 'react-icons/ai';
-import useCategorie from '../../store/categorie';
+import useCategories from '../../store/categories';
 
-const CategoriSelectors = () => {
+const CategorySelectors = () => {
   //대분류 셀렉터 클릭 유뮤 저장, 상태에 따라 드롭다운
   const [spread, setSpread] = useState(false);
   //셀렉터에서 클릭한 것 이름 저장
-  const { clickName, setClickName } = useCategorie();
+  const { clickName, setClickName } = useCategories();
 
   //대분류 셀렉터 클릭 이벤트 함수
   const handleSelectClick = (e: React.MouseEvent<HTMLElement>) => {
@@ -93,4 +93,4 @@ const CategoriSelectors = () => {
   );
 };
 
-export default CategoriSelectors;
+export default CategorySelectors;
