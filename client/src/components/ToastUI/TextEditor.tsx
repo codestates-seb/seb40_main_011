@@ -8,12 +8,13 @@ import 'prismjs/themes/prism.css';
 
 import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css';
 import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import useReview from '../../store/review';
 import { uploadEditorImage } from '../../util/apiCollection';
 import { postEditorContent, editReview } from '../../util/apiCollection';
 import { useNavigate, useParams } from 'react-router-dom';
 import { loginRefresh } from '../../util/loginRefresh';
+import Confirm from '../Modal/Confirm';
 
 function TextEditor() {
   const params = useParams();
@@ -32,7 +33,21 @@ function TextEditor() {
   } = useReview();
   const navigate = useNavigate();
 
-  console.log(`thumbnailImg`, thumbnailImg);
+  //메세지 모달 보이는지, 안 보이는 여부
+  const [showModal, setShowModal] = useState(false);
+  const modalMsg: string[] = [
+    '제목을 입력해주세요',
+    '제목은 50자를 넘을 수 없습니다',
+    '카테고리에서 제품을 선택해주세요',
+    '썸네일을 선택해주세요',
+    '썸네일 등록 완료!',
+    '썸네일 등록 실패 ㅜㅜ 다시 시도해 주세요',
+    '리뷰는 300자 이상 작성해야 합니다',
+    '게시글 등록 완료 :)',
+    '게시글 등록 실패 ㅜㅜ',
+  ];
+  //모달 메세지 저장
+  const [reviewMsg, setReviewMsg] = useState(modalMsg[0]);
 
   //리뷰수정부분 준일 작성
   if (params.id !== undefined) {
@@ -116,28 +131,62 @@ function TextEditor() {
       thumbnail: thumbnailImg,
     };
 
+    //프로덕트 아이디를 클릭하지 않았다면 뜨는 모달
+    if (productId.length === 0) {
+      setReviewMsg(modalMsg[2]);
+      return setShowModal(true);
+    }
+    //타이틀 글자수가 0이거나 50자 이상이라면 뜨는 모달
+    if (title.length === 0) {
+      setReviewMsg(modalMsg[0]);
+      return setShowModal(true);
+    } else if (title.length >= 50) {
+      setReviewMsg(modalMsg[1]);
+      return setShowModal(true);
+    }
+    //썸네일을 선택하지 않았다면 뜨는 모달
+    if (thumbnailImg.length === 0) {
+      setReviewMsg(modalMsg[3]);
+      return setShowModal(true);
+    }
+    //컨텐츠의 글자수가 0이거나 300이하라면 뜨는 모달
+    if (content.length === 0 || content.length <= 300) {
+      setReviewMsg(modalMsg[6]);
+      return setShowModal(true);
+    }
+
     //api 요청
-    const submit = await postEditorContent(editorData);
-    console.log(`submit`, submit);
-    switch (submit.status) {
-      default:
-        console.log('Success');
-        console.log(`submit.status`, submit.status);
-        navigate('/');
-        break;
-      case 401:
-        alert('에러');
-        console.error(submit.status + 'Error');
-        break;
-      case 412: {
-        loginRefresh();
-        handleClick();
-        break;
+    if (
+      title.length !== 0 &&
+      title.length <= 50 &&
+      productId.length !== 0 &&
+      content.length !== 0 &&
+      content.length >= 300 &&
+      thumbnailImg.length !== 0
+    ) {
+      const submit = await postEditorContent(editorData);
+      console.log(`submit`, submit);
+      switch (submit.status) {
+        case 200:
+          setReviewMsg(modalMsg[7]);
+          setShowModal(true);
+          navigate('/');
+          break;
+        case 401:
+          alert('에러');
+          console.error(submit.status + 'Error');
+          break;
+        case 412: {
+          loginRefresh();
+          handleClick();
+          break;
+        }
       }
     }
   };
   return (
     <>
+      {showModal && <Confirm msg={reviewMsg} setShowModal={setShowModal} />}
       <Editor
         ref={editorRef}
         previewStyle="vertical"

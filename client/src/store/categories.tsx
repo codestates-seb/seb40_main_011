@@ -9,10 +9,10 @@ type Categories = {
   clearClickName: (clickName: string) => void;
 };
 
-const useCategorie = create<Categories>((set) => ({
+const useCategories = create<Categories>((set) => ({
   clickName: '대분류 선택',
   setClickName: (input) => set(() => ({ clickName: input })),
   clearClickName: (input) => set(() => ({ clickName: '대분류 선택' })),
 }));
 
-export default useCategorie;
+export default useCategories;

@@ -53,7 +53,7 @@ const SearchProduct = ({ keyword }: any) => {
 
   console.log(products);
   return (
-    <div className="flex flex-col items-center justify-center w-[64rem]">
+    <div className="flex flex-col items-center justify-center w-full lg:w-[64rem] mx-auto bg-zinc-100">
       <div className="mt-16 mb-4 justify-start w-full text-xl font-bold">
         # {keyword} 에 대한 제품 검색 결과
       </div>

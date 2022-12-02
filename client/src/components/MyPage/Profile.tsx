@@ -94,7 +94,7 @@ const Profile = () => {
         />
       )}
 
-      <div className="flex items-center justify-center pt-2 bg-zinc-100">
+      <div className="flex flex-col items-center justify-center pt-2 bg-zinc-100 lg:flex-row">
         <div className="mx-10">
           <img
             src={`https://codetech.nworld.dev${userProfileData?.image}`}
@@ -110,25 +110,25 @@ const Profile = () => {
             </button>
           </div>
         </div>
-        <div className="">
-          <div className="m-3 mt-0 text-4xl font-bold">
+        <div className="lg:block sm:flex-col ">
+          <div className="px-24 m-3 mt-0 text-2xl font-bold lg:text-4xl lg:p-0">
             {userProfileData?.nickname}
           </div>
-          <div className="m-2 text-sm font-semibold">
+          <div className="px-24 m-2 text-sm font-semibold lg:p-0">
             {userProfileData?.email}
           </div>
-          <div className="m-2 text-sm font-semibold">
+          <div className="px-24 m-2 text-sm font-semibold lg:p-0">
             {userProfileData?.point} point
           </div>
-          <div className="flex mt-3 mb-10">
+          <div className="flex items-center justify-center mt-3 mb-10 lg:items-start lg:justify-start">
             <button
-              className="py-2 m-4 ml-0 bg-white rounded px-14"
+              className="px-10 py-2 m-4 ml-0 bg-white rounded sm:px-14"
               onClick={openEditProfileModalHandler}
             >
               닉네임 수정
             </button>
             <button
-              className="py-2 m-4 bg-white rounded px-14"
+              className="px-10 py-2 m-4 bg-white rounded sm:px-14"
               onClick={openEditPasswordModalHandler}
             >
               비밀번호 수정
