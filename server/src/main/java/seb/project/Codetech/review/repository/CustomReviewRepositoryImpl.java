@@ -1,6 +1,7 @@
 package seb.project.Codetech.review.repository;
 
 import static seb.project.Codetech.product.entity.QProduct.*;
+import static seb.project.Codetech.recommend.entity.QRecommend.*;
 import static seb.project.Codetech.review.entity.QReview.*;
 import static seb.project.Codetech.review.entity.QReviewComment.*;
 import static seb.project.Codetech.user.entity.QUser.*;
@@ -87,7 +88,16 @@ public class CustomReviewRepositoryImpl implements CustomReviewRepository {
 			}
 		}
 
-		// 3. 목표한 리뷰 글 하나를 가져옴.
+		// 3. 상세리뷰가 가지고 있는 좋아요 유저 아이디를 가져옴
+		var recommends = queryFactory
+			.select(
+				recommend.user.id
+			)
+			.from(recommend)
+			.where(recommend.review.id.eq(id))
+			.fetch();
+
+		// 4. 목표한 리뷰 글 하나를 가져옴.
 		var page = queryFactory
 			.select(
 				Projections.fields(ReviewResponseDto.Page.class,
@@ -113,10 +123,12 @@ public class CustomReviewRepositoryImpl implements CustomReviewRepository {
 			.fetchOne();
 
 		assert page != null; // 가져온 page가 null이 아님을 확인.
-		// 4. 위에서 가져온 댓글을 리뷰 글 DTO에 쑤셔넣음.
+		// 5. 위에서 가져온 댓글을 리뷰 글 DTO에 쑤셔넣음.
 		page.setReviewComments(comments);
+		// 6. 위에서 가져온 좋아요 유저 아이디를 넣음.
+		page.setRecommends(recommends);
 
-		// 5. 리턴
+		// 6. 리턴
 		return page;
 	}
 
