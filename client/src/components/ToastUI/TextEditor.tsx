@@ -61,6 +61,7 @@ function TextEditor() {
           setThumnailImg('');
           navigate(`/review/${params.id}`);
           break;
+
         case 401:
           alert('에러');
           console.error(submit.status + 'Error');

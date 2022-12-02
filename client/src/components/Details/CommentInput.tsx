@@ -12,8 +12,9 @@ export const CommentInput = () => {
   const handleTextarea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setComment(e.target.value);
   };
+
   const onCommentClick = async () => {
-    if (comment !== 'undefined') {
+    if (comment !== undefined && comment !== '') {
       const response = await postComment({
         reviewId: params.id,
         parentId: 0,
@@ -39,7 +40,7 @@ export const CommentInput = () => {
   return (
     <>
       <div className="w-full bg-zinc-100 flex justify-center m-4">
-        <div className="py-10 w-full">
+        <div className="py-10 w-full border-t-2">
           <TextareaAutosize
             minRows={3}
             maxRows={6}
