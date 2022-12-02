@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import seb.project.Codetech.file.entity.FileEntity;
 import seb.project.Codetech.global.exception.BusinessLogicException;
 import seb.project.Codetech.global.exception.ExceptionCode;
 import seb.project.Codetech.product.dto.ProductResponseDto;
@@ -35,18 +36,19 @@ public class ProductService {
 	}
 
 	@Transactional
-	public Product createProduct(String email, Product product) {
+	public Product createProduct(String email, Product product, FileEntity file) {
 
 		if (!findUser(email).getRoles().contains("USER")) // 회원만 제품을 등록 할 수 있다.
 			throw new BusinessLogicException(ExceptionCode.PRODUCT_NOT_USE);
 
 		product.setWriter(findUser(email).getNickname()); // 작성자를 기록한다 한번 기록하면 수정이 불가능해진다.
 		product.setModifier(findUser(email).getNickname()); // 수정자도 동시에 작성자로 기록한다.
+		product.setThumbnail(file.getPath());
 		return productRepository.save(product);
 	}
 
 	@Transactional
-	public Product modifyProduct(String email, Long id, Product product) {
+	public Product modifyProduct(String email, Long id, Product product, FileEntity file) {
 
 		if (!findUser(email).getRoles().contains("USER")) // 회원만 제품을 수정 할 수 있다.
 			throw new BusinessLogicException(ExceptionCode.PRODUCT_NOT_USE);
@@ -56,7 +58,7 @@ public class ProductService {
 		Optional.ofNullable(product.getType()).ifPresent(findProduct::setType);
 		Optional.ofNullable(findUser(email).getNickname()).ifPresent(findProduct::setModifier); // 수정한 유저 이름을 기록한다.
 		Optional.ofNullable(product.getDetail()).ifPresent(findProduct::setDetail);
-		Optional.ofNullable(product.getFileEntities()).ifPresent(findProduct::setFileEntities);
+		Optional.ofNullable(file.getPath()).ifPresent(findProduct::setThumbnail);
 		return productRepository.save(findProduct);
 	}
 
