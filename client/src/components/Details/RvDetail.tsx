@@ -42,6 +42,14 @@ const RvDetail = () => {
   const { loginId } = useIsLogin();
   const [comments, setComments] = useState<ReviewComments[]>([]);
   const [showModal, setShowModal] = useState(false);
+
+  const HandleSpinner = () => {
+    if (review.content === '') {
+      return <Spinner />;
+    }
+    return null;
+  };
+
   const getParsedDate = (createdAt: string) => {
     return new Date(createdAt).toLocaleDateString('ko-KR');
   };
@@ -169,13 +177,6 @@ const RvDetail = () => {
       );
   };
 
-  const HandleSpinner = () => {
-    if (review.content === '') {
-      return <Spinner />;
-    }
-    return null;
-  };
-
   return (
     <>
       {showModal && (
@@ -205,10 +206,13 @@ const RvDetail = () => {
           </div>
           <ReviewInfo />
           <section className="flex flex-col items-center border-b border-gray-200">
-            <img
-              className="mt-8 rounded"
-              src={`https://codetech.nworld.dev${review?.thumbnail}`}
-            />
+            {review.thumbnail.length === 0 ? null : (
+              <img
+                className="mt-8 rounded"
+                src={`https://codetech.nworld.dev${review?.thumbnail}`}
+              />
+            )}
+
             <div id="viewer" className="p-4 my-16 whitespace-pre-wrap">
               <ConvertedContent markdown={review.content} />
             </div>
