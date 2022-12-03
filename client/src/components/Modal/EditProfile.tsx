@@ -69,9 +69,9 @@ const EditProfile = ({
         <button className="p-3 ml-auto" onClick={openEditProfileModalHandler}>
           <BsXLg />
         </button>
-        <div className="px-12 py-8">
-          <div className="text-4xl">닉네임을 수정하시겠습니까?</div>
-          <div className="my-2 text-xl mb-28 text-slate-500">
+        <div className="px-6 py-4 sm:px-12 sm:py-8">
+          <div className="text-xl sm:text-4xl">닉네임을 수정하시겠습니까?</div>
+          <div className="my-2 mb-16 sm:text-xl text-slate-500 sm:mb-28">
             새로운 닉네임을 입력해주세요
           </div>
 
@@ -96,7 +96,7 @@ const EditProfile = ({
               value={username}
               onChange={handleUsername}
               placeholder="닉네임을 입력해주세요"
-              className="flex w-full text-lg"
+              className="flex w-full text-sm sm:text-lg "
             />
           </div>
           {usernameError && (

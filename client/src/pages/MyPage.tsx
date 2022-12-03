@@ -7,6 +7,8 @@ import MypageTab from '../components/MyPage/MypageTab';
 import Profile from '../components/MyPage/Profile';
 import OptOut from '../components/Modal/OptOut';
 import { useIsLogin } from '../store/login';
+import { useEffect } from 'react';
+import { loginRefresh } from '../util/loginRefresh';
 
 export interface OptOutModalHandler {
   openOptOutModalHandler: React.MouseEventHandler<HTMLButtonElement>;
@@ -25,6 +27,10 @@ const MyPage = (): JSX.Element => {
   const container = isLogin
     ? 'flex flex-col'
     : 'flex flex-col fixed table-fixed';
+
+  useEffect(() => {
+    loginRefresh();
+  }, []);
 
   return (
     <>

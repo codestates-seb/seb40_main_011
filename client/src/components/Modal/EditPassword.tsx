@@ -116,8 +116,10 @@ const EditPassword = ({
         <button className="p-3 ml-auto" onClick={openEditPasswordModalHandler}>
           <BsXLg />
         </button>
-        <div className="px-12 py-8">
-          <div className="mb-6 text-3xl">비밀번호를 변경하시겠습니까?</div>
+        <div className="px-6 py-4 sm:px-12 sm:py-8">
+          <div className="mb-6 text-lg sm:text-3xl">
+            비밀번호를 변경하시겠습니까?
+          </div>
           {notiPass ? (
             <div className="px-2 pt-2 pb-2 mb-2 text-sm font-medium text-red-500 bg-red-100 rounded">
               모든 항목을 입력 해주세요
@@ -139,7 +141,7 @@ const EditPassword = ({
                 value={prePassword}
                 onChange={handlePrePassword}
                 placeholder="현재 비빌번호를 입력해주세요"
-                className="flex w-full p-1.5 mt-4"
+                className="flex w-full p-1.5 mt-4 text-sm sm:text-base"
               />
             ) : (
               <input
@@ -147,7 +149,7 @@ const EditPassword = ({
                 value={prePassword}
                 onChange={handlePrePassword}
                 placeholder="현재 비빌번호를 입력해주세요"
-                className="flex w-full p-1.5 mt-4"
+                className="flex w-full p-1.5 mt-4 text-sm sm:text-base"
               />
             )}
 
@@ -173,7 +175,7 @@ const EditPassword = ({
                 value={password}
                 onChange={handlePassword}
                 placeholder="새 비빌번호를 입력해주세요 "
-                className="flex w-full p-1.5 mt-4"
+                className="flex w-full p-1.5 mt-4 text-sm sm:text-base"
               />
             ) : (
               <input
@@ -181,7 +183,7 @@ const EditPassword = ({
                 value={password}
                 onChange={handlePassword}
                 placeholder="새 비빌번호를 입력해주세요 "
-                className="flex w-full p-1.5 mt-4"
+                className="flex w-full p-1.5 mt-4 text-sm sm:text-base"
               />
             )}
 
@@ -208,7 +210,7 @@ const EditPassword = ({
                 value={passwordCheck}
                 onChange={handlePasswordCheck}
                 placeholder="새 비빌번호를 확인해주세요"
-                className="flex w-full p-1.5 mt-4"
+                className="flex w-full p-1.5 mt-4 text-sm sm:text-base"
               />
             ) : (
               <input
@@ -216,7 +218,7 @@ const EditPassword = ({
                 value={passwordCheck}
                 onChange={handlePasswordCheck}
                 placeholder="새 비빌번호를 확인해주세요"
-                className="flex w-full p-1.5 mt-4"
+                className="flex w-full p-1.5 mt-4 text-sm sm:text-base"
               />
             )}
 
