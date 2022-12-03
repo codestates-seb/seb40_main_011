@@ -8,6 +8,7 @@ import moment from 'moment';
 import { format } from 'timeago.js';
 import { categoryList } from '../Selectors/MainCategory';
 import Spinner from '../../util/Spinner';
+import { ReviewLists } from '../../pages';
 
 const ProductList = () => {
   const navigate = useNavigate();
@@ -68,6 +69,8 @@ const ProductList = () => {
     }, 1000);
   }, []);
 
+  console.log(products);
+
   return (
     <>
       {spinner ? (
@@ -89,11 +92,7 @@ const ProductList = () => {
                   className="relative group flex flex-col sm:flex-[1_1_40%] lg:flex-[1_1_30%] flex-[1_1_50%] my-5 mx-3 hover:bg-white rounded-3xl"
                 >
                   <img
-                    src={
-                      el?.filePath === null
-                        ? require('../../images/placeholder-image.png')
-                        : `https://codetech.nworld.dev${el?.filePath}`
-                    }
+                    src={`https://codetech.nworld.dev${el?.thumbnail}`}
                     className="object-cover h-48 bg-slate-200 rounded-3xl group-hover:rounded-b-none"
                   />
                   <div className="absolute -top-6 w-fit px-3 pt-0.5 pb-1 my-3 rounded-full bg-slate-300 text-slate-600 text-sm font-medium">

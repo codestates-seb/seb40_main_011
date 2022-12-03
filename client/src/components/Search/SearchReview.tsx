@@ -78,9 +78,11 @@ const SearchReview = ({ keyword }: any) => {
                 {onlyText(el.content)}
               </div>
               <div className="flex flex-row justify-between items-center w-full">
-                <div className="flex w-1/8">
+                <div className="flex w-1/8 items-center">
                   <AiOutlineHeart size="30" className="p-1 text-slate-500" />
-                  <div className="p-1 text-slate-500">{el.recommendNumber}</div>
+                  <div className="py-1.5  text-slate-500">
+                    {el.recommendNumber}
+                  </div>
                 </div>
                 <div className="flex items-end">
                   <div className="p-2">{el.writer}</div>
