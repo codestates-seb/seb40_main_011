@@ -1,5 +1,5 @@
 // Snack Review List fetching & boxing comp
-import { Suspense, useEffect } from 'react';
+import { useEffect } from 'react';
 import BestReviewList from '../components/List/BestReviewList';
 import ProductList from '../components/List/ProductList';
 import QuestionList from '../components/List/QuestionList';
@@ -25,13 +25,12 @@ const Main = () => {
     setThumnailImg('');
     clearClickName('');
   }, []);
+
   return (
     <>
-      <Suspense fallback={<div>loading...</div>}>
-        <BestReviewList />
-        <ProductList />
-        <QuestionList />
-      </Suspense>
+      <BestReviewList />
+      <ProductList />
+      <QuestionList />
     </>
   );
 };

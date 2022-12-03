@@ -7,13 +7,15 @@ import { useIsLogin } from '../../store/login';
 
 interface LikeProps {
   userId: number;
+  recommends: number[];
 }
 
-const HandleLike = ({ userId }: LikeProps) => {
+const HandleLike = ({ userId, recommends }: LikeProps) => {
   const [isHover, setIsHover] = useState(false);
 
   const params = useParams();
   const { loginId } = useIsLogin();
+  const didLike = recommends.filter((el) => Number(loginId) === el);
   const handleLikeClick = async () => {
     if (loginId) {
       const response = await postLike(Number(params.id));
@@ -31,7 +33,7 @@ const HandleLike = ({ userId }: LikeProps) => {
     }
   };
   const HandleHover = () => {
-    if (isHover) {
+    if (isHover && didLike.length !== 1) {
       return (
         <AiFillHeart
           color="blue"
@@ -42,6 +44,26 @@ const HandleLike = ({ userId }: LikeProps) => {
     }
     return null;
   };
+
+  const HandleLiked = () => {
+    if (didLike.length !== 1) {
+      return (
+        <AiOutlineHeart
+          color="2962F6"
+          size="40"
+          className="relative inline-flex"
+        />
+      );
+    } else
+      return (
+        <AiFillHeart
+          color="2962F6"
+          size="40"
+          className="relative inline-flex"
+        />
+      );
+  };
+
   return (
     <>
       {userId === Number(loginId) ? null : (
@@ -51,11 +73,7 @@ const HandleLike = ({ userId }: LikeProps) => {
           onMouseEnter={() => setIsHover(true)}
           onMouseLeave={() => setIsHover(false)}
         >
-          <AiOutlineHeart
-            color="2962F6"
-            size="40"
-            className="relative inline-flex"
-          />
+          <HandleLiked />
           <HandleHover />
         </button>
       )}

@@ -69,12 +69,20 @@ const SearchProduct = ({ keyword }: any) => {
                 role="button"
                 onClick={onProductClick}
                 id={el.id.toString()}
-                className=" flex flex-col w-full bg-white rounded-b-lg"
+                className=" flex flex-col w-full bg-white rounded-lg"
               >
-                <img
-                  className="rounded-t-lg h-48"
-                  src={require('../../images/Image-null.png')}
-                />
+                {el.thumbnail.length === 0 ? (
+                  <img
+                    className="rounded-t-lg h-48"
+                    src={require('../../images/Image-null.png')}
+                  />
+                ) : (
+                  <img
+                    className="rounded-t-lg h-48"
+                    src={`https://codetech.nworld.dev${el.thumbnail}`}
+                  />
+                )}
+
                 <div>
                   <div className="p-2 border-t-2 border-slate-300">
                     {el.name}

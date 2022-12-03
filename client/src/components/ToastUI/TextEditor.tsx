@@ -8,7 +8,7 @@ import 'prismjs/themes/prism.css';
 
 import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css';
 import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
-import { useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import useReview from '../../store/review';
 import { uploadEditorImage } from '../../util/apiCollection';
 import { postEditorContent, editReview } from '../../util/apiCollection';
@@ -18,6 +18,15 @@ import Confirm from '../Modal/Confirm';
 
 function TextEditor() {
   const params = useParams();
+  //글자 수 세기
+  const [contentCount, setContentCount] = useState('');
+  //글자 수 세는 이벤트
+  const onChangeContent = () => {
+    const countData = editorRef.current?.getInstance().getHTML();
+    if (countData !== undefined) {
+      setContentCount(countData);
+    }
+  };
 
   const editorRef = useRef<Editor>(null);
   const {
@@ -164,11 +173,12 @@ function TextEditor() {
     ) {
       const submit = await postEditorContent(editorData);
       console.log(`submit`, submit);
+      console.log(`submit.data`, submit.data);
       switch (submit.status) {
-        case 200:
+        case 201:
           setReviewMsg(modalMsg[7]);
           setShowModal(true);
-          navigate('/');
+          navigate(`/review/${submit.data}`);
           break;
         case 401:
           alert('에러');
@@ -188,10 +198,11 @@ function TextEditor() {
       <Editor
         ref={editorRef}
         previewStyle="vertical"
-        initialValue={content || '내용을 입력하세요'}
+        initialValue=" "
         height="550px"
         usageStatistics={false}
         plugins={[[codeSyntaxHighlight, { highlighter: Prism }]]}
+        onChange={onChangeContent}
         hooks={{
           async addImageBlobHook(blob, callback) {
             const formData = new FormData();
@@ -202,6 +213,11 @@ function TextEditor() {
           },
         }}
       />
+      <div>
+        <span className="text-sm text-gray-400">
+          현재 글자수 {contentCount.length} / 최소 글자수 300자
+        </span>
+      </div>
       <div className="flex justify-center mt-10">
         <button
           onClick={handleClick}

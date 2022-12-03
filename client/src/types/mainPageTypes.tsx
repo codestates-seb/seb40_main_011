@@ -32,6 +32,7 @@ export interface Product {
   reviewCount: number;
   snackCount: number;
   type: string;
+  thumbnail: string;
 }
 export interface Review {
   content: string;
@@ -48,6 +49,7 @@ export interface Review {
   writer: string;
   productId: number;
   thumbnail: string;
+  recommends: number[];
 }
 
 export interface ReviewProps {
