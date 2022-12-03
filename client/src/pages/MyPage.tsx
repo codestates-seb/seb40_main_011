@@ -22,11 +22,15 @@ const MyPage = (): JSX.Element => {
     setIsOptOut(!isOptOut);
   };
 
+  const container = isLogin
+    ? 'flex flex-col'
+    : 'flex flex-col fixed table-fixed';
+
   return (
     <>
       {isLogin ? (
         <>
-          <div className="flex flex-col ">
+          <div className={container}>
             {isOptOut === false ? null : (
               <OptOut openOptOutModalHandler={openOptOutModalHandler} />
             )}

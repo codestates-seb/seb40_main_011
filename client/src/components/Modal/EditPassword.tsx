@@ -26,6 +26,9 @@ const EditPassword = ({
   const [viewPassword, setViewPassword] = useState(false);
   const [viewPasswordCheck, setViewPasswordCheck] = useState(false);
 
+  const [notiPass, setNotiPass] = useState(false);
+  const [notiPassCheck, setNotiPassCheck] = useState(false);
+
   const viewPrePasswordHandler = (e: React.MouseEvent<HTMLElement>) => {
     setViewPrePassword(!viewPrePassword);
   };
@@ -69,12 +72,12 @@ const EditPassword = ({
   };
 
   const handleSubmitPassword = async () => {
-    if (prePassword.length === 0) {
-      alert('이전 비밀번호를 입력해 주세요');
-    } else if (password.length === 0) {
-      alert('새로운 비밀번호를 입력해 주세요');
+    if (prePassword.length === 0 || password.length === 0) {
+      setNotiPass(true);
+      setNotiPassCheck(false);
     } else if (passwordCheck.length === 0) {
-      alert('이전 비밀번호 확인을 입력해 주세요');
+      setNotiPass(true);
+      setNotiPassCheck(false);
     } else if (!passwordError && !passwordCheckError) {
       const data: Password = {
         oldPassword: prePassword,
@@ -84,12 +87,13 @@ const EditPassword = ({
       const submitEditPassword = await editPassword(data);
       // console.log(submitEditPassword);
       switch (submitEditPassword.status) {
-        // case 200:
-        //   location.reload();
-        //   break;
+        case 200:
+          location.reload();
+          break;
         case 404:
           setPrePasswordError(true);
-          alert('비밀번호가 일치하지 않습니다');
+          setNotiPass(false);
+          setNotiPassCheck(true);
           break;
         case 412: {
           loginRefresh;
@@ -97,8 +101,6 @@ const EditPassword = ({
           break;
         }
         default:
-          location.reload();
-          break;
       }
     }
     // else if (passwordError) {
@@ -114,9 +116,22 @@ const EditPassword = ({
         <button className="p-3 ml-auto" onClick={openEditPasswordModalHandler}>
           <BsXLg />
         </button>
-        <div className="px-24 py-16">
+        <div className="px-12 py-8">
           <div className="mb-6 text-3xl">비밀번호를 변경하시겠습니까?</div>
-
+          {notiPass ? (
+            <div className="px-2 pt-2 pb-2 mb-2 text-sm font-medium text-red-500 bg-red-100 rounded">
+              모든 항목을 입력 해주세요
+            </div>
+          ) : (
+            <></>
+          )}
+          {notiPassCheck ? (
+            <div className="px-2 pt-2 pb-2 mb-2 text-sm font-medium text-red-500 bg-red-100 rounded">
+              이전 비밀번호가 일치하지 않습니다
+            </div>
+          ) : (
+            <></>
+          )}
           <div className="flex items-end border-b ">
             {viewPrePassword ? (
               <input
@@ -222,7 +237,7 @@ const EditPassword = ({
             비밀번호가 일치하지 않습니다
           </div>
         </div>
-        <div className="flex justify-center pt-4">
+        <div className="flex justify-center pt-4 mb-10">
           <button
             className="w-1/3 py-3 mx-5 border rounded-3xl"
             onClick={openEditPasswordModalHandler}
