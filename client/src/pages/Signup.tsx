@@ -180,6 +180,7 @@ const Signup = () => {
     '회원가입이 완료되었습니다',
     '회원가입 실패 ㅜㅜ 고객센터로 문의해주세요',
     '가입이 되어있는 이메일입니다 ㅜㅜ',
+    '탈퇴한 이메일은 재가입이 불가능합니다 ㅜㅜ',
   ];
   const [msg, setMsg] = useState(modalMsg[0]);
 
@@ -204,6 +205,10 @@ const Signup = () => {
           setMsg(modalMsg[4]);
           setShowModal(true);
           setIsEmailBut(true);
+          break;
+        case 400:
+          setMsg(modalMsg[12]);
+          setShowModal(true);
           break;
         case 404:
           setMsg(modalMsg[5]);

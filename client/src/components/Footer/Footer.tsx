@@ -17,7 +17,7 @@ function Banner() {
       <span className="text-center text-slate-500 text-xl">
         Codestates Front-End & Back-End Bootcamp 40th
       </span>
-      <div className="text-center">
+      <div className="text-center max-sm:hidden">
         <span className="text-center text-gray-300 text-2xl">Main-Project</span>
         <span className="border-l-gray-500 border-l border-solid mx-4 text-xs"></span>
         <span className="text-center text-gray-300 text-2xl">
