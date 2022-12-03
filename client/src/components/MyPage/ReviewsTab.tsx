@@ -74,7 +74,7 @@ const ReviewsTab = () => {
                 <Link
                   to={`/review/${el.id}`}
                   key={index}
-                  className="flex flex-col justify-center w-full max-w-screen-lg p-5 lg:px-24 sm:p-10"
+                  className="flex flex-col justify-center w-full max-w-screen-lg py-2.5 lg:px-24 px-10"
                 >
                   <div className="mb-2 text-xl">{el.title}</div>
                   <div className="mb-2 overflow-hidden text-ellipsis line-clamp-2">
@@ -86,7 +86,7 @@ const ReviewsTab = () => {
                     <div className="px-3 py-0.5 bg-slate-300 rounded-lg">
                       {el.type}
                     </div>
-                    <div className="px-3 py-0.5 overflow-hidden text-ellipsis line-clamp-1">
+                    <div className="px-3 py-0.5 hidden sm:block">
                       {el.productName}
                     </div>
                     <div className="ml-auto text-slate-600">
