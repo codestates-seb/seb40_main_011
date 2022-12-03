@@ -67,9 +67,9 @@ const OptOut = ({ openOptOutModalHandler }: OptOutModalHandler) => {
         <button className="p-3 ml-auto" onClick={openOptOutModalHandler}>
           <BsXLg />
         </button>
-        <div className="px-12 py-8">
-          <div className="text-4xl">정말 탈퇴하시겠습니까?</div>
-          <div className="my-2 mb-20 text-xl text-slate-500">
+        <div className="px-6 py-4 sm:px-12 sm:py-8">
+          <div className="text-2xl sm:text-4xl">정말 탈퇴하시겠습니까?</div>
+          <div className="my-2 mb-20 sm:text-xl text-slate-500">
             회원탈퇴를 위해 비빌번호를 입력해주세요
           </div>
 
@@ -96,7 +96,7 @@ const OptOut = ({ openOptOutModalHandler }: OptOutModalHandler) => {
                 value={password}
                 onChange={handlePassword}
                 placeholder="비밀번호"
-                className="flex w-full text-lg"
+                className="flex w-full pb-1 text-sm sm:text-lg"
               />
             ) : (
               <input
@@ -104,7 +104,7 @@ const OptOut = ({ openOptOutModalHandler }: OptOutModalHandler) => {
                 value={password}
                 onChange={handlePassword}
                 placeholder="비밀번호"
-                className="flex w-full text-lg"
+                className="flex w-full pb-1 text-sm sm:text-lg"
               />
             )}
 
