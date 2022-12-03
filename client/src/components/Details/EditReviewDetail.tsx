@@ -28,8 +28,7 @@ const EditReviewDetail = () => {
 
   const params = useParams();
 
-  const { setTitle, setProductId, setThumbnailBase64, setThumnailImg } =
-    useReview();
+  const { setTitle, setProductId, setThumnailImg } = useReview();
 
   useEffect(() => {
     const getReviewData = async () => {

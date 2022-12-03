@@ -67,17 +67,17 @@ export default function Comment({ reviewComments }: CommentProps) {
     setSubComment(e.target.value);
   };
 
-  const onSubCommentClick = async (e: React.MouseEvent) => {
+  const onSubCommentClick = async (e: React.MouseEvent, id: string) => {
     e.preventDefault();
-    const parentId = e.currentTarget.id;
-    if (subComment !== 'undefined') {
+
+    if (subComment !== '') {
       const response = await postComment({
         reviewId: params.id,
-        parentId,
+        parentId: id,
         content: subComment,
       });
       switch (response.status) {
-        case 201:
+        default:
           location.reload();
           break;
         case 401:
@@ -86,7 +86,7 @@ export default function Comment({ reviewComments }: CommentProps) {
           break;
         case 412: {
           loginRefresh();
-          onSubCommentClick(e);
+          onSubCommentClick(e, id);
           break;
         }
       }
@@ -212,8 +212,9 @@ export default function Comment({ reviewComments }: CommentProps) {
                       className="peer w-full resize-none pl-6 mt-2 mb-3 outline-none font-medium bg-transparent"
                     />
                     <button
-                      id={reviewComments.id.toString()}
-                      onClick={onSubCommentClick}
+                      onClick={(e) =>
+                        onSubCommentClick(e, reviewComments.id.toString())
+                      }
                       className="w-12 flex-none flex justify-center items-center"
                     >
                       <FiSend className="text-3xl text-gray-400 hover:text-blue-500 mr-2 hover:text-blue-500  hover:bg-blue-100 p-1 rounded-lg w-10 h-8 pr-1.5" />
@@ -239,8 +240,9 @@ export default function Comment({ reviewComments }: CommentProps) {
                       className="peer w-full resize-none pl-6 mt-2 mb-3 outline-none font-medium bg-transparent"
                     />
                     <button
-                      id={reviewComments.id.toString()}
-                      onClick={onSubCommentClick}
+                      onClick={(e) =>
+                        onSubCommentClick(e, reviewComments.id.toString())
+                      }
                       className="w-12 flex-none flex justify-center items-center"
                     >
                       <FiSend className="text-3xl text-gray-400 hover:text-blue-500 mr-2 hover:text-blue-500  hover:bg-blue-100 p-1 rounded-lg w-10 h-8 pr-1.5" />
