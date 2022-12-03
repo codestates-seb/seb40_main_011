@@ -94,7 +94,7 @@ const Profile = () => {
         />
       )}
 
-      <div className="flex flex-col items-center justify-center pt-2 bg-zinc-100 lg:flex-row">
+      <div className="flex flex-col items-center justify-center pt-2 bg-zinc-100 md:flex-row">
         <div className="mx-10">
           <img
             src={`https://codetech.nworld.dev${userProfileData?.image}`}
@@ -103,7 +103,7 @@ const Profile = () => {
           />
           <div className="flex justify-center">
             <button
-              className="px-12 py-2 mt-4 mb-10 bg-gray-400 rounded onClick={openModalHandler}"
+              className="px-12 py-2 mt-4 mb-10 bg-slate-300 rounded onClick={openModalHandler}"
               onClick={openEditProfileImgModalHandler}
             >
               사진 업로드
@@ -111,13 +111,13 @@ const Profile = () => {
           </div>
         </div>
         <div className="lg:block sm:flex-col ">
-          <div className="px-24 m-3 mt-0 text-2xl font-bold lg:text-4xl lg:p-0">
+          <div className="px-24 m-3 mt-0 text-2xl font-bold md:text-4xl md:p-0">
             {userProfileData?.nickname}
           </div>
-          <div className="px-24 m-2 text-sm font-semibold lg:p-0">
+          <div className="px-24 m-2 text-sm font-semibold md:p-0">
             {userProfileData?.email}
           </div>
-          <div className="px-24 m-2 text-sm font-semibold lg:p-0">
+          <div className="px-24 m-2 text-sm font-semibold md:p-0">
             {userProfileData?.point} point
           </div>
           <div className="flex items-center justify-center mt-3 mb-10 lg:items-start lg:justify-start">

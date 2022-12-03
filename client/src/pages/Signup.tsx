@@ -79,11 +79,11 @@ const Signup = () => {
       setNameMessage('사용 가능한 닉네임입니다');
       setIsName(true);
     }
-    console.log(`e.target.value`, e);
   }, []);
 
   //이메일
   const onChangeEmail = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    // e.target.value = '';
     const emailCurrent = e.target.value;
     setEmail(emailCurrent);
 
@@ -178,7 +178,7 @@ const Signup = () => {
     '이메일 인증이 완료되었습니다 :)',
     '인증번호가 유효하지 않습니다',
     '회원가입이 완료되었습니다',
-    '회원가입 실패 ㅜㅜ 고객센터로 문의해주세요',
+    '회원가입 실패 ㅜㅜ 코드테크로 문의해주세요',
     '가입이 되어있는 이메일입니다 ㅜㅜ',
     '탈퇴한 이메일은 재가입이 불가능합니다 ㅜㅜ',
   ];
@@ -281,6 +281,7 @@ const Signup = () => {
         nickname,
         image,
       });
+      console.log(signupResult);
       switch (signupResult.status) {
         case 200:
           setMsg(modalMsg[9]);
@@ -320,7 +321,7 @@ const Signup = () => {
               value={nickname}
               name="nicmname"
               onChange={onChangeName}
-              onKeyDown={(e) => handleEnter(e, 'email')}
+              onKeyPress={(e) => handleEnter(e, 'email')}
             ></input>
             <label
               className={`absolute font-medium top-4 left-6 text-gray-500 duration-200 pointer-events-none peer-focus/email:-translate-y-2.5 peer-focus/email:text-xs ${
@@ -428,7 +429,7 @@ const Signup = () => {
                   id="but02"
                   className="w-full h-full pb-1 text-base font-medium text-white bg-blue-600 rounded-md hover:bg-blue-500"
                   onClick={emailNumCheckClick}
-                  onKeyDown={(e) => handleEnter(e, 'password')}
+                  onKeyPress={(e) => handleEnter(e, 'password')}
                 >
                   인증 완료
                 </button>
@@ -453,7 +454,7 @@ const Signup = () => {
               value={password}
               name="password"
               onChange={onChangePassword}
-              onKeyDown={(e) => handleEnter(e, 'passwordCheck')}
+              onKeyPress={(e) => handleEnter(e, 'passwordCheck')}
             ></input>
             <label
               className={`absolute font-medium top-4 left-6 text-gray-500 duration-200 pointer-events-none peer-focus/password:-translate-y-2.5 peer-focus/password:text-xs ${
@@ -498,7 +499,7 @@ const Signup = () => {
               value={passwordCheck}
               name="password"
               onChange={onChangePasswordCheck}
-              onKeyDown={(e) => handleEnter(e, 'signUpSubmit')}
+              onKeyPress={(e) => handleEnter(e, 'signUpSubmit')}
             ></input>
             <label
               className={`absolute font-medium top-4 left-6 text-gray-500 duration-200 pointer-events-none peer-focus/password:-translate-y-2.5 peer-focus/password:text-xs ${
@@ -534,14 +535,6 @@ const Signup = () => {
             회원가입
           </button>
         </form>
-        {/* <button
-          id="signUpSubmit"
-          type="submit"
-          onClick={onSubmit}
-          className="w-full h-16 pb-1 text-xl font-bold text-white bg-blue-600 rounded-md hover:bg-blue-500"
-        >
-          회원가입
-        </button> */}
       </div>
       <div className="my-4 pt-1.5 pb-2 px-8 hover:bg-white/20 rounded-full">
         <label className="font-medium text-gray-500" htmlFor="goLogin">
