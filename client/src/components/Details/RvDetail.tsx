@@ -68,7 +68,7 @@ const RvDetail = () => {
     window.scrollTo({
       top: 0,
     });
-  }, [review]);
+  }, []);
 
   const onTypeClick = () => {
     navigate(`/categories/review/${review.productId}`);
