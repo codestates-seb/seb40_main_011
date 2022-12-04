@@ -16,12 +16,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
 import seb.project.Codetech.event.dto.SnackReviewUpdateEvent;
-import seb.project.Codetech.productstat.service.ProductStatService;
 import seb.project.Codetech.snackreview.dto.SnackReviewRequestDto;
 import seb.project.Codetech.snackreview.dto.SnackReviewResponseDto;
 import seb.project.Codetech.snackreview.dto.SnackReviewServiceDto;
@@ -35,7 +33,6 @@ import seb.project.Codetech.snackreview.service.SnackReviewService;
 @Validated
 public class SnackReviewController {
 	private final SnackReviewService snackReviewService;
-	private final ProductStatService productStatService;
 	private final ApplicationEventPublisher applicationEventPublisher;
 	private final SnackReviewControllerMapper dtoMapper;
 
@@ -44,14 +41,6 @@ public class SnackReviewController {
 		SnackReviewResponseDto.Slice slice = snackReviewService.readSlice(params);
 
 		return ResponseEntity.ok().body(slice);
-	}
-
-	@GetMapping("/stats")
-	public ResponseEntity<SnackReviewResponseDto.Info> getStats(@RequestParam Long productId) {
-		SnackReviewResponseDto.Info info =
-			new SnackReviewResponseDto.Info(productStatService.findVerifiedOne(productId));
-
-		return ResponseEntity.ok().body(info);
 	}
 
 	@PostMapping
