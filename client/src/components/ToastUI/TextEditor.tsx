@@ -8,16 +8,26 @@ import 'prismjs/themes/prism.css';
 
 import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css';
 import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
-import { useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import useReview from '../../store/review';
 import { uploadEditorImage } from '../../util/apiCollection';
 import { postEditorContent, editReview } from '../../util/apiCollection';
 import { useNavigate, useParams } from 'react-router-dom';
 import { loginRefresh } from '../../util/loginRefresh';
 import Confirm from '../Modal/Confirm';
+import useCategories from '../../store/categories';
 
 function TextEditor() {
   const params = useParams();
+  //글자 수 세기
+  const [contentCount, setContentCount] = useState('');
+  //글자 수 세는 이벤트
+  const onChangeContent = () => {
+    const countData = editorRef.current?.getInstance().getHTML();
+    if (countData !== undefined) {
+      setContentCount(countData);
+    }
+  };
 
   const editorRef = useRef<Editor>(null);
   const {
@@ -31,6 +41,7 @@ function TextEditor() {
     setThumnailImg,
     thumbnailImg,
   } = useReview();
+  const { setSelectName } = useCategories();
   const navigate = useNavigate();
 
   //메세지 모달 보이는지, 안 보이는 여부
@@ -148,7 +159,7 @@ function TextEditor() {
       return setShowModal(true);
     }
     //컨텐츠의 글자수가 0이거나 300이하라면 뜨는 모달
-    if (content.length === 0 || content.length <= 300) {
+    if (contentCount.length === 0 || contentCount.length <= 300) {
       setReviewMsg(modalMsg[6]);
       return setShowModal(true);
     }
@@ -158,17 +169,23 @@ function TextEditor() {
       title.length !== 0 &&
       title.length <= 50 &&
       productId.length !== 0 &&
-      content.length !== 0 &&
-      content.length >= 300 &&
+      contentCount.length !== 0 &&
+      contentCount.length >= 300 &&
       thumbnailImg.length !== 0
     ) {
       const submit = await postEditorContent(editorData);
       console.log(`submit`, submit);
+      console.log(`submit.data`, submit.data);
       switch (submit.status) {
-        case 200:
+        case 201:
           setReviewMsg(modalMsg[7]);
           setShowModal(true);
-          navigate('/');
+          setTitle('');
+          setContent('');
+          setProductId('');
+          setThumnailImg('');
+          setSelectName('소분류 선택');
+          navigate(`/review/${submit.data}`);
           break;
         case 401:
           alert('에러');
@@ -188,10 +205,11 @@ function TextEditor() {
       <Editor
         ref={editorRef}
         previewStyle="vertical"
-        initialValue={content || '내용을 입력하세요'}
+        initialValue=" "
         height="550px"
         usageStatistics={false}
         plugins={[[codeSyntaxHighlight, { highlighter: Prism }]]}
+        onChange={onChangeContent}
         hooks={{
           async addImageBlobHook(blob, callback) {
             const formData = new FormData();
@@ -202,6 +220,11 @@ function TextEditor() {
           },
         }}
       />
+      <div>
+        <span className="text-sm text-gray-400">
+          현재 글자수 {contentCount.length} / 최소 글자수 300자
+        </span>
+      </div>
       <div className="flex justify-center mt-10">
         <button
           onClick={handleClick}

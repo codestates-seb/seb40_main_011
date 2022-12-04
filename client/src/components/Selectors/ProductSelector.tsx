@@ -11,25 +11,32 @@ import useReview from '../../store/review';
 import '../common.css';
 import Confirm from '../Modal/Confirm';
 
-interface ICategoriesData {
-  id: number;
-  name: string;
+interface SpreadProps {
+  productCategorySpread: boolean;
+  setProductCategorySpread(state: boolean): void;
 }
 
-const ProductSelector = () => {
-  const [spread, setSpread] = useState(false);
+const ProductSelector = ({
+  productCategorySpread,
+  setProductCategorySpread,
+}: SpreadProps) => {
   //대분류 셀렉터에서 클릭한 값이 저장된
-  const { clickName } = useCategories();
-  //get으로 받아온 데이터 저장
-  const [categories, setCategories] = useState<ICategoriesData[] | []>([]);
-  //소분류 셀렉터에서 클릭한 버튼의 이름을 저장
-  const [selectName, setSelectName] = useState('제품 선택');
+  const {
+    clickName,
+    selectName,
+    setSelectName,
+    beforeClickname,
+    setBeforeClickname,
+    categoriesData,
+    setCategoriesData,
+  } = useCategories();
+
   //소분류에서 선택한 제품의 productId를 저장
   const { setProductId } = useReview();
 
   const handleSelect = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
-    setSpread(!spread);
+    setProductCategorySpread(!productCategorySpread);
   };
 
   //url 디코딩
@@ -42,6 +49,7 @@ const ProductSelector = () => {
   const modalMsg: string[] = ['대분류를 선택해주세요 ㅜㅜ'];
   //모달 메세지 저장
   const [selectorMsg, setSelectorMsg] = useState(modalMsg[0]);
+  //전의 타입을 저장
 
   //소분류 셀렉터 클릭시 대분류에서 선택한 text 값과 일치하는 type의 data list 를 가져옴
   const handleSelectClick = async (e: React.MouseEvent<HTMLElement>) => {
@@ -55,11 +63,13 @@ const ProductSelector = () => {
       const res = await axios.get(`/api/products/review-search`, {
         params: { type: upperText },
       });
-      setCategories(res.data);
+      setCategoriesData(res.data);
+      setBeforeClickname(upperText);
     } catch (error: unknown) {
       handleError(error);
     }
-    setSpread(!spread); //여기 있어야 데이터 다 들어온 후 드롭다운이 뜸
+    setProductCategorySpread(!productCategorySpread); //여기 있어야 데이터 다 들어온 후 드롭다운이 뜸
+    setBeforeClickname(upperText);
   };
 
   //에러 핸들러
@@ -81,7 +91,7 @@ const ProductSelector = () => {
   const handleButClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (e.currentTarget.textContent) {
       setSelectName(e.currentTarget.textContent); //클릭한 버튼의 name값이 들어옴
-      setSpread(!spread);
+      setProductCategorySpread(!productCategorySpread);
     }
     if (e.currentTarget.value) {
       setProductId(e.currentTarget.value); //클릭한 버튼의 제품id값이 들어옴
@@ -94,31 +104,34 @@ const ProductSelector = () => {
       <button
         onClick={handleSelectClick}
         className={`justify-between alsolute t-0 text-sm bg-white h-10 rounded border border-slate-200 flex items-center px-4 pb-0.5 font-medium text-gray-500 ${
-          spread &&
+          productCategorySpread &&
           'rounded-bl-none rounded-br-none bg-slate-200 text-gray-400 border-b-0'
         }`}
       >
-        {selectName} {spread ? <AiFillCaretUp /> : <AiFillCaretDown />}
+        {selectName}
+        {productCategorySpread ? <AiFillCaretUp /> : <AiFillCaretDown />}
       </button>
-      {spread && (
+      {productCategorySpread && (
         <div
           onClick={handleSelect}
           className={
-            categories.length === 0
-              ? `select-div-style`
-              : `select-div-style h-60`
+            categoriesData.length < 6
+              ? `selector-div-style`
+              : `selector-div-style h-60`
           }
         >
-          {categories.length === 0 ? (
-            <button className="select-but-style">제품이 없습니다</button>
+          {categoriesData.length === 0 ? (
+            <button className="selector-but-dropdown-style">
+              제품이 없습니다
+            </button>
           ) : (
-            categories.map((product, idx) => {
+            categoriesData.map((product, idx) => {
               return (
                 <button
                   key={idx}
                   onClick={handleButClick}
                   value={product.id}
-                  className="truncate select-but-style "
+                  className="truncate selector-but-dropdown-style "
                 >
                   {product.name}
                 </button>

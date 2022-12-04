@@ -12,6 +12,7 @@ import { useIsLogin } from '../../store/login';
 import useReview from '../../store/review';
 import { AiOutlineHeart } from 'react-icons/ai';
 import CheckModal from './DeleteModal';
+import Spinner from '../../util/Spinner';
 
 const RvDetail = () => {
   interface markdownProps {
@@ -36,10 +37,19 @@ const RvDetail = () => {
     writer: '',
     productId: 0,
     thumbnail: '',
+    recommends: [],
   });
   const { loginId } = useIsLogin();
   const [comments, setComments] = useState<ReviewComments[]>([]);
   const [showModal, setShowModal] = useState(false);
+
+  const HandleSpinner = () => {
+    if (review.content === '') {
+      return <Spinner />;
+    }
+    return null;
+  };
+
   const getParsedDate = (createdAt: string) => {
     return new Date(createdAt).toLocaleDateString('ko-KR');
   };
@@ -58,7 +68,7 @@ const RvDetail = () => {
     window.scrollTo({
       top: 0,
     });
-  }, [review]);
+  }, []);
 
   const onTypeClick = () => {
     navigate(`/categories/review/${review.productId}`);
@@ -176,6 +186,7 @@ const RvDetail = () => {
           productId={review.productId}
         />
       )}
+      <HandleSpinner />
       <div className="bg-zinc-100">
         <div className="flex flex-col justify-center mx-auto w-full lg:w-[64rem] ">
           <div className="w-full">
@@ -195,10 +206,17 @@ const RvDetail = () => {
           </div>
           <ReviewInfo />
           <section className="flex flex-col items-center border-b border-gray-200">
+            {review.thumbnail.length === 0 ? null : (
+              <img
+                className="mt-8 rounded"
+                src={`https://codetech.nworld.dev${review?.thumbnail}`}
+              />
+            )}
+
             <div id="viewer" className="p-4 my-16 whitespace-pre-wrap">
               <ConvertedContent markdown={review.content} />
             </div>
-            <HandleLike userId={review.userId} />
+            <HandleLike userId={review.userId} recommends={review.recommends} />
             <CommentView />
             <CommentInput />
           </section>

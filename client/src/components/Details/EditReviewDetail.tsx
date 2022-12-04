@@ -23,12 +23,12 @@ const EditReviewDetail = () => {
     writer: '',
     productId: 0,
     thumbnail: '',
+    recommends: [],
   });
 
   const params = useParams();
 
-  const { setTitle, setProductId, setThumbnailBase64, setThumnailImg } =
-    useReview();
+  const { setTitle, setProductId, setThumnailImg } = useReview();
 
   useEffect(() => {
     const getReviewData = async () => {

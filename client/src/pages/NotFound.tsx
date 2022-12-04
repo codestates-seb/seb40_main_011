@@ -7,8 +7,8 @@ const NotFound = () => {
     <>
       <div>
         {' '}
-        <div className="flex flex-col items-center justify-center w-full bg-slate-100">
-          <div className="flex flex-col items-center mt-24">
+        <div className="flex flex-col items-center justify-center w-full h-screen bg-slate-100">
+          <div className="flex flex-col items-center ">
             <div className="mb-3">
               <BsExclamationTriangle className="w-24 h-24" />
             </div>

@@ -58,7 +58,7 @@ const QuestionsTab = () => {
   return (
     <>
       {!reviewData || reviewData?.length === 0 ? (
-        <div className="flex flex-col justify-center w-[850px] p-5 mt-20">
+        <div className="flex flex-col justify-center w-full max-w-screen-lg p-5 px-24 mt-20">
           <div className="mb-2 text-xl text-center">작성한 질문이 없습니다</div>
         </div>
       ) : (
@@ -67,7 +67,7 @@ const QuestionsTab = () => {
             return (
               <>
                 <div
-                  className="flex flex-col justify-center w-[850px] p-5"
+                  className="flex flex-col justify-center w-full max-w-screen-lg py-2.5 lg:px-24 px-10"
                   key={index}
                 >
                   <div className="flex text-sm">

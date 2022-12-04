@@ -7,6 +7,8 @@ import MypageTab from '../components/MyPage/MypageTab';
 import Profile from '../components/MyPage/Profile';
 import OptOut from '../components/Modal/OptOut';
 import { useIsLogin } from '../store/login';
+import { useEffect } from 'react';
+import { loginRefresh } from '../util/loginRefresh';
 
 export interface OptOutModalHandler {
   openOptOutModalHandler: React.MouseEventHandler<HTMLButtonElement>;
@@ -22,11 +24,19 @@ const MyPage = (): JSX.Element => {
     setIsOptOut(!isOptOut);
   };
 
+  const container = isLogin
+    ? 'flex flex-col'
+    : 'flex flex-col fixed table-fixed';
+
+  useEffect(() => {
+    loginRefresh();
+  }, []);
+
   return (
     <>
       {isLogin ? (
         <>
-          <div className="flex flex-col ">
+          <div className={container}>
             {isOptOut === false ? null : (
               <OptOut openOptOutModalHandler={openOptOutModalHandler} />
             )}
@@ -34,7 +44,7 @@ const MyPage = (): JSX.Element => {
             <MypageTab />
             <div className="flex justify-center">
               <button
-                className="px-12 py-2 bg-gray-100 rounded m-14"
+                className="px-12 py-2 rounded bg-slate-300 m-14"
                 onClick={openOptOutModalHandler}
               >
                 회원 탈퇴
@@ -46,10 +56,10 @@ const MyPage = (): JSX.Element => {
         <>
           <div>
             {' '}
-            <div className="flex flex-col items-center justify-center w-full bg-slate-100">
-              <div className="flex flex-col items-center mt-24">
+            <div className="flex flex-col items-center justify-center w-full h-screen bg-slate-100">
+              <div className="flex flex-col items-center ">
                 <div className="mb-3">
-                  <BsExclamationTriangle className="w-24 h-24" />
+                  <BsExclamationTriangle className="w-32 h-32" />
                 </div>
                 <h2 className="leading-10 text-left">
                   <p className="mb-10 text-3xl font-extrabold text-center">

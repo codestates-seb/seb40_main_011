@@ -7,8 +7,15 @@ import { useNavigate } from 'react-router-dom';
 import moment from 'moment';
 import { format } from 'timeago.js';
 import { categoryList } from '../Selectors/MainCategory';
+import Spinner from '../../util/Spinner';
 
 const ProductList = () => {
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+    });
+  }, []);
+
   const navigate = useNavigate();
   const [products, setProducts] = useState<Product[]>([]);
   const [category, setCategory] = useState('all');
@@ -45,6 +52,7 @@ const ProductList = () => {
   const convertToKR: any = (type: string) => {
     return categoryList.filter((el) => el.id === type).map((el) => el.name);
   };
+
   const NoElement = () => {
     if (products.length === 0) {
       return (
@@ -58,10 +66,18 @@ const ProductList = () => {
     }
     return null;
   };
+
+  const [spinner, setSpinner] = useState(true);
+  useEffect(() => {
+    setTimeout(() => {
+      setSpinner(false);
+    }, 1000);
+  }, []);
+
   return (
     <>
-      {products === undefined ? (
-        <div>loading</div>
+      {spinner ? (
+        <Spinner />
       ) : (
         <div className="bg-zinc-100">
           <div className="mx-auto w-full lg:w-[64rem] flex flex-col items-center px-4">
@@ -79,11 +95,7 @@ const ProductList = () => {
                   className="relative group flex flex-col sm:flex-[1_1_40%] lg:flex-[1_1_30%] flex-[1_1_50%] my-5 mx-3 hover:bg-white rounded-3xl"
                 >
                   <img
-                    src={
-                      el?.filePath === null
-                        ? require('../../images/placeholder-image.png')
-                        : `https://codetech.nworld.dev${el?.filePath}`
-                    }
+                    src={`https://codetech.nworld.dev${el?.thumbnail}`}
                     className="object-cover h-48 bg-slate-200 rounded-3xl group-hover:rounded-b-none"
                   />
                   <div className="absolute -top-6 w-fit px-3 pt-0.5 pb-1 my-3 rounded-full bg-slate-300 text-slate-600 text-sm font-medium">
