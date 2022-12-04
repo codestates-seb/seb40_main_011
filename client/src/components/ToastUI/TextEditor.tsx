@@ -15,6 +15,7 @@ import { postEditorContent, editReview } from '../../util/apiCollection';
 import { useNavigate, useParams } from 'react-router-dom';
 import { loginRefresh } from '../../util/loginRefresh';
 import Confirm from '../Modal/Confirm';
+import useCategories from '../../store/categories';
 
 function TextEditor() {
   const params = useParams();
@@ -40,6 +41,7 @@ function TextEditor() {
     setThumnailImg,
     thumbnailImg,
   } = useReview();
+  const { setSelectName } = useCategories();
   const navigate = useNavigate();
 
   //메세지 모달 보이는지, 안 보이는 여부
@@ -157,7 +159,7 @@ function TextEditor() {
       return setShowModal(true);
     }
     //컨텐츠의 글자수가 0이거나 300이하라면 뜨는 모달
-    if (content.length === 0 || content.length <= 300) {
+    if (contentCount.length === 0 || contentCount.length <= 300) {
       setReviewMsg(modalMsg[6]);
       return setShowModal(true);
     }
@@ -167,8 +169,8 @@ function TextEditor() {
       title.length !== 0 &&
       title.length <= 50 &&
       productId.length !== 0 &&
-      content.length !== 0 &&
-      content.length >= 300 &&
+      contentCount.length !== 0 &&
+      contentCount.length >= 300 &&
       thumbnailImg.length !== 0
     ) {
       const submit = await postEditorContent(editorData);
@@ -178,6 +180,11 @@ function TextEditor() {
         case 201:
           setReviewMsg(modalMsg[7]);
           setShowModal(true);
+          setTitle('');
+          setContent('');
+          setProductId('');
+          setThumnailImg('');
+          setSelectName('소분류 선택');
           navigate(`/review/${submit.data}`);
           break;
         case 401:
