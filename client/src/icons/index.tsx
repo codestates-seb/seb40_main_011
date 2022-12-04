@@ -6,11 +6,15 @@ import {
   AiFillCheckCircle,
   AiOutlineGoogle,
   AiFillEyeInvisible,
+  AiOutlineHeart,
+  AiFillStar,
 } from 'react-icons/ai';
 import {
   RiKakaoTalkFill,
   RiRotateLockFill,
   RiLockPasswordLine,
+  RiChat3Line,
+  RiHeart3Line,
 } from 'react-icons/ri';
 
 export {
@@ -25,4 +29,8 @@ export {
   AiFillCheckCircle,
   RiRotateLockFill,
   BsFilePerson,
+  AiOutlineHeart,
+  RiChat3Line,
+  RiHeart3Line,
+  AiFillStar,
 };

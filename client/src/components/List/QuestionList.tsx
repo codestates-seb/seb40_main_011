@@ -72,7 +72,7 @@ const QuestionList = () => {
         </div>
         <div className="my-4">
           {questions.map((el, idx) => (
-            <div key={idx} className="flex justify-between p-2 ">
+            <div key={idx} className="flex md:justify-between p-2 ">
               <span className="line-clamp-1 grow break-all">{el.content}</span>
               <span className="hidden md:line-clamp-1 text-right text-gray-500/70 tracking-tight flex-none w-20">
                 {el.nickname}

@@ -115,7 +115,7 @@ const ProductSelector = ({
         <div
           onClick={handleSelect}
           className={
-            categoriesData.length < 5
+            categoriesData.length < 6
               ? `selector-div-style`
               : `selector-div-style h-60`
           }

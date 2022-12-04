@@ -9,8 +9,6 @@ import {
   AnswerContent,
 } from '../types/mainPageTypes';
 
-const initialToken: any = localStorage.getItem('authorization');
-
 export const postSnack = async (req: any) => {
   const reqUrl = '/api/snack-reviews';
   try {
@@ -194,7 +192,9 @@ export const getUserProfile = async () => {
 export const delAccount = async (data: any) => {
   try {
     const optOut = await axios.patch('/api/withdraw', data, {
-      headers: { Authorization: initialToken },
+      headers: {
+        Authorization: localStorage.getItem('authorization'),
+      },
     });
     return optOut;
   } catch (err: any) {
