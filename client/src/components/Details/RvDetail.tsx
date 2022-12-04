@@ -37,7 +37,7 @@ const RvDetail = () => {
     writer: '',
     productId: 0,
     thumbnail: '',
-    recommends: [],
+    // recommends: [],
   });
   const { loginId } = useIsLogin();
   const [comments, setComments] = useState<ReviewComments[]>([]);
@@ -216,7 +216,7 @@ const RvDetail = () => {
             <div id="viewer" className="p-4 my-16 whitespace-pre-wrap">
               <ConvertedContent markdown={review.content} />
             </div>
-            <HandleLike userId={review.userId} recommends={review.recommends} />
+            {/* <HandleLike userId={review.userId} recommends={review.recommends} /> */}
             <CommentView />
             <CommentInput />
           </section>

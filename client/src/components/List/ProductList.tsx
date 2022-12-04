@@ -1,6 +1,6 @@
 // [GET]
 import { getProducts } from '../../util/apiCollection';
-import { useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { Product } from '../../types/mainPageTypes';
 import MainCategory from '../Selectors/MainCategory';
 import { useNavigate } from 'react-router-dom';
@@ -85,7 +85,9 @@ const ProductList = () => {
           </div>
           <div className="mx-auto w-full lg:w-[64rem] flex flex-wrap pt-4 px-1 pb-4">
             <NoElement />
-            {products.slice(0, viewMore).map((el, idx) => {
+            {products.slice(0, viewMore).map((el, idx): JSX.Element => {
+              const { thumbnail } = el;
+              console.log(el);
               return (
                 <div
                   key={idx}
@@ -95,7 +97,7 @@ const ProductList = () => {
                   className="relative group flex flex-col sm:flex-[1_1_40%] lg:flex-[1_1_30%] flex-[1_1_50%] my-5 mx-3 hover:bg-white rounded-3xl"
                 >
                   <img
-                    src={`https://codetech.nworld.dev${el?.thumbnail}`}
+                    src={`https://codetech.nworld.dev${thumbnail}`}
                     className="object-cover h-48 bg-slate-200 rounded-3xl group-hover:rounded-b-none"
                   />
                   <div className="absolute -top-6 w-fit px-3 pt-0.5 pb-1 my-3 rounded-full bg-slate-300 text-slate-600 text-sm font-medium">
