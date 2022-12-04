@@ -14,6 +14,7 @@ import seb.project.Codetech.product.service.ProductService;
 import seb.project.Codetech.review.dto.ReviewResponseDto;
 import seb.project.Codetech.review.entity.Review;
 import seb.project.Codetech.review.entity.Sort;
+import seb.project.Codetech.review.repository.ReviewCommRepository;
 import seb.project.Codetech.review.repository.ReviewRepository;
 import seb.project.Codetech.user.entity.User;
 import seb.project.Codetech.user.service.UserService;
@@ -26,11 +27,14 @@ public class ReviewService {
 	private final UserService userService;
 	private final ProductService productService;
 	private final ReviewRepository reviewRepository;
+	private final ReviewCommRepository reviewCommRepository;
 
-	public ReviewService(UserService userService, ProductService productService, ReviewRepository reviewRepository) {
+	public ReviewService(UserService userService, ProductService productService, ReviewRepository reviewRepository,
+		ReviewCommRepository reviewCommRepository) {
 		this.userService = userService;
 		this.productService = productService;
 		this.reviewRepository = reviewRepository;
+		this.reviewCommRepository = reviewCommRepository;
 	}
 
 	@Transactional
@@ -77,6 +81,7 @@ public class ReviewService {
 			throw new BusinessLogicException(ExceptionCode.REVIEW_NOT_MODIFY);
 		}
 
+		reviewCommRepository.deleteAllByReviewId(id);
 		reviewRepository.deleteById(id);
 
 		return productId;
