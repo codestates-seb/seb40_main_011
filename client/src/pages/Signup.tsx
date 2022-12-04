@@ -1,5 +1,3 @@
-//회원가입 페이지
-//안지은, 김광민 작성
 import React, {
   ChangeEvent,
   useCallback,
@@ -380,7 +378,7 @@ const Signup = () => {
               <button
                 type="button"
                 id="but01"
-                className="w-full h-full pb-1 text-base font-medium text-white bg-blue-600 rounded-md hover:bg-blue-500"
+                className="w-full h-full pb-1 text-base font-medium text-white bg-slate-600 rounded-md hover:bg-blue-500"
                 onClick={emailButClick}
                 onKeyDown={(e) => handleEnter(e, 'emailCertification')}
               >
@@ -427,7 +425,7 @@ const Signup = () => {
                 <button
                   type="button"
                   id="but02"
-                  className="w-full h-full pb-1 text-base font-medium text-white bg-blue-600 rounded-md hover:bg-blue-500"
+                  className="w-full h-full pb-1 text-base font-medium text-white bg-emerald-500 rounded-md hover:bg-blue-500"
                   onClick={emailNumCheckClick}
                   onKeyPress={(e) => handleEnter(e, 'password')}
                 >

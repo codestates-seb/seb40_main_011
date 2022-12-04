@@ -26,7 +26,6 @@ const QuestionsTab = () => {
     switch (data.status) {
       case 200:
         setReviewData(data?.data.questions.content);
-        console.log(data?.data.questions);
         setTotalPages(data?.data.questions.totalPages);
         break;
       case 412:
