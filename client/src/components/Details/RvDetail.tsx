@@ -37,7 +37,7 @@ const RvDetail = () => {
     writer: '',
     productId: 0,
     thumbnail: '',
-    // recommends: [],
+    recommends: [],
   });
   const { loginId } = useIsLogin();
   const [comments, setComments] = useState<ReviewComments[]>([]);
