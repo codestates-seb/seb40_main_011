@@ -8,129 +8,141 @@ const SnackReview = ({ snackReviewData }: SnackReviewProps) => {
   const [selectedReview, setSelectedReview] = useState<any>();
   const [isModal, setIsModal] = useState(false);
 
-  const openModalHandler = (
-    event: React.MouseEvent<HTMLElement, MouseEvent>
-  ) => {
+  const openModalHandler = () => {
     setIsModal(!isModal);
   };
 
+  const reviewList = [
+    { name: '가성비', avg: 'avgCe' },
+    { name: '품질', avg: 'avgQlt' },
+    { name: '만족감', avg: 'avgStf' },
+    { name: '성능', avg: 'avgPerf' },
+    { name: '디자인', avg: 'avgDsn' },
+  ];
+
+  const getDecial = (num: number | undefined) => {
+    if (num !== undefined) {
+      const result = Math.round((num + Number.EPSILON) * 10) / 10;
+      return result;
+    }
+  };
+
+  const getNatural = (num: number | undefined) => {
+    if (num !== undefined) {
+      const result = Math.round(num + Number.EPSILON);
+      return result;
+    }
+  };
+
   return (
-    <>
-      {isModal ? (
+    <div className="w-full">
+      {isModal && (
         <SnackReviewModal
           selectedReview={selectedReview}
           openModalHandler={openModalHandler}
         />
-      ) : (
-        <></>
       )}
-
       {snackReviewData?.cards.map((el: SnackReviewCards, idx: number) => {
         return (
-          <button
+          <div
+            className="w-full"
+            role="button"
             key={idx}
-            // onClick={openModalHandler}
             onClick={() => {
               setIsModal(!isModal);
               setSelectedReview(el);
             }}
           >
-            <div className="border w-[300px] h-[330px] px-2 py-1.5 bg-white rounded-3xl shadow-md hover:-translate-y-1 transition ease-in-out hover:scale-110">
+            <div className="w-full">
               <div className="flex items-center justify-between">
-                <Avatar image={el.image} />
-                {/* <img
-                  src={`https://codetech.nworld.dev${el?.image}`}
-                  alt=""
-                  className="w-16 w-full h-16 rounded-full bg-slate-200"
-                /> */}
-                <div className="flex flex-col items-start justify-start w-[205px] pt-2.5">
-                  <div>{el.nickname}</div>
-                  <div className="pt-1 ml-auto text-sm text-gray-400">
-                    {' '}
-                    {new Date(el.createdAt).toLocaleDateString('kr-KO', {
-                      month: 'short',
-                      day: 'numeric',
-                      year: 'numeric',
-                    })}
+                <div
+                  className={`w-14 h-12 rounded-2xl flex items-center justify-center text-xl font-bold pb-1 mr-2 
+                ${
+                  el.score.grade >= 0 &&
+                  el.score.grade <= 1 &&
+                  `bg-red-400 text-red-900`
+                }
+                ${
+                  el.score.grade > 1 &&
+                  el.score.grade <= 2 &&
+                  `bg-orange-400 text-orange-900`
+                }
+                ${
+                  el.score.grade > 2 &&
+                  el.score.grade <= 3 &&
+                  `bg-yellow-400 text-yellow-900`
+                }
+                ${
+                  el.score.grade > 3 &&
+                  el.score.grade <= 4 &&
+                  `bg-lime-400 text-lime-900`
+                }
+                ${
+                  el.score.grade > 4 &&
+                  el.score.grade <= 5 &&
+                  `bg-emerald-400 text-emerald-900`
+                }
+                `}
+                ></div>
+                <div className="flex flex-col w-full">
+                  <div className="flex flex-row justify-between">
+                    <div>{el.nickname}</div>
+                    <div className="pt-1 text-sm text-gray-400">
+                      {new Date(el.createdAt).toLocaleDateString('kr-KO', {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric',
+                      })}
+                    </div>
+                  </div>
+                  <div className="w-full md:w-1/2 lg:w-1/3">
+                    <div className="hidden md:inline-block flex flex-wrap flex-[1_1_40%] md:flex-col justify-center md:px-8 pt-3 pb-12 md:pb-3">
+                      {reviewList.map((el, idx) => {
+                        return (
+                          <div className="flex items-center mr-2" key={idx}>
+                            <div className="mr-1.5 text-black/70 w-12">
+                              {el.name}
+                            </div>
+                            {snackReviewStats !== undefined && (
+                              <Rating
+                                allowFraction
+                                readonly
+                                initialValue={getNatural(
+                                  snackReviewStats[el.avg]
+                                )}
+                                size={24}
+                              />
+                            )}
+                            <div className="ml-1.5 text-black/70">
+                              {getDecial(snackReviewStats[el.avg])}
+                            </div>
+                          </div>
+                        );
+                      })}
+                      <div className="invisible md:hidden flex items-center mx-8 justify-between">
+                        <div className="mr-1.5 text-black/70 w-12">
+                          {reviewList[0].name}
+                        </div>
+                        <Rating
+                          allowFraction
+                          readonly
+                          initialValue={1.5}
+                          size={24}
+                        />
+                        <div className="ml-1.5 text-black/70">{1.5}</div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div className="grid grid-cols-2 mt-2.5 mb-1 px-1">
-                <div className="flex items-center justify-center ">
-                  <p className="pr-0.5 text-sm">가성비</p>
-                  <Rating
-                    allowFraction
-                    readonly
-                    initialValue={el.score.costEfficiency}
-                    size={17}
-                  />
-                </div>
-                <div className="flex items-center justify-center ">
-                  <p className="pr-0.5 text-sm">품질</p>
-                  <Rating
-                    allowFraction
-                    readonly
-                    initialValue={el.score.quality}
-                    size={17}
-                  />
-                </div>
-                <div className="flex items-center justify-center ">
-                  <p className="pr-0.5 text-sm">만족감</p>
-                  <Rating
-                    allowFraction
-                    readonly
-                    initialValue={el.score.satisfaction}
-                    size={17}
-                  />
-                </div>
-                <div className="flex items-center justify-center ">
-                  <p className="pr-0.5 text-sm">성능</p>
-                  <Rating
-                    allowFraction
-                    readonly
-                    initialValue={el.score.performance}
-                    size={17}
-                  />
-                </div>
-                <div className="flex items-center justify-center ">
-                  <p className="pr-0.5 text-sm">디자인</p>
-                  <Rating
-                    allowFraction
-                    readonly
-                    initialValue={el.score.design}
-                    size={17}
-                  />
-                </div>
-              </div>
-              <div className="pt-1.5 px-2 overflow-hidden text-justify whitespace-normal text-ellipsis line-clamp-6">
+              <div className="w-full pt-2 pb-3 mt-3 mb-8 px-5">
                 {el.content}
               </div>
-
-              {/* <div className="flex items-end justify-end text-sm">
-              {Number(loginId) === el.writerId ? (
-                <>
-                  <button
-                    onClick={onEditClick}
-                    id={el.id.toString()}
-                    className="border m-0.5 p-0.5 rounded-lg"
-                  >
-                    수정
-                  </button>
-                  <button
-                    onClick={onDeleteClick}
-                    id={el.id.toString()}
-                    className="border m-0.5 p-0.5 rounded-lg"
-                  >
-                    삭제
-                  </button>
-                </>
-              ) : null}
-            </div> */}
             </div>
-          </button>
+          </div>
         );
       })}
-    </>
+    </div>
   );
 };
 
