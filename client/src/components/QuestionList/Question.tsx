@@ -20,7 +20,6 @@ export default function Question({
     setShowAnswer(true);
   };
 
-  console.log();
   return (
     <div className="w-full">
       <div className="w-full flex mt-5">
