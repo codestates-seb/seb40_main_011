@@ -81,19 +81,18 @@ const DetailReview = ({
       {reviewData?.reviewLists.map((el: any, idx: number) => {
         return (
           <Link to={`/review/${el.id}`} key={idx}>
-            <div className="rounded-3xl overflow-hidden flex flex-col md:flex-row mb-16 md:mb-10">
-              <div className="w-full md:w-2/5 lg:w-1/3 overflow-hidden rounded-3xl flex-none flex items-center mr-6">
-                <div className="w-full h-56 md:h-48">
-                  <img
-                    src={`https://codetech.nworld.dev${el.thumbnail}`}
-                    alt=""
-                    className="w-full"
-                  />
-                </div>
+            <div className="rounded-3xl overflow-hidden flex flex-col md:flex-row mb-10">
+              <div className="w-full md:w-2/5 lg:w-1/3 overflow-hidden rounded-3xl flex-none flex items-center mr-8">
+                <img
+                  // src={`https://codetech.nworld.dev${el.thumbnail}`}
+                  src={`https://codetech.nworld.dev/images/1268bc17-8074-46a2-aecf-f488fe6db3db.png`}
+                  alt=""
+                  className="scale-125"
+                />
               </div>
-              <div className="w-full md:3/5 lg:w-2/3 h-48 flex flex-col overflow-hidden text-left justify-between">
+              <div className="w-full md:3/5 lg:w-2/3 h-48 flex flex-col overflow-hidden text-left justify-between py-2">
                 <div>
-                  <div className="my-2 text-xl font-bold tracking-tight line-clamp-1">
+                  <div className="mb-2 text-xl font-bold tracking-tight line-clamp-1">
                     {el.title}
                   </div>
                   <div className="pb-1 overflow-hidden tracking-tight text-black/60 line-clamp-3">
@@ -116,6 +115,16 @@ const DetailReview = ({
                       </div>
                     </div>
                   </div>
+                  <div className="flex items-center">
+                    <RiHeart3Line className="text-2xl text-black/40" />
+                    <span className="mx-1 text-lg font-medium text-black/70">
+                      {el.recommendNumber}
+                    </span>
+                    <RiChat3Line className="ml-2 text-2xl pl-0.5 text-black/40" />
+                    <span className="mx-1 text-lg font-medium text-black/70">
+                      {el.commentCount}
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -130,12 +139,6 @@ const DetailReview = ({
         >
           더 보기
         </span>
-        // <button
-        //   className="px-10 py-2 my-5 rounded-xl bg-slate-200"
-        //   onClick={onMoreClick}
-        // >
-        //   더보기
-        // </button>
       )}
     </div>
   );
