@@ -125,8 +125,9 @@ const CreateSnackReview = ({ ratingCategory }: RatingCategory) => {
   };
   return (
     <>
-      <div className="flex items-center justify-between">
-        {/* {ratingCategory.map((el: string, index: number) => {
+      <div className="flex lg:w-[900px]">
+        <div className="flex flex-col justify-center items-between w-[250px] mr-3">
+          {/* {ratingCategory.map((el: string, index: number) => {
           return (
             <div className="flex items-center" key={index}>
               <p className={`${el} pr-1.5 text-lg`}>{el}</p>
@@ -142,51 +143,52 @@ const CreateSnackReview = ({ ratingCategory }: RatingCategory) => {
           );
         })} */}
 
-        <div className="flex items-center justify-between px-1">
-          <p className="pr-0.5 text-xl">가성비</p>
-          <Rating allowFraction size={25} onClick={handleRatingC} />
+          <div className="flex items-center justify-between px-1">
+            <p className="pr-0.5 text-lg">가성비</p>
+            <Rating allowFraction size={25} onClick={handleRatingC} />
+          </div>
+          <div className="flex items-center justify-between px-1">
+            <p className="pr-0.5 text-lg">품질</p>
+            <Rating allowFraction size={25} onClick={handleRatingQ} />
+          </div>
+          <div className="flex items-center justify-between px-1">
+            <p className="pr-0.5 text-lg">만족감</p>
+            <Rating allowFraction size={25} onClick={handleRatingS} />
+          </div>
+          <div className="flex items-center justify-between px-1">
+            <p className="pr-0.5 text-lg">성능</p>
+            <Rating allowFraction size={25} onClick={handleRatingP} />
+          </div>
+          <div className="flex items-center justify-between px-1">
+            <p className="pr-0.5 text-lg">디자인</p>
+            <Rating allowFraction size={25} onClick={handleRatingD} />
+          </div>
         </div>
-        <div className="flex items-center justify-between px-1">
-          <p className="pr-0.5 text-xl">품질</p>
-          <Rating allowFraction size={25} onClick={handleRatingQ} />
-        </div>
-        <div className="flex items-center justify-between px-1">
-          <p className="pr-0.5 text-xl">만족감</p>
-          <Rating allowFraction size={25} onClick={handleRatingS} />
-        </div>
-        <div className="flex items-center justify-between px-1">
-          <p className="pr-0.5 text-xl">성능</p>
-          <Rating allowFraction size={25} onClick={handleRatingP} />
-        </div>
-        <div className="flex items-center justify-between px-1">
-          <p className="pr-0.5 text-xl">디자인</p>
-          <Rating allowFraction size={25} onClick={handleRatingD} />
-        </div>
-      </div>
-      <div className="bg-slate-200">
-        <div className="flex justify-center bg-white border-b border-gray-200">
-          <div className="w-full py-10">
-            <TextareaAutosize
-              onFocus={onInputFocus}
-              minRows={3}
-              maxRows={6}
-              className={`w-full outline-none text-gray-300 font-medium resize-none focus:text-gray-700 text-lg ${
-                content.length !== 0 && `text-gray-700`
-              }`}
-              placeholder="Enter your question..."
-              onChange={handleTextarea}
-              value={content}
-            />
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-gray-400">
-                현재 글자수 {content.length} / 최대 글자수 500자
-              </span>
-              <button
-                onClick={onCreateClick}
-                className="font-medium text-white pb-0.5 px-5 h-10 rounded-full bg-blue-500 hover:bg-blue-400"
-              >
-                리뷰쓰기
-              </button>
+        <div className="w-full bg-slate-200">
+          <div className="flex justify-center bg-white border-b border-gray-200">
+            <div className="w-full py-10">
+              <TextareaAutosize
+                onFocus={onInputFocus}
+                minRows={3}
+                maxRows={4}
+                className={`w-full outline-none text-gray-300 font-medium resize-none focus:text-gray-700 text-lg ${
+                  content.length !== 0 && `text-gray-700`
+                }`}
+                placeholder="Enter your question..."
+                onChange={handleTextarea}
+                value={content}
+              />
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-gray-400">
+                  현재 글자수 {content.length} / 최대 글자수 500자
+                </span>
+                <button
+                  onClick={onCreateClick}
+                  className="font-medium text-white pb-0.5 px-5 h-10 rounded-full bg-blue-500 hover:bg-blue-400"
+                >
+                  리뷰쓰기
+                </button>
+              </div>
             </div>
           </div>
         </div>
