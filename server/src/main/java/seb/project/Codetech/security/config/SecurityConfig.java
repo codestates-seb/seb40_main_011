@@ -42,7 +42,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Configuration
-@EnableWebSecurity
+@EnableWebSecurity(debug = true)
 public class SecurityConfig {
 	@Value("${spring.security.oauth2.client.registration.google.clientId}")
 	private String googleClientId;
@@ -130,7 +130,6 @@ public class SecurityConfig {
 
 			builder
 					.addFilter(jwtAuthenticationFilter)
-					.addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class)
 					.addFilterAfter(jwtVerificationFilter, OAuth2LoginAuthenticationFilter.class);
 		}
 	}
