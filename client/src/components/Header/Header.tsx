@@ -97,11 +97,11 @@ export default function Header() {
           <div className="max-md:hidden flex">
             {!isLogin ? (
               <>
-                <button className="h-full flex flex-row items-center mx-2">
+                {/* <button className="h-full flex flex-row items-center mx-2">
                   <span className="material-icons text-2xl w-14 h-14 rounded-full hover:bg-slate-100 flex items-center justify-center">
                     <BsFillSunFill />
                   </span>
-                </button>
+                </button> */}
                 <div>
                   <HeaderTextButton name="login" />
                   <HeaderTextButton name="signup" />
@@ -109,11 +109,11 @@ export default function Header() {
               </>
             ) : (
               <>
-                <button className="h-full flex flex-row items-center mx-2">
+                {/* <button className="h-full flex flex-row items-center mx-2">
                   <span className="material-icons text-2xl w-14 h-14 rounded-full hover:bg-slate-100 flex items-center justify-center">
                     <BsFillSunFill />
                   </span>
-                </button>
+                </button> */}
                 <div>
                   <HeaderTextButton name="My Page" />
                   <HeaderTextButton name="logout" />
