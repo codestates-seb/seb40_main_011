@@ -26,8 +26,6 @@ const EditReviewDetail = () => {
     recommends: [],
   });
 
-  // console.log(recommends);
-
   const [isEditMode, setIsEditMode] = useState(true);
   const params = useParams();
 

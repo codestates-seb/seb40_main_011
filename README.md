@@ -65,10 +65,10 @@
 <details>
  <summary>📍 리뷰 리스트 페이지 </summary>
  
- ![clickCategory](https://user-images.githubusercontent.com/94808683/205483691-5e638b3c-fb56-4e8c-b2ee-070e5057edbc.gif)
- 
- ![mainToReviewListSnack](https://user-images.githubusercontent.com/94808683/205483732-b2ece6a4-650b-4464-ab35-6626907eaaeb.gif)
- 
+ ![Dec-05-2022 20-03-17](https://user-images.githubusercontent.com/94808683/205621976-e6337de1-4155-4370-b7e8-5a05375a2f46.gif)
+
+ ![Dec-05-2022 20-01-05](https://user-images.githubusercontent.com/94808683/205621625-00ed8473-a999-42b7-b98c-59825e8bc00f.gif)
+
 </details>
   
 </br>

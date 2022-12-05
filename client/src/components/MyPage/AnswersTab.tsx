@@ -3,6 +3,7 @@ import { BsCheckCircleFill } from 'react-icons/bs';
 import { getUserReview } from '../../util/apiCollection';
 import ReviewTabPagenation from './ReviewTabPagenation';
 import { loginRefresh } from '../../util/loginRefresh';
+import { AnswersMore } from './AnswersMore';
 
 interface ReviewType {
   adoptedId: null | number;
@@ -18,8 +19,6 @@ export const AnswersTab = () => {
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [isUpdate, setIsUpdate] = useState(true);
-
-  const [more, setMore] = useState(false);
 
   const params = `?page=${currentPage}&size=5&sort=createdAt`;
   const DetailReviewData = async () => {
@@ -42,9 +41,6 @@ export const AnswersTab = () => {
     setIsUpdate(false);
   }, [isUpdate]);
 
-  const handleMore = (e: any) => {
-    setMore(!more);
-  };
   const onClickPage = (
     target: SetStateAction<string> | SetStateAction<number>
   ) => {
@@ -93,19 +89,19 @@ export const AnswersTab = () => {
                   <div className="mb-0.5 overflow-hidden text-sm text-ellipsis line-clamp-2  text-slate-700">
                     {el.content}
                   </div>
-
-                  {el.answers.content.map((ele: any, idx: number) => {
+                  <AnswersMore el={el} />
+                  {/* {el.answers.content.map((ele: any, idx: number) => {
                     return (
                       <>
                         <div
                           className="mb-1 overflow-hidden text-lg text-ellipsis line-clamp-2"
                           key={idx}
                         >
-                          {ele.content}
+                          {idx + 1}. {ele.content}
                         </div>
                       </>
                     );
-                  })}
+                  })} */}
                 </div>
               </>
             );
