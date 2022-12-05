@@ -80,40 +80,46 @@ const DetailReview = ({
 
       {reviewData?.reviewLists.map((el: any, idx: number) => {
         return (
-          <div className="flex mb-3" key={idx}>
-            <img src="" alt="" className="w-[300px] h-[250px] mr-3 rouned" />
-            <div className="flex flex-col overflow-hidden text-left w-[760px]">
-              <div className="mb-1 text-2xl">{el.title}</div>
-              <div className="pb-1 overflow-hidden text-xl text-justify whitespace-normal h-36 text-ellipsis line-clamp-5">
-                {el.content}
+          <Link to={`/review/${el.id}`} key={idx}>
+            <div className="rounded-3xl overflow-hidden flex flex-col md:flex-row mb-16 md:mb-10">
+              <div className="w-full md:w-2/5 lg:w-1/3 overflow-hidden rounded-3xl flex-none flex items-center mr-6">
+                <div className="w-full h-56 md:h-48">
+                  <img
+                    src={`https://codetech.nworld.dev${el.thumbnail}`}
+                    alt=""
+                    className="w-full"
+                  />
+                </div>
               </div>
-
-              <div className="flex flex-row items-center w-full ">
-                <div className="mx-1 mt-4">좋아요 {el.recommendNumber}</div>
-                <div className="mx-1 mt-4">댓글 {el.commentCount}</div>
-                <div className="flex flex-row items-start ml-auto">
-                  <Avatar image={el.userImage} />
-                  <div className="mx-1 mt-3">
-                    <div>{el.writer}</div>
-                    <div className="ml-auto text-sm text-gray-400">
-                      {' '}
-                      {new Date(el.createdAt).toLocaleDateString('kr-KO', {
-                        month: 'short',
-                        day: 'numeric',
-                        year: 'numeric',
-                      })}
+              <div className="w-full md:3/5 lg:w-2/3 h-48 flex flex-col overflow-hidden text-left justify-between">
+                <div>
+                  <div className="my-2 text-xl font-bold tracking-tight line-clamp-1">
+                    {el.title}
+                  </div>
+                  <div className="pb-1 overflow-hidden tracking-tight text-black/60 line-clamp-3">
+                    {onlyText(el.content)}
+                  </div>
+                </div>
+                <div className="flex justify-between items-end w-full">
+                  <div className="flex items-center">
+                    <Avatar image={el.userImage} />
+                    <div className="pl-3">
+                      <div className="font-medium text-lg tracking-tight text-black/80">
+                        {el.writer}
+                      </div>
+                      <div className="text-sm text-black/50 font-medium tracking-tight">
+                        {new Date(el.createdAt).toLocaleDateString('kr-KO', {
+                          month: 'short',
+                          day: 'numeric',
+                          year: 'numeric',
+                        })}
+                      </div>
                     </div>
                   </div>
                 </div>
-
-                {/* <img
-                    src=
-                    alt=""
-                    className="w-16 h-16 rounded-full bg-slate-200"
-                  /> */}
               </div>
             </div>
-          </div>
+          </Link>
         );
       })}
       {reviewData && reviewData?.hasNext && (

@@ -20,7 +20,7 @@ const BestReviewList = () => {
 
   useEffect(() => {
     const getReviewData = async () => {
-      const { data } = await getBestReview(3);
+      const { data } = await getBestReview(7);
       setSortedReviews(data);
       setbestReviewCount(data.length);
     };
@@ -35,15 +35,15 @@ const BestReviewList = () => {
 
   const onClickPrev = () => {
     if (selectedIdx === 0) {
-      return;
+      setSelectedIdx(6);
     } else {
       setSelectedIdx(selectedIdx - 1);
     }
   };
 
   const onClickNext = () => {
-    if (selectedIdx === 2) {
-      return;
+    if (selectedIdx === 6) {
+      setSelectedIdx(0);
     } else {
       setSelectedIdx(selectedIdx + 1);
     }
@@ -63,7 +63,7 @@ const BestReviewList = () => {
   };
 
   setTimeout(() => {
-    if (selectedIdx === 2) {
+    if (selectedIdx === 6) {
       setSelectedIdx(0);
     } else {
       setSelectedIdx(selectedIdx + 1);
@@ -113,7 +113,7 @@ const BestReviewList = () => {
                   </div>
                 </div>
               </div>
-              <div className="hidden md:inline-flex flex items-center text-gray-300 group-hover:text-gray-600 font-medium group-hover:bg-slate-100 pl-5 pr-4 py-3 rounded-full">
+              <div className="hidden md:flex items-center text-gray-300 group-hover:text-gray-600 font-medium group-hover:bg-slate-100 pl-5 pr-4 py-3 rounded-full">
                 <span className="mr-2">자세히 보기</span>
                 <BsArrowRight className="text-2xl" />
               </div>
@@ -125,11 +125,7 @@ const BestReviewList = () => {
       <div className="w-full lg:w-[64rem] mx-auto py-6 px-2 flex justify-between items-center font-medium">
         <div className="flex items-center">
           <button
-            className={`${
-              selectedIdx === 0
-                ? `text-zinc-400 cursor-default`
-                : `bg-white hover:bg-slate-300 hover:text-slate-700`
-            } mx-2 flex items-center h-12 rounded-full ease-in-out duration-150 pl-4 pr-5`}
+            className={`bg-white hover:bg-slate-300 hover:text-slate-700 mx-2 flex items-center h-12 rounded-full ease-in-out duration-150 pl-4 pr-5`}
             onClick={onClickPrev}
           >
             <FaChevronRight className="text-xl mr-2 rotate-180" />
@@ -142,13 +138,7 @@ const BestReviewList = () => {
             </span>
           </div>
           <button
-            className={`
-            ${
-              selectedIdx === 2
-                ? `text-zinc-400 cursor-default`
-                : `bg-white hover:bg-slate-300 hover:text-slate-700`
-            }
-            mx-2 flex items-center h-12 rounded-full ease-in-out duration-150 pl-5 pr-4`}
+            className={`bg-white hover:bg-slate-300 hover:text-slate-700 mx-2 flex items-center h-12 rounded-full ease-in-out duration-150 pl-5 pr-4`}
             onClick={onClickNext}
           >
             <span className="mb-0.5">다음</span>
