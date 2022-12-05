@@ -303,5 +303,4 @@ public class UserService {
 
         return jwtTokenizer.generateAccessToken(claims, subject, expiration, base64EncodedSecretKey);
     }
-
 }
