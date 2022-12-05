@@ -21,10 +21,8 @@ export default function SelectBox({
   const handleSelect = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     setSelected(e.currentTarget.id);
-    // console.log(e.currentTarget.id);
-    // console.log(selected);
     if (setPendingSort !== undefined) {
-      switch (selected) {
+      switch (e.currentTarget.id) {
         case '최신 순':
           setPendingSort(false);
           break;
@@ -33,7 +31,7 @@ export default function SelectBox({
           break;
       }
     } else if (setAdoptSort !== undefined) {
-      switch (selected) {
+      switch (e.currentTarget.id) {
         case '최신 순':
           setAdoptSort(false);
           break;
