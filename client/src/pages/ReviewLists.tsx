@@ -28,7 +28,6 @@ const ReviewLists = () => {
   const [selected, setSelected] = useState('최신 순');
   const [productData, setProductData] = useState<ProductDetail>();
 
-  const ratingCategory = ['가성비', '품질', '만족감', '성능', '디자인'];
   const menu = ['최신 순', '별점 순', '낮은 별점 순'];
 
   const productId = Number(useParams().id);
@@ -153,8 +152,8 @@ const ReviewLists = () => {
           )}
           {/* 한줄 리뷰 직성 */}
         </div>
-        <div className="w-full px-12 bg-white rounded-b-3xl border-t border-zinc-200">
-          <CreateSnackReview ratingCategory={ratingCategory} />
+        <div className="w-full px-12 bg-white border-t rounded-b-3xl border-zinc-200">
+          <CreateSnackReview />
         </div>
       </div>
     </div>

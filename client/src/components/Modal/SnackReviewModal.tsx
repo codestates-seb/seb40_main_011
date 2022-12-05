@@ -42,21 +42,12 @@ const SnackReviewModal = ({ selectedReview, openModalHandler }: any) => {
   //   design: 0,
   // });
 
-  const ratingArr = [
-    { name: '가성비', en: 'costEfficiency' },
-    { name: '품질', en: 'quality' },
-    { name: '만족감', en: 'satisfaction' },
-    { name: '성능', en: 'performance' },
-    { name: '디자인', en: 'design' },
-  ];
-
   const handleRatingC = (el: any) => {
     setScore((current: any) => {
       const newScore = { ...current };
       newScore.costEfficiency = el;
       return newScore;
     });
-    console.log(score);
   };
   const handleRatingQ = (el: any) => {
     setScore((current: any) => {
@@ -64,7 +55,6 @@ const SnackReviewModal = ({ selectedReview, openModalHandler }: any) => {
       newScore.quality = el;
       return newScore;
     });
-    console.log(score);
   };
   const handleRatingS = (el: any) => {
     setScore((current: any) => {
@@ -72,7 +62,6 @@ const SnackReviewModal = ({ selectedReview, openModalHandler }: any) => {
       newScore.satisfaction = el;
       return newScore;
     });
-    console.log(score);
   };
   const handleRatingP = (el: any) => {
     setScore((current: any) => {
@@ -80,7 +69,6 @@ const SnackReviewModal = ({ selectedReview, openModalHandler }: any) => {
       newScore.performance = el;
       return newScore;
     });
-    console.log(score);
   };
   const handleRatingD = (el: any) => {
     setScore((current: any) => {
@@ -88,9 +76,15 @@ const SnackReviewModal = ({ selectedReview, openModalHandler }: any) => {
       newScore.design = el;
       return newScore;
     });
-    console.log(score);
   };
 
+  const ratingArr = [
+    { name: '가성비', en: 'costEfficiency', fnc: handleRatingC },
+    { name: '품질', en: 'quality', fnc: handleRatingQ },
+    { name: '만족감', en: 'satisfaction', fnc: handleRatingS },
+    { name: '성능', en: 'performance', fnc: handleRatingP },
+    { name: '디자인', en: 'design', fnc: handleRatingD },
+  ];
   // const handleRating = (
   //   value: number,
   //   index: number,
@@ -148,18 +142,19 @@ const SnackReviewModal = ({ selectedReview, openModalHandler }: any) => {
   return (
     <div className="fixed inset-0 z-30 flex items-center justify-center w-full h-screen overflow-hidden bg-black/30 backdrop-blur-sm justify-content">
       <div className="w-[40rem] z-40 rounded-xl overflow-hidden">
-        <div className="flex flex-col p-3 font-medium text-gray-600 bg-slate-100 border-slate-200">
+        <div className="flex flex-col p-3 font-medium text-gray-600 bg-zinc-100 border-slate-200">
           <div className="flex justify-start items-top">
-            <Avatar image={el.image} />
-            {/* <img
+            <div className="pt-3 pl-2">
+              <Avatar image={el.image} />
+              {/* <img
               src={`https://codetech.nworld.dev${el?.image}`}
               alt=""
               className="w-16 h-16 rounded-full bg-slate-200"
             /> */}
-            4
-            <div className="flex flex-col items-start justify-start pt-1.5 ml-8">
-              <div className="pt-1.5">{el.nickname}</div>
-              <div className="pt-1 ml-auto text-xs text-gray-400 ">
+            </div>
+            <div className="flex flex-col items-center justify-start pt-1.5 ml-3">
+              <div className="pt-1.5 mr-auto">{el.nickname}</div>
+              <div className="pt-1 mr-auto text-xs text-gray-400 ">
                 {' '}
                 {new Date(el.createdAt).toLocaleDateString('kr-KO', {
                   month: 'short',
@@ -168,103 +163,81 @@ const SnackReviewModal = ({ selectedReview, openModalHandler }: any) => {
                 })}
               </div>
             </div>
-            <button className="h-full ml-auto" onClick={openModalHandler}>
-              <BsXLg className="flex flex-col justify-start" />
-            </button>
-          </div>
 
-          {editStus ? (
-            <>
-              <div className="grid grid-cols-3 px-2 mt-4">
-                <div className="flex items-center justify-between px-1">
-                  <p className="pr-0.5 text-xl">가성비</p>
-                  <Rating
-                    allowFraction
-                    initialValue={el.score.costEfficiency}
-                    size={25}
-                    onClick={handleRatingC}
-                  />
-                </div>
-                <div className="flex items-center justify-between px-1">
-                  <p className="pr-0.5 text-xl">품질</p>
-                  <Rating
-                    allowFraction
-                    initialValue={el.score.quality}
-                    size={25}
-                    onClick={handleRatingQ}
-                  />
-                </div>
-                <div className="flex items-center justify-between px-1">
-                  <p className="pr-0.5 text-xl">만족감</p>
-                  <Rating
-                    allowFraction
-                    initialValue={el.score.satisfaction}
-                    size={25}
-                    onClick={handleRatingS}
-                  />
-                </div>
-                <div className="flex items-center justify-between px-1">
-                  <p className="pr-0.5 text-xl">성능</p>
-                  <Rating
-                    allowFraction
-                    initialValue={el.score.performance}
-                    size={25}
-                    onClick={handleRatingP}
-                  />
-                </div>
-                <div className="flex items-center justify-between px-1">
-                  <p className="pr-0.5 text-xl">디자인</p>
-                  <Rating
-                    allowFraction
-                    initialValue={el.score.design}
-                    size={25}
-                    onClick={handleRatingD}
-                  />
-                </div>
-              </div>
-              <TextareaAutosize
-                className={`p-2 w-full bg-transparent outline-none text-gray-300 font-medium resize-none focus:text-gray-700 text-lg ${
-                  content.length !== 0 && `text-gray-700`
-                }`}
-                minRows={7}
-                value={content}
-                onChange={handleTextarea}
-              />
-            </>
-          ) : (
-            <>
-              <div className="grid grid-cols-3 px-2 mt-4">
-                {ratingArr.map((ele, idx) => {
-                  return (
-                    <div
-                      className="flex items-center justify-between px-1"
-                      key={idx}
-                    >
-                      <p className="pr-0.5 text-xl">{ele.name}</p>
-                      <Rating
+            {!editStus ? (
+              <>
+                <div className="flex flex-row items-center justify-between px-3 py-1 mt-2 ml-auto bg-white border border-zinc-200 text-black/50 rounded-xl">
+                  {ratingArr.map((ele, idx) => {
+                    return (
+                      <div
+                        className="flex flex-row items-center justify-between px-1 "
+                        key={idx}
+                      >
+                        <p className="pr-0.5 text-sm">{ele.name}</p>
+                        <span className="text-sm font-medium md:ml-1 text-black/60">
+                          {el.score[ele.en]}
+                        </span>
+                        {/* <Rating
                         allowFraction
                         readonly
                         initialValue={el.score[ele.en]}
                         size={25}
-                      />
-                    </div>
-                  );
-                })}
-              </div>
-              <div className="p-2 text-lg text-justify min-h-[150px]">
-                {el.content}
-              </div>
-            </>
-          )}
-          <div className="flex items-end justify-end text-sm">
-            {Number(loginId) === el.writerId ? (
-              editStus ? (
-                <>
-                  <div className="flex items-center justify-between w-full">
-                    <span className="flex text-sm text-gray-400">
+                      /> */}
+                      </div>
+                    );
+                  })}
+                </div>
+              </>
+            ) : (
+              <></>
+            )}
+
+            <button className="h-full ml-auto" onClick={openModalHandler}>
+              <BsXLg className="flex flex-col justify-start" />
+            </button>
+          </div>
+          {/* 수정상태 */}
+          {editStus ? (
+            <>
+              <div className="flex">
+                <div className="px-2 mt-4 ">
+                  {ratingArr.map((ele, idx: number) => {
+                    return (
+                      <div
+                        className="flex flex-col items-center px-1"
+                        key={idx}
+                      >
+                        <div className="pr-0.5 flex justify-between items-center w-10/12">
+                          {ele.name}
+                          <p className="px-2 bg-zinc-200 rounded ml-3  text-sm text-black/70 font-medium w-[35px] text-center">
+                            {score[ele.en]}
+                          </p>
+                        </div>
+                        <Rating
+                          allowFraction
+                          initialValue={el.score[ele.en]}
+                          size={25}
+                          onClick={ele.fnc}
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
+                <div className="w-full mt-2 ml-1 border-l">
+                  <TextareaAutosize
+                    className={`p-3 w-full bg-transparent outline-none text-gray-300 font-medium resize-none focus:text-gray-700 text-lg ${
+                      content.length !== 0 && `text-gray-700`
+                    }`}
+                    minRows={7}
+                    value={content}
+                    onChange={handleTextarea}
+                  />
+
+                  <div className="flex items-center justify-between w-full ">
+                    <span className="flex pl-3 text-sm text-gray-400">
                       현재 글자수 {content.length} / 최대 글자수 500자
                     </span>
-                    <div>
+                    <div className="ml-auto">
                       {' '}
                       <button
                         onClick={handelEditStus}
@@ -282,7 +255,20 @@ const SnackReviewModal = ({ selectedReview, openModalHandler }: any) => {
                       </button>
                     </div>
                   </div>
-                </>
+                </div>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="p-2 text-lg text-justify min-h-[150px]">
+                {el.content}
+              </div>
+            </>
+          )}
+          <div className="flex items-end justify-end text-sm">
+            {Number(loginId) === el.writerId ? (
+              editStus ? (
+                <></>
               ) : (
                 <>
                   <button

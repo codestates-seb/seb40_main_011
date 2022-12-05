@@ -13,10 +13,10 @@ export default function Answer({
 }: AnswerProps) {
   return (
     <div className="w-full flex mt-3 mb-1">
-      <div className="flex-none ml-10">
+      <div className="flex-none ml-10 mt-3">
         <Avatar image={image} />
       </div>
-      <div className="w-full">
+      <div className="w-full pl-2">
         <BodyTop
           createdAt={createdAt}
           nickname={nickname}

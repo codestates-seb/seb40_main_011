@@ -1,7 +1,5 @@
 import axios from 'axios';
 import { Password } from '../components/Modal/EditPassword';
-import { blob } from 'stream/consumers';
-import { EditSncakReview } from '../components/Modal/SnackReviewModal';
 import {
   LoginInputs,
   SignupInputs,
@@ -19,25 +17,6 @@ export const postSnack = async (req: any) => {
       },
     });
     return searchResponse;
-  } catch (err: any) {
-    return err.response;
-  }
-};
-
-export const getReview = async () =>
-  await axios
-    .get('/api/review')
-    .then((data) => data)
-    .catch((err) => err.response);
-
-export const getProduct = async (productId: number) => {
-  try {
-    const response = await axios.get(`/api/reviews/best?size=${productId}`, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    return response;
   } catch (err: any) {
     return err.response;
   }
@@ -197,15 +176,6 @@ export const delAccount = async (data: any) => {
       },
     });
     return optOut;
-  } catch (err: any) {
-    return err.response;
-  }
-};
-
-export const editAccount = async () => {
-  try {
-    const editUserInfo = await axios.patch('/api/user/withdraw');
-    return editUserInfo;
   } catch (err: any) {
     return err.response;
   }
@@ -525,19 +495,6 @@ export const deleteReview = async (reviewId: number) => {
     return err.response;
   }
 };
-
-// export const getProducts = async () => {
-//   try {
-//     const response = await axios.get(`/api/products/main-search`, {
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//     });
-//     return response;
-//   } catch (err: any) {
-//     return err.response;
-//   }
-// };
 
 export const getProducts = async () => {
   try {
