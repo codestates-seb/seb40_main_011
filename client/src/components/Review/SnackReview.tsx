@@ -4,7 +4,7 @@ import { SnackReviewProps, SnackReviewCards } from '../../types/mainPageTypes';
 import Avatar from '../Avatar/Avatar';
 import SnackReviewModal from '../Modal/SnackReviewModal';
 
-const SnackReview = ({ snackReviewData }: SnackReviewProps) => {
+const SnackReview = ({ snackReviewData }: any) => {
   const [selectedReview, setSelectedReview] = useState<any>();
   const [isModal, setIsModal] = useState(false);
 
@@ -13,11 +13,11 @@ const SnackReview = ({ snackReviewData }: SnackReviewProps) => {
   };
 
   const reviewList = [
-    { name: '가성비', avg: 'avgCe' },
-    { name: '품질', avg: 'avgQlt' },
-    { name: '만족감', avg: 'avgStf' },
-    { name: '성능', avg: 'avgPerf' },
-    { name: '디자인', avg: 'avgDsn' },
+    { name: '가성비', avg: 'costEfficiency' },
+    { name: '품질', avg: 'quality' },
+    { name: '만족감', avg: 'satisfaction' },
+    { name: '성능', avg: 'performance' },
+    { name: '디자인', avg: 'design' },
   ];
 
   const getDecial = (num: number | undefined) => {
@@ -97,29 +97,30 @@ const SnackReview = ({ snackReviewData }: SnackReviewProps) => {
                   </div>
                   <div className="w-full md:w-1/2 lg:w-1/3">
                     <div className="hidden md:inline-block flex flex-wrap flex-[1_1_40%] md:flex-col justify-center md:px-8 pt-3 pb-12 md:pb-3">
-                      {reviewList.map((el, idx) => {
+                      {reviewList.map((ele, idx) => {
                         return (
                           <div className="flex items-center mr-2" key={idx}>
                             <div className="mr-1.5 text-black/70 w-12">
-                              {el.name}
+                              {ele.name}
                             </div>
-                            {snackReviewStats !== undefined && (
+                            {snackReviewData !== undefined && (
                               <Rating
                                 allowFraction
                                 readonly
-                                initialValue={getNatural(
-                                  snackReviewStats[el.avg]
-                                )}
+                                initialValue={el.score[ele.avg]}
+                                // {getNatural(
+                                //   snackReviewData[el.avg]
+                                // )}
                                 size={24}
                               />
                             )}
                             <div className="ml-1.5 text-black/70">
-                              {getDecial(snackReviewStats[el.avg])}
+                              {getDecial(snackReviewData[ele.avg])}
                             </div>
                           </div>
                         );
                       })}
-                      <div className="invisible md:hidden flex items-center mx-8 justify-between">
+                      <div className="flex items-center justify-between invisible mx-8 md:hidden">
                         <div className="mr-1.5 text-black/70 w-12">
                           {reviewList[0].name}
                         </div>
@@ -135,7 +136,7 @@ const SnackReview = ({ snackReviewData }: SnackReviewProps) => {
                   </div>
                 </div>
               </div>
-              <div className="w-full pt-2 pb-3 mt-3 mb-8 px-5">
+              <div className="w-full px-5 pt-2 pb-3 mt-3 mb-8">
                 {el.content}
               </div>
             </div>
