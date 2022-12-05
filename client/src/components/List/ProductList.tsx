@@ -1,6 +1,6 @@
 // [GET]
 import { getProducts } from '../../util/apiCollection';
-import { ReactNode, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Product } from '../../types/mainPageTypes';
 import MainCategory from '../Selectors/MainCategory';
 import { useNavigate } from 'react-router-dom';
@@ -87,7 +87,6 @@ const ProductList = () => {
             <NoElement />
             {products.slice(0, viewMore).map((el, idx): JSX.Element => {
               const { thumbnail } = el;
-              console.log(el);
               return (
                 <div
                   key={idx}
