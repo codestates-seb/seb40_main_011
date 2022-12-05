@@ -11,6 +11,7 @@ import WriteAnswer from '../Modal/WriteAnswer';
 import { useIsLogin } from '../../store/login';
 import { useNavigate } from 'react-router-dom';
 import Avatar from '../Avatar/Avatar';
+import FirstAnswer from './FirstAnswer';
 
 export default function PendingQuestion({
   createdAt,
@@ -52,7 +53,7 @@ export default function PendingQuestion({
     return false;
   };
   const editable = getEdit();
-  console.log(answerCards);
+
   return (
     <div className="w-full">
       {showModal && (
@@ -80,28 +81,6 @@ export default function PendingQuestion({
               <div className="px-4 pt-2 pb-3 rounded bg-white text-gray-600 font-medium">
                 {content}
               </div>
-              {firstComment && (
-                <PendingAnswer
-                  key={firstComment.id}
-                  createdAt={firstComment.createdAt}
-                  nickname={firstComment.nickname}
-                  content={firstComment.content}
-                  writerId={firstComment.writerId}
-                  id={firstComment.id}
-                  questionId={firstComment.questionId}
-                  questionWriterId={firstComment.questionWriterId}
-                  questionContent={firstComment.questionContent}
-                  image={firstComment.image}
-                />
-              )}
-              {answerCards !== null && !showAnswer && answerCards.length !== 1 && (
-                <button
-                  onClick={handleShowAnswer}
-                  className="w-full mt-1 rounded overflow-hidden"
-                >
-                  <AnswerMore count={answerCards.length - 1} />
-                </button>
-              )}
             </div>
             <div className="flex-none w-16 mx-2 flex justify-center items-start">
               <button
@@ -114,25 +93,50 @@ export default function PendingQuestion({
           </div>
         </div>
       </div>
+      {firstComment && (
+        <FirstAnswer
+          key={firstComment.id}
+          createdAt={firstComment.createdAt}
+          nickname={firstComment.nickname}
+          content={firstComment.content}
+          writerId={firstComment.writerId}
+          id={firstComment.id}
+          questionId={firstComment?.questionId}
+          questionWriterId={firstComment?.questionWriterId}
+          questionContent={firstComment.questionContent}
+          image={firstComment.image}
+        />
+      )}
+      {answerCards !== null && !showAnswer && answerCards.length !== 1 && (
+        <button
+          onClick={handleShowAnswer}
+          className="w-full mt-1 rounded overflow-hidden"
+        >
+          <AnswerMore count={answerCards.length - 1} />
+        </button>
+      )}
       {answerCards !== null &&
         showAnswer &&
-        answerCards.map((el: AnswerCardsProps) => {
-          const { id, createdAt, nickname, content, writerId, image } = el;
-          return (
-            <PendingAnswer
-              key={id}
-              createdAt={createdAt}
-              nickname={nickname}
-              content={content}
-              writerId={writerId}
-              id={id}
-              questionId={questionId}
-              questionWriterId={questionWriterId}
-              questionContent={questionContent}
-              image={image}
-            />
-          );
-        })}
+        answerCards
+          .slice()
+          .filter((el: PendingQuestionProps) => el.id !== firstComment.id)
+          .map((el: AnswerCardsProps) => {
+            const { id, createdAt, nickname, content, writerId, image } = el;
+            return (
+              <PendingAnswer
+                key={id}
+                createdAt={createdAt}
+                nickname={nickname}
+                content={content}
+                writerId={writerId}
+                id={id}
+                questionId={questionId}
+                questionWriterId={questionWriterId}
+                questionContent={questionContent}
+                image={image}
+              />
+            );
+          })}
     </div>
   );
 }

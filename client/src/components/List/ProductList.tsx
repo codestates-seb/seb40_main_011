@@ -36,7 +36,6 @@ const ProductList = () => {
 
   const getMoreData = () => {
     if (viewMore < products.length) {
-      console.log(products.length);
       setViewMore(viewMore + 9);
     }
   };
