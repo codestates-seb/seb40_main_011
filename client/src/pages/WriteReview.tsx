@@ -10,9 +10,10 @@ import useReview from '../store/review';
 import AddProduct from '../components/Modal/AddProduct';
 import ThumbnailModal from '../components/Modal/ThumbnailModal';
 import useCategories from '../store/categories';
+import { editReviewProps } from '../types/mainPageTypes';
 // import { useIsLogin } from '../store/login';
 
-const WriteReview = () => {
+const WriteReview = ({ isEditMode }: editReviewProps) => {
   const { title, setTitle, thumbnailImg } = useReview();
   // const { isLogin } = useIsLogin();
   const {
@@ -55,32 +56,35 @@ const WriteReview = () => {
           <ThumbnailModal openThum={openThum} setOpenThum={setOpenThum} />
         )}
         <div className="m-auto mt-8">
-          <div className="flex justify-between h-12 mb-3 max-sm:block max-sm:mb-[6rem] max-sm:w-full">
-            <div className="flex w-4/5 max-sm:w-full max-sm:inline-block max-sm:mb-1">
-              <div className="inline-flex w-1/3 max-sm:inline-block max-sm:w-full max-sm:mr-3 max-sm:mb-3">
-                <CategorySelector />
+          {isEditMode ? null : (
+            <div className="flex justify-between h-12 mb-3 max-sm:block max-sm:mb-[6rem] max-sm:w-full">
+              <div className="flex w-4/5 max-sm:w-full max-sm:inline-block max-sm:mb-1">
+                <div className="inline-flex w-1/3 max-sm:inline-block max-sm:w-full max-sm:mr-3 max-sm:mb-3">
+                  <CategorySelector />
+                </div>
+                <div className="inline-flex w-1/3 ml-5 max-sm:inline-block max-sm:w-full max-sm:ml-0">
+                  {mainCategorySpread && productCategorySpread ? (
+                    <ProductSelector
+                      productCategorySpread={!productCategorySpread}
+                      setProductCategorySpread={setProductCategorySpread}
+                    />
+                  ) : (
+                    <ProductSelector
+                      productCategorySpread={productCategorySpread}
+                      setProductCategorySpread={setProductCategorySpread}
+                    />
+                  )}
+                </div>
               </div>
-              <div className="inline-flex w-1/3 ml-5 max-sm:inline-block max-sm:w-full max-sm:ml-0">
-                {mainCategorySpread && productCategorySpread ? (
-                  <ProductSelector
-                    productCategorySpread={!productCategorySpread}
-                    setProductCategorySpread={setProductCategorySpread}
-                  />
-                ) : (
-                  <ProductSelector
-                    productCategorySpread={productCategorySpread}
-                    setProductCategorySpread={setProductCategorySpread}
-                  />
-                )}
-              </div>
+              <button
+                className="w-1/6 py-1 my-1 text-sm font-bold text-white rounded-md hover:bg-slate-400 bg-slate-300 max-sm:block max-sm:ml-auto max-sm:w-24 max-sm:h-10"
+                onClick={onClickModal}
+              >
+                제품 추가
+              </button>
             </div>
-            <button
-              className="w-1/6 py-1 my-1 text-sm font-bold text-white rounded-md hover:bg-slate-400 bg-slate-300 max-sm:block max-sm:ml-auto max-sm:w-24 max-sm:h-10"
-              onClick={onClickModal}
-            >
-              제품 추가
-            </button>
-          </div>
+          )}
+
           <div className="flex justify-between h-12 mb-5">
             <input
               type="text"

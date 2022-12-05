@@ -132,7 +132,7 @@ const AddProduct = ({ isModal, setIsModal }: ModalProps) => {
                   </p>
                 </div>
                 <textarea
-                  className="justify-between alsolute t-0 text-sm bg-white rounded border border-slate-200 flex items-center px-4 pb-0.5 font-medium text-gray-500 w-full"
+                  className="resize-none justify-between alsolute t-0 text-sm bg-white rounded border border-slate-200 flex items-center px-4 pb-0.5 font-medium text-gray-500 w-full"
                   value={detail}
                   rows={3}
                   cols={50}
