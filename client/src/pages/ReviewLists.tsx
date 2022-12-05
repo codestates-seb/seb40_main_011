@@ -1,26 +1,23 @@
 // 리뷰 디테일 fetching & boxing component
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { Rating } from 'react-simple-star-rating';
+import { useNavigate, useParams } from 'react-router-dom';
 import DetailReview from '../components/Review/DetailReview';
 import SnackReview from '../components/Review/SnackReview';
 import CreateSnackReview from '../components/Review/CreateSnackReview';
 import {
   getSnack,
   getGoodSnack,
-  getSnackStats,
   getProductDetail,
   getBadSnack,
 } from '../util/apiCollection';
-import {
-  SnackReviews,
-  SnackReviewAvg,
-  ProductDetail,
-} from '../types/mainPageTypes';
+import { SnackReviews, ProductDetail } from '../types/mainPageTypes';
 import RvSelectBox from '../components/Review/RvSelectBox';
 import AvgRating from '../components/Review/AvgRating';
+import { useIsLogin } from '../store/login';
 
 const ReviewLists = () => {
+  const navigate = useNavigate();
+  const { isLogin } = useIsLogin();
   const [snackReviewData, setSnackReviewData] = useState<SnackReviews>();
   const [limit, setLimit] = useState(6);
 
@@ -84,8 +81,16 @@ const ReviewLists = () => {
     setIsModal(!isModal);
   };
 
+  const onReviewWrite = () => {
+    if (!isLogin) {
+      window.alert('로그인을 해주세요');
+    } else {
+      navigate('/review/write');
+    }
+  };
+
   return (
-    <div className="pb-16 bg-zinc-100">
+    <div className="pb-12 bg-zinc-100">
       <div
         className="mx-auto w-full lg:w-[64rem] flex flex-col items-center px-4"
         onClick={() => {
@@ -93,8 +98,8 @@ const ReviewLists = () => {
           handleDetailBoxClose();
         }}
       >
-        <div className="py-16 text-center">
-          <div className="mb-3 text-xl font-medium text-black/60">
+        <div className="w-full py-8 text-center">
+          <div className="mb-3 text-xl font-medium text-black/30">
             {productData?.type}
           </div>
           <div className="text-4xl font-bold tracking-tight">
@@ -103,6 +108,13 @@ const ReviewLists = () => {
           <div className="flex justify-center">
             <AvgRating productId={productId} />
           </div>
+          <span
+            className="w-48 mx-auto mt-4 text-white pb-0.5 px-5 h-12 rounded-full bg-blue-500 hover:bg-blue-400 flex items-center font-medium justify-center text-lg"
+            role="button"
+            onClick={onReviewWrite}
+          >
+            상세리뷰 작성하기
+          </span>
         </div>
         {productData?.reviews !== null && (
           <DetailReview
@@ -111,7 +123,9 @@ const ReviewLists = () => {
             setdetailReviewSpread={setdetailReviewSpread}
           />
         )}
-        <div className="w-full px-8 pt-6 bg-white rounded-3xl md:px-10 lg:px-12 md:pt-8 lg:pt-10">
+        <div
+          className={`w-full px-8 pt-6 bg-white rounded-t-3xl md:px-10 lg:px-12 md:pt-8 lg:pt-10`}
+        >
           <div className="flex items-center justify-between mb-4 text-xl font-medium">
             <div className="pb-1 mr-3 text-2xl font-medium">한줄 리뷰</div>
             <RvSelectBox
@@ -139,7 +153,7 @@ const ReviewLists = () => {
           )}
           {/* 한줄 리뷰 직성 */}
         </div>
-        <div className="px-12 py-6 my-8 bg-white rounded-3xl">
+        <div className="w-full px-12 bg-white rounded-b-3xl border-t border-zinc-200">
           <CreateSnackReview ratingCategory={ratingCategory} />
         </div>
       </div>

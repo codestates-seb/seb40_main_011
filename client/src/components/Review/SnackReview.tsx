@@ -55,8 +55,22 @@ const SnackReview = ({ snackReviewData }: any) => {
           >
             <div className="w-full">
               <div className="flex items-center justify-between">
-                <div
-                  className={`w-14 h-12 rounded-2xl flex items-center justify-center text-xl font-bold pb-1 mr-2 
+                <div className="flex">
+                  <Avatar image={el.image} />
+                  <div className="flex flex-col w-ful ml-3 font-medium tracking-tight mt-0.5">
+                    <div className="text-black/70">{el.nickname}</div>
+                    <div className="pt-0.5 text-sm text-black/40">
+                      {new Date(el.createdAt).toLocaleDateString('kr-KO', {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric',
+                      })}
+                    </div>
+                  </div>
+                </div>
+                <div className="flex">
+                  <div
+                    className={`w-12 h-12 rounded-2xl flex items-center justify-center text-xl font-bold pb-1 
                 ${
                   el.score.grade >= 0 &&
                   el.score.grade <= 1 &&
@@ -83,56 +97,25 @@ const SnackReview = ({ snackReviewData }: any) => {
                   `bg-emerald-400 text-emerald-900`
                 }
                 `}
-                ></div>
-                <div className="flex flex-col w-full">
-                  <div className="flex flex-row justify-between">
-                    <div>{el.nickname}</div>
-                    <div className="pt-1 text-sm text-gray-400">
-                      {new Date(el.createdAt).toLocaleDateString('kr-KO', {
-                        month: 'short',
-                        day: 'numeric',
-                        year: 'numeric',
-                      })}
-                    </div>
+                  >
+                    {el.score.grade}
                   </div>
-                  <div className="w-full md:w-1/2 lg:w-1/3">
-                    <div className="hidden md:inline-block flex flex-wrap flex-[1_1_40%] md:flex-col justify-center md:px-8 pt-3 pb-12 md:pb-3">
-                      {reviewList.map((ele, idx) => {
-                        return (
-                          <div className="flex items-center mr-2" key={idx}>
-                            <div className="mr-1.5 text-black/70 w-12">
-                              {ele.name}
-                            </div>
-                            {snackReviewData !== undefined && (
-                              <Rating
-                                allowFraction
-                                readonly
-                                initialValue={el.score[ele.avg]}
-                                // {getNatural(
-                                //   snackReviewData[el.avg]
-                                // )}
-                                size={24}
-                              />
-                            )}
-                            <div className="ml-1.5 text-black/70">
-                              {getDecial(snackReviewData[ele.avg])}
-                            </div>
+                  <div className="hidden md:flex">
+                    {reviewList.map((ele, idx) => {
+                      return (
+                        <div
+                          className="flex flex-col items-center ml-2 w-12 h-12 rounded-2xl bg-zinc-100 justify-center font-medium"
+                          key={idx}
+                        >
+                          <div className="text-black/60">
+                            {el.score[ele.avg]}
                           </div>
-                        );
-                      })}
-                      <div className="flex items-center justify-between invisible mx-8 md:hidden">
-                        <div className="mr-1.5 text-black/70 w-12">
-                          {reviewList[0].name}
+                          <div className="text-black/40 text-xs mb-1">
+                            {ele.name}
+                          </div>
                         </div>
-                        <Rating
-                          allowFraction
-                          readonly
-                          initialValue={1.5}
-                          size={24}
-                        />
-                        <div className="ml-1.5 text-black/70">{1.5}</div>
-                      </div>
-                    </div>
+                      );
+                    })}
                   </div>
                 </div>
               </div>
