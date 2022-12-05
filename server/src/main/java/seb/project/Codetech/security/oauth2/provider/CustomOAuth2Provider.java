@@ -25,7 +25,7 @@ public enum CustomOAuth2Provider {
         @Override
         public ClientRegistration.Builder getBuilder(String registrationId){
             ClientRegistration.Builder builder = getBuilder(registrationId,
-                    ClientAuthenticationMethod.CLIENT_SECRET_BASIC, "https://codetech.nworld.dev/login/oauth2/code/kakao");
+                    ClientAuthenticationMethod.CLIENT_SECRET_BASIC, DEFAULT_LOGIN_REDIRECT_URL);
             builder.scope("profile_nickname","profile_image");
             builder.authorizationUri("https://kauth.kakao.com/oauth/authorize");
             builder.tokenUri("https://kauth.kakao.com/oauth/token");
