@@ -260,7 +260,7 @@ const SnackReviewModal = ({ selectedReview, openModalHandler }: any) => {
             </>
           ) : (
             <>
-              <div className="p-2 text-lg text-justify min-h-[150px]">
+              <div className="pt-3 px-4 text-lg text-justify min-h-[150px]">
                 {el.content}
               </div>
             </>
