@@ -171,7 +171,7 @@ export default function Comment({ reviewComments }: CommentProps) {
                 <span className="ml-1 font-semibold">
                   {reviewComments.writer}
                 </span>
-                <span className="text-sm font-medium before:content-['•'] before:mr-1.5 before:ml-1.5 before:text-gray-400 font-medium text-gray-400">
+                <span className="text-sm font-medium before:content-['•'] before:mr-1.5 before:ml-1.5 before:text-gray-400 text-gray-400">
                   {getParsedDate(reviewComments.createdAt)}
                 </span>
               </span>
@@ -217,7 +217,7 @@ export default function Comment({ reviewComments }: CommentProps) {
                       }
                       className="w-12 flex-none flex justify-center items-center"
                     >
-                      <FiSend className="text-3xl text-gray-400 hover:text-blue-500 mr-2 hover:text-blue-500  hover:bg-blue-100 p-1 rounded-lg w-10 h-8 pr-1.5" />
+                      <FiSend className="text-3xl text-gray-400 hover:text-blue-500 mr-2 hover:bg-blue-100 p-1 rounded-lg w-10 h-8 pr-1.5" />
                     </button>
                   </form>
                 </>
@@ -245,7 +245,7 @@ export default function Comment({ reviewComments }: CommentProps) {
                       }
                       className="w-12 flex-none flex justify-center items-center"
                     >
-                      <FiSend className="text-3xl text-gray-400 hover:text-blue-500 mr-2 hover:text-blue-500  hover:bg-blue-100 p-1 rounded-lg w-10 h-8 pr-1.5" />
+                      <FiSend className="text-3xl text-gray-400 mr-2 hover:text-blue-500  hover:bg-blue-100 p-1 rounded-lg w-10 h-8 pr-1.5" />
                     </button>
                   </form>
                 </>
