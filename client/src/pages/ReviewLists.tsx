@@ -153,8 +153,8 @@ const ReviewLists = () => {
           )}
           {/* 한줄 리뷰 직성 */}
         </div>
-        <div className="w-full px-12 bg-white rounded-b-3xl border-t border-zinc-200">
-          <CreateSnackReview ratingCategory={ratingCategory} />
+        <div className="w-full px-12 bg-white border-t rounded-b-3xl border-zinc-200">
+          <CreateSnackReview />
         </div>
       </div>
     </div>

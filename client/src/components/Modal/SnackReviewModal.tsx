@@ -150,13 +150,14 @@ const SnackReviewModal = ({ selectedReview, openModalHandler }: any) => {
       <div className="w-[40rem] z-40 rounded-xl overflow-hidden">
         <div className="flex flex-col p-3 font-medium text-gray-600 bg-slate-100 border-slate-200">
           <div className="flex justify-start items-top">
-            <Avatar image={el.image} />
-            {/* <img
+            <div className="pt-3 pl-2">
+              <Avatar image={el.image} />
+              {/* <img
               src={`https://codetech.nworld.dev${el?.image}`}
               alt=""
               className="w-16 h-16 rounded-full bg-slate-200"
             /> */}
-            4
+            </div>
             <div className="flex flex-col items-start justify-start pt-1.5 ml-8">
               <div className="pt-1.5">{el.nickname}</div>
               <div className="pt-1 ml-auto text-xs text-gray-400 ">
