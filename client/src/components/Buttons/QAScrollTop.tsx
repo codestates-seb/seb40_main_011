@@ -40,15 +40,15 @@ export default function QAScrollTop() {
       {showButton && (
         <>
           <button
-            className="group/button hover:bg-green-500 bg-emerald-400 fixed bottom-12 right-8 p-4 bg-gray-100 flex flex-row justify-center items-center rounded-lg shadow-2xl ring ring-inset ring-slate-200 hover:ring-0"
+            className="group/button hover:bg-emerald-500 bg-emerald-300 fixed bottom-12 right-8 p-4 flex flex-row justify-center items-center rounded-lg shadow-2xl ring ring-inset ring-slate-200 hover:ring-0"
             onClick={scrollToA}
           >
-            <span className="material-icons text-[1rem] text-white font-bold group-hover/button:text-white">
+            <span className="material-icons text-[1rem] text-emerald-700 font-bold group-hover/button:text-white">
               답변보기
             </span>
           </button>
           <button
-            className="group/button hover:bg-blue-700 bg-blue-200 fixed bottom-12 right-32 p-4 bg-gray-100 flex flex-row justify-center items-center rounded-lg shadow-2xl ring ring-inset ring-slate-200 hover:ring-0"
+            className="group/button hover:bg-blue-700 bg-blue-200 fixed bottom-12 right-32 p-4 flex flex-row justify-center items-center rounded-lg shadow-2xl ring ring-inset ring-slate-200 hover:ring-0"
             onClick={scrollToQ}
           >
             <span className="material-icons text-[1rem] text-blue-700 font-bold group-hover/button:text-white">
