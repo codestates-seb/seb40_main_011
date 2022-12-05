@@ -14,19 +14,19 @@ function Banner() {
       rel="noreferrer"
     >
       <span className="text-center text-emerald-400">Team GitHub</span>
-      <span className="text-center text-slate-500 break-keep text-xl">
+      <span className="text-xl text-center text-slate-500 break-keep">
         Codestates Front-End & Back-End Bootcamp 40th
       </span>
-      <div className="text-center flex flex-col md:flex-row mt-2">
-        <span className="leading-8 text-2xl text-center text-gray-300">
+      <div className="flex flex-col mt-2 text-center md:flex-row">
+        <span className="text-2xl leading-8 text-center text-gray-300">
           Main-Project
         </span>
         <span className="mx-4 text-xs border-l border-solid border-l-gray-500"></span>
-        <span className="leading-8 text-2xl text-center text-gray-300">
+        <span className="text-2xl leading-8 text-center text-gray-300">
           seb40_main_011
         </span>
         <span className="mx-4 text-xs border-l border-solid border-l-gray-500"></span>
-        <span className="leading-8 text-2xl text-center text-gray-300">
+        <span className="text-2xl leading-8 text-center text-gray-300">
           Core i7
         </span>
       </div>
@@ -73,14 +73,15 @@ export default function Footer() {
     },
   ];
   return (
-    <div className="px-4 pt-10 pb-16 bg-slate-900 dark:bg-black">
+    <div className="px-10 pt-10 pb-10 bg-slate-900 dark:bg-black">
       <Banner />
       <div className="text-center">
         {teamMember.map((member, index) => {
           return <Member key={index} memberInfo={member} />;
         })}
       </div>
-      <div className="py-8 text-white/40 text-center">
+
+      <div className="pt-16 text-right text-slate-200">
         Copyright 2022. codeTech inc. all rights reserved.
       </div>
     </div>
