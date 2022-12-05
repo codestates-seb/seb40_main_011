@@ -1,4 +1,5 @@
-![Dec-04-2022 18-18-12](https://user-images.githubusercontent.com/94808683/205483155-1ee629f3-7f87-481e-8f4b-975151b8d48a.gif)
+
+![Dec-05-2022 10-35-53](https://user-images.githubusercontent.com/94808683/205530462-93292f95-5c94-4d7e-bbb9-0146aca2f43b.gif)
 
 <h1 align="center"> 🖥️ CodeTech </h1> 
 
