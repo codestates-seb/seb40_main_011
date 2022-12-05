@@ -23,8 +23,10 @@ export default function Question({
   return (
     <div className="w-full">
       <div className="w-full flex mt-5">
-        <Avatar image={image} />
-        <div className="w-full">
+        <div className="mt-3">
+          <Avatar image={image} />
+        </div>
+        <div className="w-full pl-2">
           <BodyTop
             createdAt={createdAt}
             nickname={nickname}

@@ -81,13 +81,12 @@ const DetailReview = ({
       {reviewData?.reviewLists.map((el: any, idx: number) => {
         return (
           <Link to={`/review/${el.id}`} key={idx}>
-            <div className="rounded-3xl overflow-hidden flex flex-col md:flex-row mb-10">
-              <div className="w-full md:w-2/5 lg:w-1/3 overflow-hidden rounded-3xl flex-none flex items-center mr-8">
+            <div className="rounded-3xl overflow-hidden flex flex-col md:flex-row mb-16 md:mb-10">
+              <div className="w-full aspect-[16/9] md:h-48 md:w-2/5 lg:w-1/3 overflow-hidden rounded-3xl flex-none flex items-center mr-6">
                 <img
-                  // src={`https://codetech.nworld.dev${el.thumbnail}`}
-                  src={`https://codetech.nworld.dev/images/1268bc17-8074-46a2-aecf-f488fe6db3db.png`}
+                  src={`https://codetech.nworld.dev${el.thumbnail}`}
                   alt=""
-                  className="scale-125"
+                  className="w-full"
                 />
               </div>
               <div className="w-full md:3/5 lg:w-2/3 h-48 flex flex-col overflow-hidden text-left justify-between py-2">

@@ -39,12 +39,12 @@ export default function Completes() {
   }, [adoptMore, adoptSort]);
 
   return (
-    <div className="bg-slate-200/80 flex justify-center py-16 border-t border-slate-300">
+    <div className="bg-slate-200 flex justify-center py-16 border-t border-slate-300">
       <div className="w-[48rem] flex flex-col items-center">
         <div className="w-full flex justify-between pb-4 px-2">
           <div className="flex items-center text-3xl text-slate-600">
             <span className="mr-2 font-bold tracking-tight">
-              답변이 채택되었어요 :)
+              채택이 완료된 질문
             </span>
           </div>
           <SelectBox
