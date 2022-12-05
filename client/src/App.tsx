@@ -15,8 +15,6 @@ import Layout from './layout/Layout';
 import NotFound from './pages/NotFound';
 import EditReviewDetail from './components/Details/EditReviewDetail';
 
-// import Header from './components/Header/Header';
-
 function App() {
   return (
     <BrowserRouter>

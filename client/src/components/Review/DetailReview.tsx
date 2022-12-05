@@ -56,25 +56,17 @@ const DetailReview = ({
   }, [limit, selected]);
 
   const menu = ['최신 순', '좋아요 순', '댓글 순'];
-  //   sortList.map((el) => {
-  //     return el.sort;
-  //   }),
-  // ];
 
   const onMoreClick = (e: React.MouseEvent<HTMLElement>) => {
     setLimit(limit + 3);
   };
 
-  const onReviewWrite = () => {
-    if (!isLogin) {
-      window.alert('로그인을 해주세요');
-    } else {
-      navigate('/review/write');
-    }
-  };
-
   return (
-    <div className="w-full bg-white rounded-3xl px-8 md:px-12 pt-6 sm:pt-8 md:pt-10 md:pb-3 mb-8">
+    <div
+      className={`w-full bg-white rounded-3xl px-8 md:px-12 pt-6 sm:pt-8 md:pt-10 md:pb-3 mb-8 ${
+        reviewData?.reviewLists.length === 0 && `hidden`
+      }`}
+    >
       <div className="w-full flex justify-between items-center text-xl font-medium mb-6">
         <span className="text-2xl tracking-tight">상세 리뷰</span>
         <RvSelectBox
