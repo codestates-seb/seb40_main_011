@@ -60,7 +60,7 @@ const MypageTab = (): JSX.Element => {
   };
 
   return (
-    <div>
+    <div className="bg-white ">
       <div className="flex justify-center border-b">
         <ul className="flex flex-row justify-between w-full max-w-screen-lg px-10 mx-auto lg:px-24">
           {menuArr.map((ele, index) => {
