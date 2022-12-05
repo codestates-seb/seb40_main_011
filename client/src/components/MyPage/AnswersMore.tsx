@@ -8,7 +8,6 @@ export const AnswersMore = ({ el }: any) => {
   };
 
   const count = el.answers.content.length;
-  console.log(el);
 
   return (
     <>
@@ -23,7 +22,7 @@ export const AnswersMore = ({ el }: any) => {
               onClick={handleMore}
             >
               <span className="font-bold pr-0.5">
-                {count - 1} 개의 답변 더보기
+                {count - 1} 개의 답글 더보기
               </span>
             </button>
           </>
@@ -39,7 +38,7 @@ export const AnswersMore = ({ el }: any) => {
                     className="mb-1 overflow-hidden text-lg text-ellipsis line-clamp-2"
                     key={idx}
                   >
-                    {ele.content}
+                    - {ele.content}
                   </div>
                 </>
               );
