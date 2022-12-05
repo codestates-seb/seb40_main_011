@@ -81,7 +81,6 @@ const Signup = () => {
 
   //이메일
   const onChangeEmail = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    // e.target.value = '';
     const emailCurrent = e.target.value;
     setEmail(emailCurrent);
 
@@ -179,6 +178,7 @@ const Signup = () => {
     '회원가입 실패 ㅜㅜ 코드테크로 문의해주세요',
     '가입이 되어있는 이메일입니다 ㅜㅜ',
     '탈퇴한 이메일은 재가입이 불가능합니다 ㅜㅜ',
+    '메일 인증이 확인되지 않은 경우 가입이 불가합니다',
   ];
   const [msg, setMsg] = useState(modalMsg[0]);
 
@@ -196,8 +196,6 @@ const Signup = () => {
       return setShowModal(true);
     } else {
       const emailCheckReq = await postEmail(emailData);
-      console.log(emailCheckReq);
-      console.log(emailCheckReq.data.message);
       switch (emailCheckReq.status) {
         case 200:
           setMsg(modalMsg[4]);
@@ -245,7 +243,6 @@ const Signup = () => {
         case 404:
           setMsg(modalMsg[8]);
           setShowModal(true);
-          console.log(emailCheckCompletion);
           break;
       }
     }
@@ -264,6 +261,10 @@ const Signup = () => {
     }
     if (passwordCheck.length === 0) {
       setMsg(modalMsg[3]);
+      return setShowModal(true);
+    }
+    if (emailCheckCompletion === false) {
+      setMsg(modalMsg[13]);
       return setShowModal(true);
     }
 
@@ -378,7 +379,7 @@ const Signup = () => {
               <button
                 type="button"
                 id="but01"
-                className="w-full h-full pb-1 text-base font-medium text-white bg-slate-600 rounded-md hover:bg-blue-500"
+                className="w-full h-full pb-1 text-base font-medium text-white rounded-md bg-slate-600 hover:bg-blue-500"
                 onClick={emailButClick}
                 onKeyDown={(e) => handleEnter(e, 'emailCertification')}
               >
@@ -425,7 +426,7 @@ const Signup = () => {
                 <button
                   type="button"
                   id="but02"
-                  className="w-full h-full pb-1 text-base font-medium text-white bg-emerald-500 rounded-md hover:bg-blue-500"
+                  className="w-full h-full pb-1 text-base font-medium text-white rounded-md bg-emerald-500 hover:bg-blue-500"
                   onClick={emailNumCheckClick}
                   onKeyPress={(e) => handleEnter(e, 'password')}
                 >
