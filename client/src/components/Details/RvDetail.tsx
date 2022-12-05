@@ -13,7 +13,7 @@ import useReview from '../../store/review';
 import { AiOutlineHeart } from 'react-icons/ai';
 import CheckModal from './DeleteModal';
 import Spinner from '../../util/Spinner';
-
+import ScrollToTop from '../../util/ScrollToTop';
 const RvDetail = () => {
   interface markdownProps {
     markdown: string | undefined;
@@ -43,6 +43,8 @@ const RvDetail = () => {
   const [comments, setComments] = useState<ReviewComments[]>([]);
   const [showModal, setShowModal] = useState(false);
 
+  ScrollToTop();
+
   const HandleSpinner = () => {
     if (review.content === '') {
       return <Spinner />;
@@ -62,12 +64,6 @@ const RvDetail = () => {
       setContent(data.content);
     };
     getReviewData();
-  }, []);
-
-  useEffect(() => {
-    window.scrollTo({
-      top: 0,
-    });
   }, []);
 
   const onTypeClick = () => {
@@ -216,7 +212,7 @@ const RvDetail = () => {
             <div id="viewer" className="p-4 my-16 whitespace-pre-wrap">
               <ConvertedContent markdown={review.content} />
             </div>
-            {/* <HandleLike userId={review.userId} recommends={review.recommends} /> */}
+            <HandleLike userId={review.userId} recommends={review.recommends} />
             <CommentView />
             <CommentInput />
           </section>
