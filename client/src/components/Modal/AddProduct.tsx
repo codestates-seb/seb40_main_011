@@ -1,10 +1,6 @@
-//제품 추가하기
-//안지은 작성
-
 import React, { ChangeEvent, useState } from 'react';
 import CategorySelector from '../Selectors/CategorySelector';
 import '../common.css';
-// import { useNavigate } from 'react-router-dom';
 import useCategories from '../../store/categories';
 import { selectProductImg } from '../../util/apiCollection';
 import { loginRefresh } from '../../util/loginRefresh';

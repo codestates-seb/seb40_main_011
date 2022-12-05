@@ -125,45 +125,31 @@ const CreateSnackReview = ({ ratingCategory }: RatingCategory) => {
   };
   return (
     <>
-      <div className="flex lg:w-[900px]">
-        <div className="flex flex-col justify-center items-between w-[250px] mr-3">
-          {/* {ratingCategory.map((el: string, index: number) => {
-          return (
-            <div className="flex items-center" key={index}>
-              <p className={`${el} pr-1.5 text-lg`}>{el}</p>
-              <Rating
-                className={el}
-                onClick={(value, index, event) =>
-                  handleRating(value, index, event)
-                }
-                allowFraction
-                size={25}
-              />
-            </div>
-          );
-        })} */}
-
-          <div className="flex items-center justify-between px-1">
-            <p className="pr-0.5 text-lg">가성비</p>
-            <Rating allowFraction size={25} onClick={handleRatingC} />
-          </div>
-          <div className="flex items-center justify-between px-1">
-            <p className="pr-0.5 text-lg">품질</p>
-            <Rating allowFraction size={25} onClick={handleRatingQ} />
-          </div>
-          <div className="flex items-center justify-between px-1">
-            <p className="pr-0.5 text-lg">만족감</p>
-            <Rating allowFraction size={25} onClick={handleRatingS} />
-          </div>
-          <div className="flex items-center justify-between px-1">
-            <p className="pr-0.5 text-lg">성능</p>
-            <Rating allowFraction size={25} onClick={handleRatingP} />
-          </div>
-          <div className="flex items-center justify-between px-1">
-            <p className="pr-0.5 text-lg">디자인</p>
-            <Rating allowFraction size={25} onClick={handleRatingD} />
-          </div>
+      <div className="flex w-full items-center flex-col md:flex-row mt-10 md:mt-0">
+        <div className="flex flex-col justify-center items-between w-[16rem] mr-3">
+          {ratingCategory.map((el: string, index: number) => {
+            return (
+              <div
+                className="flex items-center justify-between px-1"
+                key={index}
+              >
+                <span className={`${el} mr-2 text-black/60 w-12`}>{el}</span>
+                <Rating
+                  className={el}
+                  onClick={(value, index, event) =>
+                    handleRating(value, index, event)
+                  }
+                  allowFraction
+                  size={25}
+                />
+                <span className="px-2 bg-zinc-100 rounded ml-3 pb-0.5 mt-1 text-sm text-black/70 font-medium">
+                  0
+                </span>
+              </div>
+            );
+          })}
         </div>
+        <span className="h-32 border-l border-zinc-200 ml-4 mr-10 hidden md:flex" />
         <div className="w-full bg-slate-200">
           <div className="flex justify-center bg-white border-b border-gray-200">
             <div className="w-full py-10">
@@ -178,10 +164,12 @@ const CreateSnackReview = ({ ratingCategory }: RatingCategory) => {
                 onChange={handleTextarea}
                 value={content}
               />
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-400">
-                  현재 글자수 {content.length} / 최대 글자수 500자
-                </span>
+              <div className="flex items-center justify-between text-sm text-gray-400">
+                <div className="flex flex-col md:flex-row">
+                  <span className="">현재 글자수 {content.length}</span>
+                  <span className="mx-1 hidden md:flex">/</span>
+                  <span className="">최대 글자수 500자</span>
+                </div>
                 <button
                   onClick={onCreateClick}
                   className="font-medium text-white pb-0.5 px-5 h-10 rounded-full bg-blue-500 hover:bg-blue-400"
