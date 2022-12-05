@@ -1,10 +1,6 @@
-//제품 추가하기
-//안지은 작성
-
 import React, { ChangeEvent, useState } from 'react';
 import CategorySelector from '../Selectors/CategorySelector';
 import '../common.css';
-// import { useNavigate } from 'react-router-dom';
 import useCategories from '../../store/categories';
 import { selectProductImg } from '../../util/apiCollection';
 import { loginRefresh } from '../../util/loginRefresh';
@@ -132,11 +128,7 @@ const AddProduct = ({ isModal, setIsModal }: ModalProps) => {
                   </p>
                 </div>
                 <textarea
-
                   className="resize-none justify-between alsolute t-0 text-sm bg-white rounded border border-slate-200 flex items-center px-4 pb-0.5 font-medium text-gray-500 w-full"
-
-       
-
                   value={detail}
                   rows={3}
                   cols={50}
