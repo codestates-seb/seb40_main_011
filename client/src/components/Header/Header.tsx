@@ -4,6 +4,7 @@ import { BsFillSunFill } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 import { useIsLogin } from '../../store/login';
 import { GiHamburgerMenu } from '../../icons';
+import { BiSearch } from 'react-icons/bi';
 import { useState } from 'react';
 export default function Header() {
   const [menu, setMenu] = useState(false);
@@ -50,19 +51,37 @@ export default function Header() {
     return null;
   };
 
+  const MobileSearch = () => {
+    return <BiSearch className="text-3xl mr-2" />;
+  };
+
+  const [searchBar, setSearchBar] = useState(false);
+  const handleSearchBar = () => {
+    setSearchBar(!searchBar);
+    console.log(searchBar);
+  };
+
   return (
     <div className="sticky top-0 z-20 bg-white">
       <div className="max-xl:w-full xl:w-[80rem] mx-auto px-4 h-20 flex flex-row items-center justify-between">
-        <button className="flex-none" onClick={handleHomeClick}>
+        <button
+          className={searchBar ? 'hidden' : `flex-none`}
+          onClick={handleHomeClick}
+        >
           <img
             src={require('../../images/logo.png')}
             alt=""
             className="inline-block w-40 mb-1 mr-2"
           />
         </button>
-        <SearchBar />
+        <SearchBar searchBar={searchBar} setSearchBar={setSearchBar} />
         <div className="flex-none flex flex-row h-full">
           <button className="h-full flex flex-row items-center md:hidden">
+            {searchBar ? null : (
+              <button className="sm:hidden" onClick={handleSearchBar}>
+                <MobileSearch />
+              </button>
+            )}
             <span className="material-icons text-2xl w-14 h-14 rounded-full hover:bg-slate-100 flex items-center justify-center">
               <GiHamburgerMenu onClick={onBurgerClicked} />
             </span>

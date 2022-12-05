@@ -323,3 +323,8 @@ export interface ProductDetail {
   type: string;
   writer: string;
 }
+
+export interface searchBarProps {
+  searchBar: boolean;
+  setSearchBar: Dispatch<SetStateAction<boolean>>;
+}
