@@ -173,7 +173,7 @@ const CreateSnackReview = () => {
                 className={`w-full outline-none text-gray-300 font-medium resize-none focus:text-gray-700 text-lg ${
                   content.length !== 0 && `text-gray-700`
                 }`}
-                placeholder="Enter your question..."
+                placeholder="Enter your Review..."
                 onChange={handleTextarea}
                 value={content}
               />
