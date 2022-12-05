@@ -63,7 +63,7 @@ const CategorySelectors = () => {
       {mainCategorySpread && (
         <div
           onClick={handleSelectClick}
-          className="absolute z-10 w-full overflow-hidden bg-white border top-10 rounded-bl-xl rounded-br-xl drop-shadow-md"
+          className="absolute z-30 w-full overflow-hidden bg-white border top-10 rounded-bl-xl rounded-br-xl drop-shadow-md"
         >
           <button
             onClick={handleButClick}

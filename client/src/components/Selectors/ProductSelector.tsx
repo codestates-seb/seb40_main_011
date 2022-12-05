@@ -108,7 +108,9 @@ const ProductSelector = ({
           'rounded-bl-none rounded-br-none bg-slate-200 text-gray-400 border-b-0'
         }`}
       >
-        {selectName}
+        <p className={selectName.length > 10 ? `truncate` : undefined}>
+          {selectName}
+        </p>
         {productCategorySpread ? <AiFillCaretUp /> : <AiFillCaretDown />}
       </button>
       {productCategorySpread && (
@@ -131,7 +133,7 @@ const ProductSelector = ({
                   key={idx}
                   onClick={handleButClick}
                   value={product.id}
-                  className="truncate selector-but-dropdown-style "
+                  className="truncate selector-but-dropdown-style"
                 >
                   {product.name}
                 </button>
