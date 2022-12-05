@@ -88,15 +88,20 @@ const ThumbnailModal = ({ openThum, setOpenThum }: ThumbModalProps) => {
 
   return (
     <>
-      <div className="fixed inset-0 z-30 flex items-center justify-center w-full h-screen bg-black/30 backdrop-blur-sm justify-content">
+      <div className="fixed inset-0 z-40 flex items-center justify-center w-full h-screen bg-black/30 backdrop-blur-sm justify-content">
         {showModal && <Confirm msg={thumMsg} setShowModal={setShowModal} />}
-        <div className="modal-window h-[550px] z-20 overflow-hidden h-">
-          <h1 className="px-24 pt-16 pb-8 text-3xl">썸네일 선택해주세요</h1>
+        <div className="modal-window h-[550px] z-20 overflow-hidden max-sm:w-full">
+          <h1 className="pt-12 pb-8 text-3xl text-center max-sm:text-2xl max-sm:px-5 max-sm:pt-12">
+            썸네일 선택해주세요
+          </h1>
           <div className="flex justify-center ">
-            <form encType="multipart/form-data">
+            <form
+              encType="multipart/form-data"
+              className="w-full px-10 max-sm:w-full max-sm:px-5"
+            >
               <div className="pb-5">
                 {img === false ? (
-                  <div className="flex rounded-lg w-[418px] bg-slate-200 h-72">
+                  <div className="flex w-full rounded-lg bg-slate-200 h-72">
                     <div className="m-auto">
                       <input
                         type="file"
@@ -115,7 +120,7 @@ const ThumbnailModal = ({ openThum, setOpenThum }: ThumbModalProps) => {
                     </div>
                   </div>
                 ) : (
-                  <div className="flex w-[418px] rounded-lg bg-slate-200 h-72 overflow-hidden my-0 mx-auto items-center justify-center">
+                  <div className="flex items-center justify-center mx-auto my-0 overflow-hidden rounded-lg w-fullrounded-lg bg-slate-200 h-72">
                     <div className="m-auto">
                       <img
                         src={thumbnailCheck}
