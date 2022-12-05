@@ -11,7 +11,6 @@ export default function Answer({
   adoptedId,
   image,
 }: AnswerProps) {
-  console.log(adoptedId);
   return (
     <div className="w-full flex mt-3 mb-1">
       <div className="flex-none ml-10 mt-3">
