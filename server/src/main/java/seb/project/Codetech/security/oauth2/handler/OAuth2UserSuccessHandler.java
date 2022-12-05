@@ -46,6 +46,7 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 		Authentication authentication) throws IOException, ServletException {
+		try{
 		String registrationId = ((OAuth2AuthenticationToken)authentication).getAuthorizedClientRegistrationId();
 		if(registrationId.equals("google")) {
 			var oAuth2User = (OAuth2User) authentication.getPrincipal();
@@ -87,7 +88,7 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 				saveUser(nickname, username, password, provider, image);
 			}
 			redirect(request, response, username, provider, authorities);
-		}
+		}} catch (Exception e){throw e;}
 	}
 
 	private void redirect(HttpServletRequest request, HttpServletResponse response, String email, String provider,
