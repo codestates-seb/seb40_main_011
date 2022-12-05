@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Rating } from 'react-simple-star-rating';
 import { SnackReviewProps, SnackReviewCards } from '../../types/mainPageTypes';
-import Avatar from '../Avatar/Avatar';
 import SnackReviewModal from '../Modal/SnackReviewModal';
 
 const SnackReview = ({ snackReviewData }: any) => {
