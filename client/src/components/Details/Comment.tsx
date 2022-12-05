@@ -1,8 +1,4 @@
-import {
-  CommentProps,
-  Review,
-  ReviewComments,
-} from '../../types/mainPageTypes';
+import { CommentProps, ReviewComments } from '../../types/mainPageTypes';
 import { FiSend } from 'react-icons/fi';
 import TextareaAutosize from 'react-textarea-autosize';
 import React, { useState } from 'react';
@@ -10,7 +6,7 @@ import SubComment from './SubComment';
 import EditComment from './EditComment';
 import { useIsLogin } from '../../store/login';
 import { loginRefresh } from '../../util/loginRefresh';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { postComment, editComment } from '../../util/apiCollection';
 
 export interface count {
@@ -18,6 +14,7 @@ export interface count {
 }
 
 export default function Comment({ reviewComments }: CommentProps) {
+  const navigate = useNavigate();
   const params = useParams();
   const [comment, setComment] = useState(reviewComments?.content);
   const { isLogin } = useIsLogin();
@@ -70,6 +67,9 @@ export default function Comment({ reviewComments }: CommentProps) {
   const onSubCommentClick = async (e: React.MouseEvent, id: string) => {
     e.preventDefault();
 
+    if (!isLogin) {
+      navigate('/login');
+    }
     if (subComment !== '') {
       const response = await postComment({
         reviewId: params.id,

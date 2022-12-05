@@ -7,6 +7,7 @@ import { postComment } from '../../util/apiCollection';
 
 export const CommentInput = () => {
   const params = useParams();
+
   const { isLogin } = useIsLogin();
   const [comment, setComment] = useState('');
   const handleTextarea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
