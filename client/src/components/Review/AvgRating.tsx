@@ -1,7 +1,5 @@
 // Review List fetching & boxing comp
 import { useEffect, useState } from 'react';
-import { Rating } from 'react-simple-star-rating';
-import { SnackReviewAvg } from '../../types/mainPageTypes';
 import { getSnackStats } from '../../util/apiCollection';
 import { AiFillStar } from '../../icons';
 

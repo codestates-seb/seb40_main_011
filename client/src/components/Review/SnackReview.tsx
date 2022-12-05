@@ -1,8 +1,7 @@
-import { useState } from 'react';
-import { Rating } from 'react-simple-star-rating';
-import { SnackReviewProps, SnackReviewCards } from '../../types/mainPageTypes';
-import SnackReviewModal from '../Modal/SnackReviewModal';
 import Avatar from '../Avatar/Avatar';
+import { useState } from 'react';
+import { SnackReviewCards } from '../../types/mainPageTypes';
+import SnackReviewModal from '../Modal/SnackReviewModal';
 
 const SnackReview = ({ snackReviewData }: any) => {
   const [selectedReview, setSelectedReview] = useState<any>();
@@ -20,19 +19,19 @@ const SnackReview = ({ snackReviewData }: any) => {
     { name: '디자인', avg: 'design' },
   ];
 
-  const getDecial = (num: number | undefined) => {
-    if (num !== undefined) {
-      const result = Math.round((num + Number.EPSILON) * 10) / 10;
-      return result;
-    }
-  };
+  // const getDecial = (num: number | undefined) => {
+  //   if (num !== undefined) {
+  //     const result = Math.round((num + Number.EPSILON) * 10) / 10;
+  //     return result;
+  //   }
+  // };
 
-  const getNatural = (num: number | undefined) => {
-    if (num !== undefined) {
-      const result = Math.round(num + Number.EPSILON);
-      return result;
-    }
-  };
+  // const getNatural = (num: number | undefined) => {
+  //   if (num !== undefined) {
+  //     const result = Math.round(num + Number.EPSILON);
+  //     return result;
+  //   }
+  // };
 
   return (
     <div className="w-full">
