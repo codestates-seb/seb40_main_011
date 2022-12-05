@@ -1,4 +1,3 @@
-// Review List fetching & boxing comp
 import { useEffect, useState } from 'react';
 import { getSnackStats } from '../../util/apiCollection';
 import { AiFillStar } from '../../icons';

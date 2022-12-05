@@ -8,14 +8,10 @@ import moment from 'moment';
 import { format } from 'timeago.js';
 import { categoryList } from '../Selectors/MainCategory';
 import Spinner from '../../util/Spinner';
+import ScrollToTop from '../../util/ScrollToTop';
 
 const ProductList = () => {
-  useEffect(() => {
-    window.scrollTo({
-      top: 0,
-    });
-  }, []);
-
+  ScrollToTop();
   const navigate = useNavigate();
   const [products, setProducts] = useState<Product[]>([]);
   const [category, setCategory] = useState('all');

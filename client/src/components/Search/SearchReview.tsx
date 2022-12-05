@@ -29,6 +29,10 @@ const SearchReview = ({ keyword }: any) => {
     navigate(`/review/${e.currentTarget.id}`);
   };
 
+  const onLikeClick = () => {
+    return console.log('hi');
+  };
+
   const MoreBtn = () => {
     const onMoreClick = () => {
       setLimit(limit + 3);
@@ -54,21 +58,17 @@ const SearchReview = ({ keyword }: any) => {
             key={idx}
             className="flex w-full items-center m-4 rounded-3xl p-4 bg-white"
           >
-            {el.thumbnail !== undefined && el.thumbnail.length !== 0 ? (
-              <div className="flex w-1/3 items-center pr-2">
-                <img
-                  role="button"
-                  onClick={onContentClick}
-                  className="w-full object-contain mr-3 rounded-lg"
-                  src={`https://codetech.nworld.dev${el.thumbnail}`}
-                  id={el.id}
-                ></img>
-              </div>
-            ) : null}
-            <div className="pl-2 flex flex-col text-left w-full h-[16rem] justify-evenly">
-              <div className="pb-2 flex text-[1.5rem] font-bold max-md:text-[1rem]">
-                {el.title}
-              </div>
+            <div className="h-48 w-1/4 border-r-2">
+              <img
+                role="button"
+                onClick={onContentClick}
+                className="rounded-l-lg h-full w-full"
+                src="https://img2.quasarzone.com/editor/2022/11/11/75f9d1f0e49980190d3967e19b0458e5.jpg"
+                id={el.id}
+              ></img>
+            </div>
+            <div className="flex flex-col p-3 w-3/4">
+              <div className="text-xl font-bold p-2">{el.title}</div>
               <div
                 className="pb-1 text-md ease-in-out duration-150 line-clamp-3 hover:bg-slate-300 hover:rounded-md p-1.5 text-slate-600 hover:text-cyan-900"
                 role="button"
