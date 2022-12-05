@@ -31,7 +31,7 @@ const AddProduct = ({ isModal, setIsModal }: ModalProps) => {
 
   //제품 디테일 작성한 것 저장
   const [detail, setDetail] = useState('');
-  const handelChangeDetail = (e: ChangeEvent<HTMLInputElement>) => {
+  const handelChangeDetail = (e: ChangeEvent<HTMLTextAreaElement>) => {
     e.preventDefault();
     setDetail(e.target.value);
   };
@@ -98,13 +98,15 @@ const AddProduct = ({ isModal, setIsModal }: ModalProps) => {
 
   return (
     <>
-      <div className="fixed inset-0 z-30 flex items-center justify-center w-full h-screen bg-black/30 backdrop-blur-sm justify-content">
-        <div className="modal-window h-[650px] z-40 overflow-hidden h-">
-          <h1 className="px-24 pt-16 pb-8 text-3xl">제품을 추가해주세요</h1>
-          <div className="flex justify-center ">
+      <div className="fixed inset-0 z-40 flex items-center justify-center w-full h-screen bg-black/30 backdrop-blur-sm justify-content">
+        <div className="modal-window h-[41rem] z-40 overflow-hidden max-sm:w-full w-[41rem]">
+          <h1 className="pt-12 pb-8 text-3xl text-center max-sm:text-2xl max-sm:px-5 max-sm:pt-12">
+            제품을 추가해주세요
+          </h1>
+          <div className="flex justify-center">
             <form
               id="form-data"
-              className="w-2/3"
+              className="px-12 max-sm:w-full max-sm:px-5w-full"
               encType="multipart/form-data"
             >
               <div className="pb-5">
@@ -129,10 +131,11 @@ const AddProduct = ({ isModal, setIsModal }: ModalProps) => {
                     &#33;필수
                   </p>
                 </div>
-                <input
-                  className="justify-between alsolute t-0 text-sm bg-white h-10 rounded border border-slate-200 flex items-center px-4 pb-0.5 font-medium text-gray-500 w-full"
-                  type="text"
+                <textarea
+                  className="resize-none justify-between alsolute t-0 text-sm bg-white rounded border border-slate-200 flex items-center px-4 pb-0.5 font-medium text-gray-500 w-full"
                   value={detail}
+                  rows={3}
+                  cols={50}
                   onChange={handelChangeDetail}
                   placeholder="디테일을 입력해주세요"
                 />
@@ -140,7 +143,7 @@ const AddProduct = ({ isModal, setIsModal }: ModalProps) => {
               <div className="pb-5">
                 <p className="modal-font">제품 이미지</p>
                 {img === false ? (
-                  <div className="flex rounded-lg w-[418px] bg-slate-200 h-28">
+                  <div className="flex w-[26rem] rounded-lg bg-slate-200 h-28 max-sm:w-full">
                     <div className="m-auto">
                       <input
                         type="file"
@@ -159,7 +162,7 @@ const AddProduct = ({ isModal, setIsModal }: ModalProps) => {
                     </div>
                   </div>
                 ) : (
-                  <div className="flex w-[418px] rounded-lg bg-slate-200 h-28 overflow-hidden my-0 mx-auto items-center justify-center">
+                  <div className="flex items-center max-sm:w-full justify-center w-[26rem] mx-auto overflow-hidden rounded-lg bg-slate-200 h-28">
                     <div className="m-auto">
                       <img
                         src={productImg}

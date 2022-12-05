@@ -45,9 +45,16 @@ spring:
               - profile_image
               - email
             clientName: Naver
-  #          kakao:
-  #            client-id: ${OAUTH2_KAKAO_CLIENT_ID}
-  #            clientSecret: ${OAUTH2_KAKAO_SECRET}
+          kakao:
+            clientId: ${OAUTH2_KAKAO_CLIENT_ID}
+            clientSecret: ${OAUTH2_KAKAO_SECRET}
+            clientAuthenticationMethod: post
+            authorizationGrantType: authorization_code
+            redirectUri: http://codetech.nworld.dev/login/oauth2/code/kakao
+            scope:
+                - profile_nickname
+                - profile_image
+            clientName: kakao
   mail:
     host: smtp.naver.com
     port: 465

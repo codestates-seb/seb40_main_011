@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.util.LinkedMultiValueMap;
@@ -45,17 +46,48 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 		Authentication authentication) throws IOException, ServletException {
-		var oAuth2User = (OAuth2User)authentication.getPrincipal();
-		String username = String.valueOf(oAuth2User.getAttributes().get("email"));
-		String nickname = String.valueOf(oAuth2User.getAttributes().get("name"));
-		String provider = "oauth";
-		String password = String.valueOf(oAuth2User.getAttributes().get("providerId"));
-		String image = String.valueOf(oAuth2User.getAttributes().get("picture"));
-		List<String> authorities = authorityUtils.createRoles(username);
-		if (userRepository.findByEmail(username).isEmpty()) {
-			saveUser(nickname, username, password,provider,image);
+		String registrationId = ((OAuth2AuthenticationToken)authentication).getAuthorizedClientRegistrationId();
+		if(registrationId.equals("google")) {
+			var oAuth2User = (OAuth2User) authentication.getPrincipal();
+			String username = String.valueOf(oAuth2User.getAttributes().get("email"));
+			String nickname = String.valueOf(oAuth2User.getAttributes().get("name"));
+			String provider = "google";
+			String password = String.valueOf(oAuth2User.getAttributes().get("providerId"));
+			String image = String.valueOf(oAuth2User.getAttributes().get("picture"));
+			List<String> authorities = authorityUtils.createRoles(username);
+			if (userRepository.findByEmail(username).isEmpty()) {
+				saveUser(nickname, username, password, provider, image);
+			}
+			redirect(request, response, username, provider, authorities);
 		}
-		redirect(request, response, username, provider, authorities);
+
+		if(registrationId.equals("naver")) {
+			var oAuth2User = (OAuth2User) authentication.getPrincipal();
+			String username = String.valueOf(oAuth2User.getAttributes().get("email"));
+			String nickname = String.valueOf(oAuth2User.getAttributes().get("name"));
+			String provider = "naver";
+			String password = String.valueOf(oAuth2User.getAttributes().get("providerId"));
+			String image = String.valueOf(oAuth2User.getAttributes().get("profile_image"));
+			List<String> authorities = authorityUtils.createRoles(username);
+			if (userRepository.findByEmail(username).isEmpty()) {
+				saveUser(nickname, username, password, provider, image);
+			}
+			redirect(request, response, username, provider, authorities);
+		}
+
+		if(registrationId.equals("kakao")) {
+			var oAuth2User = (OAuth2User) authentication.getPrincipal();
+			String username = String.valueOf(oAuth2User.getAttributes().get("profile_nickname"));
+			String nickname = String.valueOf(oAuth2User.getAttributes().get("profile_nickname"));
+			String provider = "kakao";
+			String password = String.valueOf(oAuth2User.getAttributes().get("profile_nickname"));
+			String image = String.valueOf(oAuth2User.getAttributes().get("profile_image"));
+			List<String> authorities = authorityUtils.createRoles(username);
+			if (userRepository.findByEmail(username).isEmpty()) {
+				saveUser(nickname, username, password, provider, image);
+			}
+			redirect(request, response, username, provider, authorities);
+		}
 	}
 
 	private void redirect(HttpServletRequest request, HttpServletResponse response, String email, String provider,
@@ -108,7 +140,7 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 	private void saveUser(String nickname, String email, String password, String provider, String image) {
 		User user = new User(nickname, email, password, provider, image);
 		userService.registerUser(user);
-		user.setProvider("oauth");
+		user.setProvider(provider);
 		userRepository.save(user);
 	}
 }

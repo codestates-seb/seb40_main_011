@@ -206,6 +206,7 @@ function TextEditor() {
         ref={editorRef}
         previewStyle="vertical"
         initialValue=" "
+        initialEditType="wysiwyg"
         height="550px"
         usageStatistics={false}
         plugins={[[codeSyntaxHighlight, { highlighter: Prism }]]}

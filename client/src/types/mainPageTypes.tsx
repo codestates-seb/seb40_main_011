@@ -62,7 +62,6 @@ export interface markdownProps {
 
 export interface editReviewProps {
   isEditMode?: boolean;
-  setIsEditMode?: Dispatch<SetStateAction<boolean>>;
 }
 
 export interface BestReview {

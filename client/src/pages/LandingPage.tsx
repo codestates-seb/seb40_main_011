@@ -1,32 +1,34 @@
+import { useNavigate } from 'react-router-dom';
+
 const LandingPage = () => {
+  const navigate = useNavigate();
+
   return (
     <>
-      <div className="flex flex-col items-center justify-start py-10 px-26">
-        <div>
-          <p className="text-6xl font-medium">관심있는 장비! 사고싶은 장비!</p>
-          <br />
-          <p className="flex font-semibold text-7xl">
-            <p className="mr-5 text-blue-600">자세한 리뷰가</p>
-            궁금하다면?
+      <div className="flex flex-col items-center justify-start py-10 bg-white px-26 ">
+        <div className="flex flex-col items-center lg:mt-20">
+          <p className="text-3xl font-medium lg:text-6xl sm:text-4xl md:text-5xl">
+            관심있는 장비! 사고싶은 장비!
           </p>
+          <br />
+          <p className="flex text-4xl font-semibold lg:text-7xl sm:text-5xl md:text-6xl">
+            <p className="mr-3 text-blue-600 lg:mr-5">자세한 리뷰가 </p>
+            {` `}궁금하다면?
+          </p>
+          <button
+            className="py-1.5 px-6 bg-blue-600 rounded-2xl text-white mt-16 text-center lg:text-2xl lg:py-3 lg:px-10 font-medium lg:rounded-3xl"
+            onClick={() => navigate('/')}
+          >
+            {' '}
+            최신 리뷰 보러 가기
+          </button>
         </div>
-        <div className="flex mt-20">
+        <div className="flex flex-col items-center justify-center my-16 md:flex-row ">
           <img
-            src={require('../images/Dec-05-2022 11-14-13.gif')}
+            src={require('../images/Dec-05-2022 14-15-32.gif')}
             alt=""
-            className="w-2/4"
+            className="object-cover w-full"
           />
-          <div className="flex flex-col items-center justify-center w-full max-w-3xl mt-20">
-            <img
-              src={require('../images/logo.png')}
-              alt=""
-              className="w-7/12"
-            />
-            <button className="py-1.5 px-4 bg-blue-600 rounded-2xl text-white mt-16">
-              {' '}
-              메인 페이지로 이동
-            </button>
-          </div>
         </div>
 
         {/* <img

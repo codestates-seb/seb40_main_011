@@ -47,7 +47,7 @@ const EditReviewDetail = () => {
 
   return (
     <>
-      <WriteReview isEditMode={isEditMode} setIsEditMode={setIsEditMode} />
+      <WriteReview isEditMode={isEditMode} />
     </>
   );
 };
