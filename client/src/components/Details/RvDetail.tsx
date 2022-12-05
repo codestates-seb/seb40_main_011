@@ -37,7 +37,7 @@ const RvDetail = () => {
     writer: '',
     productId: 0,
     thumbnail: '',
-    // recommends: [],
+    recommends: [],
   });
   const { loginId } = useIsLogin();
   const [comments, setComments] = useState<ReviewComments[]>([]);
@@ -89,8 +89,8 @@ const RvDetail = () => {
   const CommentView = () => {
     if (review !== undefined && review?.reviewComments?.length > 0) {
       return (
-        <div className="flex flex-col h-full w-full my-8 border-t-2">
-          <div className="flex justify-start w-full p-4 mb-4 mt-6 text-2xl font-bold">
+        <div className="flex flex-col w-full h-full my-8 border-t-2">
+          <div className="flex justify-start w-full p-4 mt-6 mb-4 text-2xl font-bold">
             Comment
           </div>
           {review.reviewComments.map((el: ReviewComments, idx: number) => (
@@ -112,7 +112,7 @@ const RvDetail = () => {
     if (review.userId === Number(loginId)) {
       return (
         <div className="flex items-end justify-between w-full p-4 border-b border-gray-200 ">
-          <div className="flex bg-white rounded-3xl p-2 items-center">
+          <div className="flex items-center p-2 bg-white rounded-3xl">
             <img
               className="w-12 h-12 m-2 rounded-full"
               src={`https://codetech.nworld.dev${review?.userImage}`}
@@ -120,13 +120,13 @@ const RvDetail = () => {
             <div className="flex flex-col items-end p-2 text-lg">
               <div className="pt-0.5 font-medium text-gray-600">
                 {review?.writer}
-                <div className="text-gray-500/60 before:text-gray-300 text-md font-medium tracking-tight">
+                <div className="font-medium tracking-tight text-gray-500/60 before:text-gray-300 text-md">
                   {getParsedDate(review?.createdAt)}
                 </div>
               </div>
             </div>
           </div>
-          <div className="flex flex-col text-gray-500/60 before:text-gray-300 text-md font-medium tracking-tight">
+          <div className="flex flex-col font-medium tracking-tight text-gray-500/60 before:text-gray-300 text-md">
             <div>
               <button
                 onClick={handleDeleteReview}
@@ -153,7 +153,7 @@ const RvDetail = () => {
     } else
       return (
         <div className="flex items-end justify-between w-full p-4 border-b border-gray-200 ">
-          <div className="flex bg-white rounded-3xl p-2 items-center">
+          <div className="flex items-center p-2 bg-white rounded-3xl">
             <img
               className="w-12 h-12 m-2 rounded-full"
               src={`https://codetech.nworld.dev${review?.userImage}`}
@@ -161,7 +161,7 @@ const RvDetail = () => {
             <div className="flex flex-col items-end p-2 text-lg">
               <div className="pt-0.5 font-medium text-gray-600">
                 {review?.writer}
-                <div className="text-gray-500/60 before:text-gray-300 text-md font-medium tracking-tight">
+                <div className="font-medium tracking-tight text-gray-500/60 before:text-gray-300 text-md">
                   {getParsedDate(review?.createdAt)}
                 </div>
               </div>
@@ -192,7 +192,7 @@ const RvDetail = () => {
           <div className="w-full">
             <div className="flex justify-start p-4 m-4 text-sm">
               <div
-                className="font-medium text-gray-600 bg-white hover:bg-slate-300 hover:text-slate-700 mx-2 flex items-center h-12 rounded-full ease-in-out duration-150 pl-4 pr-5"
+                className="flex items-center h-12 pl-4 pr-5 mx-2 font-medium text-gray-600 duration-150 ease-in-out bg-white rounded-full hover:bg-slate-300 hover:text-slate-700"
                 role="button"
                 onClick={onTypeClick}
               >
