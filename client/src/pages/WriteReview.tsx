@@ -10,9 +10,10 @@ import useReview from '../store/review';
 import AddProduct from '../components/Modal/AddProduct';
 import ThumbnailModal from '../components/Modal/ThumbnailModal';
 import useCategories from '../store/categories';
+import { editReviewProps } from '../types/mainPageTypes';
 // import { useIsLogin } from '../store/login';
 
-const WriteReview = () => {
+const WriteReview = ({ isEditMode, setIsEditMode }: editReviewProps) => {
   const { title, setTitle, thumbnailImg } = useReview();
   // const { isLogin } = useIsLogin();
   const {
@@ -55,55 +56,84 @@ const WriteReview = () => {
           <ThumbnailModal openThum={openThum} setOpenThum={setOpenThum} />
         )}
         <div className="m-auto mt-8">
-          <div className="flex justify-between h-12 mb-3">
-            <div className="flex w-4/5">
-              <div className="inline-flex w-1/3 ">
-                <CategorySelector />
-              </div>
-              <div className="inline-flex w-1/3 ml-5 ">
-                {mainCategorySpread && productCategorySpread ? (
-                  <ProductSelector
-                    productCategorySpread={!productCategorySpread}
-                    setProductCategorySpread={setProductCategorySpread}
-                  />
-                ) : (
-                  <ProductSelector
-                    productCategorySpread={productCategorySpread}
-                    setProductCategorySpread={setProductCategorySpread}
-                  />
-                )}
-              </div>
+          {isEditMode ? (
+            <div className="flex justify-between h-12 mb-5">
+              <input
+                type="text"
+                id="title"
+                value={title}
+                onChange={onChangeTitle}
+                placeholder="제목을 입력하세요"
+                maxLength={50}
+                className="w-4/5 mb-1 border signup-input border-slate-300"
+              />{' '}
+              <button
+                onClick={onClickThumModal}
+                className={
+                  thumbnailImg.length === 0
+                    ? `w-1/6 pb-1 mb-1 text-sm font-bold text-white rounded-md hover:bg-slate-400 bg-slate-300`
+                    : `w-1/6 pb-1 mb-1 text-sm font-bold text-white bg-blue-600 rounded-md hover:bg-blue-500`
+                }
+              >
+                {thumbnailImg.length === 0
+                  ? `썸네일 선택하기`
+                  : `썸네일 수정하기`}
+              </button>
             </div>
-            <button
-              className="w-1/6 pb-1 mb-1 text-sm font-bold text-white rounded-md hover:bg-slate-400 bg-slate-300"
-              onClick={onClickModal}
-            >
-              제품 추가하기
-            </button>
-          </div>
-          <div className="flex justify-between h-12 mb-5">
-            <input
-              type="text"
-              id="title"
-              value={title}
-              onChange={onChangeTitle}
-              placeholder="제목을 입력하세요"
-              maxLength={50}
-              className="w-4/5 mb-1 border signup-input border-slate-300"
-            />
-            <button
-              onClick={onClickThumModal}
-              className={
-                thumbnailImg.length === 0
-                  ? `w-1/6 pb-1 mb-1 text-sm font-bold text-white rounded-md hover:bg-slate-400 bg-slate-300`
-                  : `w-1/6 pb-1 mb-1 text-sm font-bold text-white bg-blue-600 rounded-md hover:bg-blue-500`
-              }
-            >
-              {thumbnailImg.length === 0
-                ? `썸네일 선택하기`
-                : `썸네일 수정하기`}
-            </button>
-          </div>
+          ) : (
+            <>
+              {' '}
+              <div className="flex justify-between h-12 mb-3">
+                <div className="flex w-4/5">
+                  <div className="inline-flex w-1/3 ">
+                    <CategorySelector />
+                  </div>
+                  <div className="inline-flex w-1/3 ml-5 ">
+                    {mainCategorySpread && productCategorySpread ? (
+                      <ProductSelector
+                        productCategorySpread={!productCategorySpread}
+                        setProductCategorySpread={setProductCategorySpread}
+                      />
+                    ) : (
+                      <ProductSelector
+                        productCategorySpread={productCategorySpread}
+                        setProductCategorySpread={setProductCategorySpread}
+                      />
+                    )}
+                  </div>
+                </div>
+                <button
+                  className="w-1/6 pb-1 mb-1 text-sm font-bold text-white rounded-md hover:bg-slate-400 bg-slate-300"
+                  onClick={onClickModal}
+                >
+                  제품 추가하기
+                </button>
+              </div>
+              <div className="flex justify-between h-12 mb-5">
+                <input
+                  type="text"
+                  id="title"
+                  value={title}
+                  onChange={onChangeTitle}
+                  placeholder="제목을 입력하세요"
+                  maxLength={50}
+                  className="w-4/5 mb-1 border signup-input border-slate-300"
+                />
+                <button
+                  onClick={onClickThumModal}
+                  className={
+                    thumbnailImg.length === 0
+                      ? `w-1/6 pb-1 mb-1 text-sm font-bold text-white rounded-md hover:bg-slate-400 bg-slate-300`
+                      : `w-1/6 pb-1 mb-1 text-sm font-bold text-white bg-blue-600 rounded-md hover:bg-blue-500`
+                  }
+                >
+                  {thumbnailImg.length === 0
+                    ? `썸네일 선택하기`
+                    : `썸네일 수정하기`}
+                </button>
+              </div>
+            </>
+          )}
           <div>
             <TextEditor />
           </div>

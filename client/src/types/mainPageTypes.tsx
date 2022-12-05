@@ -60,6 +60,11 @@ export interface markdownProps {
   markdown: string | undefined;
 }
 
+export interface editReviewProps {
+  isEditMode?: boolean;
+  setIsEditMode?: Dispatch<SetStateAction<boolean>>;
+}
+
 export interface BestReview {
   content: string;
   createdAt: string;

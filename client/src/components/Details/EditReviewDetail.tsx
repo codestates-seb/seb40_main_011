@@ -27,8 +27,8 @@ const EditReviewDetail = () => {
   });
 
   // console.log(recommends);
-  console.log(review);
 
+  const [isEditMode, setIsEditMode] = useState(true);
   const params = useParams();
 
   const { setTitle, setProductId, setThumnailImg } = useReview();
@@ -47,7 +47,7 @@ const EditReviewDetail = () => {
 
   return (
     <>
-      <WriteReview />
+      <WriteReview isEditMode={isEditMode} setIsEditMode={setIsEditMode} />
     </>
   );
 };
