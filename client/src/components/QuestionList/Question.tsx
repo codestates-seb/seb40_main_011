@@ -20,6 +20,8 @@ export default function Question({
     setShowAnswer(true);
   };
 
+  const adoptedAnswer = answerCards.filter((el: any) => el.id === adoptedId)[0];
+
   return (
     <div className="w-full">
       <div className="w-full flex mt-5">
@@ -37,35 +39,49 @@ export default function Question({
               <div className="px-4 pt-2 pb-3 rounded bg-white text-gray-600 font-medium">
                 {content}
               </div>
-              {answerCards !== null && !showAnswer && (
-                <button
-                  onClick={handleShowAnswer}
-                  className="w-full mt-1 rounded overflow-hidden"
-                >
-                  <AnswerMore count={answerCards.length} />
-                </button>
-              )}
             </div>
           </div>
         </div>
       </div>
+      {answerCards !== null && (
+        <Answer
+          key={adoptedAnswer.id}
+          createdAt={adoptedAnswer.createdAt}
+          nickname={adoptedAnswer.nickname}
+          content={adoptedAnswer.content}
+          writerId={adoptedAnswer.writerId}
+          id={Number(adoptedAnswer.id)}
+          adoptedId={adoptedId}
+          image={adoptedAnswer.image}
+        />
+      )}
+      {answerCards !== null && !showAnswer && (
+        <button
+          onClick={handleShowAnswer}
+          className="w-full mt-1 rounded overflow-hidden"
+        >
+          <AnswerMore count={answerCards.length - 1} />
+        </button>
+      )}
       {answerCards !== null &&
         showAnswer &&
-        answerCards.map((el: AnswerCardsProps) => {
-          const { id, createdAt, nickname, content, writerId, image } = el;
-          return (
-            <Answer
-              key={id}
-              createdAt={createdAt}
-              nickname={nickname}
-              content={content}
-              writerId={writerId}
-              id={Number(id)}
-              adoptedId={adoptedId}
-              image={image}
-            />
-          );
-        })}
+        answerCards
+          .filter((el: any) => el.id !== adoptedId)
+          .map((el: AnswerCardsProps) => {
+            const { id, createdAt, nickname, content, writerId, image } = el;
+            return (
+              <Answer
+                key={id}
+                createdAt={createdAt}
+                nickname={nickname}
+                content={content}
+                writerId={writerId}
+                id={Number(id)}
+                adoptedId={adoptedId}
+                image={image}
+              />
+            );
+          })}
     </div>
   );
 }
