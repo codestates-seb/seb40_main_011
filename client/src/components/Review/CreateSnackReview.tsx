@@ -155,14 +155,14 @@ const CreateSnackReview = () => {
               >
                 <span className="w-12 mr-2 text-black/60">{el.name}</span>
                 <Rating onClick={el.fnc} allowFraction size={25} />
-                <span className="px-2 bg-zinc-100 rounded ml-3 pb-0.5 mt-1 text-sm text-black/70 font-medium">
+                <span className="px-2 bg-zinc-100 rounded ml-3 pb-0.5 mt-1 text-sm text-black/70 font-medium w-[35px] text-center">
                   {score[el.en]}
                 </span>
               </div>
             );
           })}
         </div>
-        <span className="hidden h-32 ml-4 mr-10 border-l border-zinc-200 md:flex" />
+        <span className="hidden h-32 ml-2 mr-10 border-l border-zinc-200 md:flex" />
         <div className="w-full bg-slate-200">
           <div className="flex justify-center bg-white border-b border-gray-200">
             <div className="w-full py-10">

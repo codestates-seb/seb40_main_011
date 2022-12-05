@@ -28,7 +28,6 @@ const ReviewLists = () => {
   const [selected, setSelected] = useState('최신 순');
   const [productData, setProductData] = useState<ProductDetail>();
 
-  const ratingCategory = ['가성비', '품질', '만족감', '성능', '디자인'];
   const menu = ['최신 순', '별점 순', '낮은 별점 순'];
 
   const productId = Number(useParams().id);
