@@ -218,13 +218,13 @@ export interface PendingAnswerProps {
 }
 
 export interface AnswerProps {
-  createdAt: number;
-  nickname: string;
   content: string;
-  writerId: number;
+  createdAt: number;
   id: number;
-  adoptedId: number;
   image: string;
+  nickname: string;
+  writerId: number;
+  adoptedId: number;
 }
 
 export interface AnswerCardsProps {

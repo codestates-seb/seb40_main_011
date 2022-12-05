@@ -51,17 +51,17 @@ const SubComment = ({ child }: SubCommentProps) => {
   return (
     <>
       {comment !== '작성자가 삭제한 댓글입니다.' ? (
-        <div className="w-full flex my-6 mr-16">
+        <div className="w-full flex my-4 mr-16">
           <img
             src={`https://codetech.nworld.dev${child?.userImage}`}
             alt=""
-            className="w-12 h-12 rounded-full mx-2 ring ring-slate-200"
+            className="flex-none w-12 h-12 rounded-2xl mx-2 ring ring-slate-200"
           />
-          <div className="w-2/3">
+          <div className="grow">
             <div className="flex justify-between mb-1.5 items-center">
               <span>
                 <span className="font-semibold">{child.writer}</span>
-                <span className="text-sm font-medium before:content-['•'] before:mr-1.5 before:ml-1.5 before:text-gray-400 font-medium text-gray-400">
+                <span className="text-sm font-medium before:content-['•'] before:mr-1.5 before:ml-1.5 before:text-gray-400 text-gray-400">
                   {getParsedDate(child.createdAt)}
                 </span>
               </span>
@@ -87,10 +87,8 @@ const SubComment = ({ child }: SubCommentProps) => {
                 }
               ></input>
             ) : (
-              <div className="ring-1 ring-gray-200 rounded-xl overflow-hidden bg-white">
-                <div className="px-6 pt-3 pb-4 border-b border-gray-200">
-                  {comment}
-                </div>
+              <div className="ring-1 ring-gray-200 rounded-xl overflow-hidden bg-white px-6 pt-3 pb-4">
+                {comment}
               </div>
             )}
           </div>

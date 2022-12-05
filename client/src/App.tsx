@@ -11,7 +11,7 @@ import {
 } from './pages';
 import RvDetail from './components/Details/RvDetail';
 import SearchResult from './components/Search/SearchResult';
-import Layout from './layout/Layout';
+import { Layout, QuestionListLayOut } from './layout/Layout';
 import NotFound from './pages/NotFound';
 import EditReviewDetail from './components/Details/EditReviewDetail';
 import LandingPage from './pages/LandingPage';
@@ -26,13 +26,15 @@ function App() {
           <Route path="" element={<Main />} />
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/search" element={<SearchResult />} />
-          <Route path="categories/review/:id" element={<ReviewLists />} />
-          <Route path="review/write" element={<WriteReview />} />
-          <Route path="question-lists" element={<QuestionLists />} />
-          <Route path="review/:id" element={<RvDetail />} />
+          <Route path="/categories/review/:id" element={<ReviewLists />} />
+          <Route path="/review/write" element={<WriteReview />} />
+          <Route path="/review/:id" element={<RvDetail />} />
           <Route path="/review/edit/:id" element={<EditReviewDetail />} />
           <Route path="*" element={<NotFound />} />
           <Route path="/landingpage" element={<LandingPage />} />
+        </Route>
+        <Route path="/" element={<QuestionListLayOut />}>
+          <Route path="/question-lists" element={<QuestionLists />} />
         </Route>
       </Routes>
     </BrowserRouter>

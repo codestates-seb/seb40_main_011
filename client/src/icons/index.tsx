@@ -8,6 +8,7 @@ import {
   AiFillEyeInvisible,
   AiOutlineHeart,
   AiFillStar,
+  AiOutlineEye,
 } from 'react-icons/ai';
 import {
   RiKakaoTalkFill,
@@ -18,6 +19,7 @@ import {
 } from 'react-icons/ri';
 
 export {
+  AiOutlineEye,
   GiHamburgerMenu,
   BsFillPatchExclamationFill,
   MdOutlineEmail,

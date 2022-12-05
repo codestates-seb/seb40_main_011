@@ -58,7 +58,6 @@ export default function Header() {
   const [searchBar, setSearchBar] = useState(false);
   const handleSearchBar = () => {
     setSearchBar(!searchBar);
-    console.log(searchBar);
   };
 
   return (
