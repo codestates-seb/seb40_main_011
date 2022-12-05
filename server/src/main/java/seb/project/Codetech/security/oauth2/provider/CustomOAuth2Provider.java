@@ -31,7 +31,7 @@ public enum CustomOAuth2Provider {
             builder.tokenUri("https://kauth.kakao.com/oauth/token");
             builder.userInfoUri("https://kapi.kakao.com/v2/user/me");
             builder.userNameAttributeName("id");
-            builder.clientName("Naver");
+            builder.clientName("Kakao");
             return builder;
         }
     };
