@@ -1,19 +1,20 @@
 // Review List fetching & boxing comp
-import { getReviewDetail } from '../../util/apiCollection';
 import { useEffect, useState } from 'react';
-import { Review, ReviewComments } from '../../types/mainPageTypes';
 import { useNavigate, useParams } from 'react-router-dom';
-import { CommentInput } from './CommentInput';
+import { useIsLogin } from '../../store/login';
+import { getReviewDetail } from '../../util/apiCollection';
+import { Review, ReviewComments } from '../../types/mainPageTypes';
+import { AiOutlineHeart } from 'react-icons/ai';
 import { Viewer } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor-viewer.css';
-import Comment from './Comment';
+import CommentInput from './CommentInput';
 import HandleLike from './Like';
-import { useIsLogin } from '../../store/login';
+import Comment from './Comment';
 import useReview from '../../store/review';
-import { AiOutlineHeart } from 'react-icons/ai';
 import CheckModal from './DeleteModal';
 import Spinner from '../../util/Spinner';
 import ScrollToTop from '../../util/ScrollToTop';
+
 const RvDetail = () => {
   interface markdownProps {
     markdown: string | undefined;
