@@ -17,6 +17,7 @@ const CheckModal = ({ setShowModal, msg, productId }: setShowModalProps) => {
         navigate(`/categories/review/${productId}`);
         setShowModal(false);
         break;
+      case 500:
       case 401:
         alert('에러');
         console.log(response);

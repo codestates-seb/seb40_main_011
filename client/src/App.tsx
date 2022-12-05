@@ -14,8 +14,7 @@ import SearchResult from './components/Search/SearchResult';
 import Layout from './layout/Layout';
 import NotFound from './pages/NotFound';
 import EditReviewDetail from './components/Details/EditReviewDetail';
-
-// import Header from './components/Header/Header';
+import LandingPage from './pages/LandingPage';
 
 function App() {
   return (
@@ -23,7 +22,6 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="signup" element={<Signup />} />
-
         <Route path="/" element={<Layout />}>
           <Route path="" element={<Main />} />
           <Route path="/mypage" element={<MyPage />} />
@@ -34,6 +32,7 @@ function App() {
           <Route path="review/:id" element={<RvDetail />} />
           <Route path="/review/edit/:id" element={<EditReviewDetail />} />
           <Route path="*" element={<NotFound />} />
+          <Route path="/landingpage" element={<LandingPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

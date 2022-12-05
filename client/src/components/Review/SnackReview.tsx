@@ -1,10 +1,9 @@
-import { useState } from 'react';
-import { Rating } from 'react-simple-star-rating';
-import { SnackReviewProps, SnackReviewCards } from '../../types/mainPageTypes';
 import Avatar from '../Avatar/Avatar';
+import { useState } from 'react';
+import { SnackReviewCards } from '../../types/mainPageTypes';
 import SnackReviewModal from '../Modal/SnackReviewModal';
 
-const SnackReview = ({ snackReviewData }: SnackReviewProps) => {
+const SnackReview = ({ snackReviewData }: any) => {
   const [selectedReview, setSelectedReview] = useState<any>();
   const [isModal, setIsModal] = useState(false);
 
@@ -13,26 +12,26 @@ const SnackReview = ({ snackReviewData }: SnackReviewProps) => {
   };
 
   const reviewList = [
-    { name: '가성비', avg: 'avgCe' },
-    { name: '품질', avg: 'avgQlt' },
-    { name: '만족감', avg: 'avgStf' },
-    { name: '성능', avg: 'avgPerf' },
-    { name: '디자인', avg: 'avgDsn' },
+    { name: '가성비', avg: 'costEfficiency' },
+    { name: '품질', avg: 'quality' },
+    { name: '만족감', avg: 'satisfaction' },
+    { name: '성능', avg: 'performance' },
+    { name: '디자인', avg: 'design' },
   ];
 
-  const getDecial = (num: number | undefined) => {
-    if (num !== undefined) {
-      const result = Math.round((num + Number.EPSILON) * 10) / 10;
-      return result;
-    }
-  };
+  // const getDecial = (num: number | undefined) => {
+  //   if (num !== undefined) {
+  //     const result = Math.round((num + Number.EPSILON) * 10) / 10;
+  //     return result;
+  //   }
+  // };
 
-  const getNatural = (num: number | undefined) => {
-    if (num !== undefined) {
-      const result = Math.round(num + Number.EPSILON);
-      return result;
-    }
-  };
+  // const getNatural = (num: number | undefined) => {
+  //   if (num !== undefined) {
+  //     const result = Math.round(num + Number.EPSILON);
+  //     return result;
+  //   }
+  // };
 
   return (
     <div className="w-full">
@@ -55,8 +54,22 @@ const SnackReview = ({ snackReviewData }: SnackReviewProps) => {
           >
             <div className="w-full">
               <div className="flex items-center justify-between">
-                <div
-                  className={`w-14 h-12 rounded-2xl flex items-center justify-center text-xl font-bold pb-1 mr-2 
+                <div className="flex">
+                  <Avatar image={el.image} />
+                  <div className="flex flex-col w-ful ml-3 font-medium tracking-tight mt-0.5">
+                    <div className="text-black/70">{el.nickname}</div>
+                    <div className="pt-0.5 text-sm text-black/40">
+                      {new Date(el.createdAt).toLocaleDateString('kr-KO', {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric',
+                      })}
+                    </div>
+                  </div>
+                </div>
+                <div className="flex">
+                  <div
+                    className={`w-12 h-12 rounded-2xl flex items-center justify-center text-xl font-bold pb-1 
                 ${
                   el.score.grade >= 0 &&
                   el.score.grade <= 1 &&
@@ -83,59 +96,29 @@ const SnackReview = ({ snackReviewData }: SnackReviewProps) => {
                   `bg-emerald-400 text-emerald-900`
                 }
                 `}
-                ></div>
-                <div className="flex flex-col w-full">
-                  <div className="flex flex-row justify-between">
-                    <div>{el.nickname}</div>
-                    <div className="pt-1 text-sm text-gray-400">
-                      {new Date(el.createdAt).toLocaleDateString('kr-KO', {
-                        month: 'short',
-                        day: 'numeric',
-                        year: 'numeric',
-                      })}
-                    </div>
+                  >
+                    {el.score.grade}
                   </div>
-                  <div className="w-full md:w-1/2 lg:w-1/3">
-                    <div className="hidden md:inline-block flex flex-wrap flex-[1_1_40%] md:flex-col justify-center md:px-8 pt-3 pb-12 md:pb-3">
-                      {reviewList.map((el, idx) => {
-                        return (
-                          <div className="flex items-center mr-2" key={idx}>
-                            <div className="mr-1.5 text-black/70 w-12">
-                              {el.name}
-                            </div>
-                            {snackReviewStats !== undefined && (
-                              <Rating
-                                allowFraction
-                                readonly
-                                initialValue={getNatural(
-                                  snackReviewStats[el.avg]
-                                )}
-                                size={24}
-                              />
-                            )}
-                            <div className="ml-1.5 text-black/70">
-                              {getDecial(snackReviewStats[el.avg])}
-                            </div>
+                  <div className="hidden md:flex">
+                    {reviewList.map((ele, idx) => {
+                      return (
+                        <div
+                          className="flex flex-col items-center justify-center w-12 h-12 ml-2 font-medium rounded-2xl bg-zinc-100"
+                          key={idx}
+                        >
+                          <div className="text-black/60">
+                            {el.score[ele.avg]}
                           </div>
-                        );
-                      })}
-                      <div className="invisible md:hidden flex items-center mx-8 justify-between">
-                        <div className="mr-1.5 text-black/70 w-12">
-                          {reviewList[0].name}
+                          <div className="mb-1 text-xs text-black/40">
+                            {ele.name}
+                          </div>
                         </div>
-                        <Rating
-                          allowFraction
-                          readonly
-                          initialValue={1.5}
-                          size={24}
-                        />
-                        <div className="ml-1.5 text-black/70">{1.5}</div>
-                      </div>
-                    </div>
+                      );
+                    })}
                   </div>
                 </div>
               </div>
-              <div className="w-full pt-2 pb-3 mt-3 mb-8 px-5">
+              <div className="w-full px-5 pt-2 pb-3 mt-3 mb-8">
                 {el.content}
               </div>
             </div>

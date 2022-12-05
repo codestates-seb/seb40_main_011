@@ -3,15 +3,21 @@ import EditComment from './EditComment';
 import { useState } from 'react';
 import { loginRefresh } from '../../util/loginRefresh';
 import { editComment } from '../../util/apiCollection';
+import { useIsLogin } from '../../store/login';
+import { useNavigate } from 'react-router-dom';
 
 const SubComment = ({ child }: SubCommentProps) => {
+  const navigate = useNavigate();
   const [editedComment, setEditedComment] = useState('');
   const [comment, setComment] = useState(child.content);
   const [isEditSub, setIsEditSub] = useState(false);
-
+  const { isLogin } = useIsLogin();
   const onEnterPress = async () => {
     setComment(editedComment);
     setIsEditSub(!isEditSub);
+    if (!isLogin) {
+      navigate('/login');
+    }
     if (isEditSub === true && editedComment !== undefined) {
       if (comment !== '') {
         const response = await editComment({

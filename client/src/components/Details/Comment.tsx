@@ -1,8 +1,4 @@
-import {
-  CommentProps,
-  Review,
-  ReviewComments,
-} from '../../types/mainPageTypes';
+import { CommentProps, ReviewComments } from '../../types/mainPageTypes';
 import { FiSend } from 'react-icons/fi';
 import TextareaAutosize from 'react-textarea-autosize';
 import React, { useState } from 'react';
@@ -10,7 +6,7 @@ import SubComment from './SubComment';
 import EditComment from './EditComment';
 import { useIsLogin } from '../../store/login';
 import { loginRefresh } from '../../util/loginRefresh';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { postComment, editComment } from '../../util/apiCollection';
 
 export interface count {
@@ -18,6 +14,7 @@ export interface count {
 }
 
 export default function Comment({ reviewComments }: CommentProps) {
+  const navigate = useNavigate();
   const params = useParams();
   const [comment, setComment] = useState(reviewComments?.content);
   const { isLogin } = useIsLogin();
@@ -70,6 +67,9 @@ export default function Comment({ reviewComments }: CommentProps) {
   const onSubCommentClick = async (e: React.MouseEvent, id: string) => {
     e.preventDefault();
 
+    if (!isLogin) {
+      navigate('/login');
+    }
     if (subComment !== '') {
       const response = await postComment({
         reviewId: params.id,
@@ -171,7 +171,7 @@ export default function Comment({ reviewComments }: CommentProps) {
                 <span className="ml-1 font-semibold">
                   {reviewComments.writer}
                 </span>
-                <span className="text-sm font-medium before:content-['•'] before:mr-1.5 before:ml-1.5 before:text-gray-400 font-medium text-gray-400">
+                <span className="text-sm font-medium before:content-['•'] before:mr-1.5 before:ml-1.5 before:text-gray-400 text-gray-400">
                   {getParsedDate(reviewComments.createdAt)}
                 </span>
               </span>
@@ -217,7 +217,7 @@ export default function Comment({ reviewComments }: CommentProps) {
                       }
                       className="w-12 flex-none flex justify-center items-center"
                     >
-                      <FiSend className="text-3xl text-gray-400 hover:text-blue-500 mr-2 hover:text-blue-500  hover:bg-blue-100 p-1 rounded-lg w-10 h-8 pr-1.5" />
+                      <FiSend className="text-3xl text-gray-400 hover:text-blue-500 mr-2 hover:bg-blue-100 p-1 rounded-lg w-10 h-8 pr-1.5" />
                     </button>
                   </form>
                 </>
@@ -245,7 +245,7 @@ export default function Comment({ reviewComments }: CommentProps) {
                       }
                       className="w-12 flex-none flex justify-center items-center"
                     >
-                      <FiSend className="text-3xl text-gray-400 hover:text-blue-500 mr-2 hover:text-blue-500  hover:bg-blue-100 p-1 rounded-lg w-10 h-8 pr-1.5" />
+                      <FiSend className="text-3xl text-gray-400 mr-2 hover:text-blue-500  hover:bg-blue-100 p-1 rounded-lg w-10 h-8 pr-1.5" />
                     </button>
                   </form>
                 </>

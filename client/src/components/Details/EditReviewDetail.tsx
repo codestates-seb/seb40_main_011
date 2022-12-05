@@ -23,7 +23,7 @@ const EditReviewDetail = () => {
     writer: '',
     productId: 0,
     thumbnail: '',
-    // recommends: [],
+    recommends: [],
   });
 
   // console.log(recommends);

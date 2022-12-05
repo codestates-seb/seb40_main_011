@@ -112,7 +112,9 @@ public class Review extends BaseTime {
 
 		var commentCount = queryFactory.select(reviewComment.count())
 			.from(reviewComment)
-			.where(reviewComment.review.id.eq(this.id)).fetchOne();
+			.where(reviewComment.review.id.eq(this.id)
+				.and(reviewComment.status.eq(true))) // 해당 리뷰 아이디를 가진 활성화(true) 상태의 댓글만 집계
+			.fetchOne();
 		var commentUpdatedAt = LocalDateTime.now();
 
 		queryFactory.update(

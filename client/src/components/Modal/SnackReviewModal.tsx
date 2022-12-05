@@ -156,6 +156,7 @@ const SnackReviewModal = ({ selectedReview, openModalHandler }: any) => {
               alt=""
               className="w-16 h-16 rounded-full bg-slate-200"
             /> */}
+            4
             <div className="flex flex-col items-start justify-start pt-1.5 ml-8">
               <div className="pt-1.5">{el.nickname}</div>
               <div className="pt-1 ml-auto text-xs text-gray-400 ">

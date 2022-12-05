@@ -88,7 +88,7 @@ export default function Login() {
     }
     const loginResult = await postLogin({ email, password });
     switch (loginResult.status) {
-      case 200:
+      default:
         localStorage.setItem('refresh', loginResult.headers.get('refresh'));
         localStorage.setItem(
           'authorization',
@@ -99,9 +99,9 @@ export default function Login() {
         break;
       case 401:
         // alert('이메일과 비밀번호가 일치하지 않습니다.');
-        console.error(loginResult.status + ' Error');
+        setShowModal(true);
+        setMsg(errorMsg[2]);
         break;
-      default:
     }
   };
 
@@ -121,9 +121,10 @@ export default function Login() {
 
   // showError 모달
   const [showModal, setShowModal] = useState(false);
-  const errorMsg: [string, string] = [
+  const errorMsg: string[] = [
     '이메일을 입력하지 않았습니다.',
     '비밀번호를 입력하지 않았습니다.',
+    '아이디 또는 비밀번호를 잘못 입력했습니다.',
   ];
   const [msg, setMsg] = useState(errorMsg[0]);
 
