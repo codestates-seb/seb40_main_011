@@ -103,13 +103,13 @@ const SnackReview = ({ snackReviewData }: any) => {
                     {reviewList.map((ele, idx) => {
                       return (
                         <div
-                          className="flex flex-col items-center ml-2 w-12 h-12 rounded-2xl bg-zinc-100 justify-center font-medium"
+                          className="flex flex-col items-center justify-center w-12 h-12 ml-2 font-medium rounded-2xl bg-zinc-100"
                           key={idx}
                         >
                           <div className="text-black/60">
                             {el.score[ele.avg]}
                           </div>
-                          <div className="text-black/40 text-xs mb-1">
+                          <div className="mb-1 text-xs text-black/40">
                             {ele.name}
                           </div>
                         </div>
