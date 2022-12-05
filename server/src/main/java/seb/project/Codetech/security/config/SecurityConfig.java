@@ -140,7 +140,11 @@ public class SecurityConfig {
 																	 @Value("${spring.security.oauth2.client.registration.naver.clientId}")
 																	 String naverClientId,
 																	 @Value("${spring.security.oauth2.client.registration.naver.clientSecret}")
-																	 String naverClientSecret) {
+																	 String naverClientSecret,
+																	 @Value("${spring.security.oauth2.client.registration.kakao.clientId}")
+																		 String kakaoClientId,
+																	 @Value("${spring.security.oauth2.client.registration.kakao.clientSecret}")
+																		 String kakaoClientSecret) {
 		List<ClientRegistration> registrations = oAuth2ClientProperties
 				.getRegistration().keySet().stream()
 				.map(client -> getRegistration(oAuth2ClientProperties, client))
@@ -150,6 +154,12 @@ public class SecurityConfig {
 		registrations.add(CustomOAuth2Provider.NAVER.getBuilder("naver")
 				.clientId(naverClientId)
 				.clientSecret(naverClientSecret)
+				.jwkSetUri("temp")
+				.build());
+
+		registrations.add(CustomOAuth2Provider.KAKAO.getBuilder("kakao")
+				.clientId(kakaoClientId)
+				.clientSecret(kakaoClientSecret)
 				.jwkSetUri("temp")
 				.build());
 //		var clientRegistration = clientRegistration();
