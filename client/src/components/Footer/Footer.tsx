@@ -8,23 +8,27 @@ export interface team {
 function Banner() {
   return (
     <a
-      className="flex flex-col m-4 mx-auto mb-8 w-fit"
+      className="flex flex-col mx-auto mb-8 w-fit"
       href="https://github.com/codestates-seb/seb40_main_011"
       target="_blank"
       rel="noreferrer"
     >
       <span className="text-center text-emerald-400">Team GitHub</span>
-      <span className="text-xl text-center text-slate-500">
+      <span className="text-center text-slate-500 break-keep text-xl">
         Codestates Front-End & Back-End Bootcamp 40th
       </span>
-      <div className="text-center max-sm:hidden">
-        <span className="text-2xl text-center text-gray-300">Main-Project</span>
+      <div className="text-center flex flex-col md:flex-row mt-2">
+        <span className="leading-8 text-2xl text-center text-gray-300">
+          Main-Project
+        </span>
         <span className="mx-4 text-xs border-l border-solid border-l-gray-500"></span>
-        <span className="text-2xl text-center text-gray-300">
+        <span className="leading-8 text-2xl text-center text-gray-300">
           seb40_main_011
         </span>
         <span className="mx-4 text-xs border-l border-solid border-l-gray-500"></span>
-        <span className="text-2xl text-center text-gray-300">Core i7</span>
+        <span className="leading-8 text-2xl text-center text-gray-300">
+          Core i7
+        </span>
       </div>
     </a>
   );
@@ -69,15 +73,14 @@ export default function Footer() {
     },
   ];
   return (
-    <div className="px-10 pt-10 pb-32 bg-slate-900 dark:bg-black">
+    <div className="px-4 pt-10 pb-16 bg-slate-900 dark:bg-black">
       <Banner />
       <div className="text-center">
         {teamMember.map((member, index) => {
           return <Member key={index} memberInfo={member} />;
         })}
       </div>
-
-      <div className="pt-20 text-right text-slate-200">
+      <div className="py-8 text-white/40 text-center">
         Copyright 2022. codeTech inc. all rights reserved.
       </div>
     </div>
