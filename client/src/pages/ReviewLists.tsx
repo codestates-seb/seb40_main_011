@@ -85,7 +85,7 @@ const ReviewLists = () => {
   };
 
   return (
-    <div className="bg-zinc-100 pb-16">
+    <div className="pb-16 bg-zinc-100">
       <div
         className="mx-auto w-full lg:w-[64rem] flex flex-col items-center px-4"
         onClick={() => {
@@ -93,7 +93,7 @@ const ReviewLists = () => {
           handleDetailBoxClose();
         }}
       >
-        <div className="text-center py-16">
+        <div className="py-16 text-center">
           <div className="mb-3 text-xl font-medium text-black/60">
             {productData?.type}
           </div>
@@ -111,9 +111,9 @@ const ReviewLists = () => {
             setdetailReviewSpread={setdetailReviewSpread}
           />
         )}
-        <div className="w-full bg-white rounded-3xl px-8 md:px-10 lg:px-12 pt-6 md:pt-8 lg:pt-10">
-          <div className="flex justify-between items-center mb-4 text-xl font-medium">
-            <div className="font-medium text-2xl pb-1 mr-3">한줄 리뷰</div>
+        <div className="w-full px-8 pt-6 bg-white rounded-3xl md:px-10 lg:px-12 md:pt-8 lg:pt-10">
+          <div className="flex items-center justify-between mb-4 text-xl font-medium">
+            <div className="pb-1 mr-3 text-2xl font-medium">한줄 리뷰</div>
             <RvSelectBox
               spread={spread}
               setSpread={setSpread}
@@ -131,16 +131,16 @@ const ReviewLists = () => {
               <span
                 role="button"
                 onClick={onMoreClick}
-                className="mx-4 rounded-xl h-14 flex items-center justify-center bg-zinc-200/60  hover:bg-zinc-300/50 text-lg font-medium text-zinc-400 hover:text-zinc-500 tracking-tight"
+                className="flex items-center justify-center mx-4 text-lg font-medium tracking-tight rounded-xl h-14 bg-zinc-200/60 hover:bg-zinc-300/50 text-zinc-400 hover:text-zinc-500"
               >
                 더 보기
               </span>
             </div>
           )}
           {/* 한줄 리뷰 직성 */}
-          {/* <div className="mt-8 bg-blue-500">
-            <CreateSnackReview ratingCategory={ratingCategory} />
-          </div> */}
+        </div>
+        <div className="px-12 py-6 my-8 bg-white rounded-3xl">
+          <CreateSnackReview ratingCategory={ratingCategory} />
         </div>
       </div>
     </div>
