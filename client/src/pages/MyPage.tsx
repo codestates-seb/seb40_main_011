@@ -25,8 +25,8 @@ const MyPage = (): JSX.Element => {
   };
 
   const container = isLogin
-    ? 'flex flex-col'
-    : 'flex flex-col fixed table-fixed';
+    ? 'flex flex-col bg-white'
+    : 'flex flex-col fixed table-fixed bg-white';
 
   useEffect(() => {
     loginRefresh();

@@ -2,7 +2,7 @@ import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { useState } from 'react';
 import { postLike } from '../../util/apiCollection';
 import { loginRefresh } from '../../util/loginRefresh';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useIsLogin } from '../../store/login';
 
 interface LikeProps {
@@ -12,11 +12,14 @@ interface LikeProps {
 
 const HandleLike = ({ userId, recommends }: LikeProps) => {
   const [isHover, setIsHover] = useState(false);
-
+  const navigate = useNavigate();
   const params = useParams();
   const { loginId } = useIsLogin();
   const didLike = recommends.filter((el) => Number(loginId) === el);
   const handleLikeClick = async () => {
+    if (!loginId) {
+      navigate('/login');
+    }
     if (loginId) {
       const response = await postLike(Number(params.id));
       switch (response.status) {

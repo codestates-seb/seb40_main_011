@@ -2,12 +2,12 @@ import { useState } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import { useIsLogin } from '../../store/login';
 import { loginRefresh } from '../../util/loginRefresh';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { postComment } from '../../util/apiCollection';
 
 export const CommentInput = () => {
   const params = useParams();
-
+  const navigate = useNavigate();
   const { isLogin } = useIsLogin();
   const [comment, setComment] = useState('');
   const handleTextarea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -15,6 +15,9 @@ export const CommentInput = () => {
   };
 
   const onCommentClick = async () => {
+    if (!isLogin) {
+      navigate('/login');
+    }
     if (comment !== undefined && comment !== '' && comment.length <= 100) {
       const response = await postComment({
         reviewId: params.id,
@@ -83,6 +86,4 @@ export const CommentInput = () => {
   );
 };
 
-export const SubCommentInput = () => {
-  return;
-};
+export default CommentInput;
