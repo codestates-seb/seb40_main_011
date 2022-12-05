@@ -126,9 +126,11 @@ export default function Comment({ reviewComments }: CommentProps) {
       return (
         <button
           onClick={() => setMoreComment(!moreComment)}
-          className="w-full text-gray-400 font-medium text-sm px-2 pb-0.5 rounded hover:bg-slate-200 hover:text-gray-500 group"
+          className="w-full text-gray-400 font-medium text-sm px-2 pb-0.5 rounded bg-zinc-50 hover:bg-zinc-200 hover:text-gray-500 group mb-4"
         >
-          <div className="pr-0.5 text-base group-hover:text-gray-800">접기</div>
+          <div className="pr-0.5 py-3 text-base rounded-2xl group-hover:text-zinc-800">
+            접기
+          </div>
         </button>
       );
     }
@@ -159,13 +161,13 @@ export default function Comment({ reviewComments }: CommentProps) {
     <>
       {reviewComments &&
       reviewComments.content !== '작성자가 삭제한 댓글입니다.' ? (
-        <div className="w-full flex my-6">
+        <div className="w-full flex my-2">
           <img
             src={`https://codetech.nworld.dev${reviewComments?.userImage}`}
             alt=""
-            className="w-12 h-12 rounded-full mx-2 ring ring-slate-200"
+            className="flex-none w-12 h-12 rounded-2xl mx-2 ring ring-zinc-100"
           />
-          <div className="w-2/3">
+          <div className="grow">
             <div className="flex justify-between mb-1.5 items-center">
               <span className="max-sm:flex flex-col items-start">
                 <span className="ml-1 font-semibold">
@@ -228,7 +230,7 @@ export default function Comment({ reviewComments }: CommentProps) {
                   </div>
                   <form
                     action=""
-                    className="flex flex-row items-center hover:bg-slate-50 peer-invalid:bg-slate-50 "
+                    className="w-full flex flex-row items-center hover:bg-slate-50 peer-invalid:bg-slate-50 "
                   >
                     <TextareaAutosize
                       onChange={handleSubComment}

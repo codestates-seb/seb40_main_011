@@ -54,8 +54,8 @@ export const CommentInput = () => {
 
   return (
     <>
-      <div className="w-full bg-zinc-100 flex justify-center m-4">
-        <div className="py-10 w-full border-t-2">
+      <div className="w-full flex justify-center m-4">
+        <div className="mb-4 w-full">
           <HandleValidation />
           <TextareaAutosize
             minRows={3}
