@@ -37,6 +37,7 @@ export default function Question({
               <div className="px-4 pt-2 pb-3 rounded bg-white text-gray-600 font-medium">
                 {content}
               </div>
+
               {answerCards !== null && !showAnswer && (
                 <button
                   onClick={handleShowAnswer}

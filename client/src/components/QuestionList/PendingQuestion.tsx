@@ -25,6 +25,8 @@ export default function PendingQuestion({
   const questionWriterId = writerId;
   const questionContent = content;
 
+  const firstComment = answerCards?.slice(0, 1)[0];
+
   // 답변 불러오기
   const [showAnswer, setShowAnswer] = useState(false);
   const handleShowAnswer = () => {
@@ -50,7 +52,7 @@ export default function PendingQuestion({
     return false;
   };
   const editable = getEdit();
-
+  console.log(answerCards);
   return (
     <div className="w-full">
       {showModal && (
@@ -78,12 +80,26 @@ export default function PendingQuestion({
               <div className="px-4 pt-2 pb-3 rounded bg-white text-gray-600 font-medium">
                 {content}
               </div>
-              {answerCards !== null && !showAnswer && (
+              {firstComment && (
+                <PendingAnswer
+                  key={firstComment.id}
+                  createdAt={firstComment.createdAt}
+                  nickname={firstComment.nickname}
+                  content={firstComment.content}
+                  writerId={firstComment.writerId}
+                  id={firstComment.id}
+                  questionId={firstComment.questionId}
+                  questionWriterId={firstComment.questionWriterId}
+                  questionContent={firstComment.questionContent}
+                  image={firstComment.image}
+                />
+              )}
+              {answerCards !== null && !showAnswer && answerCards.length !== 1 && (
                 <button
                   onClick={handleShowAnswer}
                   className="w-full mt-1 rounded overflow-hidden"
                 >
-                  <AnswerMore count={answerCards.length} />
+                  <AnswerMore count={answerCards.length - 1} />
                 </button>
               )}
             </div>
