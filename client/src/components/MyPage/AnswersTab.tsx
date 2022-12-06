@@ -70,23 +70,27 @@ export const AnswersTab = () => {
                   key={index}
                 >
                   <div className="flex text-sm">
-                    <div className=" text-slate-500">
-                      {new Date(el.createdAt).toLocaleDateString('kr-KO', {
+                    <div className=" text-slate-500 dark:text-gray-400">
+                      {new Date(el.createdAt).toLocaleDateString('ko-KR', {
                         month: 'short',
                         day: 'numeric',
                         year: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
                       })}
                     </div>
                     {el.adoptedId ? (
                       <>
                         <BsCheckCircleFill className=" w-[20px] h-[20px] mb-1 ml-1.5 text-emerald-500" />
-                        <p className="ml-1 text-slate-500">채택됨</p>
+                        <p className="ml-1 text-slate-500 dark:text-gray-400">
+                          채택됨
+                        </p>
                       </>
                     ) : (
                       <></>
                     )}
                   </div>
-                  <div className="mb-0.5 overflow-hidden text-sm text-ellipsis line-clamp-2  text-slate-700">
+                  <div className="mb-0.5 overflow-hidden text-sm text-ellipsis line-clamp-2  text-slate-700  dark:text-gray-300">
                     {el.content}
                   </div>
                   <AnswersMore el={el} />
