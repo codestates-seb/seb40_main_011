@@ -46,7 +46,7 @@ export default function FirstAnswer({
         <BodyTop
           createdAt={createdAt}
           nickname={nickname}
-          writerId={writerId}
+          writerId={questionWriterId}
           answerId={answerId}
           content={content}
           questionContent={questionContent}

@@ -568,3 +568,15 @@ export const getDetailList = async (id: number, opt: string, limit: number) => {
     return err.response;
   }
 };
+
+export const patchAdoption = async (id: number | undefined) => {
+  try {
+    const response = await axios.patch(`/api/questions/${id}/adopt`, '', {
+      headers: { Authorization: localStorage.getItem('authorization') },
+    });
+    console.log(response);
+    return response;
+  } catch (err: any) {
+    return err.response;
+  }
+};

@@ -4,6 +4,7 @@ import Answer from './Answer';
 import { QuestionProps, AnswerCardsProps } from '../../types/mainPageTypes';
 import { useState } from 'react';
 import Avatar from '../Avatar/Avatar';
+import { BsFillChatTextFill } from 'react-icons/bs';
 
 export default function Question({
   createdAt,
@@ -33,10 +34,11 @@ export default function Question({
               createdAt={adoptedAnswer.createdAt}
               nickname={adoptedAnswer.nickname}
               content={adoptedAnswer.content}
-              writerId={adoptedAnswer.writerId}
+              writerId={writerId}
               id={Number(adoptedAnswer.id)}
               adoptedId={adoptedId}
               image={adoptedAnswer.image}
+              questionId={adoptedAnswer.questionId}
             />
           )}
         </>

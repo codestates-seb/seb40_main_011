@@ -95,7 +95,7 @@ export default function Login() {
           loginResult.headers.get('authorization')
         );
         Login(loginResult.headers.id);
-        navigate('/');
+        navigate(-1);
         break;
       case 401:
         // alert('이메일과 비밀번호가 일치하지 않습니다.');
@@ -116,14 +116,6 @@ export default function Login() {
   const handleGoogle = () => {
     window.location.href =
       'https://codetech.nworld.dev/api/oauth2/authorize/google';
-    const responseParam = window.location.href;
-    const accessToken = new URL(location.href).searchParams.get('access_token');
-    const refreshToken = new URL(location.href).searchParams.get(
-      'refresh_token'
-    );
-    const memberId = new URL(location.href).searchParams.get('member_id');
-
-    console.log(accessToken);
   };
 
   // google login

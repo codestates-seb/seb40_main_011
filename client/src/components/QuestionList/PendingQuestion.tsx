@@ -99,10 +99,10 @@ export default function PendingQuestion({
           createdAt={firstComment.createdAt}
           nickname={firstComment.nickname}
           content={firstComment.content}
-          writerId={firstComment.writerId}
+          writerId={writerId}
           id={firstComment.id}
           questionId={firstComment?.questionId}
-          questionWriterId={firstComment?.questionWriterId}
+          questionWriterId={firstComment?.writerId}
           questionContent={firstComment.questionContent}
           image={firstComment.image}
         />
