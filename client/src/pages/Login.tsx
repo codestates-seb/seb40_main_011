@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { postLogin, postGoogle } from '../util/apiCollection';
+import { postLogin } from '../util/apiCollection';
 import { useIsLogin } from '../store/login';
 import {
   MdOutlineEmail,
@@ -88,7 +88,7 @@ export default function Login() {
     }
     const loginResult = await postLogin({ email, password });
     switch (loginResult.status) {
-      case 200:
+      default:
         localStorage.setItem('refresh', loginResult.headers.get('refresh'));
         localStorage.setItem(
           'authorization',
@@ -99,22 +99,32 @@ export default function Login() {
         break;
       case 401:
         // alert('이메일과 비밀번호가 일치하지 않습니다.');
-        console.error(loginResult.status + ' Error');
+        setShowModal(true);
+        setMsg(errorMsg[2]);
         break;
-      default:
     }
   };
 
+  // naver.com login
+  const handleNaver = () => {
+    window.location.href =
+      'https://codetech.nworld.dev/api/oauth2/authorize/naver';
+    return;
+  };
+
   // google login
-  const handleGoogle = async () => {
-    const loginResult = await postGoogle();
+  const handleGoogle = () => {
+    window.location.href =
+      'https://codetech.nworld.dev/api/oauth2/authorize/google';
+    return;
   };
 
   // showError 모달
   const [showModal, setShowModal] = useState(false);
-  const errorMsg: [string, string] = [
+  const errorMsg: string[] = [
     '이메일을 입력하지 않았습니다.',
     '비밀번호를 입력하지 않았습니다.',
+    '아이디 또는 비밀번호를 잘못 입력했습니다.',
   ];
   const [msg, setMsg] = useState(errorMsg[0]);
 
@@ -208,7 +218,6 @@ export default function Login() {
             로그인
           </button>
         </form>
-
         {/* <span className="py-10 font-medium text-center text-gray-400">
           or use your sns account
         </span> */}
@@ -216,18 +225,21 @@ export default function Login() {
           <button className="mx-8">
             <RiKakaoTalkFill className="w-16 h-16 p-3 overflow-hidden text-gray-400 duration-300 bg-white border rounded-full hover:p-2 hover:border-0 hover:text-black hover:bg-yellow-300 bg-border-0" />
           </button>
-          <a
-            href="/oauth2/authorization/google"
-            className="mx-8"
-            target="_blank"
-          >
+          <div className="mx-8">
             <AiOutlineGoogle
-              onClick={handleGoogle}
+              role="button"
+              onClick={() => handleGoogle()}
               className="w-16 h-16 p-3 overflow-hidden text-gray-400 duration-300 bg-white border rounded-full hover:p-2 hover:border-0 hover:text-white hover:bg-red-500 bg-border-0"
             />
-          </a>
+          </div>
           <button className="flex justify-center items-center text-[34px] hover:text-[40px] font-black pb-1 w-16 h-16 rounded-full bg-white border hover:border-0 overflow-hidden text-gray-400 hover:text-white hover:bg-green-500 mx-8 duration-300">
-            <div className="pointer-events-none">N</div>
+            <div
+              role="button"
+              onClick={() => handleNaver()}
+              // className="pointer-events-none"
+            >
+              N
+            </div>
           </button>
         </div>
       </div>

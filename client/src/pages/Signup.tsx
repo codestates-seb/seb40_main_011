@@ -1,6 +1,9 @@
-//회원가입 페이지
-//안지은, 김광민 작성
-import React, { ChangeEvent, useCallback, useState } from 'react';
+import React, {
+  ChangeEvent,
+  useCallback,
+  useState,
+  KeyboardEvent,
+} from 'react';
 import '../components/common.css';
 import { useNavigate } from 'react-router-dom';
 import { postSignup } from '../util/apiCollection';
@@ -35,6 +38,9 @@ const Signup = () => {
 
   //인증메일 전송버튼 클릭 여부
   const [emailBut, setIsEmailBut] = useState<boolean>(false);
+  //이메일 인증 완료 여부
+  const [emailCheckCompletion, setEmailCheckCompletion] =
+    useState<boolean>(false);
 
   // navigate login & home
   const navigate = useNavigate();
@@ -61,42 +67,11 @@ const Signup = () => {
   ];
   const image = imgPlaceholder[getNumber()];
 
-  // 회원가입 submit
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (nickname.length === 0) {
-      setMsg(errorMsg[0]);
-      return setShowModal(true);
-    }
-    if (email.length === 0) {
-      setMsg(errorMsg[1]);
-      return setShowModal(true);
-    }
-    if (password.length === 0) {
-      setMsg(errorMsg[2]);
-      return setShowModal(true);
-    }
-    if (passwordCheck.length === 0) {
-      setMsg(errorMsg[3]);
-      return setShowModal(true);
-    }
-    const signupResult = await postSignup({ email, password, nickname, image });
-    switch (signupResult.status) {
-      case 200:
-        alert('회원가입되었습니다.');
-        navigate('/login');
-        break;
-      case 401:
-        console.error(signupResult.status + ' Error');
-        break;
-    }
-  };
-
   //이름
   const onChangeName = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setNickname(e.target.value);
-    if (e.target.value.length < 2 || e.target.value.length > 20) {
-      setNameMessage('닉네임은 2글자 이상 20글자 미만으로 입력해주세요');
+    if (e.target.value.length < 2 || e.target.value.length > 10) {
+      setNameMessage('닉네임은 2글자 이상 10글자 미만으로 입력해주세요');
       setIsName(false);
     } else {
       setNameMessage('사용 가능한 닉네임입니다');
@@ -106,6 +81,7 @@ const Signup = () => {
 
   //이메일
   const onChangeEmail = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    // e.target.value = '';
     const emailCurrent = e.target.value;
     setEmail(emailCurrent);
 
@@ -128,27 +104,24 @@ const Signup = () => {
   );
 
   //비밀번호
-  const onChangePassword = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const passwordCurrent = e.target.value;
-      setPassword(passwordCurrent);
+  const onChangePassword = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    const passwordCurrent = e.target.value;
+    setPassword(passwordCurrent);
 
-      if (!passwordRegex.test(passwordCurrent)) {
-        setPasswordMessage(
-          '숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요'
-        );
-        setIsPassword(false);
-      } else {
-        setPasswordMessage('안전한 비밀번호입니다)');
-        setIsPassword(true);
-      }
-    },
-    []
-  );
+    if (!passwordRegex.test(passwordCurrent)) {
+      setPasswordMessage(
+        '숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요'
+      );
+      setIsPassword(false);
+    } else {
+      setPasswordMessage('안전한 비밀번호입니다)');
+      setIsPassword(true);
+    }
+  }, []);
 
   //비밀번호 확인
   const onChangePasswordCheck = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+    (e: ChangeEvent<HTMLInputElement>) => {
       const passwordCheckCurrent = e.target.value;
       setPasswordCheck(passwordCheckCurrent);
 
@@ -176,55 +149,148 @@ const Signup = () => {
   };
 
   // handleEnter
-  const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.code === 'Enter') {
-      onSubmit;
+  const handleEnter = (
+    e: KeyboardEvent<HTMLInputElement | HTMLButtonElement>,
+    next: string
+  ) => {
+    const key = e.key || e.keyCode;
+    if (key === 'Enter' || key === 13) {
+      if (next === 'signUpSubmit') {
+        onSubmit;
+      } else {
+        document.getElementById(next)?.focus();
+      }
     }
   };
 
   // error modal
   const [showModal, setShowModal] = useState(false);
-  const errorMsg: [string, string, string, string] = [
+  const modalMsg: string[] = [
     '닉네임을 입력하지 않았습니다.',
     '이메일을 입력하지 않았습니다.',
     '비밀번호를 입력하지 않았습니다.',
     '비밀번호 확인을 입력하지 않았습니다.',
+    '이메일로 인증번호가 전송되었습니다',
+    '이메일이 유효하지 않습니다',
+    '인증번호를 입력하지 않았습니다',
+    '이메일 인증이 완료되었습니다 :)',
+    '인증번호가 유효하지 않습니다',
+    '회원가입이 완료되었습니다',
+    '회원가입 실패 ㅜㅜ 코드테크로 문의해주세요',
+    '가입이 되어있는 이메일입니다 ㅜㅜ',
+    '탈퇴한 이메일은 재가입이 불가능합니다 ㅜㅜ',
   ];
-  const [msg, setMsg] = useState(errorMsg[0]);
+  const [msg, setMsg] = useState(modalMsg[0]);
 
-  //이메일 인증 번호 받기 클릭시 post 요청
+  //이메일 인증 => 메일 전송 클릭시 post 요청
   const emailButClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    setIsEmailBut(!emailBut);
+    e.preventDefault();
 
     const emailData = {
       email: email,
     };
-    const emailCheckReq = await postEmail(emailData);
-    switch (emailCheckReq.status) {
-      case 200:
-        alert('인증번호가 전송되었습니다');
-        break;
-      case 404:
-        alert('이메일이 유효하지 않습니다');
-        break;
+
+    if (email.length === 0) {
+      setMsg(modalMsg[1]);
+      setIsEmailBut(emailBut);
+      return setShowModal(true);
+    } else {
+      const emailCheckReq = await postEmail(emailData);
+      console.log(emailCheckReq);
+      console.log(emailCheckReq.data.message);
+      switch (emailCheckReq.status) {
+        case 200:
+          setMsg(modalMsg[4]);
+          setShowModal(true);
+          setIsEmailBut(true);
+          break;
+        case 400:
+          setMsg(modalMsg[12]);
+          setShowModal(true);
+          break;
+        case 404:
+          setMsg(modalMsg[5]);
+          setShowModal(true);
+          break;
+        case 409:
+          setMsg(modalMsg[11]);
+          setShowModal(true);
+          break;
+      }
     }
   };
 
   //이메일 인증 번호 작성 후 post 요청
   const emailNumCheckClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
     const emailNumData = {
       email: email,
       code: certification,
     };
-    const emailCheckReq = await postEmailCertificationCheck(emailNumData);
-    switch (emailCheckReq.status) {
-      case 200:
-        alert('이메일 인증이 완료되었습니다');
-        setIsEmailBut(!emailBut);
-        break;
-      case 404:
-        alert('인증번호가 일치하지 않습니다');
-        break;
+
+    if (certification.length === 0) {
+      setMsg(modalMsg[6]);
+      setIsEmailBut(emailBut);
+      return setShowModal(true);
+    } else {
+      const emailCheckReq = await postEmailCertificationCheck(emailNumData);
+      switch (emailCheckReq.status) {
+        case 200:
+          setMsg(modalMsg[7]);
+          setShowModal(true);
+          setEmailCheckCompletion(true);
+          setIsEmailBut(!emailBut);
+          break;
+        case 404:
+          setMsg(modalMsg[8]);
+          setShowModal(true);
+          console.log(emailCheckCompletion);
+          break;
+      }
+    }
+  };
+
+  // 회원가입 submit
+  const onSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    if (nickname.length === 0) {
+      setMsg(modalMsg[0]);
+      return setShowModal(true);
+    }
+    if (password.length === 0) {
+      setMsg(modalMsg[2]);
+      return setShowModal(true);
+    }
+    if (passwordCheck.length === 0) {
+      setMsg(modalMsg[3]);
+      return setShowModal(true);
+    }
+
+    if (
+      nickname.length !== 0 &&
+      email.length !== 0 &&
+      password.length !== 0 &&
+      passwordCheck.length !== 0
+    ) {
+      const signupResult = await postSignup({
+        email,
+        password,
+        nickname,
+        image,
+      });
+      console.log(signupResult);
+      switch (signupResult.status) {
+        case 200:
+          setMsg(modalMsg[9]);
+          setShowModal(true);
+          navigate('/login');
+          break;
+        case 401:
+          setMsg(modalMsg[10]);
+          setShowModal(true);
+          break;
+      }
     }
   };
 
@@ -238,13 +304,7 @@ const Signup = () => {
           className="w-56 pb-10 m-auto cursor-pointer"
           onClick={handleHomeClick}
         />
-        <form
-          name="signup"
-          action="https://codetech.nworld.dev/api/register"
-          method="POST"
-          className="flex flex-col justify-center"
-          onSubmit={onSubmit}
-        >
+        <form name="signup" className="flex flex-col justify-center">
           <div
             className={`relative bg-gray-50 rounded h-14 ring-inset ring-1 ring-slate-200 hover:ring-slate-400 hover:ring-2 ${
               nickname.length > 5 && !isName
@@ -254,10 +314,12 @@ const Signup = () => {
           >
             <input
               type="text"
+              id="nickname"
               className="absolute top-0 w-full h-full px-6 pt-3 text-base font-medium bg-transparent outline-none peer/email input-ani"
               value={nickname}
-              name="email"
+              name="nicmname"
               onChange={onChangeName}
+              onKeyPress={(e) => handleEnter(e, 'email')}
             ></input>
             <label
               className={`absolute font-medium top-4 left-6 text-gray-500 duration-200 pointer-events-none peer-focus/email:-translate-y-2.5 peer-focus/email:text-xs ${
@@ -288,10 +350,12 @@ const Signup = () => {
             >
               <input
                 type="text"
+                id="email"
                 className="absolute top-0 w-full h-full px-6 pt-3 text-base font-medium bg-transparent outline-none peer/email input-ani"
                 value={email}
                 name="email"
                 onChange={onChangeEmail}
+                onKeyDown={(e) => handleEnter(e, 'but01')}
               ></input>
               <label
                 className={`absolute font-medium top-4 left-6 text-gray-500 duration-200 pointer-events-none peer-focus/email:-translate-y-2.5 peer-focus/email:text-xs ${
@@ -299,7 +363,7 @@ const Signup = () => {
                   'peer-valid/email:-translate-y-2.5 peer-valid/email:text-xs'
                 }`}
               >
-                이메일
+                {emailCheckCompletion === false ? `이메일` : `이메일 인증완료`}
               </label>
               {email.length > 5 && !isEmail && (
                 <span className="relative flex items-center text-sm text-red-600 pointer-events-none top-16">
@@ -312,8 +376,11 @@ const Signup = () => {
             {/* 인증번호 버튼 */}
             <div className="relative w-1/4 ml-2 rounded h-14">
               <button
-                className="w-full h-full pb-1 text-base font-medium text-white bg-blue-600 rounded-md hover:bg-blue-500"
+                type="button"
+                id="but01"
+                className="w-full h-full pb-1 text-base font-medium text-white bg-slate-600 rounded-md hover:bg-blue-500"
                 onClick={emailButClick}
+                onKeyDown={(e) => handleEnter(e, 'emailCertification')}
               >
                 메일 전송
               </button>
@@ -335,10 +402,12 @@ const Signup = () => {
               >
                 <input
                   type="text"
+                  id="emailCertification"
                   className="absolute top-0 w-full h-full px-6 pt-3 text-base font-medium bg-transparent outline-none peer/email input-ani"
                   value={certification}
                   name="emailCertification"
                   onChange={onChangeCertification}
+                  onKeyDown={(e) => handleEnter(e, 'but02')}
                 ></input>
                 <label
                   className={`absolute font-medium top-4 left-6 text-gray-500 duration-200 pointer-events-none peer-focus/email:-translate-y-2.5 peer-focus/email:text-xs ${
@@ -354,8 +423,11 @@ const Signup = () => {
               {/* 인증번호 완료버튼 */}
               <div className="relative w-1/4 ml-2 rounded h-14">
                 <button
-                  className="w-full h-full pb-1 text-base font-medium text-white bg-blue-600 rounded-md hover:bg-blue-500"
+                  type="button"
+                  id="but02"
+                  className="w-full h-full pb-1 text-base font-medium text-white bg-emerald-500 rounded-md hover:bg-blue-500"
                   onClick={emailNumCheckClick}
+                  onKeyPress={(e) => handleEnter(e, 'password')}
                 >
                   인증 완료
                 </button>
@@ -375,11 +447,12 @@ const Signup = () => {
           >
             <input
               type={passwordType}
+              id="password"
               className="absolute top-0 w-full h-full px-6 pt-3 text-base font-medium bg-transparent outline-none peer/password input-ani"
               value={password}
               name="password"
               onChange={onChangePassword}
-              onKeyDown={handleEnter}
+              onKeyPress={(e) => handleEnter(e, 'passwordCheck')}
             ></input>
             <label
               className={`absolute font-medium top-4 left-6 text-gray-500 duration-200 pointer-events-none peer-focus/password:-translate-y-2.5 peer-focus/password:text-xs ${
@@ -419,11 +492,12 @@ const Signup = () => {
           >
             <input
               type={passwordCheckType}
+              id="passwordCheck"
               className="absolute top-0 w-full h-full px-6 pt-3 text-base font-medium bg-transparent outline-none peer/password input-ani"
               value={passwordCheck}
               name="password"
               onChange={onChangePasswordCheck}
-              onKeyDown={handleEnter}
+              onKeyPress={(e) => handleEnter(e, 'signUpSubmit')}
             ></input>
             <label
               className={`absolute font-medium top-4 left-6 text-gray-500 duration-200 pointer-events-none peer-focus/password:-translate-y-2.5 peer-focus/password:text-xs ${
@@ -451,7 +525,9 @@ const Signup = () => {
             )}
           </div>
           <button
-            type="submit"
+            id="signUpSubmit"
+            type="button"
+            onClick={onSubmit}
             className="w-full h-16 pb-1 text-xl font-bold text-white bg-blue-600 rounded-md hover:bg-blue-500"
           >
             회원가입

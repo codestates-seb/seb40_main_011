@@ -17,7 +17,6 @@ import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
-import seb.project.Codetech.file.entity.FileEntity;
 import seb.project.Codetech.product.dto.ProductResponseDto;
 import seb.project.Codetech.product.entity.Type;
 
@@ -45,11 +44,12 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
 
 	@Override
 	public ProductResponseDto.Get getSearchProductById(Long productId) {
-		ProductResponseDto.Get searchProduct = queryFactory
+		return queryFactory
 			.select(Projections.fields(ProductResponseDto.Get.class,
 				product.id,
 				product.name,
 				product.detail,
+				product.thumbnail,
 				product.type,
 				product.writer,
 				product.modifier,
@@ -58,16 +58,6 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
 			.from(product)
 			.where(product.id.eq(productId))
 			.fetchOne();
-
-		assert searchProduct != null;
-		List<FileEntity> fileEntities = queryFactory
-			.selectFrom(fileEntity)
-			.where(fileEntity.product.id.eq(searchProduct.getId()))
-			.fetch();
-
-		searchProduct.setFileEntities(fileEntities);
-
-		return searchProduct;
 	}
 
 	@Override
@@ -77,6 +67,7 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
 			.select(Projections.bean(ProductResponseDto.Card.class,
 				product.id,
 				product.name,
+				product.thumbnail,
 				product.type,
 				product.createdAt
 			))
@@ -106,7 +97,7 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
 	}
 
 	@Override
-	public List<ProductResponseDto.Search> searchProductByKeyword(String keyword, Long offset, int limit) {
+	public List<ProductResponseDto.Search> searchProductByKeyword(String keyword, Long offset, Integer limit) {
 
 		// 1. 입력한 키워드를 기준으로 제품의 목록을 조회한다.
 		List<ProductResponseDto.Search> productSearchs = queryFactory
@@ -114,7 +105,8 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
 					ProductResponseDto.Search.class,
 					product.id,
 					product.name,
-					product.type
+					product.type,
+					product.thumbnail
 				)
 			)
 			.from(product)
@@ -141,7 +133,7 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
 		return productSearchs;
 	}
 
-	public boolean hasNext(List<?> responseList, int limit) {
+	public boolean hasNext(List<?> responseList, Integer limit) {
 		if (responseList.size() > limit) {
 			responseList.remove(limit);
 			return true;

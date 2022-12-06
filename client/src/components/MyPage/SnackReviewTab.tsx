@@ -1,4 +1,5 @@
 import { useEffect, useState, SetStateAction } from 'react';
+import { Link } from 'react-router-dom';
 import { getUserReview } from '../../util/apiCollection';
 import ReviewTabPagenation from './ReviewTabPagenation';
 import { loginRefresh } from '../../util/loginRefresh';
@@ -67,7 +68,7 @@ const SnackReviewTab = () => {
   return (
     <>
       {!reviewData || reviewData?.length === 0 ? (
-        <div className="flex flex-col justify-center w-[850px] p-5 mt-20">
+        <div className="flex flex-col justify-center w-full max-w-screen-lg p-5 px-24 mt-20">
           <div className="mb-2 text-xl text-center">
             작성한 한줄 리뷰가 없습니다
           </div>
@@ -77,9 +78,10 @@ const SnackReviewTab = () => {
           {reviewData?.map((el: ReviewType, index: number) => {
             return (
               <>
-                <div
-                  className="flex flex-col justify-center w-[850px] p-5"
+                <Link
+                  to={`../categories/review/${el.productId}`}
                   key={index}
+                  className="flex flex-col justify-center w-full max-w-screen-lg py-2.5 lg:px-24 px-10"
                 >
                   <div className="mb-2 overflow-hidden text-ellipsis line-clamp-2">
                     {el.content}
@@ -99,7 +101,7 @@ const SnackReviewTab = () => {
                       })}
                     </div>
                   </div>
-                </div>
+                </Link>
               </>
             );
           })}

@@ -46,9 +46,8 @@ public class MailService {
     }
 
     public String sendCertificationMail(String email)  throws BusinessLogicException {
-        if(nullUser(email).isPresent()){
-            throw new BusinessLogicException(ExceptionCode.USER_EXISTS);
-        }
+        if(nullUser(email).isPresent() && nullUser(email).get().getStatus()) throw new BusinessLogicException(ExceptionCode.WITHDRAWN_USER);
+        if(nullUser(email).isPresent()) throw new BusinessLogicException(ExceptionCode.USER_EXISTS);
         try{
             String code = UUID.randomUUID().toString().substring(0, 6);
             sendMail(code, email);

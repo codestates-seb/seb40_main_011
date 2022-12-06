@@ -6,6 +6,7 @@ import lombok.Setter;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Getter
 @Setter
@@ -16,11 +17,11 @@ public class UserPostDto {
     private String email;
 
     @NotBlank
-    @Pattern(regexp = "^(?=.*[A-Za-z0-9가-힣])[A-Za-z0-9가-힣]{2,16}$", message = "닉네임은 2자 이상 16자 이하 대소문자 영어와 한글 숫자로 구성할 수 있습니다.")
+    @Size(min = 2,max = 10)
     private String nickname;
 
     @NotBlank
-    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@!%*#?&])[A-Za-z\\d$@!%*#?&]{8,16}$", message = "비밀번호는 8자 이상 16자 이하 특수문자와 대소문자 영어 및 숫자만 허용됩니다.")
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@!%*#?&])[A-Za-z\\d$@!%*#?&]{8,25}$", message = "비밀번호는 8자 이상 25자 이하 특수문자와 대소문자 영어 및 숫자만 허용됩니다.")
     private String password;
 
     private String image;

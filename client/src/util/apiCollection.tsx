@@ -9,8 +9,6 @@ import {
   AnswerContent,
 } from '../types/mainPageTypes';
 
-const initialToken: any = localStorage.getItem('authorization');
-
 export const postSnack = async (req: any) => {
   const reqUrl = '/api/snack-reviews';
   try {
@@ -107,15 +105,6 @@ export const postRefresh = async () => {
   }
 };
 
-export const postGoogle = async () => {
-  try {
-    const response = await axios.post('/oauth2/authorization/google');
-    console.log(response);
-  } catch (err: any) {
-    return err.response;
-  }
-};
-
 export const getProductDetail = async (productId: number) => {
   try {
     const searchResponse = await axios.get(`/api/products/${productId}`, {
@@ -129,10 +118,25 @@ export const getProductDetail = async (productId: number) => {
   }
 };
 
-export const getSearchReview = async (keyword: string) => {
+export const getSearchReview = async (keyword: string, limit: number) => {
   try {
     const searchResponse = await axios.get(
-      `/api/reviews/search?keyword=${keyword}&offset=0&limit=3`,
+      `/api/reviews/search?keyword=${keyword}&offset=0&limit=${limit}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    return searchResponse;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+export const getSearchProduct = async (keyword: string) => {
+  try {
+    const searchResponse = await axios.get(
+      `/api/products/search?keyword=${keyword}&offset=0&limit=3`,
       {
         headers: {
           'Content-Type': 'application/json',
@@ -188,7 +192,9 @@ export const getUserProfile = async () => {
 export const delAccount = async (data: any) => {
   try {
     const optOut = await axios.patch('/api/withdraw', data, {
-      headers: { Authorization: initialToken },
+      headers: {
+        Authorization: localStorage.getItem('authorization'),
+      },
     });
     return optOut;
   } catch (err: any) {
@@ -240,7 +246,7 @@ export const getGoodSnack = async (productId: any, limit: number) => {
 export const getBadSnack = async (productId: any, limit: number) => {
   try {
     const response = await axios.get(
-      `/api/snack-reviews?productId=${productId}&offset=0&limit=${limit}&sortByGrade=false&asc=false`,
+      `/api/snack-reviews?productId=${productId}&offset=0&limit=${limit}&sortByGrade=true&asc=true`,
       {
         headers: {
           'Content-Type': 'application/json',
@@ -495,14 +501,59 @@ export const postEditorContent = async (data: any) => {
   }
 };
 
-export const getProducts = async () => {
+export const editReview = async (data: any) => {
   try {
-    const response = await axios.get(`/api/products/main-search`, {
+    const editorContent = await axios.patch('/api/reviews', data, {
       headers: {
-        'Content-Type': 'application/json',
+        Authorization: localStorage.getItem('authorization'),
+      },
+    });
+    return editorContent;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+export const deleteReview = async (reviewId: number) => {
+  try {
+    const response = await axios.delete(`/api/reviews/${reviewId}`, {
+      headers: {
+        Authorization: localStorage.getItem('authorization'),
       },
     });
     return response;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
+// export const getProducts = async () => {
+//   try {
+//     const response = await axios.get(`/api/products/main-search`, {
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//     });
+//     return response;
+//   } catch (err: any) {
+//     return err.response;
+//   }
+// };
+
+export const getProducts = async () => {
+  try {
+    const response = await axios.get(`/api/products/main-search`);
+    return response;
+  } catch (err: any) {
+    return err.response;
+  }
+};
+
+export const selectThumnailImg = async (data: any) => {
+  try {
+    const thumbnailImg = await axios.post('/api/thumbnail', data, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+    return thumbnailImg;
   } catch (err: any) {
     return err.response;
   }

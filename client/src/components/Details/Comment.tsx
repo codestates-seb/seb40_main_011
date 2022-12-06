@@ -1,8 +1,4 @@
-import {
-  CommentProps,
-  Review,
-  ReviewComments,
-} from '../../types/mainPageTypes';
+import { CommentProps, ReviewComments } from '../../types/mainPageTypes';
 import { FiSend } from 'react-icons/fi';
 import TextareaAutosize from 'react-textarea-autosize';
 import React, { useState } from 'react';
@@ -10,7 +6,7 @@ import SubComment from './SubComment';
 import EditComment from './EditComment';
 import { useIsLogin } from '../../store/login';
 import { loginRefresh } from '../../util/loginRefresh';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { postComment, editComment } from '../../util/apiCollection';
 
 export interface count {
@@ -18,6 +14,7 @@ export interface count {
 }
 
 export default function Comment({ reviewComments }: CommentProps) {
+  const navigate = useNavigate();
   const params = useParams();
   const [comment, setComment] = useState(reviewComments?.content);
   const { isLogin } = useIsLogin();
@@ -67,17 +64,20 @@ export default function Comment({ reviewComments }: CommentProps) {
     setSubComment(e.target.value);
   };
 
-  const onSubCommentClick = async (e: React.MouseEvent) => {
+  const onSubCommentClick = async (e: React.MouseEvent, id: string) => {
     e.preventDefault();
-    const parentId = e.currentTarget.id;
-    if (subComment !== 'undefined') {
+
+    if (!isLogin) {
+      navigate('/login');
+    }
+    if (subComment !== '') {
       const response = await postComment({
         reviewId: params.id,
-        parentId,
+        parentId: id,
         content: subComment,
       });
       switch (response.status) {
-        case 201:
+        default:
           location.reload();
           break;
         case 401:
@@ -86,7 +86,7 @@ export default function Comment({ reviewComments }: CommentProps) {
           break;
         case 412: {
           loginRefresh();
-          onSubCommentClick(e);
+          onSubCommentClick(e, id);
           break;
         }
       }
@@ -159,7 +159,7 @@ export default function Comment({ reviewComments }: CommentProps) {
     <>
       {reviewComments &&
       reviewComments.content !== '작성자가 삭제한 댓글입니다.' ? (
-        <div className="w-full flex my-6 ">
+        <div className="w-full flex my-6">
           <img
             src={`https://codetech.nworld.dev${reviewComments?.userImage}`}
             alt=""
@@ -167,13 +167,15 @@ export default function Comment({ reviewComments }: CommentProps) {
           />
           <div className="w-2/3">
             <div className="flex justify-between mb-1.5 items-center">
-              <span>
-                <span className="font-semibold">{reviewComments.writer}</span>
-                <span className="text-sm font-medium before:content-['•'] before:mr-1.5 before:ml-1.5 before:text-gray-400 font-medium text-gray-400">
+              <span className="max-sm:flex flex-col items-start">
+                <span className="ml-1 font-semibold">
+                  {reviewComments.writer}
+                </span>
+                <span className="text-sm font-medium before:content-['•'] before:mr-1.5 before:ml-1.5 before:text-gray-400 text-gray-400">
                   {getParsedDate(reviewComments.createdAt)}
                 </span>
               </span>
-              <div>
+              <div className="flex items-center">
                 <EditComment
                   isEditMode={isEditMode}
                   setIsEditMode={setIsEditMode}
@@ -210,17 +212,18 @@ export default function Comment({ reviewComments }: CommentProps) {
                       className="peer w-full resize-none pl-6 mt-2 mb-3 outline-none font-medium bg-transparent"
                     />
                     <button
-                      id={reviewComments.id.toString()}
-                      onClick={onSubCommentClick}
+                      onClick={(e) =>
+                        onSubCommentClick(e, reviewComments.id.toString())
+                      }
                       className="w-12 flex-none flex justify-center items-center"
                     >
-                      <FiSend className="text-3xl text-gray-400 hover:text-blue-500 mr-2 hover:text-blue-500  hover:bg-blue-100 p-1 rounded-lg w-10 h-8 pr-1.5" />
+                      <FiSend className="text-3xl text-gray-400 hover:text-blue-500 mr-2 hover:bg-blue-100 p-1 rounded-lg w-10 h-8 pr-1.5" />
                     </button>
                   </form>
                 </>
               ) : (
                 <>
-                  <div className="px-6 pt-3 pb-4 border-b border-gray-200">
+                  <div className="px-6 pt-3 pb-4 border-b border-gray-200 bg-white text-gray-600 font-medium">
                     {comment}
                   </div>
                   <form
@@ -237,11 +240,12 @@ export default function Comment({ reviewComments }: CommentProps) {
                       className="peer w-full resize-none pl-6 mt-2 mb-3 outline-none font-medium bg-transparent"
                     />
                     <button
-                      id={reviewComments.id.toString()}
-                      onClick={onSubCommentClick}
+                      onClick={(e) =>
+                        onSubCommentClick(e, reviewComments.id.toString())
+                      }
                       className="w-12 flex-none flex justify-center items-center"
                     >
-                      <FiSend className="text-3xl text-gray-400 hover:text-blue-500 mr-2 hover:text-blue-500  hover:bg-blue-100 p-1 rounded-lg w-10 h-8 pr-1.5" />
+                      <FiSend className="text-3xl text-gray-400 mr-2 hover:text-blue-500  hover:bg-blue-100 p-1 rounded-lg w-10 h-8 pr-1.5" />
                     </button>
                   </form>
                 </>

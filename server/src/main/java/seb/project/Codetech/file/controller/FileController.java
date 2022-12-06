@@ -2,6 +2,8 @@ package seb.project.Codetech.file.controller;
 
 import java.io.IOException;
 
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,8 +34,9 @@ public class FileController {
 	}
 
 	@PostMapping("/thumbnail")
-	public ResponseEntity<?> uploadThumbnail(@RequestPart MultipartFile file,
-		@RequestPart FileDto request) throws
+	public ResponseEntity<String> uploadThumbnail(
+		@RequestPart MultipartFile file,
+		@RequestPart @Valid FileDto request) throws
 		IOException {
 
 		String saveThumbnail = fileService.convertThumbnail(file, request.getWidth(), request.getHeight());

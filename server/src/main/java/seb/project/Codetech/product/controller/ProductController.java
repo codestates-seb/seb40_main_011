@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import lombok.extern.log4j.Log4j2;
 import seb.project.Codetech.file.entity.FileEntity;
 import seb.project.Codetech.file.service.FileService;
-import seb.project.Codetech.product.dto.ProductDto;
+import seb.project.Codetech.product.dto.ProductRequestDto;
 import seb.project.Codetech.product.dto.ProductResponseDto;
 import seb.project.Codetech.product.entity.Product;
 import seb.project.Codetech.product.entity.Type;
@@ -47,13 +49,12 @@ public class ProductController {
 
 	@PostMapping // 제품을 생성한다.
 	public ResponseEntity<Long> postProduct(@AuthenticationPrincipal String email,
-		@RequestPart @Valid ProductDto.Post request,
-		@RequestPart List<MultipartFile> file) throws IOException {
+		@RequestPart @Valid ProductRequestDto.Post request,
+		@RequestPart MultipartFile file) throws IOException {
 
 		Product dtoToProduct = mapper.productPostDtoToProduct(request);
-		Product serviceProduct = productService.createProduct(email, dtoToProduct); // 제품 정보를 등록한다.
-		List<FileEntity> fileEntities = fileService.insertFiles(file); // 파일 정보를 등록하고 파일을 로컬에 저장한다.
-		fileService.setUploadProduct(serviceProduct, fileEntities); // 파일 정보를 제품에 등록한다.
+		FileEntity saveFile = fileService.saveFile(file);
+		Product serviceProduct = productService.createProduct(email, dtoToProduct, saveFile); // 제품 정보를 등록한다.
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(serviceProduct.getId());
 	}
@@ -61,20 +62,19 @@ public class ProductController {
 	@PatchMapping("/{id}") // 등록된 제품을 수정한다.
 	public ResponseEntity<Long> patchProduct(@AuthenticationPrincipal String email,
 		@PathVariable @Positive Long id,
-		@RequestPart @Valid ProductDto.Patch request,
-		@RequestPart List<MultipartFile> file) throws IOException {
+		@RequestPart @Valid ProductRequestDto.Patch request,
+		@RequestPart MultipartFile file) throws IOException {
 
 		Product dtoToProduct = mapper.productPatchDtoToProduct(id, request);
-		Product serviceProduct = productService.modifyProduct(email, id, dtoToProduct);
-		List<FileEntity> fileEntities = fileService.insertFiles(file);
-		fileService.setUploadProduct(serviceProduct, fileEntities);
+		FileEntity saveFile = fileService.saveFile(file);
+		Product serviceProduct = productService.modifyProduct(email, id, dtoToProduct, saveFile);
 
 		return ResponseEntity.ok(serviceProduct.getId());
 	}
 
 	@DeleteMapping("/{id}") // 등록된 제품을 삭제한다.
 	public ResponseEntity<Product> deleteProduct(@AuthenticationPrincipal String email,
-		@PathVariable Long id) {
+		@PathVariable @Positive Long id) {
 
 		productService.removeProduct(email, id);
 
@@ -90,7 +90,7 @@ public class ProductController {
 	}
 
 	@GetMapping("/review-search") // 타입을 입력해서 타입의 모든 제품들의 이름을 가져온다.
-	public ResponseEntity<List<ProductResponseDto.Select>> getTypeProduct(@RequestParam Type type) {
+	public ResponseEntity<List<ProductResponseDto.Select>> getTypeProduct(@RequestParam @NotBlank Type type) {
 		List<ProductResponseDto.Select> searchType = productService.searchTypeProduct(type);
 
 		return ResponseEntity.ok(searchType);
@@ -104,9 +104,10 @@ public class ProductController {
 	}
 
 	@GetMapping("/search")
-	public ResponseEntity<ProductResponseDto.Slice> getSearchReview(@RequestParam String keyword,
-		@RequestParam Long offset,
-		@RequestParam int limit) {
+	public ResponseEntity<ProductResponseDto.Slice> getSearchReview(
+		@RequestParam @NotBlank String keyword,
+		@RequestParam @PositiveOrZero Long offset,
+		@RequestParam @Positive Integer limit) {
 
 		ProductResponseDto.Slice searchProduct = productService.searchProduct(keyword, offset, limit);
 

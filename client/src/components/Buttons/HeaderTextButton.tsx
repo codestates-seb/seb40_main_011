@@ -6,15 +6,19 @@ export default function HeaderTextButton({ name }: { name: string }) {
   const { Logout } = useIsLogin();
   const onClick = () => {
     switch (name) {
+      case 'hamburgerLogin':
       case 'login':
         navigate('/login');
         break;
+      case 'hamburgerSignup':
       case 'signup':
         navigate('/signup');
         break;
+      case 'hamburgerMyPage':
       case 'My Page':
         navigate('/mypage');
         break;
+      case 'hamburgerLogout':
       case 'logout':
         localStorage.removeItem('refresh');
         localStorage.removeItem('authorization');
@@ -22,6 +26,50 @@ export default function HeaderTextButton({ name }: { name: string }) {
         navigate('/');
     }
   };
+
+  if (name === 'hamburgerMyPage') {
+    return (
+      <button
+        onClick={onClick}
+        className="p-2 w-full text-lg hover:bg-slate-100"
+      >
+        My page
+      </button>
+    );
+  }
+
+  if (name === 'hamburgerLogout') {
+    return (
+      <button
+        onClick={onClick}
+        className="p-2 w-full text-lg hover:bg-slate-100"
+      >
+        Logout
+      </button>
+    );
+  }
+
+  if (name === 'hamburgerLogin') {
+    return (
+      <button
+        onClick={onClick}
+        className="p-2 w-full text-lg hover:bg-slate-100"
+      >
+        Login
+      </button>
+    );
+  }
+
+  if (name === 'hamburgerSignup') {
+    return (
+      <button
+        onClick={onClick}
+        className="p-2 w-full text-lg hover:bg-slate-100"
+      >
+        SignUp
+      </button>
+    );
+  }
 
   return (
     <>

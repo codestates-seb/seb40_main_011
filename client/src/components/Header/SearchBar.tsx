@@ -8,7 +8,10 @@ export default function SearchBar() {
   const onKeyPress = (e: KeyboardEvent) => {
     if (e.key == 'Enter') {
       e.preventDefault();
-      navigate({ pathname: `/search`, search: `?search=${keywords}` });
+      navigate({
+        pathname: `/search`,
+        search: `?search=${keywords.replace(/[^ㄱ-ㅎ가-힣a-zA-Z0-9]/g, ' ')}`,
+      });
       setKeywords('');
     }
   };
@@ -21,7 +24,6 @@ export default function SearchBar() {
         value={keywords}
         placeholder="리뷰...리뷰를 남기자!"
         onChange={(e) => {
-          console.log(e.target.value);
           setKeywords(e.target.value);
         }}
         onKeyPress={onKeyPress}

@@ -48,6 +48,9 @@ public class Product extends BaseTime {
 	@Column(nullable = false, columnDefinition = "MEDIUMTEXT")
 	private String detail;
 
+	@Column(nullable = false)
+	private String thumbnail;
+
 	@OneToMany(mappedBy = "product")
 	private List<Review> reviews = new ArrayList<>();
 

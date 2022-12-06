@@ -14,6 +14,7 @@ import seb.project.Codetech.product.service.ProductService;
 import seb.project.Codetech.review.dto.ReviewResponseDto;
 import seb.project.Codetech.review.entity.Review;
 import seb.project.Codetech.review.entity.Sort;
+import seb.project.Codetech.review.repository.ReviewCommRepository;
 import seb.project.Codetech.review.repository.ReviewRepository;
 import seb.project.Codetech.user.entity.User;
 import seb.project.Codetech.user.service.UserService;
@@ -26,11 +27,14 @@ public class ReviewService {
 	private final UserService userService;
 	private final ProductService productService;
 	private final ReviewRepository reviewRepository;
+	private final ReviewCommRepository reviewCommRepository;
 
-	public ReviewService(UserService userService, ProductService productService, ReviewRepository reviewRepository) {
+	public ReviewService(UserService userService, ProductService productService, ReviewRepository reviewRepository,
+		ReviewCommRepository reviewCommRepository) {
 		this.userService = userService;
 		this.productService = productService;
 		this.reviewRepository = reviewRepository;
+		this.reviewCommRepository = reviewCommRepository;
 	}
 
 	@Transactional
@@ -77,6 +81,7 @@ public class ReviewService {
 			throw new BusinessLogicException(ExceptionCode.REVIEW_NOT_MODIFY);
 		}
 
+		reviewCommRepository.deleteAllByReviewId(id);
 		reviewRepository.deleteById(id);
 
 		return productId;
@@ -91,7 +96,7 @@ public class ReviewService {
 		return reviewRepository.getReviewPageByReview(id, saveFile);
 	}
 
-	public ReviewResponseDto.Slice searchReview(String keyword, Long offset, int limit) {
+	public ReviewResponseDto.Slice searchReview(String keyword, Long offset, Integer limit) {
 
 		List<ReviewResponseDto.Search> searches = reviewRepository.searchReviewByKeyword(keyword, offset, limit);
 		boolean hasNext = reviewRepository.hasNext(searches, limit);
@@ -99,7 +104,7 @@ public class ReviewService {
 		return new ReviewResponseDto.Slice(searches, hasNext);
 	}
 
-	public ReviewResponseDto.Slice loadSliceReview(Long id, Sort sort, Long offset, int limit) {
+	public ReviewResponseDto.Slice loadSliceReview(Long id, Sort sort, Long offset, Integer limit) {
 		List<ReviewResponseDto.ReviewList> reviewLists = reviewRepository.loadSortReviewByProductId(id, sort, offset,
 			limit);
 		boolean hasNext = reviewRepository.hasNext(reviewLists, limit);

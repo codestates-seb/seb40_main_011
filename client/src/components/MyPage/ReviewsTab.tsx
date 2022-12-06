@@ -1,4 +1,5 @@
 import { useEffect, useState, SetStateAction } from 'react';
+import { Link } from 'react-router-dom';
 import { getUserReview } from '../../util/apiCollection';
 import ReviewTabPagenation from './ReviewTabPagenation';
 import { loginRefresh } from '../../util/loginRefresh';
@@ -60,7 +61,7 @@ const ReviewsTab = () => {
   return (
     <>
       {!reviewData || reviewData?.length === 0 ? (
-        <div className="flex flex-col justify-center w-[850px] p-5 mt-20">
+        <div className="flex flex-col justify-center w-full max-w-screen-lg p-5 px-24 mt-20">
           <div className="mb-2 text-xl text-center">
             작성한 상세 리뷰가 없습니다
           </div>
@@ -70,9 +71,10 @@ const ReviewsTab = () => {
           {reviewData?.map((el: ReviewType, index: number) => {
             return (
               <>
-                <div
-                  className="flex flex-col justify-center w-[850px] p-5"
+                <Link
+                  to={`/review/${el.id}`}
                   key={index}
+                  className="flex flex-col justify-center w-full max-w-screen-lg py-2.5 lg:px-24 px-10"
                 >
                   <div className="mb-2 text-xl">{el.title}</div>
                   <div className="mb-2 overflow-hidden text-ellipsis line-clamp-2">
@@ -84,7 +86,9 @@ const ReviewsTab = () => {
                     <div className="px-3 py-0.5 bg-slate-300 rounded-lg">
                       {el.type}
                     </div>
-                    <div className="px-3 py-0.5">{el.productName}</div>
+                    <div className="px-3 py-0.5 hidden sm:block">
+                      {el.productName}
+                    </div>
                     <div className="ml-auto text-slate-600">
                       {new Date(el.createdAt).toLocaleDateString('en-US', {
                         month: 'short',
@@ -95,7 +99,7 @@ const ReviewsTab = () => {
                       })}
                     </div>
                   </div>
-                </div>
+                </Link>
               </>
             );
           })}

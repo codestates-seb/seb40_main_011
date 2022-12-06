@@ -6,13 +6,13 @@
 import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 import { Viewer } from '@toast-ui/react-editor';
 
-import Prism from 'prismjs';
+// import Prism from 'prismjs';
 import 'prismjs/themes/prism.css';
 
 import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css';
-import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
+// import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
 
-const test = `#markdown test`; //잘 뜨나 테스트삼아 쓰는 것. 나중에 지워도 돼요
+// const test = `#markdown test`; //잘 뜨나 테스트삼아 쓰는 것. 나중에 지워도 돼요
 
 const TextViewer = (initialValue: any) => {
   return (

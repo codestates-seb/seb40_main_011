@@ -1,6 +1,7 @@
 package seb.project.Codetech.review.repository;
 
 import static seb.project.Codetech.product.entity.QProduct.*;
+import static seb.project.Codetech.recommend.entity.QRecommend.*;
 import static seb.project.Codetech.review.entity.QReview.*;
 import static seb.project.Codetech.review.entity.QReviewComment.*;
 import static seb.project.Codetech.user.entity.QUser.*;
@@ -87,7 +88,16 @@ public class CustomReviewRepositoryImpl implements CustomReviewRepository {
 			}
 		}
 
-		// 3. 목표한 리뷰 글 하나를 가져옴.
+		// 3. 상세리뷰가 가지고 있는 좋아요 유저 아이디를 가져옴
+		var recommends = queryFactory
+			.select(
+				recommend.user.id
+			)
+			.from(recommend)
+			.where(recommend.review.id.eq(id))
+			.fetch();
+
+		// 4. 목표한 리뷰 글 하나를 가져옴.
 		var page = queryFactory
 			.select(
 				Projections.fields(ReviewResponseDto.Page.class,
@@ -113,15 +123,18 @@ public class CustomReviewRepositoryImpl implements CustomReviewRepository {
 			.fetchOne();
 
 		assert page != null; // 가져온 page가 null이 아님을 확인.
-		// 4. 위에서 가져온 댓글을 리뷰 글 DTO에 쑤셔넣음.
+		// 5. 위에서 가져온 댓글을 리뷰 글 DTO에 쑤셔넣음.
 		page.setReviewComments(comments);
+		// 6. 위에서 가져온 좋아요 유저 아이디를 넣음.
+		page.setRecommends(recommends);
 
-		// 5. 리턴
+		// 6. 리턴
 		return page;
 	}
 
 	@Override
-	public List<ReviewResponseDto.ReviewList> loadSortReviewByProductId(Long id, Sort sort, Long offset, int limit) {
+	public List<ReviewResponseDto.ReviewList> loadSortReviewByProductId(Long id, Sort sort, Long offset,
+		Integer limit) {
 
 		// 댓글 많은 순 -> 댓글이 몇 갠지 알아야 함
 		// 세 가지 방법이 있음
@@ -173,7 +186,7 @@ public class CustomReviewRepositoryImpl implements CustomReviewRepository {
 	}
 
 	@Override
-	public List<ReviewResponseDto.Search> searchReviewByKeyword(String keyword, Long offset, int limit) {
+	public List<ReviewResponseDto.Search> searchReviewByKeyword(String keyword, Long offset, Integer limit) {
 		return queryFactory
 			.select(Projections.fields(ReviewResponseDto.Search.class,
 					review.id,
@@ -227,7 +240,7 @@ public class CustomReviewRepositoryImpl implements CustomReviewRepository {
 			.fetch();
 	}
 
-	public boolean hasNext(List<?> responseList, int limit) {
+	public boolean hasNext(List<?> responseList, Integer limit) {
 		if (responseList.size() > limit) {
 			responseList.remove(limit);
 			return true;

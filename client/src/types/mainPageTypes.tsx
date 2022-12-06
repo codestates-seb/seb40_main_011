@@ -32,6 +32,7 @@ export interface Product {
   reviewCount: number;
   snackCount: number;
   type: string;
+  thumbnail: string;
 }
 export interface Review {
   content: string;
@@ -47,6 +48,8 @@ export interface Review {
   view: number;
   writer: string;
   productId: number;
+  thumbnail: string;
+  recommends: number[];
 }
 
 export interface ReviewProps {
@@ -57,8 +60,8 @@ export interface markdownProps {
   markdown: string | undefined;
 }
 
-export interface LikeProps {
-  recommendNumber: number;
+export interface editReviewProps {
+  isEditMode?: boolean;
 }
 
 export interface BestReview {
@@ -96,11 +99,13 @@ export interface SearchData {
 }
 
 export interface ReviewLists {
+  id: string | undefined;
   content: string;
   recommendNumber: number;
   title: string;
   userImage: string;
   writer: string;
+  thumbnail: string;
 }
 
 export interface CommentProps {
@@ -113,7 +118,7 @@ export interface CommentsProps {
 
 export interface CategoryProps {
   setCategory: Dispatch<SetStateAction<string>>;
-  setCurrentPage: Dispatch<SetStateAction<number>>;
+  category: string;
 }
 
 export interface SubCommentProps {
@@ -246,6 +251,7 @@ export interface WriteAnswerProps {
 export interface setShowModalProps {
   setShowModal(state: boolean): void;
   msg: string;
+  productId?: number;
 }
 
 export interface EditQuestionProps {

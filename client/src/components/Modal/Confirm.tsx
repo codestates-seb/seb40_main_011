@@ -9,15 +9,15 @@ export default function Confirm({ setShowModal, msg }: setShowModalProps) {
   return (
     <div
       onClick={handleClick}
-      className="fixed inset-0 h-screen w-full z-30 bg-black/30 backdrop-blur-sm flex justify-content justify-center items-center"
+      className="fixed inset-0 z-30 flex items-center justify-center w-full h-screen bg-black/30 backdrop-blur-sm justify-content"
     >
       <div className="w-[28rem] z-40 rounded-xl overflow-hidden">
-        <div className="bg-white px-4 py-12 font-medium text-center text-lg text-gray-600">
+        <div className="px-4 py-12 text-lg font-medium text-center text-gray-600 bg-white">
           <span>{msg}</span>
         </div>
         <button
           onClick={handleClick}
-          className="bg-blue-500 hover:bg-blue-400 px-4 py-3 w-full text-white font-medium"
+          className="w-full px-4 py-3 font-medium text-white bg-blue-500 hover:bg-blue-400"
         >
           확인
         </button>

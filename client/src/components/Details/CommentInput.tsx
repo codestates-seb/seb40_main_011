@@ -2,24 +2,29 @@ import { useState } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import { useIsLogin } from '../../store/login';
 import { loginRefresh } from '../../util/loginRefresh';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { postComment } from '../../util/apiCollection';
 
 export const CommentInput = () => {
   const params = useParams();
+  const navigate = useNavigate();
   const { isLogin } = useIsLogin();
   const [comment, setComment] = useState('');
   const handleTextarea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setComment(e.target.value);
   };
+
   const onCommentClick = async () => {
-    if (comment !== 'undefined') {
+    if (!isLogin) {
+      navigate('/login');
+    }
+    if (comment !== undefined && comment !== '' && comment.length <= 100) {
       const response = await postComment({
         reviewId: params.id,
         parentId: 0,
         content: comment,
       });
-      console.log(response);
+
       switch (response.status) {
         default:
           location.reload();
@@ -36,10 +41,22 @@ export const CommentInput = () => {
     }
   };
 
+  const HandleValidation = () => {
+    if (comment.length > 100) {
+      return (
+        <div className="text-red-500 font-medium text-sm mx-4 bg-red-100 rounded px-2 pt-2 pb-2 mb-3">
+          최대 글자수를 초과했습니다.
+        </div>
+      );
+    }
+    return null;
+  };
+
   return (
     <>
-      <div className="w-full bg-white flex justify-center  m-4">
-        <div className="py-10 w-full">
+      <div className="w-full bg-zinc-100 flex justify-center m-4">
+        <div className="py-10 w-full border-t-2">
+          <HandleValidation />
           <TextareaAutosize
             minRows={3}
             maxRows={6}
@@ -69,6 +86,4 @@ export const CommentInput = () => {
   );
 };
 
-export const SubCommentInput = () => {
-  return;
-};
+export default CommentInput;

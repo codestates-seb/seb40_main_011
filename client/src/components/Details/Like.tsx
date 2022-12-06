@@ -1,17 +1,29 @@
-import { AiOutlineLike } from 'react-icons/ai';
-import { LikeProps } from '../../types/mainPageTypes';
+import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
+import { useState } from 'react';
 import { postLike } from '../../util/apiCollection';
 import { loginRefresh } from '../../util/loginRefresh';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useIsLogin } from '../../store/login';
-const HandleLike = ({ recommendNumber }: LikeProps) => {
+
+interface LikeProps {
+  userId: number;
+  recommends: number[];
+}
+
+const HandleLike = ({ userId, recommends }: LikeProps) => {
+  const [isHover, setIsHover] = useState(false);
+  const navigate = useNavigate();
   const params = useParams();
   const { loginId } = useIsLogin();
+  const didLike = recommends.filter((el) => Number(loginId) === el);
   const handleLikeClick = async () => {
+    if (!loginId) {
+      navigate('/login');
+    }
     if (loginId) {
       const response = await postLike(Number(params.id));
       switch (response.status) {
-        case 201:
+        case 200:
           location.reload();
           break;
         case 412:
@@ -23,12 +35,51 @@ const HandleLike = ({ recommendNumber }: LikeProps) => {
       }
     }
   };
+  const HandleHover = () => {
+    if (isHover && didLike.length !== 1) {
+      return (
+        <AiFillHeart
+          color="blue"
+          size="40"
+          className="animate-ping absolute inline-flex opacity-75"
+        />
+      );
+    }
+    return null;
+  };
+
+  const HandleLiked = () => {
+    if (didLike.length !== 1) {
+      return (
+        <AiOutlineHeart
+          color="2962F6"
+          size="40"
+          className="relative inline-flex"
+        />
+      );
+    } else
+      return (
+        <AiFillHeart
+          color="2962F6"
+          size="40"
+          className="relative inline-flex"
+        />
+      );
+  };
+
   return (
     <>
-      <div className="p-2">{recommendNumber}</div>
-      <button onClick={handleLikeClick}>
-        <AiOutlineLike className="p-2" size="60" />
-      </button>
+      {userId === Number(loginId) ? null : (
+        <button
+          className="flex "
+          onClick={handleLikeClick}
+          onMouseEnter={() => setIsHover(true)}
+          onMouseLeave={() => setIsHover(false)}
+        >
+          <HandleLiked />
+          <HandleHover />
+        </button>
+      )}
     </>
   );
 };
