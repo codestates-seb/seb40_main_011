@@ -71,9 +71,11 @@ export const CommentInput = () => {
             value={comment}
           />
           <div className="mt-4 flex justify-between items-center">
-            <span className="text-gray-400 text-sm">
-              현재 글자수 {comment.length} / 최대 글자수 100자
-            </span>
+            <div className="text-black/40 text-sm flex flex-col md:flex-row">
+              <span className="">현재 글자수 {comment.length}</span>
+              <span className="mx-2 hidden md:flex">/</span>
+              <span className="">최대 글자수 100자</span>
+            </div>
             <button
               onClick={onCommentClick}
               className="font-medium text-white pb-0.5 px-5 h-10 rounded-full bg-blue-500 hover:bg-blue-400"

@@ -126,6 +126,13 @@ export default function Login() {
     console.log(accessToken);
   };
 
+  // google login
+  const handleKakao = () => {
+    window.location.href =
+      'https://codetech.nworld.dev/api/oauth2/authorize/kakao';
+    return;
+  };
+
   // showError 모달
   const [showModal, setShowModal] = useState(false);
   const errorMsg: string[] = [
@@ -138,7 +145,7 @@ export default function Login() {
   return (
     <div className="w-full h-screen bg-slate-300 pt-8 max-md:pt-0 flex flex-col items-center justify-center max-md:justify-start">
       {showModal && <Confirm setShowModal={setShowModal} msg={msg} />}
-      <div className="max-md:w-full md:w-[32rem] bg-white flex justify-center flex-col p-16 rounded-3xl max-md:rounded-none shadow-2xl/30">
+      <div className="max-md:w-full md:w-[32rem] bg-white flex justify-center flex-col px-8 py-12 md:p-16 rounded-3xl max-md:rounded-none shadow-2xl/30">
         <img
           src={require('../images/logo.png')}
           alt=""
@@ -225,29 +232,32 @@ export default function Login() {
             로그인
           </button>
         </form>
-        {/* <span className="py-10 font-medium text-center text-gray-400">
-          or use your sns account
-        </span> */}
-        <div className="flex flex-row justify-center pt-12">
-          <button className="mx-8">
-            <RiKakaoTalkFill className="w-16 h-16 p-3 overflow-hidden text-gray-400 duration-300 bg-white border rounded-full hover:p-2 hover:border-0 hover:text-black hover:bg-yellow-300 bg-border-0" />
-          </button>
-          <div className="mx-8">
-            <AiOutlineGoogle
-              role="button"
-              onClick={() => handleGoogle()}
-              className="w-16 h-16 p-3 overflow-hidden text-gray-400 duration-300 bg-white border rounded-full hover:p-2 hover:border-0 hover:text-white hover:bg-red-500 bg-border-0"
-            />
+        <div className="flex flex-col justify-center">
+          <div
+            role="button"
+            onClick={() => handleKakao()}
+            className="mt-4 group flex items-center h-16 p-3 bg-white border hover:border-0 rounded-full hover:bg-yellow-300"
+          >
+            <RiKakaoTalkFill className="flex-none w-12 h-12 p-2 group-hover:p-1 mr-2 overflow-hidden rounded-full text-black bg-yellow-300 bg-border-0" />
+            <div className="grow text-center mr-12 font-bold text-black/70">
+              카카오톡으로 로그인
+            </div>
           </div>
-          <button className="flex justify-center items-center text-[34px] hover:text-[40px] font-black pb-1 w-16 h-16 rounded-full bg-white border hover:border-0 overflow-hidden text-gray-400 hover:text-white hover:bg-green-500 mx-8 duration-300">
-            <div
-              role="button"
-              onClick={() => handleNaver()}
-              // className="pointer-events-none"
-            >
+          <div
+            role="button"
+            onClick={() => handleGoogle()}
+            className="mt-3 group flex items-center h-16 p-3 bg-white border hover:border-0 rounded-full hover:bg-red-500"
+          >
+            <AiOutlineGoogle className="flex-none w-12 h-12 p-2 group-hover:p-1 mr-2 overflow-hidden rounded-full text-white bg-red-500 bg-border-0" />
+            <div className="grow text-center mr-12 font-bold text-black/70 group-hover:text-black/80 group-hover:text-white">
+              구글로 로그인
+            </div>
+          </div>
+          {/* <button className="flex justify-center items-center text-[34px] hover:text-[40px] font-black pb-1 w-16 h-16 rounded-full bg-white border hover:border-0 overflow-hidden text-gray-400 hover:text-white hover:bg-green-500 mx-8 duration-300">
+            <div role="button" onClick={() => handleNaver()}>
               N
             </div>
-          </button>
+          </button> */}
         </div>
       </div>
       <div className="my-4 pt-1.5 pb-2 px-8 hover:bg-white/20 rounded-full">
