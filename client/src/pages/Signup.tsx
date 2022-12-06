@@ -298,7 +298,7 @@ const Signup = () => {
   return (
     <div className="flex flex-col items-center justify-center w-full h-screen pt-8 bg-slate-300 max-md:pt-0 max-md:justify-start">
       {showModal && <Confirm msg={msg} setShowModal={setShowModal} />}
-      <div className="max-md:w-full md:w-[32rem] bg-white flex justify-center flex-col p-16 rounded-3xl max-md:rounded-none shadow-2xl/30">
+      <div className="max-md:w-full md:w-[32rem] bg-white flex justify-center flex-col px-8 py-12 md:p-16 rounded-3xl max-md:rounded-none shadow-2xl/30">
         <img
           src={require('../images/logo.png')}
           alt=""
@@ -331,7 +331,7 @@ const Signup = () => {
               닉네임
             </label>
             {nickname.length > 5 && !isName && (
-              <span className="relative flex items-center text-sm text-red-600 pointer-events-none top-16">
+              <span className="relative flex items-center text-xs font-medium text-red-600 pointer-events-none top-16">
                 <BsFillPatchExclamationFill className="inline mr-1 text-base mt-0.5" />
                 {nameMessage}
               </span>
@@ -343,7 +343,7 @@ const Signup = () => {
           {/* 이메일 */}
           <div className="flex">
             <div
-              className={`w-3/4 relative bg-gray-50 rounded h-14 ring-inset ring-1 ring-slate-200 hover:ring-slate-400 hover:ring-2 ${
+              className={`grow relative bg-gray-50 rounded h-14 ring-inset ring-1 ring-slate-200 hover:ring-slate-400 hover:ring-2 ${
                 email.length > 5 && !isEmail
                   ? 'mb-10 ring-red-500 ring-2'
                   : 'mb-4'
@@ -367,7 +367,7 @@ const Signup = () => {
                 {emailCheckCompletion === false ? `이메일` : `이메일 인증완료`}
               </label>
               {email.length > 5 && !isEmail && (
-                <span className="relative flex items-center text-sm text-red-600 pointer-events-none top-16">
+                <span className="relative flex items-center text-xs font-medium text-red-600 pointer-events-none top-16">
                   <BsFillPatchExclamationFill className="inline mr-1 text-base mt-0.5" />
                   {emailMessage}
                 </span>
@@ -375,17 +375,15 @@ const Signup = () => {
             </div>
             {/* 인증번호 버튼 */}
             {/* 인증번호 버튼 */}
-            <div className="relative w-1/4 ml-2 rounded h-14">
-              <button
-                type="button"
-                id="but01"
-                className="w-full h-full pb-1 text-base font-medium text-white rounded-md bg-slate-600 hover:bg-blue-500"
-                onClick={emailButClick}
-                onKeyDown={(e) => handleEnter(e, 'emailCertification')}
-              >
-                메일 전송
-              </button>
-            </div>
+            <button
+              type="button"
+              id="but01"
+              className="ml-2 h-14 px-3 pb-1 text-base font-medium text-white rounded-md bg-slate-600 hover:bg-blue-500"
+              onClick={emailButClick}
+              onKeyDown={(e) => handleEnter(e, 'emailCertification')}
+            >
+              메일 전송
+            </button>
           </div>
           {/* 이메일 검증 */}
           {/* 이메일 검증 */}
@@ -395,10 +393,8 @@ const Signup = () => {
           {!emailBut ? null : (
             <div className="flex">
               <div
-                className={`relative w-3/4 bg-gray-50 rounded h-14 ring-inset ring-1 ring-slate-200 hover:ring-slate-400 hover:ring-2 ${
-                  email.length > 5 && !isEmail
-                    ? 'mb-10 ring-red-500 ring-2'
-                    : 'mb-4'
+                className={`relative w-3/4 bg-gray-50 rounded h-14 ring-inset ring-1 ring-slate-200 hover:ring-slate-400 hover:ring-2 mb-4 ${
+                  email.length > 5 && !isEmail && 'ring-red-500 ring-2'
                 }`}
               >
                 <input
@@ -419,8 +415,6 @@ const Signup = () => {
                   인증번호 입력
                 </label>
               </div>
-              {/* 인증번호 완료버튼 */}
-              {/* 인증번호 완료버튼 */}
               {/* 인증번호 완료버튼 */}
               <div className="relative w-1/4 ml-2 rounded h-14">
                 <button
@@ -474,7 +468,7 @@ const Signup = () => {
               )}
             </div>
             {password.length > 5 && !isPassword && (
-              <span className="relative flex items-center text-sm text-red-600 pointer-events-none top-16">
+              <span className="relative flex items-center text-xs font-medium text-red-600 pointer-events-none top-16">
                 <BsFillPatchExclamationFill className="inline mr-1 text-base mt-0.5" />
                 {passwordMessage}
               </span>
@@ -519,7 +513,7 @@ const Signup = () => {
               )}
             </div>
             {passwordCheck.length > 5 && !isPasswordCheck && (
-              <span className="relative flex items-center text-sm text-red-600 pointer-events-none top-16">
+              <span className="relative flex items-center text-xs font-medium text-red-600 pointer-events-none top-16">
                 <BsFillPatchExclamationFill className="inline mr-1 text-base mt-0.5" />
                 {passwordCheckMessage}
               </span>
