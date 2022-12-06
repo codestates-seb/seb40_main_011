@@ -141,7 +141,7 @@ const EditPassword = ({
                 value={prePassword}
                 onChange={handlePrePassword}
                 placeholder="현재 비빌번호를 입력해주세요"
-                className="flex w-full p-1.5 mt-4 text-sm sm:text-base"
+                className="flex w-full p-1.5 mt-4 text-sm sm:text-base dark:bg-DMSubColor"
               />
             ) : (
               <input
@@ -149,7 +149,7 @@ const EditPassword = ({
                 value={prePassword}
                 onChange={handlePrePassword}
                 placeholder="현재 비빌번호를 입력해주세요"
-                className="flex w-full p-1.5 mt-4 text-sm sm:text-base"
+                className="flex w-full p-1.5 mt-4 text-sm sm:text-base dark:bg-DMSubColor"
               />
             )}
 
@@ -175,7 +175,7 @@ const EditPassword = ({
                 value={password}
                 onChange={handlePassword}
                 placeholder="새 비빌번호를 입력해주세요 "
-                className="flex w-full p-1.5 mt-4 text-sm sm:text-base"
+                className="flex w-full p-1.5 mt-4 text-sm sm:text-base dark:bg-DMSubColor"
               />
             ) : (
               <input
@@ -183,7 +183,7 @@ const EditPassword = ({
                 value={password}
                 onChange={handlePassword}
                 placeholder="새 비빌번호를 입력해주세요 "
-                className="flex w-full p-1.5 mt-4 text-sm sm:text-base"
+                className="flex w-full p-1.5 mt-4 text-sm sm:text-base dark:bg-DMSubColor"
               />
             )}
 
@@ -210,7 +210,7 @@ const EditPassword = ({
                 value={passwordCheck}
                 onChange={handlePasswordCheck}
                 placeholder="새 비빌번호를 확인해주세요"
-                className="flex w-full p-1.5 mt-4 text-sm sm:text-base"
+                className="flex w-full p-1.5 mt-4 text-sm sm:text-base dark:bg-DMSubColor"
               />
             ) : (
               <input
@@ -218,7 +218,7 @@ const EditPassword = ({
                 value={passwordCheck}
                 onChange={handlePasswordCheck}
                 placeholder="새 비빌번호를 확인해주세요"
-                className="flex w-full p-1.5 mt-4 text-sm sm:text-base"
+                className="flex w-full p-1.5 mt-4 text-sm sm:text-base dark:bg-DMSubColor"
               />
             )}
 
@@ -241,13 +241,13 @@ const EditPassword = ({
         </div>
         <div className="flex justify-center pt-4 mb-10">
           <button
-            className="w-1/3 py-3 mx-5 border rounded-3xl"
+            className="w-1/3 py-3 mx-5 border rounded-3xl dark:bg-DMMainTextColor dark:border-DMSubTextColor dark:text-white"
             onClick={openEditPasswordModalHandler}
           >
             취소
           </button>
           <button
-            className="w-1/3 py-3 mx-5 border rounded-3xl bg-slate-300"
+            className="w-1/3 py-3 mx-5 text-white bg-blue-600 rounded-3xl hover:bg-blue-500"
             onClick={handleSubmitPassword}
           >
             확인

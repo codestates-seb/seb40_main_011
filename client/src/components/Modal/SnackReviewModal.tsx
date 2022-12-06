@@ -142,7 +142,7 @@ const SnackReviewModal = ({ selectedReview, openModalHandler }: any) => {
   return (
     <div className="fixed inset-0 z-30 flex items-center justify-center w-full h-screen overflow-hidden bg-black/30 backdrop-blur-sm justify-content">
       <div className="w-[40rem] z-40 rounded-xl overflow-hidden">
-        <div className="flex flex-col p-3 font-medium text-gray-600 bg-zinc-100 border-slate-200">
+        <div className="flex flex-col p-3 font-medium text-gray-600 bg-zinc-100 border-slate-200 dark:bg-DMSubColor dark:text-gray-300">
           <div className="flex justify-start items-top">
             <div className="pt-3 pl-2">
               <Avatar image={el.image} />
@@ -166,7 +166,7 @@ const SnackReviewModal = ({ selectedReview, openModalHandler }: any) => {
 
             {!editStus ? (
               <>
-                <div className="flex flex-row items-center justify-between px-3 py-1 mt-2 ml-auto bg-white border border-zinc-200 text-black/50 rounded-xl">
+                <div className="flex flex-row items-center justify-between px-3 py-1 mt-2 ml-auto bg-white border border-zinc-200 text-black/50 rounded-xl dark:border-DMSubTextColor dark:bg-DMMainColor dark:text-gray-300">
                   {ratingArr.map((ele, idx) => {
                     return (
                       <div
@@ -174,7 +174,7 @@ const SnackReviewModal = ({ selectedReview, openModalHandler }: any) => {
                         key={idx}
                       >
                         <p className="pr-0.5 text-sm">{ele.name}</p>
-                        <span className="text-sm font-medium md:ml-1 text-black/60">
+                        <span className="text-sm font-medium md:ml-1 text-black/60 dark:text-gray-300">
                           {el.score[ele.en]}
                         </span>
                         {/* <Rating
@@ -225,7 +225,7 @@ const SnackReviewModal = ({ selectedReview, openModalHandler }: any) => {
                 </div>
                 <div className="w-full mt-2 ml-1 border-l">
                   <TextareaAutosize
-                    className={`p-3 w-full bg-transparent outline-none text-gray-300 font-medium resize-none focus:text-gray-700 text-lg ${
+                    className={`p-3 w-full bg-transparent outline-none dark:text-gray-300 font-medium resize-none text-gray-700 text-lg ${
                       content.length !== 0 && `text-gray-700`
                     }`}
                     minRows={7}
@@ -242,14 +242,14 @@ const SnackReviewModal = ({ selectedReview, openModalHandler }: any) => {
                       <button
                         onClick={handelEditStus}
                         id={el.id.toString()}
-                        className="px-3 py-2 m-1 border rounded-lg"
+                        className="px-3 py-2 m-1 border rounded-lg dark:bg-DMMainTextColor dark:border-DMSubTextColor"
                       >
                         취소
                       </button>
                       <button
                         onClick={onSubmitClick}
                         id={el.id.toString()}
-                        className="px-3 py-2 m-1 border rounded-lg"
+                        className="px-3 py-2 m-1 text-white bg-blue-600 rounded-lg hover:bg-blue-500"
                       >
                         수정
                       </button>
@@ -274,14 +274,14 @@ const SnackReviewModal = ({ selectedReview, openModalHandler }: any) => {
                   <button
                     onClick={handelEditStus}
                     id={el.id.toString()}
-                    className="px-3 py-2 m-1 border rounded-lg"
+                    className="px-3 py-2 m-1 border rounded-lg dark:bg-DMMainTextColor dark:border-DMSubTextColor "
                   >
                     수정
                   </button>
                   <button
                     onClick={onDeleteClick}
                     id={el.id.toString()}
-                    className="px-3 py-2 m-1 border rounded-lg"
+                    className="px-3 py-2 m-1 text-white bg-blue-600 rounded-lg hover:bg-blue-500"
                   >
                     삭제
                   </button>
