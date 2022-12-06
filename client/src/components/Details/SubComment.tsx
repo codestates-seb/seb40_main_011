@@ -80,14 +80,14 @@ const SubComment = ({ child }: SubCommentProps) => {
               <input
                 autoFocus
                 defaultValue={comment}
-                className="w-full px-6 pt-3 pb-4 rounded-xl border-b border-gray-200"
+                className="dark:bg-DMSubColor w-full px-6 pt-3 pb-4 rounded-xl border-b border-gray-200"
                 onChange={onCommentEdit}
                 onKeyUp={(comment) =>
                   comment.key === 'Enter' ? onEnterPress() : null
                 }
               ></input>
             ) : (
-              <div className="ring-1 ring-gray-200 rounded-xl overflow-hidden bg-white px-6 pt-3 pb-4">
+              <div className="dark:bg-DMSubColor ring-1 ring-gray-200 rounded-xl overflow-hidden bg-white px-6 pt-3 pb-4">
                 {comment}
               </div>
             )}

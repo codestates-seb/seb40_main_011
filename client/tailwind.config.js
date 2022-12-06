@@ -12,6 +12,7 @@ module.exports = {
         DMMainColor: '#343447',
         DMSubColor: '#23232F',
         DMThrColor: '#43435B',
+        DMForColor: '#75758f',
         DMMainTextColor: '#545475',
         DMSubTextColor: '#3C3C55',
         DMThrTextColor: '#38384A',
