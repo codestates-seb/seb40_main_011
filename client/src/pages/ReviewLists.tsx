@@ -14,8 +14,10 @@ import { SnackReviews, ProductDetail } from '../types/mainPageTypes';
 import RvSelectBox from '../components/Review/RvSelectBox';
 import AvgRating from '../components/Review/AvgRating';
 import { useIsLogin } from '../store/login';
+import ScrollToTop from '../util/ScrollToTop';
 
 const ReviewLists = () => {
+  ScrollToTop();
   const navigate = useNavigate();
   const { isLogin } = useIsLogin();
   const [snackReviewData, setSnackReviewData] = useState<SnackReviews>();

@@ -71,11 +71,9 @@ const BestReviewList = () => {
   }, 5000);
 
   return (
-    <div className="pt-8 bg-zinc-100 dark:bg-DMMainColor dark:text-gray-300">
+    <div className="pt-8 bg-zinc-100 dark:bg-DMMainColor dark:text-gray-300 transition-all ease-in">
       <div className="w-full lg:w-[64rem] mx-auto">
-        {sortedReviews[selectedIdx] === undefined ? (
-          <div className="mx-auto">API 필요 </div>
-        ) : (
+        {sortedReviews[selectedIdx] === undefined ? null : (
           <div
             role="button"
             onClick={onContentClick}

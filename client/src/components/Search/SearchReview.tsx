@@ -29,10 +29,6 @@ const SearchReview = ({ keyword }: any) => {
     navigate(`/review/${e.currentTarget.id}`);
   };
 
-  const onLikeClick = () => {
-    return console.log('hi');
-  };
-
   const MoreBtn = () => {
     const onMoreClick = () => {
       setLimit(limit + 3);
@@ -56,21 +52,21 @@ const SearchReview = ({ keyword }: any) => {
         {searchData?.map((el, idx) => (
           <div
             key={idx}
-            className="flex w-full items-center m-4 rounded-3xl p-4 bg-white"
+            className="flex w-full items-center m-4 rounded-3xl p-4 bg-white dark:bg-DMSubColor"
           >
-            <div className="h-48 w-1/4 border-r-2">
+            <div className="h-48 w-1/4">
               <img
                 role="button"
                 onClick={onContentClick}
-                className="rounded-l-lg h-full w-full"
-                src="https://img2.quasarzone.com/editor/2022/11/11/75f9d1f0e49980190d3967e19b0458e5.jpg"
+                className="rounded-lg h-full w-full"
+                src={`https://codetech.nworld.dev${el.thumbnail}`}
                 id={el.id}
               ></img>
             </div>
             <div className="flex flex-col p-3 w-3/4">
               <div className="text-xl font-bold p-2">{el.title}</div>
               <div
-                className="pb-1 text-md ease-in-out duration-150 line-clamp-3 hover:bg-slate-300 hover:rounded-md p-1.5 text-slate-600 hover:text-cyan-900"
+                className="dark:text-DMMainTextColor pb-1 text-md ease-in-out duration-150 line-clamp-3 hover:bg-slate-300 hover:rounded-md p-1.5 text-slate-600 hover:text-cyan-900 dark:hover:bg-DMMainColor"
                 role="button"
                 onClick={onContentClick}
                 id={el.id}

@@ -30,7 +30,7 @@ const QuestionList = () => {
   };
 
   return (
-    <div className="bg-white dark:bg-DMSubColor dark:text-gray-300">
+    <div className="bg-white dark:bg-DMSubColor dark:text-gray-300 transition-all ease-in">
       <div className="mx-auto w-full lg:w-[64rem] py-8 flex md:flex-row flex-col">
         <div className="flex flex-col m-4 md:w-1/2">
           <div

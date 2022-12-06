@@ -10,6 +10,7 @@ import {
   RiKakaoTalkFill,
   RiLockPasswordLine,
   BsFillPatchExclamationFill,
+  SiNaver,
 } from '../icons';
 import { emailRegex, passwordRegex } from '../util/Regex';
 import Confirm from '../components/Modal/Confirm';
@@ -230,7 +231,7 @@ export default function Login() {
             onClick={() => handleKakao()}
             className="mt-4 group flex items-center h-16 p-3 bg-white border hover:border-0 rounded-full hover:bg-yellow-300"
           >
-            <RiKakaoTalkFill className="flex-none w-12 h-12 p-2 group-hover:p-1 mr-2 overflow-hidden rounded-full text-black bg-yellow-300 bg-border-0" />
+            <RiKakaoTalkFill className="transition-all duration-300 flex-none w-12 h-12 p-2 group-hover:p-1 mr-2 overflow-hidden rounded-full text-black bg-yellow-300 bg-border-0" />
             <div className="grow text-center mr-12 font-bold text-black/70">
               카카오톡으로 로그인
             </div>
@@ -240,9 +241,19 @@ export default function Login() {
             onClick={() => handleGoogle()}
             className="mt-3 group flex items-center h-16 p-3 bg-white border hover:border-0 rounded-full hover:bg-red-500"
           >
-            <AiOutlineGoogle className="flex-none w-12 h-12 p-2 group-hover:p-1 mr-2 overflow-hidden rounded-full text-white bg-red-500 bg-border-0" />
+            <AiOutlineGoogle className="transition-all duration-300 flex-none w-12 h-12 p-2 group-hover:p-1 mr-2 overflow-hidden rounded-full text-white bg-red-500 bg-border-0" />
             <div className="grow text-center mr-12 font-bold text-black/70 group-hover:text-black/80 group-hover:text-white">
               구글로 로그인
+            </div>
+          </div>
+          <div
+            role="button"
+            onClick={() => handleNaver()}
+            className="mt-3 group flex items-center h-16 p-3 bg-white border hover:border-0 rounded-full hover:bg-green-500"
+          >
+            <SiNaver className="transition-all duration-300 flex-none w-12 h-12 p-2 group-hover:p-1 mr-2 overflow-hidden rounded-full text-white bg-green-500 bg-border-0" />
+            <div className="grow text-center mr-12 font-bold text-black/70 group-hover:text-black/80 group-hover:text-white">
+              네이버로 로그인
             </div>
           </div>
           {/* <button className="flex justify-center items-center text-[34px] hover:text-[40px] font-black pb-1 w-16 h-16 rounded-full bg-white border hover:border-0 overflow-hidden text-gray-400 hover:text-white hover:bg-green-500 mx-8 duration-300">

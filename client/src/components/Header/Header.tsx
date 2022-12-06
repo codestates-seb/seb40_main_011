@@ -75,6 +75,7 @@ export default function Header() {
     setDarkButton(!darkButton);
     setDarkMode(!darkMode);
   };
+  Darkmode();
 
   return (
     <div className="sticky top-0 z-20 bg-white">
