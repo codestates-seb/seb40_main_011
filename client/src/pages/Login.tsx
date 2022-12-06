@@ -116,7 +116,14 @@ export default function Login() {
   const handleGoogle = () => {
     window.location.href =
       'https://codetech.nworld.dev/api/oauth2/authorize/google';
-    return;
+    const responseParam = window.location.href;
+    const accessToken = new URL(location.href).searchParams.get('access_token');
+    const refreshToken = new URL(location.href).searchParams.get(
+      'refresh_token'
+    );
+    const memberId = new URL(location.href).searchParams.get('member_id');
+
+    console.log(accessToken);
   };
 
   // showError 모달

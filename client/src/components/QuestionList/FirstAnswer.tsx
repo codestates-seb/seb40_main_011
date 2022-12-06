@@ -19,7 +19,6 @@ export default function FirstAnswer({
 }: PendingAnswerProps) {
   const { loginId } = useIsLogin();
   const answerId = id;
-
   const handleAdopt = async () => {
     const Result = await postAdopt({ answerId, questionId });
     switch (Result.status) {
@@ -55,19 +54,21 @@ export default function FirstAnswer({
         <div className="flex w-full">
           <div
             className={`grow px-4 pt-2 pb-3 rounded bg-white text-gray-600 font-medium ${
-              Number(loginId) !== questionWriterId && 'mr-2'
+              Number(loginId) !== writerId && 'mr-2'
             }`}
           >
             {content}
           </div>
-          <div className=" flex-none w-16 mx-2 flex justify-center items-center">
-            <button
-              onClick={handleAdopt}
-              className="group w-full h-full bg-green-200/50 rounded-lg text-4xl hover:ring hover:ring-green-300 duration-300"
-            >
-              <AiFillCheckCircle className="p-1 text-green-600 mx-auto" />
-            </button>
-          </div>
+          {Number(loginId) === writerId && (
+            <div className=" flex-none w-16 mx-2 flex justify-center items-center">
+              <button
+                onClick={handleAdopt}
+                className="group w-full h-full bg-green-200/50 rounded-lg text-4xl hover:ring hover:ring-green-300 duration-300"
+              >
+                <AiFillCheckCircle className="p-1 text-green-600 mx-auto" />
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
