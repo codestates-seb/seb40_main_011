@@ -70,7 +70,6 @@ export default function Header() {
   const { darkMode, setDarkMode } = useDarkMode();
   const [darkButton, setDarkButton] = useState(false);
   const handleDarkkMode = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
     Darkmode();
     setDarkButton(!darkButton);
     setDarkMode(!darkMode);
