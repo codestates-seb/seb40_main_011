@@ -54,12 +54,11 @@ public class User extends BaseTime {
 		this.point += diff;
 	}
 
-public User(String nickname, String email, String password, String provider, String image) {
+public User(String nickname, String email, String password, String provider) {
         this.email = email;
         this.nickname = nickname;
         this.password = password;
 		this.provider = provider;
-		this.image = image;
     }
 
     @ElementCollection(fetch = FetchType.EAGER)

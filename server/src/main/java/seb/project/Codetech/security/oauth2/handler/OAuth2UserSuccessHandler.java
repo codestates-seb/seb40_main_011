@@ -54,10 +54,9 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 			String nickname = String.valueOf(oAuth2User.getAttributes().get("name"));
 			String provider = "google";
 			String password = String.valueOf(oAuth2User.getAttributes().get("providerId"));
-			String image = String.valueOf(oAuth2User.getAttributes().get("picture"));
 			List<String> authorities = authorityUtils.createRoles(username);
 			if (userRepository.findByEmail(username).isEmpty()) {
-				saveUser(nickname, username, password, provider, image);
+				saveUser(nickname, username, password, provider);
 			}
 			redirect(request, response, username, provider, authorities);
 		}
@@ -68,24 +67,23 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 			String nickname = String.valueOf(oAuth2User.getAttributes().get("name"));
 			String provider = "naver";
 			String password = String.valueOf(oAuth2User.getAttributes().get("providerId"));
-			String image = String.valueOf(oAuth2User.getAttributes().get("profile_image"));
 			List<String> authorities = authorityUtils.createRoles(username);
 			if (userRepository.findByEmail(username).isEmpty()) {
-				saveUser(nickname, username, password, provider, image);
+				saveUser(nickname, username, password, provider);
 			}
 			redirect(request, response, username, provider, authorities);
 		}
 
 		if(registrationId.equals("kakao")) {
 			var oAuth2User = (OAuth2User) authentication.getPrincipal();
-			String username = String.valueOf(oAuth2User.getAttributes().get("profile_nickname"));
-			String nickname = String.valueOf(oAuth2User.getAttributes().get("profile_nickname"));
+			HashMap userInfo = oAuth2User.getAttribute("properties");
+			String username = userInfo.get("nickname").toString()+userInfo.get("profile_image").toString();
+			String nickname = userInfo.get("nickname").toString();
 			String provider = "kakao";
-			String password = String.valueOf(oAuth2User.getAttributes().get("profile_nickname"));
-			String image = String.valueOf(oAuth2User.getAttributes().get("profile_image"));
+			String password = userInfo.get("profile_image").toString();
 			List<String> authorities = authorityUtils.createRoles(username);
 			if (userRepository.findByEmail(username).isEmpty()) {
-				saveUser(nickname, username, password, provider, image);
+				saveUser(nickname, username, password, provider);
 			}
 			redirect(request, response, username, provider, authorities);
 		}} catch (Exception e){throw e;}
@@ -140,8 +138,8 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 		return jwtTokenizer.generateAccessToken(claims, email, expiration, base64EncodedSecretKey);
 	}
 
-	private void saveUser(String nickname, String email, String password, String provider, String image) {
-		User user = new User(nickname, email, password, provider, image);
+	private void saveUser(String nickname, String email, String password, String provider) {
+		User user = new User(nickname, email, password, provider);
 		userService.registerUser(user);
 		user.setProvider(provider);
 		userRepository.save(user);
