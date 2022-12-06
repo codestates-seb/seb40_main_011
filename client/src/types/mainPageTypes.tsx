@@ -227,6 +227,17 @@ export interface AnswerProps {
   adoptedId: number;
 }
 
+export interface PatchAnswerProps {
+  content: string;
+  createdAt: number;
+  id: number;
+  image: string;
+  nickname: string;
+  writerId: number;
+  adoptedId: number;
+  questionId?: number;
+}
+
 export interface AnswerCardsProps {
   id: string;
   createdAt: number;
@@ -252,6 +263,12 @@ export interface setShowModalProps {
   setShowModal(state: boolean): void;
   msg: string;
   productId?: number;
+}
+
+export interface PatchAdoptProps {
+  setShowModal(state: boolean): void;
+  msg: string;
+  id?: number;
 }
 
 export interface EditQuestionProps {

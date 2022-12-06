@@ -1,7 +1,8 @@
-import { setShowModalProps } from '../../types/mainPageTypes';
+import { PatchAdoptProps } from '../../types/mainPageTypes';
 import { useParams, useNavigate } from 'react-router-dom';
 import { loginRefresh } from '../../util/loginRefresh';
-const UndoAdopt = ({ setShowModal, msg }: setShowModalProps) => {
+import { patchAdoption } from '../../util/apiCollection';
+const UndoAdopt = ({ setShowModal, msg, id }: PatchAdoptProps) => {
   const params = useParams();
   const navigate = useNavigate();
 
@@ -10,9 +11,23 @@ const UndoAdopt = ({ setShowModal, msg }: setShowModalProps) => {
   };
 
   const handleClick = async (e: React.MouseEvent) => {
-    console.log('hi');
+    const response = await patchAdoption(id);
+    switch (response.status) {
+      default:
+        setShowModal(false);
+        location.reload();
+        break;
+      case 500:
+      case 401:
+        alert('에러');
+        console.log(response);
+        break;
+      case 412:
+        loginRefresh();
+        handleClick(e);
+    }
+    setShowModal(false);
   };
-
   return (
     <div
       onClick={handleCancel}

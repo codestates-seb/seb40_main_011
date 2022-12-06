@@ -95,7 +95,7 @@ export default function BodyTop({
           {format(createdAt)}
         </span>
       </span>
-      {loginId == writerId && adoptedId === undefined && (
+      {Number(loginId) === writerId && adoptedId === undefined && (
         <div className="flex items-center">
           <button
             onClick={() => {

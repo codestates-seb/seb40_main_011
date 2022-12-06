@@ -34,10 +34,11 @@ export default function Question({
               createdAt={adoptedAnswer.createdAt}
               nickname={adoptedAnswer.nickname}
               content={adoptedAnswer.content}
-              writerId={adoptedAnswer.writerId}
+              writerId={writerId}
               id={Number(adoptedAnswer.id)}
               adoptedId={adoptedId}
               image={adoptedAnswer.image}
+              questionId={adoptedAnswer.questionId}
             />
           )}
         </>

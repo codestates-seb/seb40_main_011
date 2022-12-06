@@ -1,9 +1,10 @@
 import BodyTop from './BodyTop';
-import { AnswerProps } from '../../types/mainPageTypes';
+import { PatchAnswerProps } from '../../types/mainPageTypes';
 import Avatar from '../Avatar/Avatar';
 import { RiChatDeleteFill } from 'react-icons/ri';
 import { useState } from 'react';
 import UndoAdopt from '../Modal/UndoAdopt';
+import { useIsLogin } from '../../store/login';
 
 export default function Answer({
   createdAt,
@@ -13,16 +14,24 @@ export default function Answer({
   id,
   adoptedId,
   image,
-}: AnswerProps) {
+  questionId,
+}: PatchAnswerProps) {
   const [showModal, setShowModal] = useState(false);
-
+  const { loginId } = useIsLogin();
   const hanldeUndo = () => {
     setShowModal(!showModal);
   };
+
+  console.log(loginId);
+
   return (
     <>
       {showModal && (
-        <UndoAdopt setShowModal={setShowModal} msg="채택을 취소하시겠습니까?" />
+        <UndoAdopt
+          setShowModal={setShowModal}
+          msg="채택을 취소하시겠습니까?"
+          id={questionId}
+        />
       )}
       <div className="w-full flex mt-3 mb-1">
         <div className="flex-none ml-10 mt-3">
@@ -42,11 +51,15 @@ export default function Answer({
             >
               {content}
             </div>
-            {id === adoptedId && (
+            <div
+              className={`tracking-tight absolute ${
+                Number(loginId) !== writerId ? 'right-6' : 'right-16'
+              } text-sm font-medium bg-green-500 text-white px-3 rounded-full pt-1 pb-1.5 -top-4`}
+            >
+              채택된 답변
+            </div>
+            {id === adoptedId && Number(loginId) === writerId && (
               <>
-                <div className="tracking-tight absolute text-sm font-medium bg-green-500 text-white px-3 rounded-full pt-1 pb-1.5 right-16 -top-4">
-                  채택된 답변
-                </div>
                 <div className="flex-none w-16 mx-2 flex justify-center items-start">
                   <button
                     onClick={hanldeUndo}
