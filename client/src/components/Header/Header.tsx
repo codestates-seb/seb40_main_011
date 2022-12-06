@@ -52,7 +52,11 @@ export default function Header() {
   };
 
   const MobileSearch = () => {
-    return <BiSearch className="text-3xl mr-2" />;
+    return (
+      <button className="sm:hidden" onClick={handleSearchBar}>
+        <BiSearch className="text-3xl mr-2" />
+      </button>
+    );
   };
 
   const [searchBar, setSearchBar] = useState(false);
@@ -75,23 +79,20 @@ export default function Header() {
         </button>
         <SearchBar searchBar={searchBar} setSearchBar={setSearchBar} />
         <div className="flex-none flex flex-row h-full">
-          <button className="h-full flex flex-row items-center md:hidden">
-            {searchBar ? null : (
-              <button className="sm:hidden" onClick={handleSearchBar}>
-                <MobileSearch />
-              </button>
-            )}
+          <div className="h-full flex flex-row items-center md:hidden">
+            {searchBar ? null : <MobileSearch />}
             <span className="material-icons text-2xl w-14 h-14 rounded-full hover:bg-slate-100 flex items-center justify-center">
-              <GiHamburgerMenu onClick={onBurgerClicked} />
+              <GiHamburgerMenu role="button" onClick={onBurgerClicked} />
             </span>
-          </button>
+          </div>
           {menu ? (
-            <div
-              onClick={onBurgerClicked}
-              className="fixed inset-0 h-screen w-full flex justify-content justify-center items-center"
-            >
+            <>
+              <div
+                onClick={onBurgerClicked}
+                className="fixed inset-0 h-screen w-full flex justify-content justify-center items-center"
+              ></div>
               <BurgurDropDown />
-            </div>
+            </>
           ) : null}
           <div className="max-md:hidden flex">
             {!isLogin ? (

@@ -21,10 +21,6 @@ export default function SocialLogin() {
     'id'
   );
 
-  console.log('token', token);
-  console.log('refresh', refreshToken);
-  console.log('id', id);
-
   useEffect(() => {
     const tokenStr: string = 'Bearer ' + token;
     switch (token === null) {

@@ -20,7 +20,30 @@ export default function Question({
     setShowAnswer(true);
   };
 
-  const adoptedAnswer = answerCards.filter((el: any) => el.id === adoptedId)[0];
+  const Adopted = () => {
+    if (answerCards?.length > 0) {
+      const adoptedAnswer = answerCards.filter(
+        (el: any) => el.id === adoptedId
+      )[0];
+      return (
+        <>
+          {answerCards !== null && (
+            <Answer
+              key={adoptedAnswer.id}
+              createdAt={adoptedAnswer.createdAt}
+              nickname={adoptedAnswer.nickname}
+              content={adoptedAnswer.content}
+              writerId={adoptedAnswer.writerId}
+              id={Number(adoptedAnswer.id)}
+              adoptedId={adoptedId}
+              image={adoptedAnswer.image}
+            />
+          )}
+        </>
+      );
+    }
+    return null;
+  };
 
   return (
     <div className="w-full">
@@ -43,18 +66,7 @@ export default function Question({
           </div>
         </div>
       </div>
-      {answerCards !== null && (
-        <Answer
-          key={adoptedAnswer.id}
-          createdAt={adoptedAnswer.createdAt}
-          nickname={adoptedAnswer.nickname}
-          content={adoptedAnswer.content}
-          writerId={adoptedAnswer.writerId}
-          id={Number(adoptedAnswer.id)}
-          adoptedId={adoptedId}
-          image={adoptedAnswer.image}
-        />
-      )}
+      <Adopted />
       {answerCards !== null && !showAnswer && (
         <button
           onClick={handleShowAnswer}
