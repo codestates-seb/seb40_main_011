@@ -27,13 +27,11 @@ const Main = () => {
   }, []);
 
   return (
-    <>
-      <div className="bg-zinc-100">
-        <BestReviewList />
-        <ProductList />
-        <QuestionList />
-      </div>
-    </>
+    <div className="bg-zinc-100">
+      <BestReviewList />
+      <ProductList />
+      <QuestionList />
+    </div>
   );
 };
 

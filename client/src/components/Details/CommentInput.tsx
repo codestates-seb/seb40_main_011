@@ -54,8 +54,9 @@ export const CommentInput = () => {
 
   return (
     <>
+      <span className="md:hidden w-full border-b border-zinc-200 mb-3 mt-5" />
       <div className="w-full flex justify-center m-4">
-        <div className="mb-4 w-full">
+        <div className="mb-2 md:mb-4 w-full">
           <HandleValidation />
           <TextareaAutosize
             minRows={3}

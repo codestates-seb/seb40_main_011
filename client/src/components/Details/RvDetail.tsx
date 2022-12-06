@@ -120,7 +120,7 @@ const RvDetail = () => {
     1;
 
     return (
-      <div className="flex items-center justify-between w-full px-6 md:px-12">
+      <div className="flex items-center justify-between w-full px-5 md:px-12">
         <div className="flex items-center bg-white rounded-3xl">
           <img
             className="w-12 h-12 rounded-2xl"
@@ -192,7 +192,7 @@ const RvDetail = () => {
           </div>
           <div className="bg-white rounded-t-3xl py-4 md:py-8">
             <ReviewInfo />
-            <div className="flex justify-center px-6 md:px-12 pt-6 md:pt-12 pb-6 text-5xl leading-tight tracking-tight font-bold max-md:text-[2rem] break-keep text-center">
+            <div className="flex justify-center px-5 md:px-12 pt-6 md:pt-12 pb-6 text-5xl leading-tight tracking-tight font-bold max-md:text-[2rem] break-keep text-center">
               {review?.title}
             </div>
           </div>
@@ -205,7 +205,7 @@ const RvDetail = () => {
               </div>
             )}
           </div>
-          <section className="bg-white rounded-b-3xl flex flex-col items-center px-6 md:px-12">
+          <section className="bg-white rounded-b-3xl flex flex-col items-center px-5 md:px-12">
             <div
               id="viewer"
               className="w-full md:px-12 my-6 md:my-12 whitespace-pre-wrap flex flex-col justify-center"
@@ -219,8 +219,8 @@ const RvDetail = () => {
           </section>
         </div>
         <div className="flex flex-col justify-center mx-auto w-full lg:w-[64rem] px-4 mt-4">
-          <div className="flex flex-col items-center bg-white rounded-3xl px-6 md:px-12">
-            <div className="flex justify-start w-full text-2xl font-bold mb-4 mt-8">
+          <div className="flex flex-col items-center bg-white rounded-3xl px-5 md:px-12">
+            <div className="flex justify-start w-full text-2xl font-bold mb-4 mt-6 md:mt-8">
               Comment
             </div>
             <CommentView />
