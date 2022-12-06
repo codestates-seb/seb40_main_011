@@ -12,7 +12,6 @@ interface ModalProps {
 
 const AddProduct = ({ isModal, setIsModal }: ModalProps) => {
   const { clickName } = useCategories();
-  // const navigate = useNavigate();
 
   //clickName 대문자로 변경
   const encoded = encodeURI(clickName);
@@ -67,7 +66,7 @@ const AddProduct = ({ isModal, setIsModal }: ModalProps) => {
     detail: detail,
   };
 
-  const handleSubmitImg = async (e: any) => {
+  const handleSubmitImg = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append('file', uploadImg);
@@ -95,8 +94,8 @@ const AddProduct = ({ isModal, setIsModal }: ModalProps) => {
   return (
     <>
       <div className="fixed inset-0 z-40 flex items-center justify-center w-full h-screen bg-black/30 backdrop-blur-sm justify-content">
-        <div className="modal-window h-[41rem] z-40 overflow-hidden max-sm:w-full w-[41rem]">
-          <h1 className="pt-12 pb-8 text-3xl text-center max-sm:text-2xl max-sm:px-5 max-sm:pt-12">
+        <div className="modal-window h-[41rem] z-40 overflow-hidden max-sm:w-full w-[41rem] dark:bg-DMSubColor">
+          <h1 className="pt-12 pb-6 text-3xl text-center max-sm:text-2xl max-sm:px-5 max-sm:pt-12 dark:text-white">
             제품을 추가해주세요
           </h1>
           <div className="flex justify-center">
@@ -106,13 +105,13 @@ const AddProduct = ({ isModal, setIsModal }: ModalProps) => {
               encType="multipart/form-data"
             >
               <div className="pb-5">
-                <p className="modal-font">분류</p>
+                <p className="pb-1 modal-font dark:text-gray-400">분류</p>
                 <CategorySelector />
               </div>
               <div className="pb-5">
-                <p className="modal-font">제품 이름</p>
+                <p className="pb-1 modal-font dark:text-gray-400">제품 이름</p>
                 <input
-                  className="justify-between alsolute t-0 text-sm bg-white h-10 rounded border border-slate-200 flex items-center px-4 pb-0.5 font-medium text-gray-500 w-full"
+                  className="justify-between alsolute t-0 text-sm bg-white h-10 rounded border border-slate-200 flex items-center px-4 pb-0.5 font-medium text-gray-500 w-full dark:bg-DMMainTextColor dark:border-DMSubTextColor dark:text-white"
                   type="text"
                   value={name}
                   onChange={handelChangeName}
@@ -120,15 +119,9 @@ const AddProduct = ({ isModal, setIsModal }: ModalProps) => {
                 />
               </div>
               <div className="pb-5">
-                <div className="flex">
-                  <p className="modal-font">디테일</p>
-                  <p className="ml-1 text-sm text-red-600 font-nomal mt-[0.15rem]">
-                    {' '}
-                    &#33;필수
-                  </p>
-                </div>
+                <p className="pb-1 modal-font dark:text-gray-400">디테일</p>
                 <textarea
-                  className="resize-none justify-between alsolute t-0 text-sm bg-white rounded border border-slate-200 flex items-center px-4 pb-0.5 font-medium text-gray-500 w-full"
+                  className="resize-none justify-between alsolute t-0 text-sm bg-white rounded border border-slate-200 flex items-center px-4 pb-0.5 font-medium text-gray-500 w-full dark:bg-DMMainTextColor dark:border-DMSubTextColor dark:text-white"
                   value={detail}
                   rows={3}
                   cols={50}
@@ -137,9 +130,11 @@ const AddProduct = ({ isModal, setIsModal }: ModalProps) => {
                 />
               </div>
               <div className="pb-5">
-                <p className="modal-font">제품 이미지</p>
+                <p className="pb-1 modal-font dark:text-gray-400">
+                  제품 이미지
+                </p>
                 {img === false ? (
-                  <div className="flex w-[26rem] rounded-lg bg-slate-200 h-28 max-sm:w-full">
+                  <div className="flex w-[26rem] rounded-lg bg-slate-200 h-28 max-sm:w-full dark:bg-DMMainTextColor dark:border-DMSubTextColor dark:text-white">
                     <div className="m-auto">
                       <input
                         type="file"
@@ -177,7 +172,7 @@ const AddProduct = ({ isModal, setIsModal }: ModalProps) => {
               </div>
               <div className="flex justify-center pt-4">
                 <button
-                  className="w-1/3 py-3 mx-5 border rounded-3xl"
+                  className="w-1/3 py-3 mx-5 border rounded-3xl dark:bg-DMMainTextColor dark:border-DMSubTextColor dark:text-white"
                   onClick={openModalHandler}
                 >
                   취소
