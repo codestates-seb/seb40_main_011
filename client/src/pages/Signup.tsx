@@ -386,7 +386,7 @@ const Signup = () => {
             <button
               type="button"
               id="but01"
-              className="px-3 pb-1 ml-2 text-base font-medium text-white rounded-md h-14 bg-slate-600 hover:bg-blue-500"
+              className="px-3 pb-1 ml-2 text-base font-medium text-white rounded-md h-14 bg-slate-600 hover:bg-slate-700"
               onClick={emailButClick}
               onKeyDown={(e) => handleEnter(e, 'emailCertification')}
             >
@@ -537,7 +537,7 @@ const Signup = () => {
           </button>
         </form>
       </div>
-      <div className="my-4 pt-1.5 pb-2 px-8 hover:bg-white/20 rounded-full dark:hover:bg-DMSubColor">
+      <div className="my-4 pt-1.5 pb-2 px-8 hover:bg-white/70 bg-white/40 rounded-full dark:hover:bg-DMSubColor dark:bg-DMSubColor/70">
         <label className="font-medium text-gray-500" htmlFor="goLogin">
           계정이 이미 있으시다구요?
         </label>

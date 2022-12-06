@@ -88,7 +88,7 @@ const ProductList = () => {
                   role="button"
                   onClick={onProductClick}
                   id={el.id.toString()}
-                  className="relative group flex flex-col sm:flex-[1_1_40%] lg:flex-[1_1_30%] flex-[1_1_50%] my-5 mx-3 hover:bg-white rounded-3xl dark:hover:text-gray-700"
+                  className="relative group flex flex-col sm:flex-[1_1_40%] lg:flex-[1_1_30%] flex-[1_1_50%] my-5 mx-3 hover:bg-white dark:hover:bg-DMSubColor rounded-3xl dark:hover:text-white"
                 >
                   <div className="overflow-hidden aspect-[16/9] bg-slate-200 rounded-3xl group-hover:rounded-b-none">
                     <img

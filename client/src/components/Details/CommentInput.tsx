@@ -54,14 +54,14 @@ export const CommentInput = () => {
 
   return (
     <>
-      <span className="md:hidden w-full border-b border-zinc-200 mb-3 mt-5" />
+      <span className="md:hidden w-full border-b border-zinc-200 dark:border-white/30 mb-3 mt-5" />
       <div className="w-full flex justify-center m-4">
         <div className="mb-2 md:mb-4 w-full ">
           <HandleValidation />
           <TextareaAutosize
             minRows={3}
             maxRows={6}
-            className={`dark:bg-DMSubColor dark:text-white p-4 focus:ring-sky-500 ring-1 ring-gray-200 rounded-xl w-full outline-none text-gray-300 font-medium resize-none focus:text-gray-700 text-lg ${
+            className={`dark:bg-DMSubColor dark:text-white p-4 focus:ring-sky-500 ring-1 ring-gray-200 dark:ring-white/30 rounded-xl w-full outline-none text-gray-300 font-medium resize-none focus:text-gray-700 text-lg ${
               comment.length !== 0 && `text-gray-700`
             }`}
             placeholder={
@@ -75,8 +75,8 @@ export const CommentInput = () => {
               <span className="dark:text-white">
                 현재 글자수 {comment.length}
               </span>
-              <span className="dark:text-white mx-2 hidden md:flex">/</span>
-              <span className="dark:text-white">최대 글자수 100자</span>
+              <span className="dark:text-white/40 mx-2 hidden md:flex">/</span>
+              <span className="dark:text-white/70">최대 글자수 100자</span>
             </div>
             <button
               onClick={onCommentClick}
