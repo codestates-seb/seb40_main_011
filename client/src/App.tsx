@@ -8,6 +8,7 @@ import {
   ReviewLists,
   QuestionLists,
   Login,
+  SocialLogin,
 } from './pages';
 import RvDetail from './components/Details/RvDetail';
 import SearchResult from './components/Search/SearchResult';
@@ -33,6 +34,7 @@ function App() {
           <Route path="/review/edit/:id" element={<EditReviewDetail />} />
           <Route path="*" element={<NotFound />} />
           <Route path="/landingpage" element={<LandingPage />} />
+          <Route path="/social" element={<SocialLogin />} />
         </Route>
         <Route path="/" element={<QuestionListLayOut />}>
           <Route path="/question-lists" element={<QuestionLists />} />
