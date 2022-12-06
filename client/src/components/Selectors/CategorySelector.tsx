@@ -1,6 +1,5 @@
 //새로 작성한 대분류 셀렉터
 //리뷰 작성 페이지에서 사용
-//안지은 작성
 
 import '../common.css';
 import React from 'react';
@@ -52,9 +51,9 @@ const CategorySelectors = () => {
       <button
         id="selectname"
         onClick={handleSelectClick}
-        className={`justify-between alsolute t-0 text-sm bg-white h-10 rounded border border-slate-200 flex items-center px-4 pb-0.5 font-medium text-gray-500 ${
+        className={`justify-between alsolute t-0 text-sm bg-white h-10 rounded border border-slate-200 flex items-center px-4 pb-0.5 font-medium text-gray-500 dark:bg-DMMainTextColor dark:border-DMSubTextColor dark:text-white ${
           mainCategorySpread &&
-          'rounded-bl-none rounded-br-none bg-slate-200 text-gray-400 border-b-0'
+          'rounded-bl-none rounded-br-none bg-slate-200 text-gray-400 border-b-0 dark:bg-DMThrColor'
         }`}
       >
         {clickName}
@@ -63,47 +62,47 @@ const CategorySelectors = () => {
       {mainCategorySpread && (
         <div
           onClick={handleSelectClick}
-          className="absolute z-30 w-full overflow-hidden bg-white border top-10 rounded-bl-xl rounded-br-xl drop-shadow-md"
+          className="absolute z-30 w-full overflow-hidden bg-white border top-10 rounded-bl-xl rounded-br-xl drop-shadow-md dark:bg-DMMainTextColor dark:border-DMSubTextColor dark:text-DMThrTextColor"
         >
           <button
             onClick={handleButClick}
             id="DESKTOP"
-            className="flex items-center w-full px-4 pt-2 pb-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900"
+            className="flex items-center w-full px-4 pt-2 pb-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-DMThrColor dark:text-white"
           >
             Desktop
           </button>
           <button
             onClick={handleButClick}
             id="LAPTOP"
-            className="flex items-center w-full px-4 pt-2 pb-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900"
+            className="flex items-center w-full px-4 pt-2 pb-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-DMThrColor dark:text-white"
           >
             Laptop
           </button>
           <button
             onClick={handleButClick}
             id="MONITOR"
-            className="flex items-center w-full px-4 pt-2 pb-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900"
+            className="flex items-center w-full px-4 pt-2 pb-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-DMThrColor dark:text-white"
           >
             Monitor
           </button>
           <button
             onClick={handleButClick}
             id="KEYBOARD"
-            className="flex items-center w-full px-4 pt-2 pb-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900"
+            className="flex items-center w-full px-4 pt-2 pb-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-DMThrColor dark:text-white"
           >
             Keyboard
           </button>
           <button
             onClick={handleButClick}
             id="MOUSE"
-            className="flex items-center w-full px-4 pt-2 pb-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900"
+            className="flex items-center w-full px-4 pt-2 pb-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-DMThrColor dark:text-white"
           >
             Mouse
           </button>
           <button
             onClick={handleButClick}
             id="ETC"
-            className="flex items-center w-full px-4 pt-2 pb-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900"
+            className="flex items-center w-full px-4 pt-2 pb-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-DMThrColor dark:text-white"
           >
             Etc
           </button>

@@ -296,18 +296,22 @@ const Signup = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-full h-screen pt-8 bg-slate-300 max-md:pt-0 max-md:justify-start">
+    <div className="flex flex-col items-center justify-center w-full h-screen pt-8 bg-slate-300 max-md:pt-0 max-md:justify-start dark:bg-DMMainColor">
       {showModal && <Confirm msg={msg} setShowModal={setShowModal} />}
-      <div className="max-md:w-full md:w-[32rem] bg-white flex justify-center flex-col px-8 py-12 md:p-16 rounded-3xl max-md:rounded-none shadow-2xl/30">
+      <div className="max-md:w-full md:w-[32rem] bg-white flex justify-center flex-col px-8 py-12 md:p-16 rounded-3xl max-md:rounded-none shadow-2xl/30 dark:bg-DMSubColor">
         <img
-          src={require('../images/logo.png')}
+          src={
+            localStorage.getItem('color-theme') === 'light'
+              ? require('../images/logo.png')
+              : require('../images/darkmode_logo.png')
+          }
           alt=""
           className="w-56 pb-10 m-auto cursor-pointer"
           onClick={handleHomeClick}
         />
         <form name="signup" className="flex flex-col justify-center">
           <div
-            className={`relative bg-gray-50 rounded h-14 ring-inset ring-1 ring-slate-200 hover:ring-slate-400 hover:ring-2 ${
+            className={`relative bg-gray-50 rounded h-14 ring-inset ring-1 ring-slate-200 hover:ring-slate-400 hover:ring-2 dark:bg-DMMainTextColor dark:ring-DMMainColor ${
               nickname.length > 5 && !isName
                 ? 'mb-10 ring-red-500 ring-2'
                 : 'mb-4'
@@ -316,14 +320,14 @@ const Signup = () => {
             <input
               type="text"
               id="nickname"
-              className="absolute top-0 w-full h-full px-6 pt-3 text-base font-medium bg-transparent outline-none peer/email input-ani"
+              className="absolute top-0 w-full h-full px-6 pt-3 text-base font-medium bg-transparent outline-none peer/email input-ani dark:text-white"
               value={nickname}
               name="nicmname"
               onChange={onChangeName}
               onKeyPress={(e) => handleEnter(e, 'email')}
             ></input>
             <label
-              className={`absolute font-medium top-4 left-6 text-gray-500 duration-200 pointer-events-none peer-focus/email:-translate-y-2.5 peer-focus/email:text-xs ${
+              className={`absolute font-medium top-4 left-6 text-gray-500 duration-200 pointer-events-none peer-focus/email:-translate-y-2.5 peer-focus/email:text-xs dark:text-white ${
                 nickname.length !== 0 &&
                 'peer-valid/email:-translate-y-2.5 peer-valid/email:text-xs'
               }`}
@@ -343,7 +347,7 @@ const Signup = () => {
           {/* 이메일 */}
           <div className="flex">
             <div
-              className={`grow relative bg-gray-50 rounded h-14 ring-inset ring-1 ring-slate-200 hover:ring-slate-400 hover:ring-2 ${
+              className={`grow relative bg-gray-50 rounded h-14 ring-inset ring-1 ring-slate-200 hover:ring-slate-400 hover:ring-2 dark:bg-DMMainTextColor dark:ring-DMMainColor ${
                 email.length > 5 && !isEmail
                   ? 'mb-10 ring-red-500 ring-2'
                   : 'mb-4'
@@ -352,14 +356,14 @@ const Signup = () => {
               <input
                 type="text"
                 id="email"
-                className="absolute top-0 w-full h-full px-6 pt-3 text-base font-medium bg-transparent outline-none peer/email input-ani"
+                className="absolute top-0 w-full h-full px-6 pt-3 text-base font-medium bg-transparent outline-none peer/email input-ani dark:text-white"
                 value={email}
                 name="email"
                 onChange={onChangeEmail}
                 onKeyDown={(e) => handleEnter(e, 'but01')}
               ></input>
               <label
-                className={`absolute font-medium top-4 left-6 text-gray-500 duration-200 pointer-events-none peer-focus/email:-translate-y-2.5 peer-focus/email:text-xs ${
+                className={`absolute font-medium top-4 left-6 text-gray-500 duration-200 pointer-events-none peer-focus/email:-translate-y-2.5 peer-focus/email:text-xs dark:text-white ${
                   email.length !== 0 &&
                   'peer-valid/email:-translate-y-2.5 peer-valid/email:text-xs'
                 }`}
@@ -378,7 +382,7 @@ const Signup = () => {
             <button
               type="button"
               id="but01"
-              className="ml-2 h-14 px-3 pb-1 text-base font-medium text-white rounded-md bg-slate-600 hover:bg-blue-500"
+              className="px-3 pb-1 ml-2 text-base font-medium text-white rounded-md h-14 bg-slate-600 hover:bg-blue-500"
               onClick={emailButClick}
               onKeyDown={(e) => handleEnter(e, 'emailCertification')}
             >
@@ -389,25 +393,25 @@ const Signup = () => {
           {/* 이메일 검증 */}
           {/* 이메일 검증 */}
           {/* 이메일 검증 */}
-          {/* 인증 메일 전송 버튼 클릭했을 때만 뜨도록 만들기 */}
+          {/* 인증 메일 전송 버튼 클릭했을 때만 뜸 */}
           {!emailBut ? null : (
             <div className="flex">
               <div
-                className={`relative w-3/4 bg-gray-50 rounded h-14 ring-inset ring-1 ring-slate-200 hover:ring-slate-400 hover:ring-2 mb-4 ${
+                className={`relative w-3/4 bg-gray-50 rounded h-14 ring-inset ring-1 ring-slate-200 hover:ring-slate-400 hover:ring-2 mb-4 dark:bg-DMMainTextColor dark:ring-DMMainColor ${
                   email.length > 5 && !isEmail && 'ring-red-500 ring-2'
                 }`}
               >
                 <input
                   type="text"
                   id="emailCertification"
-                  className="absolute top-0 w-full h-full px-6 pt-3 text-base font-medium bg-transparent outline-none peer/email input-ani"
+                  className="absolute top-0 w-full h-full px-6 pt-3 text-base font-medium bg-transparent outline-none peer/email input-ani dark:text-white"
                   value={certification}
                   name="emailCertification"
                   onChange={onChangeCertification}
                   onKeyDown={(e) => handleEnter(e, 'but02')}
                 ></input>
                 <label
-                  className={`absolute font-medium top-4 left-6 text-gray-500 duration-200 pointer-events-none peer-focus/email:-translate-y-2.5 peer-focus/email:text-xs ${
+                  className={`absolute font-medium top-4 left-6 text-gray-500 duration-200 pointer-events-none peer-focus/email:-translate-y-2.5 peer-focus/email:text-xs dark:text-white  ${
                     email.length !== 0 &&
                     'peer-valid/email:-translate-y-2.5 peer-valid/email:text-xs'
                   }`}
@@ -434,7 +438,7 @@ const Signup = () => {
           {/* 비밀번호 */}
           {/* 비밀번호 */}
           <div
-            className={`relative bg-gray-50 rounded h-14 ring-inset ring-1 ring-slate-200 hover:ring-slate-400 hover:ring-2 ${
+            className={`relative bg-gray-50 rounded h-14 ring-inset ring-1 ring-slate-200 hover:ring-slate-400 hover:ring-2 dark:bg-DMMainTextColor dark:ring-DMMainColor ${
               password.length > 5 && !isPassword
                 ? 'mb-10 ring-red-500 ring-2'
                 : 'mb-4'
@@ -443,14 +447,14 @@ const Signup = () => {
             <input
               type={passwordType}
               id="password"
-              className="absolute top-0 w-full h-full px-6 pt-3 text-base font-medium bg-transparent outline-none peer/password input-ani"
+              className="absolute top-0 w-full h-full px-6 pt-3 text-base font-medium bg-transparent outline-none peer/password input-ani dark:text-white"
               value={password}
               name="password"
               onChange={onChangePassword}
               onKeyPress={(e) => handleEnter(e, 'passwordCheck')}
             ></input>
             <label
-              className={`absolute font-medium top-4 left-6 text-gray-500 duration-200 pointer-events-none peer-focus/password:-translate-y-2.5 peer-focus/password:text-xs ${
+              className={`absolute font-medium top-4 left-6 text-gray-500 duration-200 pointer-events-none peer-focus/password:-translate-y-2.5 peer-focus/password:text-xs dark:text-white ${
                 password.length !== 0 &&
                 'peer-valid/password:-translate-y-2.5 peer-valid/password:text-xs'
               }`}
@@ -479,7 +483,7 @@ const Signup = () => {
           {/* 비밀번호 확인 */}
           {/* 비밀번호 확인 */}
           <div
-            className={`relative bg-gray-50 rounded-bl rounded-br h-14 ring-inset ring-1 ring-slate-200 hover:ring-slate-400 hover:ring-2 ${
+            className={`relative bg-gray-50 rounded-bl rounded-br h-14 ring-inset ring-1 ring-slate-200 hover:ring-slate-400 hover:ring-2 dark:bg-DMMainTextColor dark:ring-DMMainColor ${
               passwordCheck.length > 5 && !isPasswordCheck
                 ? 'mb-10 ring-red-500 ring-2'
                 : 'mb-4'
@@ -488,14 +492,14 @@ const Signup = () => {
             <input
               type={passwordCheckType}
               id="passwordCheck"
-              className="absolute top-0 w-full h-full px-6 pt-3 text-base font-medium bg-transparent outline-none peer/password input-ani"
+              className="absolute top-0 w-full h-full px-6 pt-3 text-base font-medium bg-transparent outline-none peer/password input-ani dark:text-white"
               value={passwordCheck}
               name="password"
               onChange={onChangePasswordCheck}
               onKeyPress={(e) => handleEnter(e, 'signUpSubmit')}
             ></input>
             <label
-              className={`absolute font-medium top-4 left-6 text-gray-500 duration-200 pointer-events-none peer-focus/password:-translate-y-2.5 peer-focus/password:text-xs ${
+              className={`absolute font-medium top-4 left-6 text-gray-500 duration-200 pointer-events-none peer-focus/password:-translate-y-2.5 peer-focus/password:text-xs dark:text-white ${
                 passwordCheck.length !== 0 &&
                 'peer-valid/password:-translate-y-2.5 peer-valid/password:text-xs'
               }`}
@@ -529,12 +533,15 @@ const Signup = () => {
           </button>
         </form>
       </div>
-      <div className="my-4 pt-1.5 pb-2 px-8 hover:bg-white/20 rounded-full">
-        <label className="font-medium text-gray-500" htmlFor="goLogin">
+      <div className="my-4 pt-1.5 pb-2 px-8 hover:bg-white/20 rounded-full dark:hover:bg-DMSubColor">
+        <label
+          className="font-medium text-gray-500 dark:text-gray-500"
+          htmlFor="goLogin"
+        >
           계정이 이미 있으시다구요?
         </label>
         <button
-          className="ml-4 font-bold text-gray-700 hover:text-blue-600"
+          className="ml-4 font-bold text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-600"
           onClick={goLogin}
           id="goLogin"
         >

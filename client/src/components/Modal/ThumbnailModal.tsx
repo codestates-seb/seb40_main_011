@@ -1,4 +1,5 @@
-//안지은 작성
+//썸네일 모달
+//리뷰 작성페이지 사용
 
 import { useState } from 'react';
 import useReview from '../../store/review';
@@ -90,8 +91,8 @@ const ThumbnailModal = ({ openThum, setOpenThum }: ThumbModalProps) => {
     <>
       <div className="fixed inset-0 z-40 flex items-center justify-center w-full h-screen bg-black/30 backdrop-blur-sm justify-content">
         {showModal && <Confirm msg={thumMsg} setShowModal={setShowModal} />}
-        <div className="modal-window h-[550px] z-20 overflow-hidden max-sm:w-full">
-          <h1 className="pt-12 pb-8 text-3xl text-center max-sm:text-2xl max-sm:px-5 max-sm:pt-12">
+        <div className="modal-window h-[550px] z-20 overflow-hidden max-sm:w-full dark:bg-DMSubColor">
+          <h1 className="pt-12 pb-8 text-3xl text-center max-sm:text-2xl max-sm:px-5 max-sm:pt-12 dark:text-white">
             썸네일 선택해주세요
           </h1>
           <div className="flex justify-center ">
@@ -101,7 +102,7 @@ const ThumbnailModal = ({ openThum, setOpenThum }: ThumbModalProps) => {
             >
               <div className="pb-5">
                 {img === false ? (
-                  <div className="flex w-full rounded-lg bg-slate-200 h-72">
+                  <div className="flex w-full rounded-lg bg-slate-200 h-72 dark:bg-DMMainTextColor dark:border-DMSubTextColor dark:text-white">
                     <div className="m-auto">
                       <input
                         type="file"
@@ -139,7 +140,7 @@ const ThumbnailModal = ({ openThum, setOpenThum }: ThumbModalProps) => {
               </div>
               <div className="flex justify-center pt-4">
                 <button
-                  className="w-1/3 py-3 mx-5 border rounded-3xl"
+                  className="w-1/3 py-3 mx-5 border rounded-3xl dark:bg-DMMainTextColor dark:border-DMSubTextColor dark:text-white"
                   onClick={closeModalHandler}
                 >
                   취소

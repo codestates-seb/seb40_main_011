@@ -1,7 +1,6 @@
 //리뷰 작성 페이지
-//안지은 작성
 
-import React, { ChangeEvent, useCallback, useState } from 'react';
+import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import '../components/common.css';
 import CategorySelector from '../components/Selectors/CategorySelector';
 import ProductSelector from '../components/Selectors/ProductSelector';
@@ -11,11 +10,11 @@ import AddProduct from '../components/Modal/AddProduct';
 import ThumbnailModal from '../components/Modal/ThumbnailModal';
 import useCategories from '../store/categories';
 import { editReviewProps } from '../types/mainPageTypes';
-// import { useIsLogin } from '../store/login';
+import useDarkMode from '../store/darkMode';
+import Darkmode from '../components/Header/DarkMode';
 
 const WriteReview = ({ isEditMode }: editReviewProps) => {
   const { title, setTitle, thumbnailImg } = useReview();
-  // const { isLogin } = useIsLogin();
   const {
     mainCategorySpread,
     setMainCategorySpread,
@@ -46,9 +45,17 @@ const WriteReview = ({ isEditMode }: editReviewProps) => {
     setOpenThum(!openThum);
   };
 
+  const { darkMode, setDarkMode } = useDarkMode();
+  useEffect(() => {
+    if (!darkMode) {
+      Darkmode();
+      setDarkMode(!darkMode);
+    }
+  }, []);
+
   return (
-    <div className="flex flex-col items-center justify-center w-full bg-zinc-100 max-md:pt-0">
-      <div className="bg-white lg:w-[64rem] mx-auto w-full pb-14 px-10 max-sm:px-5">
+    <div className="flex flex-col items-center justify-center w-full bg-zinc-100 max-md:pt-0 dark:bg-DMMainColor">
+      <div className="bg-white lg:w-[64rem] mx-auto w-full pb-14 px-10 max-sm:px-5 dark:bg-DMSubColor">
         {isModal === false ? null : (
           <AddProduct isModal={isModal} setIsModal={setIsModal} />
         )}
@@ -77,7 +84,7 @@ const WriteReview = ({ isEditMode }: editReviewProps) => {
                 </div>
               </div>
               <button
-                className="w-1/6 py-1 my-1 text-sm font-bold text-white rounded-md hover:bg-slate-400 bg-slate-300 max-sm:block max-sm:ml-auto max-sm:w-24 max-sm:h-10"
+                className="w-1/6 py-1 my-1 text-sm font-bold text-white rounded-md hover:bg-slate-400 bg-slate-300 max-sm:block max-sm:ml-auto max-sm:w-24 max-sm:h-10 dark:bg-DMMainTextColor dark:hover:bg-DMThrColor"
                 onClick={onClickModal}
               >
                 제품 추가
@@ -93,13 +100,13 @@ const WriteReview = ({ isEditMode }: editReviewProps) => {
               onChange={onChangeTitle}
               placeholder="제목을 입력하세요"
               maxLength={50}
-              className="w-4/5 mb-1 border signup-input border-slate-300 sm:flex"
+              className="w-4/5 mb-1 border signup-input border-slate-300 sm:flex dark:bg-DMInputColor dark:border-DMInputBorder dark:text-white"
             />
             <button
               onClick={onClickThumModal}
               className={
                 thumbnailImg.length === 0
-                  ? `w-1/6 my-1 py-1 text-sm font-bold text-white rounded-md hover:bg-slate-400 bg-slate-300 max-sm:w-28 max-sm:ml-2`
+                  ? `w-1/6 my-1 py-1 text-sm font-bold text-white rounded-md hover:bg-slate-400 bg-slate-300 max-sm:w-28 max-sm:ml-2 dark:bg-DMMainTextColor dark:hover:bg-DMThrColor`
                   : `w-1/6 my-1 py-1 text-sm font-bold text-white bg-blue-600 rounded-md hover:bg-blue-500 max-sm:w-28 max-sm:ml-2`
               }
             >

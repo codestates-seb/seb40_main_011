@@ -1,6 +1,6 @@
 //다크모드
 
-import create from 'zustand/react';
+import create from 'zustand';
 
 type IDarkMode = {
   darkMode: boolean;
