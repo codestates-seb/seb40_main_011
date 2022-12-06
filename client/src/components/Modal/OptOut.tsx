@@ -96,7 +96,7 @@ const OptOut = ({ openOptOutModalHandler }: OptOutModalHandler) => {
                 value={password}
                 onChange={handlePassword}
                 placeholder="비밀번호"
-                className="flex w-full pb-1 text-sm sm:text-lg"
+                className="flex w-full pb-1 text-sm sm:text-lg dark:bg-DMSubColor"
               />
             ) : (
               <input
@@ -104,7 +104,7 @@ const OptOut = ({ openOptOutModalHandler }: OptOutModalHandler) => {
                 value={password}
                 onChange={handlePassword}
                 placeholder="비밀번호"
-                className="flex w-full pb-1 text-sm sm:text-lg"
+                className="flex w-full pb-1 text-sm sm:text-lg dark:bg-DMSubColor"
               />
             )}
 
@@ -123,13 +123,13 @@ const OptOut = ({ openOptOutModalHandler }: OptOutModalHandler) => {
 
         <div className="flex justify-center pt-8 mb-10">
           <button
-            className="w-1/3 py-3 mx-5 border rounded-3xl"
+            className="w-1/3 py-3 mx-5 border rounded-3xl dark:bg-DMMainTextColor dark:border-DMSubTextColor"
             onClick={openOptOutModalHandler}
           >
             아니요
           </button>
           <button
-            className="w-1/3 py-3 mx-5 border rounded-3xl bg-slate-300"
+            className="w-1/3 py-3 mx-5 text-white bg-blue-600 rounded-3xl hover:bg-blue-500"
             onClick={handleOptOut}
           >
             네
