@@ -53,7 +53,7 @@ const SearchProduct = ({ keyword }: any) => {
 
   return (
     <div className="flex flex-col items-center justify-center w-full lg:w-[64rem] mx-auto bg-zinc-100 dark:bg-DMMainColor">
-      <div className="mt-16 mb-4 justify-start w-full text-xl font-bold">
+      <div className="mt-16 mb-4 justify-start w-full text-xl font-bold dark:text-white/70">
         # {keyword} 에 대한 제품 검색 결과
       </div>
       <NoResult />
@@ -62,7 +62,7 @@ const SearchProduct = ({ keyword }: any) => {
           return (
             <div
               key={idx}
-              className="w-1/4 drop-shadow-productList mr-4 hover:-translate-y-1 transition ease-in-out hover:scale-110"
+              className="w-1/4 drop-shadow-2xl mr-4 hover:-translate-y-1 transition ease-in-out hover:scale-110"
             >
               <div
                 role="button"

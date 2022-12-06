@@ -12,7 +12,7 @@ import {
 } from './pages';
 import RvDetail from './components/Details/RvDetail';
 import SearchResult from './components/Search/SearchResult';
-import { Layout, QuestionListLayOut } from './layout/Layout';
+import { Layout } from './layout/Layout';
 import NotFound from './pages/NotFound';
 import EditReviewDetail from './components/Details/EditReviewDetail';
 import LandingPage from './pages/LandingPage';
@@ -34,8 +34,6 @@ function App() {
           <Route path="*" element={<NotFound />} />
           <Route path="/landingpage" element={<LandingPage />} />
           <Route path="/social" element={<SocialLogin />} />
-        </Route>
-        <Route path="/" element={<QuestionListLayOut />}>
           <Route path="/question-lists" element={<QuestionLists />} />
         </Route>
       </Routes>
