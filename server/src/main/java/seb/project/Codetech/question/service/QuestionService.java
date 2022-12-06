@@ -76,6 +76,14 @@ public class QuestionService {
 		return question.getAdoptedId();
 	}
 
+	public Long cancelAdoption(Long id) {
+		Question question = findVerifiedOne(id);
+		Long canceledId = question.getAdoptedId();
+		question.adopt(null);
+
+		return canceledId;
+	}
+
 	@Transactional(readOnly = true)
 	public Question findVerifiedOne(Long id) {
 		Optional<Question> found = questionRepository.findById(id);

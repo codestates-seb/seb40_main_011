@@ -51,4 +51,11 @@ public class QuestionResponseDto {
 		private Long id;
 		private Long adoptedId;
 	}
+
+	@Getter
+	@AllArgsConstructor
+	public static class CancelAdoption {
+		private Long id;
+		private Long canceledId;
+	}
 }
