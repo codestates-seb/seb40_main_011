@@ -88,7 +88,7 @@ const ProductList = () => {
                   role="button"
                   onClick={onProductClick}
                   id={el.id.toString()}
-                  className="relative group flex flex-col sm:flex-[1_1_40%] lg:flex-[1_1_30%] flex-[1_1_50%] my-5 mx-3 hover:bg-white rounded-3xl  dark:hover:text-gray-700"
+                  className="relative group flex flex-col sm:flex-[1_1_40%] lg:flex-[1_1_30%] flex-[1_1_50%] my-5 mx-3 hover:bg-white rounded-3xl dark:hover:text-gray-700"
                 >
                   <div className="overflow-hidden aspect-[16/9] bg-slate-200 rounded-3xl group-hover:rounded-b-none">
                     <img
@@ -96,7 +96,7 @@ const ProductList = () => {
                       className="object-cover w-full h-full scale-105"
                     />
                   </div>
-                  <div className="absolute -top-6 w-fit px-3 pt-0.5 pb-1 my-3 rounded-full bg-slate-300 text-slate-600 text-sm font-medium">
+                  <div className="absolute -top-6 w-fit px-3 pt-0.5 pb-1 my-3 rounded-full bg-slate-300 text-slate-600 text-sm font-medium dark:hover:text-gray-700">
                     {convertToKR(el.type.toLowerCase())}
                   </div>
                   <div className="p-4 pb-6 font-medium">
@@ -119,7 +119,7 @@ const ProductList = () => {
               <span
                 role="button"
                 onClick={getMoreData}
-                className="flex items-center justify-center mx-4 text-lg font-medium tracking-tight rounded-xl h-14 bg-zinc-200/60 hover:bg-zinc-300/50 text-zinc-400 hover:text-zinc-500 dark:bg-DMThrColor dark:hover:bg-gray-600 dark:text-gray-300 dark:hover:text-gray-200"
+                className="flex items-center justify-center mx-4 text-lg font-medium tracking-tight rounded-xl h-14 bg-zinc-200/60 text-zinc-400 hover:text-zinc-500 dark:bg-DMThrColor dark:text-gray-300 hover:bg-zinc-300/50 dark:hover:text-gray-200 dark:hover:bg-DMMainTextColor"
               >
                 더 보기
               </span>

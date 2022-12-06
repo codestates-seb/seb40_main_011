@@ -123,7 +123,7 @@ const BestReviewList = () => {
       <div className="w-full lg:w-[64rem] mx-auto py-6 px-2 flex justify-between items-center font-medium">
         <div className="flex items-center">
           <button
-            className={`bg-white hover:bg-slate-300 hover:text-slate-700 mx-2 flex items-center h-12 rounded-full ease-in-out duration-150 pl-4 pr-5 dark:bg-DMSubColor dark:hover:bg-slate-500 dark:hover:text-slate-600`}
+            className={`bg-white hover:bg-slate-300 hover:text-slate-700 mx-2 flex items-center h-12 rounded-full ease-in-out duration-150 pl-4 pr-5 dark:bg-DMSubColor dark:hover:bg-DMThrColor dark:hover:text-slate-400`}
             onClick={onClickPrev}
           >
             <FaChevronRight className="mr-2 text-xl rotate-180" />
@@ -136,7 +136,7 @@ const BestReviewList = () => {
             </span>
           </div>
           <button
-            className={`bg-white hover:bg-slate-300 hover:text-slate-700 mx-2 flex items-center h-12 rounded-full ease-in-out duration-150 pl-5 pr-4 dark:bg-DMSubColor dark:hover:bg-slate-500 dark:hover:text-slate-600`}
+            className={`bg-white hover:bg-slate-300 hover:text-slate-700 mx-2 flex items-center h-12 rounded-full ease-in-out duration-150 pl-5 pr-4 dark:bg-DMSubColor dark:hover:bg-DMThrColor dark:hover:text-slate-400`}
             onClick={onClickNext}
           >
             <span className="mb-0.5">다음</span>
