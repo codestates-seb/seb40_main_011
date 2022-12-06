@@ -112,7 +112,10 @@ export default function Header() {
             {darkButton ? (
               <button
                 className="flex flex-row items-center h-full mx-2"
-                onClick={handleDarkkMode}
+                onClick={() => {
+                  Darkmode();
+                  setDarkButton(!darkButton);
+                }}
               >
                 <span className="flex items-center justify-center text-2xl text-gray-600 rounded-full material-icons w-14 h-14 hover:bg-slate-100">
                   <BsFillMoonFill />
@@ -121,7 +124,10 @@ export default function Header() {
             ) : (
               <button
                 className="flex flex-row items-center h-full mx-2"
-                onClick={handleDarkkMode}
+                onClick={() => {
+                  Darkmode();
+                  setDarkButton(!darkButton);
+                }}
               >
                 <span className="flex items-center justify-center text-2xl rounded-full material-icons w-14 h-14 hover:bg-slate-100">
                   <BsFillSunFill />
