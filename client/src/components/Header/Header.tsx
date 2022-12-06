@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useIsLogin } from '../../store/login';
 import { GiHamburgerMenu } from '../../icons';
 import { BiSearch } from 'react-icons/bi';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Darkmode from './DarkMode';
 import useDarkMode from '../../store/darkMode';
 
@@ -70,11 +70,13 @@ export default function Header() {
   const { darkMode, setDarkMode } = useDarkMode();
   const [darkButton, setDarkButton] = useState(false);
   const handleDarkkMode = (e: React.MouseEvent<HTMLButtonElement>) => {
-    Darkmode();
     setDarkButton(!darkButton);
     setDarkMode(!darkMode);
   };
-  Darkmode();
+
+  useEffect(() => {
+    Darkmode();
+  }, [darkMode]);
 
   return (
     <div className="sticky top-0 z-20 bg-white">
