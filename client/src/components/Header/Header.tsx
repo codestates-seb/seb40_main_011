@@ -21,14 +21,44 @@ export default function Header() {
 
   const { isLogin } = useIsLogin();
 
+  const DarkModeBtn = () => {
+    if (darkMode) {
+      return (
+        <button
+          className="flex flex-row items-center h-full mx-2"
+          onClick={() => {
+            setDarkMode(!darkMode);
+          }}
+        >
+          <span className="flex items-center justify-center text-2xl text-yellow-500 rounded-full material-icons w-14 h-14 hover:bg-slate-100 dark:hover:bg-DMThrColor">
+            <BsFillMoonFill />
+          </span>
+        </button>
+      );
+    } else
+      return (
+        <button
+          className="flex flex-row items-center h-full mx-2"
+          onClick={() => {
+            setDarkMode(!darkMode);
+          }}
+        >
+          <span className="flex items-center justify-center text-2xl text-red-500 rounded-full material-icons w-14 h-14 hover:bg-slate-100 ">
+            <BsFillSunFill />
+          </span>
+        </button>
+      );
+  };
+
   const BurgurDropDown = () => {
     if (menu && isLogin) {
       return (
         <div
-          className={`drop-shadow-xl m-1 p-2 md:hidden items-center justify-evenly rounded-lg bg-white fixed top-20 right-1 h-[12rem] w-[12rem] flex flex-col`}
+          className={`drop-shadow-xl m-1 p-2 md:hidden items-center justify-evenly rounded-lg bg-white fixed top-20 right-1 h-[16rem] w-[12rem] flex flex-col dark:bg-DMSubColor`}
         >
           <HeaderTextButton name="hamburgerMyPage" />
           <HeaderTextButton name="hamburgerLogout" />
+          <DarkModeBtn />
           <div className="p-2 text-sm text-slate-400">
             <div>문의</div>
             <div>contact@codetech.com</div>
@@ -39,10 +69,11 @@ export default function Header() {
     if (!isLogin) {
       return (
         <div
-          className={`drop-shadow-xl m-1 p-2 md:hidden items-center justify-evenly rounded-lg bg-white fixed top-20 right-1 h-[12rem] w-[12rem] flex flex-col`}
+          className={`drop-shadow-xl m-1 p-2 md:hidden items-center justify-evenly rounded-lg bg-white fixed top-20 right-1 h-[16rem] w-[12rem] flex flex-col dark:bg-DMSubColor`}
         >
           <HeaderTextButton name="hamburgerLogin" />
           <HeaderTextButton name="hamburgerSignup" />
+          <DarkModeBtn />
           <div className="p-2 text-sm text-slate-400">
             <div>문의</div>
             <div>contact@codetech.com</div>
@@ -55,7 +86,10 @@ export default function Header() {
 
   const MobileSearch = () => {
     return (
-      <button className="sm:hidden" onClick={handleSearchBar}>
+      <button
+        className="flex items-center justify-center rounded-full material-icons w-14 h-14 hover:bg-slate-100 dark:hover:bg-DMThrColor"
+        onClick={handleSearchBar}
+      >
         <BiSearch className="mr-2 text-3xl" />
       </button>
     );
@@ -78,23 +112,27 @@ export default function Header() {
   }, [darkMode]);
 
   return (
-    <div className="sticky top-0 z-20 bg-white">
+    <div className="sticky top-0 z-20 bg-white dark:bg-DMSubColor dark:text-white transition-all">
       <div className="max-xl:w-full xl:w-[80rem] mx-auto px-4 h-20 flex flex-row items-center justify-between">
         <button
           className={searchBar ? 'hidden' : `flex-none`}
           onClick={handleHomeClick}
         >
           <img
-            src={require('../../images/logo.png')}
+            src={
+              darkMode
+                ? require('../../images/darkmode_logo.png')
+                : require('../../images/logo.png')
+            }
             alt=""
             className="inline-block w-40 mb-1 mr-2"
           />
         </button>
         <SearchBar searchBar={searchBar} setSearchBar={setSearchBar} />
         <div className="flex flex-row flex-none h-full">
-          <div className="flex flex-row items-center h-full md:hidden">
+          <div className="flex flex-row items-center h-full md:hidden ">
             {searchBar ? null : <MobileSearch />}
-            <span className="flex items-center justify-center text-2xl rounded-full material-icons w-14 h-14 hover:bg-slate-100">
+            <span className="flex items-center justify-center text-2xl rounded-full material-icons w-14 h-14 hover:bg-slate-100 dark:hover:bg-DMThrColor">
               <GiHamburgerMenu role="button" onClick={onBurgerClicked} />
             </span>
           </div>
@@ -108,42 +146,19 @@ export default function Header() {
             </>
           ) : null}
           <div className="flex max-md:hidden">
-            {darkMode ? (
-              <button
-                className="flex flex-row items-center h-full mx-2"
-                onClick={() => {
-                  setDarkMode(!darkMode);
-                }}
-              >
-                <span className="flex items-center justify-center text-2xl text-gray-600 rounded-full material-icons w-14 h-14 hover:bg-slate-100">
-                  <BsFillMoonFill />
-                </span>
-              </button>
-            ) : (
-              <button
-                className="flex flex-row items-center h-full mx-2"
-                onClick={() => {
-                  setDarkMode(!darkMode);
-                }}
-              >
-                <span className="flex items-center justify-center text-2xl rounded-full material-icons w-14 h-14 hover:bg-slate-100">
-                  <BsFillSunFill />
-                </span>
-              </button>
-            )}
-
+            <DarkModeBtn />
             {!isLogin ? (
               <>
                 <div>
-                  <HeaderTextButton name="login" />
-                  <HeaderTextButton name="signup" />
+                  <HeaderTextButton name="로그인" />
+                  <HeaderTextButton name="회원가입" />
                 </div>
               </>
             ) : (
               <>
                 <div>
-                  <HeaderTextButton name="My Page" />
-                  <HeaderTextButton name="logout" />
+                  <HeaderTextButton name="마이페이지" />
+                  <HeaderTextButton name="로그아웃" />
                 </div>
               </>
             )}

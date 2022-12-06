@@ -27,7 +27,7 @@ export default function SearchBar({ searchBar, setSearchBar }: searchBarProps) {
       <form
         className={` ${
           searchBar ? null : 'max-sm:hidden'
-        } transition-all hover:bg-slate-100 flex items-center px-3 py-1 rounded-full w-[36rem] ring ring-inset ring-gray-100 hover:ring-0`}
+        } transition-all hover:bg-slate-100 flex items-center px-3 py-1 rounded-full w-[36rem] ring ring-inset ring-gray-100 hover:ring-0 mx-8 dark:hover:bg-DMThrColor dark:ring-white/40 `}
       >
         <BiSearch className="text-3xl mr-2" />
         <input
