@@ -14,6 +14,7 @@ import {
 } from '../icons';
 import { emailRegex, passwordRegex } from '../util/Regex';
 import Confirm from '../components/Modal/Confirm';
+import { useDarkMode } from '../store/darkMode';
 
 export default function Login() {
   // 홈으로 이동
@@ -38,11 +39,8 @@ export default function Login() {
   const [isValidEmail, setIsValidEmail] = useState(false);
   const [isValidPassword, setIsValidPassword] = useState(false);
 
-  // 이메일, 비밀번호 유효성 검사
-  // const passwordPattern = new RegExp('^[a-zA-Z0-9!@#$%^*+=-]+$');
-  // const emailPattern = new RegExp(
-  //   '^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$'
-  // );
+  //다크모드
+  const { darkMode } = useDarkMode();
 
   // onChange inputs
   const handleInputs = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -136,18 +134,22 @@ export default function Login() {
   const [msg, setMsg] = useState(errorMsg[0]);
 
   return (
-    <div className="w-full h-screen bg-slate-300 pt-8 max-md:pt-0 flex flex-col items-center justify-center max-md:justify-start">
+    <div className="flex flex-col items-center justify-center w-full h-screen pt-8 bg-slate-300 max-md:pt-0 max-md:justify-start dark:bg-DMMainColor">
       {showModal && <Confirm setShowModal={setShowModal} msg={msg} />}
-      <div className="max-md:w-full md:w-[32rem] bg-white flex justify-center flex-col px-8 py-12 md:p-16 rounded-3xl max-md:rounded-none shadow-2xl/30">
+      <div className="max-md:w-full md:w-[32rem] bg-white flex justify-center flex-col px-8 py-12 md:p-16 rounded-3xl max-md:rounded-none shadow-2xl/30 dark:bg-DMSubColor">
         <img
-          src={require('../images/logo.png')}
+          src={
+            !darkMode
+              ? require('../images/logo.png')
+              : require('../images/darkmode_logo.png')
+          }
           alt=""
           className="w-56 pb-10 m-auto cursor-pointer"
           onClick={handleHomeClick}
         />
         <form onSubmit={handleSubmit} className="flex flex-col justify-center">
           <div
-            className={`relative bg-gray-50 rounded h-14 ring-inset ring-1 ring-slate-200 hover:ring-slate-400 hover:ring-2 ${
+            className={`relative bg-gray-50 rounded h-14 ring-inset ring-1 ring-slate-200 hover:ring-slate-400 hover:ring-2 dark:bg-DMThrColor dark:ring-DMMainColor ${
               email.length > 5 && !isValidEmail
                 ? 'mb-10 ring-red-500 ring-2'
                 : 'mb-4'
@@ -155,13 +157,13 @@ export default function Login() {
           >
             <input
               type="text"
-              className="absolute top-0 w-full h-full pt-3 text-base font-medium bg-transparent outline-none peer/email input-ani px-14"
+              className="absolute top-0 w-full h-full pt-3 text-base font-medium bg-transparent outline-none peer/email input-ani px-14 dark:text-white"
               value={email}
               name="email"
               onChange={handleInputs}
             ></input>
             <label
-              className={`absolute font-medium top-4 left-14 text-gray-500 duration-200 pointer-events-none peer-focus/email:-translate-y-2.5 peer-focus/email:text-xs ${
+              className={`absolute font-medium top-4 left-14 text-gray-500 duration-200 pointer-events-none peer-focus/email:-translate-y-2.5 peer-focus/email:text-xs dark:text-white ${
                 email.length !== 0 &&
                 'peer-valid/email:-translate-y-2.5 peer-valid/email:text-xs'
               }`}
@@ -177,7 +179,7 @@ export default function Login() {
             )}
           </div>
           <div
-            className={`relative bg-gray-50 rounded h-14 ring-inset ring-1 ring-slate-200 hover:ring-slate-400 hover:ring-2 ${
+            className={`relative bg-gray-50 rounded h-14 ring-inset ring-1 ring-slate-200 hover:ring-slate-400 hover:ring-2 dark:bg-DMThrColor dark:ring-DMMainColor ${
               password.length > 5 && !isValidPassword
                 ? 'mb-10 ring-red-500 ring-2'
                 : 'mb-4'
@@ -185,14 +187,14 @@ export default function Login() {
           >
             <input
               type={passwordType}
-              className="absolute top-0 w-full h-full pt-3 text-base font-medium bg-transparent outline-none peer/password input-ani px-14"
+              className="absolute top-0 w-full h-full pt-3 text-base font-medium bg-transparent outline-none peer/password input-ani px-14 dark:text-white"
               value={password}
               name="password"
               onChange={handleInputs}
               onKeyDown={handleEnter}
             ></input>
             <label
-              className={`absolute font-medium top-4 left-14 text-gray-500 duration-200 pointer-events-none peer-focus/password:-translate-y-2.5 peer-focus/password:text-xs ${
+              className={`absolute font-medium top-4 left-14 text-gray-500 duration-200 pointer-events-none peer-focus/password:-translate-y-2.5 peer-focus/password:text-xs dark:text-white ${
                 password.length !== 0 &&
                 'peer-valid/password:-translate-y-2.5 peer-valid/password:text-xs'
               }`}
@@ -229,30 +231,30 @@ export default function Login() {
           <div
             role="button"
             onClick={() => handleKakao()}
-            className="mt-4 group flex items-center h-16 p-3 bg-white border hover:border-0 rounded-full hover:bg-yellow-300"
+            className="flex items-center h-16 p-3 mt-4 bg-white border rounded-full group hover:border-0 hover:bg-yellow-300 dark:border-DMThrColor dark:bg-DMMainColor dark:hover:bg-yellow-300"
           >
-            <RiKakaoTalkFill className="transition-all duration-300 flex-none w-12 h-12 p-2 group-hover:p-1 mr-2 overflow-hidden rounded-full text-black bg-yellow-300 bg-border-0" />
-            <div className="grow text-center mr-12 font-bold text-black/70">
+            <RiKakaoTalkFill className="flex-none w-12 h-12 p-2 mr-2 overflow-hidden text-black transition-all duration-300 bg-yellow-300 rounded-full group-hover:p-1 bg-border-0" />
+            <div className="mr-12 font-bold text-center grow text-black/70 dark:text-white/40 group-hover:text-white">
               카카오톡으로 로그인
             </div>
           </div>
           <div
             role="button"
             onClick={() => handleGoogle()}
-            className="mt-3 group flex items-center h-16 p-3 bg-white border hover:border-0 rounded-full hover:bg-red-500"
+            className="flex items-center h-16 p-3 mt-3 bg-white border rounded-full group hover:border-0 hover:bg-red-500 dark:border-DMThrColor dark:bg-DMMainColor dark:hover:hover:bg-red-500"
           >
-            <AiOutlineGoogle className="transition-all duration-300 flex-none w-12 h-12 p-2 group-hover:p-1 mr-2 overflow-hidden rounded-full text-white bg-red-500 bg-border-0" />
-            <div className="grow text-center mr-12 font-bold text-black/70 group-hover:text-black/80 group-hover:text-white">
+            <AiOutlineGoogle className="flex-none w-12 h-12 p-2 mr-2 overflow-hidden text-white transition-all duration-300 bg-red-500 rounded-full group-hover:p-1 bg-border-0" />
+            <div className="mr-12 font-bold text-center grow text-black/70 group-hover:text-black/80 group-hover:text-white dark:text-white/40">
               구글로 로그인
             </div>
           </div>
           <div
             role="button"
             onClick={() => handleNaver()}
-            className="mt-3 group flex items-center h-16 p-3 bg-white border hover:border-0 rounded-full hover:bg-green-500"
+            className="flex items-center h-16 p-3 mt-3 bg-white border rounded-full group hover:border-0 hover:bg-green-500 dark:border-DMThrColor dark:bg-DMMainColor dark:hover:bg-green-500"
           >
-            <SiNaver className="transition-all duration-300 flex-none w-12 h-12 p-2 group-hover:p-1 mr-2 overflow-hidden rounded-full text-white bg-green-500 bg-border-0" />
-            <div className="grow text-center mr-12 font-bold text-black/70 group-hover:text-black/80 group-hover:text-white">
+            <SiNaver className="flex-none w-12 h-12 p-2 mr-2 overflow-hidden text-white transition-all duration-300 bg-green-500 rounded-full group-hover:p-1 bg-border-0" />
+            <div className="mr-12 font-bold text-center grow text-black/70 group-hover:text-black/80 group-hover:text-white dark:text-white/40">
               네이버로 로그인
             </div>
           </div>
@@ -263,12 +265,12 @@ export default function Login() {
           </button> */}
         </div>
       </div>
-      <div className="my-4 pt-1.5 pb-2 px-8 hover:bg-white/20 rounded-full">
+      <div className="my-4 pt-1.5 pb-2 px-8 hover:bg-white/20 rounded-full dark:hover:bg-DMSubColor">
         <label className="font-medium text-gray-500" htmlFor="goSignup">
           회원가입이 안되어있으시다구요?
         </label>
         <button
-          className="ml-4 font-bold text-gray-700 hover:text-blue-600"
+          className="ml-4 font-bold text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-600"
           onClick={goSignup}
           id="goSignup"
         >

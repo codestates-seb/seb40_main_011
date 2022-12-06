@@ -15,6 +15,7 @@ import {
 import { emailRegex, passwordRegex } from '../util/Regex';
 import Confirm from '../components/Modal/Confirm';
 import { postEmailCertificationCheck, postEmail } from '../util/apiCollection';
+import { useDarkMode } from '../store/darkMode';
 
 const Signup = () => {
   //이름, 이메일, 인증번호, 비밀번호, 비밀번호 확인
@@ -41,6 +42,9 @@ const Signup = () => {
   //이메일 인증 완료 여부
   const [emailCheckCompletion, setEmailCheckCompletion] =
     useState<boolean>(false);
+
+  //다크모드
+  const { darkMode } = useDarkMode();
 
   // navigate login & home
   const navigate = useNavigate();
@@ -301,7 +305,7 @@ const Signup = () => {
       <div className="max-md:w-full md:w-[32rem] bg-white flex justify-center flex-col px-8 py-12 md:p-16 rounded-3xl max-md:rounded-none shadow-2xl/30 dark:bg-DMSubColor">
         <img
           src={
-            localStorage.getItem('color-theme') === 'light'
+            !darkMode
               ? require('../images/logo.png')
               : require('../images/darkmode_logo.png')
           }
@@ -534,10 +538,7 @@ const Signup = () => {
         </form>
       </div>
       <div className="my-4 pt-1.5 pb-2 px-8 hover:bg-white/20 rounded-full dark:hover:bg-DMSubColor">
-        <label
-          className="font-medium text-gray-500 dark:text-gray-500"
-          htmlFor="goLogin"
-        >
+        <label className="font-medium text-gray-500" htmlFor="goLogin">
           계정이 이미 있으시다구요?
         </label>
         <button
