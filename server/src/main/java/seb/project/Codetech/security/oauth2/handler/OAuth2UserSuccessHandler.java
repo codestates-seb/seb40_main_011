@@ -115,7 +115,7 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 			.host("codetech.nworld.dev")
 //			.path("/api/token")
 //				.port(3000)
-				.path("/api/token")
+				.path("/social")
 			.queryParams(queryParams)
 			.build()
 			.toUri();
