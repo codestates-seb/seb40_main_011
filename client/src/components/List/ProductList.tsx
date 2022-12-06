@@ -90,10 +90,12 @@ const ProductList = () => {
                   id={el.id.toString()}
                   className="relative group flex flex-col sm:flex-[1_1_40%] lg:flex-[1_1_30%] flex-[1_1_50%] my-5 mx-3 hover:bg-white rounded-3xl"
                 >
-                  <img
-                    src={`https://codetech.nworld.dev${thumbnail}`}
-                    className="object-cover h-48 bg-slate-200 rounded-3xl group-hover:rounded-b-none"
-                  />
+                  <div className="overflow-hidden aspect-[16/9] bg-slate-200 rounded-3xl group-hover:rounded-b-none">
+                    <img
+                      src={`https://codetech.nworld.dev${thumbnail}`}
+                      className="h-full w-full object-cover scale-105"
+                    />
+                  </div>
                   <div className="absolute -top-6 w-fit px-3 pt-0.5 pb-1 my-3 rounded-full bg-slate-300 text-slate-600 text-sm font-medium">
                     {convertToKR(el.type.toLowerCase())}
                   </div>

@@ -123,7 +123,7 @@ const ReviewLists = () => {
           />
         )}
         <div
-          className={`w-full px-8 pt-6 bg-white rounded-t-3xl md:px-10 lg:px-12 md:pt-8 lg:pt-10`}
+          className={`w-full px-5 pt-6 bg-white rounded-t-3xl md:px-10 lg:px-12 md:pt-8 lg:pt-10`}
         >
           <div className="flex items-center justify-between mb-4 text-xl font-medium">
             <div className="pb-1 mr-3 text-2xl font-medium">한줄 리뷰</div>
@@ -152,7 +152,7 @@ const ReviewLists = () => {
           )}
           {/* 한줄 리뷰 직성 */}
         </div>
-        <div className="w-full px-12 bg-white border-t rounded-b-3xl border-zinc-200">
+        <div className="w-full px-5 md:px-12 bg-white border-t rounded-b-3xl border-zinc-200">
           <CreateSnackReview />
         </div>
       </div>

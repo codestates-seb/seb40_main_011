@@ -119,7 +119,7 @@ const SnackReview = ({ snackReviewData }: any) => {
                   </div>
                 </div>
               </div>
-              <div className="w-full px-5 pt-2 pb-3 mt-3 mb-8">
+              <div className="w-full px-2 md:px-5 pt-2 pb-3 mt-3 mb-6 md:mb-8">
                 {el.content}
               </div>
             </div>
