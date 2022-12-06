@@ -55,7 +55,7 @@ export default function PendingQuestion({
   const editable = getEdit();
 
   return (
-    <div className="w-full">
+    <div className="w-full px-4">
       {showModal && (
         <WriteAnswer
           setShowModal={setShowModal}
@@ -63,11 +63,9 @@ export default function PendingQuestion({
           questionId={questionId}
         />
       )}
-      <div className="w-full flex mt-5">
-        <div className="mt-3">
+      <div className="w-full flex flex-col mt-5">
+        <div className="w-full flex mb-3 items-center">
           <Avatar image={image} />
-        </div>
-        <div className="w-full pl-2">
           <BodyTop
             createdAt={createdAt}
             nickname={nickname}
@@ -76,20 +74,20 @@ export default function PendingQuestion({
             content={content}
             editable={editable}
           />
-          <div className="flex">
-            <div className="grow">
-              <div className="px-4 pt-2 pb-3 rounded bg-white text-gray-600 font-medium">
-                {content}
-              </div>
+        </div>
+        <div className="flex">
+          <div className="grow">
+            <div className="px-6 pt-3 pb-4 rounded bg-white dark:bg-DMSubColor text-gray-600 dark:text-white font-medium">
+              {content}
             </div>
-            <div className="flex-none w-16 mx-2 flex justify-center items-start">
-              <button
-                onClick={handleShowModalAnswer}
-                className="group w-full h-11 text-2xl bg-blue-100 rounded duration-300 hover:ring hover:ring-blue-300 "
-              >
-                <BsFillChatTextFill className="text-blue-500 mx-auto" />
-              </button>
-            </div>
+          </div>
+          <div className="flex-none w-16 ml-2 flex justify-center items-start">
+            <button
+              onClick={handleShowModalAnswer}
+              className="group w-full h-full text-2xl bg-blue-100 rounded duration-300 hover:ring hover:ring-blue-300 "
+            >
+              <BsFillChatTextFill className="text-blue-500 mx-auto" />
+            </button>
           </div>
         </div>
       </div>
@@ -110,7 +108,7 @@ export default function PendingQuestion({
       {answerCards !== null && !showAnswer && answerCards.length !== 1 && (
         <button
           onClick={handleShowAnswer}
-          className="w-full mt-1 rounded overflow-hidden"
+          className="w-full mt-2 rounded overflow-hidden pl-12"
         >
           <AnswerMore count={answerCards.length - 1} />
         </button>

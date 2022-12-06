@@ -102,7 +102,7 @@ const ProductSelector = ({
       {showModal && <Confirm msg={selectorMsg} setShowModal={setShowModal} />}
       <button
         onClick={handleSelectClick}
-        className={`justify-between alsolute t-0 text-sm bg-white h-10 rounded border border-slate-200 flex items-center px-4 pb-0.5 font-medium text-gray-500 dark:bg-DMMainTextColor dark:border-DMSubTextColor dark:text-white ${
+        className={`justify-between alsolute t-0 text-sm bg-white h-10 rounded border border-slate-200 flex items-center px-4 pb-0.5 font-medium text-gray-500 dark:bg-transparent dark:border-DMSubTextColor dark:text-white ${
           productCategorySpread &&
           'rounded-bl-none rounded-br-none bg-slate-200 text-gray-400 border-b-0 dark:bg-DMThrColor'
         }`}

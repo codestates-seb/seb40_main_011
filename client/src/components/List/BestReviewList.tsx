@@ -83,7 +83,7 @@ const BestReviewList = () => {
             <span className="left-40 rounded-full pt-0.5 pb-1 font-medium tracking-tight text-slate-500 mr-2 dark:text-gray-400">
               {sortedReviews[selectedIdx]?.type.toLocaleLowerCase()}
             </span>
-            <div className="my-4 text-3xl font-medium tracking-tight line-clamp-1">
+            <div className="dark:text-white my-4 text-3xl font-medium tracking-tight line-clamp-1">
               {sortedReviews[selectedIdx]?.title}
             </div>
             <div className="h-12 mb-8 font-medium text-gray-500 line-clamp-2 dark:text-gray-400">
@@ -96,7 +96,7 @@ const BestReviewList = () => {
                   src={`https://codetech.nworld.dev${sortedReviews[selectedIdx]?.image}`}
                 />
                 <div>
-                  <span className="pt-0.5 font-medium text-gray-600 dark:text-gray-400">
+                  <span className="pt-0.5 font-medium text-gray-600 dark:text-white/90">
                     {sortedReviews[selectedIdx]?.writer}
                   </span>
                   <div>
@@ -111,7 +111,7 @@ const BestReviewList = () => {
                   </div>
                 </div>
               </div>
-              <div className="items-center hidden py-3 pl-5 pr-4 font-medium text-gray-300 rounded-full md:flex group-hover:text-gray-600 group-hover:bg-slate-100 dark:group-hover:bg-DMThrColor dark:group-hover:text-gray-100">
+              <div className="items-center hidden py-3 pl-5 pr-4 font-medium text-gray-300 rounded-full md:flex group-hover:text-gray-600 group-hover:bg-white/80 dark:group-hover:bg-DMThrColor dark:group-hover:text-white">
                 <span className="mr-2">자세히 보기</span>
                 <BsArrowRight className="text-2xl" />
               </div>
@@ -129,9 +129,9 @@ const BestReviewList = () => {
             <FaChevronRight className="mr-2 text-xl rotate-180" />
             <span className="mb-0.5">이전</span>
           </button>
-          <div className="hidden mx-6 text-xl text-gray-600 md:inline-block dark:text-gray-400">
+          <div className="hidden mx-6 text-xl text-gray-600 md:inline-block dark:text-white">
             <span>{selectedIdx + 1}</span>
-            <span className="text-gray-400 before:content-['/'] before:text-gray-300 before:mr-3 before:ml-3 dark:text-gray-200">
+            <span className="text-gray-400 before:content-['/'] before:text-gray-300 before:mr-3 before:ml-3 dark:text-white/40">
               {bestReviewCount}
             </span>
           </div>

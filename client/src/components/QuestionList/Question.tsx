@@ -48,22 +48,20 @@ export default function Question({
   };
 
   return (
-    <div className="w-full">
-      <div className="w-full flex mt-5">
-        <div className="mt-3">
+    <div className="w-full flex-col px-4">
+      <div className="w-full flex flex-col mt-5">
+        <div className="w-full flex mb-3 items-center">
           <Avatar image={image} />
-        </div>
-        <div className="w-full pl-2">
           <BodyTop
             createdAt={createdAt}
             nickname={nickname}
             adoptedId={adoptedId}
           />
-          <div className="flex">
-            <div className="grow mr-2">
-              <div className="px-4 pt-2 pb-3 rounded bg-white text-gray-600 font-medium">
-                {content}
-              </div>
+        </div>
+        <div className="flex">
+          <div className="grow mr-2">
+            <div className="px-6 pt-3 pb-4 rounded bg-white dark:bg-DMMainColor text-gray-600 dark:text-white font-medium">
+              {content}
             </div>
           </div>
         </div>

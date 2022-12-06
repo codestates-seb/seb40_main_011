@@ -66,12 +66,12 @@ export default function QuestionInput({
   return (
     <>
       {showModal && <Confirm setShowModal={setShowModal} msg={msg} />}
-      <div className="flex justify-center bg-white border-b border-gray-200">
+      <div className="flex justify-center bg-white dark:bg-DMSubColor border-b border-gray-200 dark:border-slate-700">
         <form className="py-10 w-[48rem] px-4">
           <TextareaAutosize
             minRows={3}
             maxRows={6}
-            className={`w-full outline-none text-gray-300 font-medium resize-none focus:text-gray-700 text-lg ${
+            className={`w-full outline-none text-gray-300 dark:bg-DMSubColor dark:text-white font-medium resize-none focus:text-gray-700 text-lg ${
               question.length !== 0 && `text-gray-700`
             }`}
             placeholder={placeholder}
