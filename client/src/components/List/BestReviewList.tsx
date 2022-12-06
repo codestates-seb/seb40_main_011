@@ -71,7 +71,7 @@ const BestReviewList = () => {
   }, 5000);
 
   return (
-    <div className="pt-8 bg-zinc-100 dark:bg-DMMainColor dark:text-gray-300 transition-all ease-in">
+    <div className="pt-8 bg-zinc-100 dark:bg-DMMainColor dark:text-gray-300 transition-all">
       <div className="w-full lg:w-[64rem] mx-auto">
         {sortedReviews[selectedIdx] === undefined ? null : (
           <div
