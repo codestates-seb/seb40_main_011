@@ -35,7 +35,7 @@ const CheckModal = ({ setShowModal, msg, productId }: setShowModalProps) => {
       className="fixed inset-0 h-screen w-full z-30 bg-black/30 backdrop-blur-sm flex justify-content justify-center items-center"
     >
       <div className="w-[28rem] z-40 rounded-xl overflow-hidden ">
-        <div className="flex flex-col h-[14rem] justify-between p-10 bg-white font-medium text-center text-lg text-gray-600">
+        <div className="dark:bg-DMSubColor dark:text-white flex flex-col h-[14rem] justify-between p-10 bg-white font-medium text-center text-lg text-gray-600">
           <div className="mt-12">
             <span>{msg}</span>
           </div>
