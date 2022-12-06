@@ -165,17 +165,17 @@ export default function Comment({ reviewComments }: CommentProps) {
           <img
             src={`https://codetech.nworld.dev${reviewComments?.userImage}`}
             alt=""
-            className="flex-none w-12 h-12 rounded-2xl mx-2 ring ring-zinc-100"
+            className="flex-none w-12 h-12 rounded-2xl mr-2 ring ring-zinc-100"
           />
           <div className="grow">
             <div className="flex justify-between mb-1.5 items-center">
-              <span className="max-sm:flex flex-col items-start">
+              <span className="flex items-start">
                 <span className="ml-1 font-semibold">
                   {reviewComments.writer}
                 </span>
-                <span className="text-sm font-medium before:content-['•'] before:mr-1.5 before:ml-1.5 before:text-gray-400 text-gray-400">
+                <div className="text-sm font-medium before:content-['•'] before:mr-1.5 before:ml-1.5 before:text-gray-400 text-gray-400 mt-0.5">
                   {getParsedDate(reviewComments.createdAt)}
-                </span>
+                </div>
               </span>
               <div className="flex items-center">
                 <EditComment

@@ -145,17 +145,19 @@ const CreateSnackReview = () => {
   return (
     <>
       {showModal && <Confirm msg={reviewMsg} setShowModal={setShowModal} />}
-      <div className="flex flex-col items-center w-full mt-10 md:flex-row md:mt-0">
-        <div className="flex flex-col justify-center items-between w-[16rem] mr-3">
+      <div className="flex flex-col items-center w-full mt-6 md:flex-row md:mt-0">
+        <div className="w-[20rem] flex flex-col justify-center items-between md:w-[20rem] md:mr-3">
           {ratingCategory.map((el: any, index: number) => {
             return (
               <div
-                className="flex items-center justify-between px-1"
+                className="flex items-center justify-between px-1 mb-1 md:mb-0"
                 key={index}
               >
-                <span className="w-12 mr-2 text-black/60">{el.name}</span>
-                <Rating onClick={el.fnc} allowFraction size={25} />
-                <span className="px-2 bg-zinc-100 rounded ml-3 pb-0.5 mt-1 text-sm text-black/70 font-medium w-[35px] text-center">
+                <span className="w-20 md:w-12 mr-2 text-black/60 text-lg md:text-base">
+                  {el.name}
+                </span>
+                <Rating onClick={el.fnc} allowFraction size={28} />
+                <span className="px-4 md:px-2 bg-zinc-100 rounded ml-6 md:ml-3 pb-0.5 mt-1 text-black/70 font-medium text-center text-lg md:text-sm w-[4rem] md:w-[3rem]">
                   {score[el.en]}
                 </span>
               </div>
@@ -163,9 +165,10 @@ const CreateSnackReview = () => {
           })}
         </div>
         <span className="hidden h-32 ml-2 mr-10 border-l border-zinc-200 md:flex" />
+        <span className="md:hidden w-full my-6 border-b border-zinc-200" />
         <div className="w-full bg-slate-200">
           <div className="flex justify-center bg-white border-b border-gray-200">
-            <div className="w-full py-10">
+            <div className="w-full pb-6 md:py-10">
               <TextareaAutosize
                 onFocus={onInputFocus}
                 minRows={3}

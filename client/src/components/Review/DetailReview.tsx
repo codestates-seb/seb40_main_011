@@ -63,7 +63,7 @@ const DetailReview = ({
 
   return (
     <div
-      className={`w-full bg-white rounded-3xl px-8 md:px-12 pt-6 sm:pt-8 md:pt-10 md:pb-3 mb-8 ${
+      className={`w-full bg-white rounded-3xl px-5 md:px-12 pt-6 sm:pt-8 md:pt-10 md:pb-3 mb-8 ${
         reviewData?.reviewLists.length === 0 && `hidden`
       }`}
     >
@@ -81,12 +81,12 @@ const DetailReview = ({
       {reviewData?.reviewLists.map((el: any, idx: number) => {
         return (
           <Link to={`/review/${el.id}`} key={idx}>
-            <div className="rounded-3xl overflow-hidden flex flex-col md:flex-row mb-16 md:mb-10">
-              <div className="w-full aspect-[16/9] md:h-48 md:w-2/5 lg:w-1/3 overflow-hidden rounded-3xl flex-none flex items-center mr-6">
+            <div className="flex flex-col md:flex-row mb-8 md:mb-10">
+              <div className="w-full aspect-[16/9] md:h-48 md:w-2/5 lg:w-1/3 overflow-hidden rounded-2xl md:rounded-3xl flex-none flex items-center mr-6">
                 <img
                   src={`https://codetech.nworld.dev${el.thumbnail}`}
                   alt=""
-                  className="w-full"
+                  className="w-full scale-105"
                 />
               </div>
               <div className="w-full md:3/5 lg:w-2/3 h-48 flex flex-col overflow-hidden text-left justify-between py-2">
