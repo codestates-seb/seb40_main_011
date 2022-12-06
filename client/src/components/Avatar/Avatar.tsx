@@ -4,7 +4,7 @@ export default function Avatar(data: { image: string | undefined }) {
     <img
       src={
         image === 'null' || image === null
-          ? require('../../images/placeholder-image.png')
+          ? require('../../images/placeholder-img-profile.png')
           : `https://codetech.nworld.dev${image}`
       }
       alt="user-image"
