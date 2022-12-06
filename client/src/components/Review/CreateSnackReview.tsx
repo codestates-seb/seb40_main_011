@@ -145,7 +145,7 @@ const CreateSnackReview = () => {
   return (
     <>
       {showModal && <Confirm msg={reviewMsg} setShowModal={setShowModal} />}
-      <div className="flex flex-col items-center w-full mt-6 md:flex-row md:mt-0">
+      <div className="flex flex-col items-center w-full mt-6 md:flex-row md:mt-0 ">
         <div className="w-[20rem] flex flex-col justify-center items-between md:w-[20rem] md:mr-3">
           {ratingCategory.map((el: any, index: number) => {
             return (
@@ -153,7 +153,7 @@ const CreateSnackReview = () => {
                 className="flex items-center justify-between px-1 mb-1 md:mb-0"
                 key={index}
               >
-                <span className="w-20 md:w-12 mr-2 text-black/60 text-lg md:text-base">
+                <span className="w-20 mr-2 text-lg md:w-12 text-black/60 md:text-base dark:text-gray-300">
                   {el.name}
                 </span>
                 <Rating onClick={el.fnc} allowFraction size={28} />
@@ -164,16 +164,16 @@ const CreateSnackReview = () => {
             );
           })}
         </div>
-        <span className="hidden h-32 ml-2 mr-10 border-l border-zinc-200 md:flex" />
-        <span className="md:hidden w-full my-6 border-b border-zinc-200" />
+        <span className="hidden h-32 ml-2 mr-10 border-l border-zinc-200 md:flex dark:border-DMThrColor" />
+        <span className="w-full my-6 border-b md:hidden border-zinc-200" />
         <div className="w-full bg-slate-200">
-          <div className="flex justify-center bg-white border-b border-gray-200">
-            <div className="w-full pb-6 md:py-10">
+          <div className="flex justify-center bg-white border-gray-200 dark:bg-DMSubColor ">
+            <div className="w-full pb-6 md:py-10 dark:bg-DMSubColor ">
               <TextareaAutosize
                 onFocus={onInputFocus}
                 minRows={3}
                 maxRows={4}
-                className={`w-full outline-none text-gray-300 font-medium resize-none focus:text-gray-700 text-lg ${
+                className={` dark:bg-DMSubColor w-full outline-none text-gray-300 font-medium resize-none  focus:text-gray-700 text-lg ${
                   content.length !== 0 && `text-gray-700`
                 }`}
                 placeholder="Enter your Review..."

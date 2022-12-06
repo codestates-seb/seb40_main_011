@@ -51,7 +51,7 @@ const ProductList = () => {
   const NoElement = () => {
     if (products.length === 0) {
       return (
-        <div className="flex w-full justify-center">
+        <div className="flex justify-center w-full">
           <img
             className="object-fit"
             src={require('../../images/sryIcon2.png')}
@@ -74,7 +74,7 @@ const ProductList = () => {
       {spinner ? (
         <Spinner />
       ) : (
-        <div className="bg-zinc-100">
+        <div className="bg-zinc-100 dark:bg-DMMainColor dark:text-gray-300">
           <div className="mx-auto w-full lg:w-[64rem] flex flex-col items-center px-4">
             <MainCategory setCategory={setCategory} category={category} />
           </div>
@@ -88,24 +88,24 @@ const ProductList = () => {
                   role="button"
                   onClick={onProductClick}
                   id={el.id.toString()}
-                  className="relative group flex flex-col sm:flex-[1_1_40%] lg:flex-[1_1_30%] flex-[1_1_50%] my-5 mx-3 hover:bg-white rounded-3xl"
+                  className="relative group flex flex-col sm:flex-[1_1_40%] lg:flex-[1_1_30%] flex-[1_1_50%] my-5 mx-3 hover:bg-white rounded-3xl  dark:hover:text-gray-700"
                 >
                   <div className="overflow-hidden aspect-[16/9] bg-slate-200 rounded-3xl group-hover:rounded-b-none">
                     <img
                       src={`https://codetech.nworld.dev${thumbnail}`}
-                      className="h-full w-full object-cover scale-105"
+                      className="object-cover w-full h-full scale-105"
                     />
                   </div>
                   <div className="absolute -top-6 w-fit px-3 pt-0.5 pb-1 my-3 rounded-full bg-slate-300 text-slate-600 text-sm font-medium">
                     {convertToKR(el.type.toLowerCase())}
                   </div>
-                  <div className="p-4 font-medium pb-6">
-                    <div className="line-clamp-1">{el.name}</div>
+                  <div className="p-4 pb-6 font-medium">
+                    <div className="line-clamp-1 ">{el.name}</div>
                     <span>
-                      <span className="text-gray-500/60 before:text-gray-300 text-sm tracking-tight">
+                      <span className="text-sm tracking-tight text-gray-500/60 before:text-gray-300 dark:text-gray-400">
                         {moment(el.createdAt).format('MM월 DD일')}
                       </span>
-                      <span className="before:content-['•'] before:mr-1.5 before:ml-1.5 text-gray-500/60 before:text-gray-300 tracking-tight text-sm">
+                      <span className="before:content-['•'] before:mr-1.5 before:ml-1.5 text-gray-500/60 before:text-gray-300 tracking-tight text-sm dark:text-gray-400">
                         {format(el.createdAt)}
                       </span>
                     </span>
@@ -119,7 +119,7 @@ const ProductList = () => {
               <span
                 role="button"
                 onClick={getMoreData}
-                className="mx-4 rounded-xl h-14 flex items-center justify-center bg-zinc-200/60  hover:bg-zinc-300/50 text-lg font-medium text-zinc-400 hover:text-zinc-500 tracking-tight"
+                className="flex items-center justify-center mx-4 text-lg font-medium tracking-tight rounded-xl h-14 bg-zinc-200/60 hover:bg-zinc-300/50 text-zinc-400 hover:text-zinc-500 dark:bg-DMThrColor dark:hover:bg-gray-600 dark:text-gray-300 dark:hover:text-gray-200"
               >
                 더 보기
               </span>

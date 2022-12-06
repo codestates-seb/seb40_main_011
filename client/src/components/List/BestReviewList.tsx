@@ -71,7 +71,7 @@ const BestReviewList = () => {
   }, 5000);
 
   return (
-    <div className="pt-8 bg-zinc-100">
+    <div className="pt-8 bg-zinc-100 dark:bg-DMMainColor dark:text-gray-300">
       <div className="w-full lg:w-[64rem] mx-auto">
         {sortedReviews[selectedIdx] === undefined ? (
           <div className="mx-auto">API 필요 </div>
@@ -80,69 +80,69 @@ const BestReviewList = () => {
             role="button"
             onClick={onContentClick}
             id={sortedReviews[selectedIdx]?.id.toString()}
-            className="mx-4 group px-6 md:px-8 lg:px-12 pt-6 md:pt-8 pb-4 md:pb-6 bg-white rounded-3xl h-[18.5rem]"
+            className=" dark:bg-DMSubColor mx-4 group px-6 md:px-8 lg:px-12 pt-6 md:pt-8 pb-4 md:pb-6 bg-white rounded-3xl h-[18.5rem]"
           >
-            <span className="left-40 rounded-full pt-0.5 pb-1 font-medium tracking-tight text-slate-500 mr-2">
+            <span className="left-40 rounded-full pt-0.5 pb-1 font-medium tracking-tight text-slate-500 mr-2 dark:text-gray-400">
               {sortedReviews[selectedIdx]?.type.toLocaleLowerCase()}
             </span>
-            <div className="line-clamp-1 font-medium my-4 text-3xl tracking-tight">
+            <div className="my-4 text-3xl font-medium tracking-tight line-clamp-1">
               {sortedReviews[selectedIdx]?.title}
             </div>
-            <div className="line-clamp-2 text-gray-500 font-medium mb-8 h-12">
+            <div className="h-12 mb-8 font-medium text-gray-500 line-clamp-2 dark:text-gray-400">
               {onlyText(sortedReviews[selectedIdx]?.content)}
             </div>
             <div className="flex items-center justify-between">
               <div className="flex items-center">
                 <img
-                  className="rounded-2xl w-12 h-12 mr-3"
+                  className="w-12 h-12 mr-3 rounded-2xl"
                   src={`https://codetech.nworld.dev${sortedReviews[selectedIdx]?.image}`}
                 />
                 <div>
-                  <span className="pt-0.5 font-medium text-gray-600">
+                  <span className="pt-0.5 font-medium text-gray-600 dark:text-gray-400">
                     {sortedReviews[selectedIdx]?.writer}
                   </span>
                   <div>
-                    <span className="text-gray-500/60 before:text-gray-300 text-sm font-medium tracking-tight">
+                    <span className="text-sm font-medium tracking-tight text-gray-500/60 before:text-gray-300 dark:text-gray-400">
                       {sortedReviews[selectedIdx]?.createdAt &&
                         getParsedDate(sortedReviews[selectedIdx]?.createdAt)}
                     </span>
-                    <span className="before:content-['•'] before:mr-1.5 before:ml-1.5 text-gray-500/60 before:text-gray-300 tracking-tight text-sm font-medium">
+                    <span className="before:content-['•'] before:mr-1.5 before:ml-1.5 text-gray-500/60 before:text-gray-300 tracking-tight text-sm font-medium dark:text-gray-400">
                       {sortedReviews[selectedIdx]?.createdAt &&
                         format(sortedReviews[selectedIdx]?.createdAt)}
                     </span>
                   </div>
                 </div>
               </div>
-              <div className="hidden md:flex items-center text-gray-300 group-hover:text-gray-600 font-medium group-hover:bg-slate-100 pl-5 pr-4 py-3 rounded-full">
+              <div className="items-center hidden py-3 pl-5 pr-4 font-medium text-gray-300 rounded-full md:flex group-hover:text-gray-600 group-hover:bg-slate-100 dark:group-hover:bg-DMThrColor dark:group-hover:text-gray-100">
                 <span className="mr-2">자세히 보기</span>
                 <BsArrowRight className="text-2xl" />
               </div>
             </div>
-            <div className="flex justify-between items-center py-2"></div>
+            <div className="flex items-center justify-between py-2"></div>
           </div>
         )}
       </div>
       <div className="w-full lg:w-[64rem] mx-auto py-6 px-2 flex justify-between items-center font-medium">
         <div className="flex items-center">
           <button
-            className={`bg-white hover:bg-slate-300 hover:text-slate-700 mx-2 flex items-center h-12 rounded-full ease-in-out duration-150 pl-4 pr-5`}
+            className={`bg-white hover:bg-slate-300 hover:text-slate-700 mx-2 flex items-center h-12 rounded-full ease-in-out duration-150 pl-4 pr-5 dark:bg-DMSubColor dark:hover:bg-slate-500 dark:hover:text-slate-600`}
             onClick={onClickPrev}
           >
-            <FaChevronRight className="text-xl mr-2 rotate-180" />
+            <FaChevronRight className="mr-2 text-xl rotate-180" />
             <span className="mb-0.5">이전</span>
           </button>
-          <div className="text-xl text-gray-600 mx-6 hidden md:inline-block">
+          <div className="hidden mx-6 text-xl text-gray-600 md:inline-block dark:text-gray-400">
             <span>{selectedIdx + 1}</span>
-            <span className="text-gray-400 before:content-['/'] before:text-gray-300 before:mr-3 before:ml-3 ">
+            <span className="text-gray-400 before:content-['/'] before:text-gray-300 before:mr-3 before:ml-3 dark:text-gray-200">
               {bestReviewCount}
             </span>
           </div>
           <button
-            className={`bg-white hover:bg-slate-300 hover:text-slate-700 mx-2 flex items-center h-12 rounded-full ease-in-out duration-150 pl-5 pr-4`}
+            className={`bg-white hover:bg-slate-300 hover:text-slate-700 mx-2 flex items-center h-12 rounded-full ease-in-out duration-150 pl-5 pr-4 dark:bg-DMSubColor dark:hover:bg-slate-500 dark:hover:text-slate-600`}
             onClick={onClickNext}
           >
             <span className="mb-0.5">다음</span>
-            <FaChevronRight className="text-xl ml-2" />
+            <FaChevronRight className="ml-2 text-xl" />
           </button>
         </div>
         <button
