@@ -110,7 +110,7 @@ const SearchReview = ({ keyword }: any) => {
 
   return (
     <div className="flex flex-col items-center justify-center w-full lg:w-[64rem] mx-auto">
-      <div className="mt-16 mb-4 justify-start w-full text-xl font-bold dark:text-white/70">
+      <div className="mt-16 mb-4 justify-start w-full text-xl font-bold dark:text-white">
         # {keyword} 에 대한 리뷰 검색 결과
       </div>
       <NoResult />
