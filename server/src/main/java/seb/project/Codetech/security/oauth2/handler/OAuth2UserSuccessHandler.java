@@ -12,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import lombok.extern.log4j.Log4j2;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
@@ -26,7 +27,7 @@ import seb.project.Codetech.security.auth.utils.UserAuthorityUtils;
 import seb.project.Codetech.user.entity.User;
 import seb.project.Codetech.user.repository.UserRepository;
 import seb.project.Codetech.user.service.UserService;
-
+@Log4j2
 public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 	private final JwtTokenizer jwtTokenizer;
 	private final UserAuthorityUtils authorityUtils;
@@ -76,11 +77,13 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 
 		if(registrationId.equals("kakao")) {
 			var oAuth2User = (OAuth2User) authentication.getPrincipal();
+			log.info(authentication.getPrincipal());
+			log.info(oAuth2User.getAttributes());
 			HashMap userInfo = oAuth2User.getAttribute("properties");
-			String username = userInfo.get("nickname").toString()+userInfo.get("profile_image").toString();
+			String username = oAuth2User.getAttribute("id").toString()+"@nworld.dev";
 			String nickname = userInfo.get("nickname").toString();
 			String provider = "kakao";
-			String password = userInfo.get("profile_image").toString();
+			String password = oAuth2User.getAttribute("id").toString()+userInfo.get("profile_image").toString();
 			List<String> authorities = authorityUtils.createRoles(username);
 			if (userRepository.findByEmail(username).isEmpty()) {
 				saveUser(nickname, username, password, provider);
