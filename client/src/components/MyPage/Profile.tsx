@@ -100,7 +100,7 @@ const Profile = () => {
             src={
               userProfileData?.image === 'null' ||
               userProfileData?.image === null
-                ? require('../../images/placeholder-image.png')
+                ? require('../../images/placeholder-img-profile.png')
                 : `https://codetech.nworld.dev${userProfileData?.image}`
             }
             alt=""
