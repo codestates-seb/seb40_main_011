@@ -51,9 +51,8 @@ const SearchProduct = ({ keyword }: any) => {
     return null;
   };
 
-  console.log(products);
   return (
-    <div className="flex flex-col items-center justify-center w-full lg:w-[64rem] mx-auto bg-zinc-100">
+    <div className="flex flex-col items-center justify-center w-full lg:w-[64rem] mx-auto bg-zinc-100 dark:bg-DMMainColor">
       <div className="mt-16 mb-4 justify-start w-full text-xl font-bold">
         # {keyword} 에 대한 제품 검색 결과
       </div>
@@ -69,12 +68,12 @@ const SearchProduct = ({ keyword }: any) => {
                 role="button"
                 onClick={onProductClick}
                 id={el.id.toString()}
-                className=" flex flex-col w-full bg-white rounded-lg"
+                className="dark:bg-DMSubColor flex flex-col w-full bg-white rounded-lg"
               >
                 {el.thumbnail.length === 0 ? (
                   <img
                     className="rounded-t-lg h-48"
-                    src={require('../../images/Image-null.png')}
+                    src={require('../../images/noSearchResult.png')}
                   />
                 ) : (
                   <img
@@ -89,7 +88,7 @@ const SearchProduct = ({ keyword }: any) => {
                   </div>
                   <div className="flex p-2 justify-between">
                     <div>{el.type.toLowerCase()}</div>
-                    <div className="이거 평점으로 바꿀거임">{el.createdAt}</div>
+                    <div>{el.createdAt}</div>
                   </div>
                 </div>
               </div>

@@ -16,6 +16,7 @@ import Spinner from '../../util/Spinner';
 import ScrollToTop from '../../util/ScrollToTop';
 import { BsArrowLeft } from 'react-icons/bs';
 import { AiOutlineEye } from '../../icons';
+import '@toast-ui/editor/dist/theme/toastui-editor-dark.css';
 
 const RvDetail = () => {
   interface markdownProps {
@@ -89,7 +90,7 @@ const RvDetail = () => {
     return (
       <>
         {markdown && (
-          <div id="viewer w-full">
+          <div id="viewer" className="dark:text-white">
             <Viewer initialValue={markdown} />
           </div>
         )}
@@ -121,11 +122,13 @@ const RvDetail = () => {
 
     return (
       <div className="flex items-center justify-between w-full px-5 md:px-12">
-        <div className="flex items-center bg-white rounded-3xl">
-          <img
-            className="w-12 h-12 rounded-2xl"
-            src={`https://codetech.nworld.dev${review?.userImage}`}
-          />
+        <div className="flex items-center bg-white rounded-3xl dark:bg-DMMainColor p-3">
+          <div>
+            <img
+              className="w-12 h-12 rounded-2xl"
+              src={`https://codetech.nworld.dev${review?.userImage}`}
+            />
+          </div>
           <div className="flex flex-col pl-2 pb-1">
             <span className="pt-0.5 font-medium text-black/70 text-lg">
               {review?.writer}
@@ -167,8 +170,8 @@ const RvDetail = () => {
         />
       )}
       <HandleSpinner />
-      <div className="bg-zinc-100 py-8">
-        <div className="flex flex-col justify-center mx-auto w-full lg:w-[64rem] px-4">
+      <div className="bg-zinc-100 py-8 dark:bg-DMMainColor dark:text-white">
+        <div className="flex flex-col justify-center mx-auto w-full lg:w-[64rem] px-4 ">
           <div className="w-full flex justify-between mb-4">
             <div
               className="grow-0 shrink-1 w-fit flex items-center h-12 pl-4 pr-4 md:pr-8 font-bold text-black/40 hover:text-black/70 duration-150 ease-in-out bg-white rounded-full hover:bg-slate-300 hover:text-slate-700"
@@ -192,7 +195,7 @@ const RvDetail = () => {
               </div>
             </div>
           </div>
-          <div className="bg-white rounded-t-3xl py-4 md:py-8">
+          <div className="bg-white dark:bg-DMSubColor rounded-t-3xl py-4 md:py-8">
             <ReviewInfo />
             <div className="flex justify-center px-5 md:px-12 pt-6 md:pt-12 pb-6 text-5xl leading-tight tracking-tight font-bold max-md:text-[2rem] break-keep text-center">
               {review?.title}
@@ -201,13 +204,13 @@ const RvDetail = () => {
           <div className={`flex justify-center items-center`}>
             {review.thumbnail.length === 0 ? null : (
               <div
-                className={`bg-white w-full flex justify-center items-center`}
+                className={`bg-white w-full flex justify-center items-center dark:bg-DMSubColor`}
               >
                 <img src={`https://codetech.nworld.dev${review?.thumbnail}`} />
               </div>
             )}
           </div>
-          <section className="bg-white rounded-b-3xl flex flex-col items-center px-5 md:px-12">
+          <section className="bg-white rounded-b-3xl flex flex-col items-center px-5 md:px-12 dark:bg-DMSubColor ">
             <div
               id="viewer"
               className="w-full md:px-12 my-6 md:my-12 whitespace-pre-wrap flex flex-col justify-center"

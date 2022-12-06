@@ -74,8 +74,8 @@ const ProductList = () => {
       {spinner ? (
         <Spinner />
       ) : (
-        <div className="bg-zinc-100">
-          <div className="mx-auto w-full lg:w-[64rem] flex flex-col items-center px-4">
+        <div className="bg-zinc-100 ">
+          <div className="mx-auto w-full lg:w-[64rem] flex flex-col items-center px-4 ">
             <MainCategory setCategory={setCategory} category={category} />
           </div>
           <div className="mx-auto w-full lg:w-[64rem] flex flex-wrap pt-4 px-1 pb-4">
