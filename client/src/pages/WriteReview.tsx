@@ -45,8 +45,8 @@ const WriteReview = ({ isEditMode }: editReviewProps) => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-full bg-zinc-100 max-md:pt-0 dark:bg-DMMainColor">
-      <div className="bg-white lg:w-[64rem] mx-auto w-full pb-14 px-10 max-sm:px-5 dark:bg-DMSubColor">
+    <div className="flex flex-col items-center justify-center w-full bg-zinc-100 max-md:pt-0 dark:bg-DMMainColor py-8">
+      <div className="bg-white lg:w-[64rem] mx-auto w-full pb-14 px-10 max-sm:px-5 dark:bg-DMSubColor rounded-3xl">
         {isModal === false ? null : (
           <AddProduct isModal={isModal} setIsModal={setIsModal} />
         )}

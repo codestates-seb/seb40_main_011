@@ -22,8 +22,6 @@ export default function Answer({
     setShowModal(!showModal);
   };
 
-  console.log(loginId);
-
   return (
     <>
       {showModal && (
@@ -33,19 +31,19 @@ export default function Answer({
           id={questionId}
         />
       )}
-      <div className="w-full flex mt-3 mb-1">
-        <div className="flex-none ml-10 mt-3">
+      <div className="w-full flex flex-col mt-4 pl-5 md:pl-12">
+        <div className="w-full flex mb-3 items-center">
           <Avatar image={image} />
-        </div>
-        <div className="w-full pl-2">
           <BodyTop
             createdAt={createdAt}
             nickname={nickname}
             adoptedId={adoptedId}
           />
+        </div>
+        <div className="w-full pl-2">
           <div className="flex relative">
             <div
-              className={`grow px-4 pt-2 pb-3 rounded bg-white text-gray-600 font-medium mr-2 ${
+              className={`grow px-4 pt-2 pb-3 rounded bg-white dark:bg-DMMainColor text-gray-600 dark:text-white font-medium mr-2 ${
                 id === adoptedId && `ring ring-green-400`
               }`}
             >

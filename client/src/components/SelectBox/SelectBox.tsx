@@ -51,18 +51,18 @@ export default function SelectBox({
     <div className="relative flex flex-col w-40">
       <button
         onClick={handleSpread}
-        className={`flex justify-between alsolute t-0 text-sm bg-white hover:bg-slate-300 h-10 rounded border border-slate-200 flex items-center px-4 pb-0.5 font-medium text-gray-500`}
+        className={`flex justify-between alsolute t-0 text-sm bg-white dark:bg-transparent hover:bg-slate-300 h-10 rounded border border-slate-200 dark:border-white/30 items-center px-4 pb-0.5 font-medium text-gray-500 dark:text-white/80`}
       >
         {selected} <AiFillCaretDown />
       </button>
       {spread && (
-        <ul className="z-30 absolute w-full top-0 border bg-white rounded overflow-hidden drop-shadow-md">
+        <ul className="z-30 absolute w-full top-0 border bg-white dark:border-white/30 dark:bg-DMSubColor rounded overflow-hidden">
           {filter.map((el, idx) => (
             <button
               onClick={handleSelect}
               key={idx}
               id={el}
-              className="w-full px-4 text-sm pb-3 pt-2 hover:bg-gray-100 flex items-center text-gray-500 hover:text-gray-900 font-medium"
+              className="w-full px-4 text-sm pb-3 pt-2 hover:bg-gray-100 dark:hover:bg-white/10 flex items-center text-gray-500 dark:text-white/70 hover:text-gray-900 dark:hover:text-white font-medium"
             >
               {el}
             </button>
@@ -72,7 +72,7 @@ export default function SelectBox({
       {spread && (
         <div
           onClick={handleSpread}
-          className="z-20 fixed inset-0 h-screen w-full bg-black/10"
+          className="z-20 fixed inset-0 h-screen w-full bg-black/10 dark:bg-black/70"
         />
       )}
     </div>

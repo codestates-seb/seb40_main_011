@@ -29,7 +29,6 @@ export default function PendingAnswer({
         break;
       case 401:
         alert('에러');
-        console.log('...');
         console.error(Result.status + ' Error');
         break;
       case 412: {
@@ -40,11 +39,9 @@ export default function PendingAnswer({
   };
 
   return (
-    <div className="w-full flex mt-3 mb-1">
-      <div className="ml-10 flex-none">
+    <div className="w-full flex flex-col mt-5 pl-8 md:pl-12">
+      <div className="w-full flex mb-3 items-center">
         <Avatar image={image} />
-      </div>
-      <div className="w-full">
         <BodyTop
           createdAt={createdAt}
           nickname={nickname}
@@ -53,19 +50,21 @@ export default function PendingAnswer({
           content={content}
           questionContent={questionContent}
         />
+      </div>
+      <div className="w-full">
         <div className="flex w-full">
           <div
-            className={`grow px-4 pt-2 pb-3 rounded bg-white text-gray-600 font-medium ${
+            className={`grow px-6 pt-5 pb-6 rounded bg-white dark:bg-DMSubColor text-gray-600  dark:text-white font-medium ${
               Number(loginId) !== questionWriterId && 'mr-2'
             }`}
           >
             {content}
           </div>
           {Number(loginId) === questionWriterId && (
-            <div className=" flex-none w-16 mx-2 flex justify-center items-center">
+            <div className=" flex-none w-16 ml-2 flex justify-center items-center">
               <button
                 onClick={handleAdopt}
-                className="group w-full h-full bg-green-200/50 rounded-lg text-4xl hover:ring hover:ring-green-300 duration-300"
+                className="group w-full h-full bg-green-200/50 dark:bg-green-100 rounded text-4xl hover:ring hover:ring-green-300 duration-300"
               >
                 <AiFillCheckCircle className="p-1 text-green-600 mx-auto" />
               </button>

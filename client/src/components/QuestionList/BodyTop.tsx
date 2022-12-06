@@ -69,7 +69,7 @@ export default function BodyTop({
   };
 
   return (
-    <div className="flex text-sm justify-between mb-2 items-center pr-2">
+    <div className="w-full flex text-sm justify-between items-center pl-3">
       {showModal && !questionContent && content && (
         <EditQuestion
           setShowModal={setShowModal}
@@ -86,17 +86,21 @@ export default function BodyTop({
         />
       )}
       {showAlert && <Confirm setShowModal={setShowAlert} msg={modalMsg} />}
-      <span>
-        <span className="font-bold text-gray-600">{nickname}</span>
-        <span className="before:content-['•'] before:mr-1.5 before:ml-1.5 text-gray-500/60 before:text-gray-300 font-medium tracking-tight">
-          {moment(createdAt).format('MM월 DD일')}
+      <div className="flex flex-col">
+        <span className="font-bold text-gray-600 dark:text-white/80">
+          {nickname}
         </span>
-        <span className="before:content-['•'] before:mr-1.5 before:ml-1.5 text-gray-500/60 before:text-gray-300 font-medium tracking-tight">
-          {format(createdAt)}
-        </span>
-      </span>
+        <div className="flex">
+          <span className="text-gray-500/60 dark:text-white/50  before:text-gray-300 dark:before:text-white/20 font-medium tracking-tight">
+            {moment(createdAt).format('MM월 DD일')}
+          </span>
+          <span className="hidden md:flex before:content-['•'] before:mr-1.5 before:ml-1.5 text-gray-500/60 dark:text-white/50 before:text-gray-300 dark:before:text-white/20 font-medium tracking-tight">
+            {format(createdAt)}
+          </span>
+        </div>
+      </div>
       {Number(loginId) === writerId && adoptedId === undefined && (
-        <div className="flex items-center">
+        <div className="flex items-center mt-2">
           <button
             onClick={() => {
               // if (editable || editable !== undefined) {
@@ -109,7 +113,7 @@ export default function BodyTop({
           >
             <XsRoundedButton name={'수정'} />
           </button>
-          <div className="h-3 border-l border border-gray-200 inline-block mx-1.5" />
+          <div className="h-3 border-l border border-gray-200 dark:border-white/10 inline-block mx-1.5" />
           <button
             onClick={() => {
               if (!editable && questionId !== undefined) {
