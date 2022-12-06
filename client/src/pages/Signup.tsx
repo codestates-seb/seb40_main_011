@@ -311,7 +311,7 @@ const Signup = () => {
         />
         <form name="signup" className="flex flex-col justify-center">
           <div
-            className={`relative bg-gray-50 rounded h-14 ring-inset ring-1 ring-slate-200 hover:ring-slate-400 hover:ring-2 dark:bg-DMMainTextColor dark:ring-DMMainColor ${
+            className={`relative bg-gray-50 rounded h-14 ring-inset ring-1 ring-slate-200 hover:ring-slate-400 hover:ring-2 dark:bg-DMThrColor dark:ring-DMMainColor ${
               nickname.length > 5 && !isName
                 ? 'mb-10 ring-red-500 ring-2'
                 : 'mb-4'
@@ -347,7 +347,7 @@ const Signup = () => {
           {/* 이메일 */}
           <div className="flex">
             <div
-              className={`grow relative bg-gray-50 rounded h-14 ring-inset ring-1 ring-slate-200 hover:ring-slate-400 hover:ring-2 dark:bg-DMMainTextColor dark:ring-DMMainColor ${
+              className={`grow relative bg-gray-50 rounded h-14 ring-inset ring-1 ring-slate-200 hover:ring-slate-400 hover:ring-2 dark:bg-DMThrColor dark:ring-DMMainColor ${
                 email.length > 5 && !isEmail
                   ? 'mb-10 ring-red-500 ring-2'
                   : 'mb-4'
@@ -397,22 +397,22 @@ const Signup = () => {
           {!emailBut ? null : (
             <div className="flex">
               <div
-                className={`relative w-3/4 bg-gray-50 rounded h-14 ring-inset ring-1 ring-slate-200 hover:ring-slate-400 hover:ring-2 mb-4 dark:bg-DMMainTextColor dark:ring-DMMainColor ${
+                className={`relative w-3/4 bg-gray-50 rounded h-14 ring-inset ring-1 ring-slate-200 hover:ring-slate-400 hover:ring-2 mb-4 dark:bg-DMThrColor dark:ring-DMMainColor ${
                   email.length > 5 && !isEmail && 'ring-red-500 ring-2'
                 }`}
               >
                 <input
                   type="text"
                   id="emailCertification"
-                  className="absolute top-0 w-full h-full px-6 pt-3 text-base font-medium bg-transparent outline-none peer/email input-ani dark:text-white"
+                  className="absolute top-0 w-full h-full px-6 pt-3 text-base font-medium bg-transparent rounded outline-none peer/email input-ani dark:text-white dark:bg-DMThrColor"
                   value={certification}
                   name="emailCertification"
                   onChange={onChangeCertification}
                   onKeyDown={(e) => handleEnter(e, 'but02')}
                 ></input>
                 <label
-                  className={`absolute font-medium top-4 left-6 text-gray-500 duration-200 pointer-events-none peer-focus/email:-translate-y-2.5 peer-focus/email:text-xs dark:text-white  ${
-                    email.length !== 0 &&
+                  className={`absolute font-medium top-4 left-6 text-gray-500 duration-200 pointer-events-none peer-focus/email:-translate-y-2.5 peer-focus/email:text-xs dark:text-white ${
+                    nickname.length !== 0 &&
                     'peer-valid/email:-translate-y-2.5 peer-valid/email:text-xs'
                   }`}
                 >
@@ -438,7 +438,7 @@ const Signup = () => {
           {/* 비밀번호 */}
           {/* 비밀번호 */}
           <div
-            className={`relative bg-gray-50 rounded h-14 ring-inset ring-1 ring-slate-200 hover:ring-slate-400 hover:ring-2 dark:bg-DMMainTextColor dark:ring-DMMainColor ${
+            className={`relative bg-gray-50 rounded h-14 ring-inset ring-1 ring-slate-200 hover:ring-slate-400 hover:ring-2 dark:bg-DMThrColor dark:ring-DMMainColor ${
               password.length > 5 && !isPassword
                 ? 'mb-10 ring-red-500 ring-2'
                 : 'mb-4'
@@ -483,7 +483,7 @@ const Signup = () => {
           {/* 비밀번호 확인 */}
           {/* 비밀번호 확인 */}
           <div
-            className={`relative bg-gray-50 rounded-bl rounded-br h-14 ring-inset ring-1 ring-slate-200 hover:ring-slate-400 hover:ring-2 dark:bg-DMMainTextColor dark:ring-DMMainColor ${
+            className={`relative bg-gray-50 rounded h-14 ring-inset ring-1 ring-slate-200 hover:ring-slate-400 hover:ring-2 dark:bg-DMThrColor dark:ring-DMMainColor ${
               passwordCheck.length > 5 && !isPasswordCheck
                 ? 'mb-10 ring-red-500 ring-2'
                 : 'mb-4'
