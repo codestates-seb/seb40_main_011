@@ -15,6 +15,8 @@ module.exports = {
         DMMainTextColor: '#545475',
         DMSubTextColor: '#3C3C55',
         DMThrTextColor: '#38384A',
+        DMInputColor: '#121212',
+        DMInputBorder: '#494C55',
       },
     },
   },

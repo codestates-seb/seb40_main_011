@@ -1,6 +1,5 @@
 //소분류 셀렉터
 //리뷰 작성 페이지에서 사용
-//안지은 작성
 import '../common.css';
 import React, { useState } from 'react';
 import { AiFillCaretDown } from 'react-icons/ai';
@@ -68,7 +67,7 @@ const ProductSelector = ({
     } catch (error: unknown) {
       handleError(error);
     }
-    setProductCategorySpread(!productCategorySpread); //여기 있어야 데이터 다 들어온 후 드롭다운이 뜸
+    setProductCategorySpread(!productCategorySpread);
     setBeforeClickname(upperText);
   };
 
@@ -103,9 +102,9 @@ const ProductSelector = ({
       {showModal && <Confirm msg={selectorMsg} setShowModal={setShowModal} />}
       <button
         onClick={handleSelectClick}
-        className={`justify-between alsolute t-0 text-sm bg-white h-10 rounded border border-slate-200 flex items-center px-4 pb-0.5 font-medium text-gray-500 ${
+        className={`justify-between alsolute t-0 text-sm bg-white h-10 rounded border border-slate-200 flex items-center px-4 pb-0.5 font-medium text-gray-500 dark:bg-DMMainTextColor dark:border-DMSubTextColor dark:text-white ${
           productCategorySpread &&
-          'rounded-bl-none rounded-br-none bg-slate-200 text-gray-400 border-b-0'
+          'rounded-bl-none rounded-br-none bg-slate-200 text-gray-400 border-b-0 dark:bg-DMThrColor'
         }`}
       >
         <p className={selectName.length > 10 ? `truncate` : undefined}>
@@ -118,12 +117,12 @@ const ProductSelector = ({
           onClick={handleSelect}
           className={
             categoriesData.length < 6
-              ? `selector-div-style`
-              : `selector-div-style h-60`
+              ? `selector-div-style dark:bg-DMMainTextColor dark:border-DMSubTextColor dark:text-DMThrTextColor`
+              : `selector-div-style h-60 dark:bg-DMMainTextColor dark:border-DMSubTextColor dark:text-DMThrTextColor`
           }
         >
           {categoriesData.length === 0 ? (
-            <button className="selector-but-dropdown-style">
+            <button className="selector-but-dropdown-style dark:hover:bg-DMThrColor dark:text-white">
               제품이 없습니다
             </button>
           ) : (
@@ -133,7 +132,7 @@ const ProductSelector = ({
                   key={idx}
                   onClick={handleButClick}
                   value={product.id}
-                  className="truncate selector-but-dropdown-style"
+                  className="truncate selector-but-dropdown-style dark:hover:bg-DMThrColor dark:text-white"
                 >
                   {product.name}
                 </button>

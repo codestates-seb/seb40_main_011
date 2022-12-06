@@ -7,6 +7,7 @@ import { GiHamburgerMenu } from '../../icons';
 import { BiSearch } from 'react-icons/bi';
 import { useState } from 'react';
 import Darkmode from './DarkMode';
+import useDarkMode from '../../store/darkMode';
 
 export default function Header() {
   const [menu, setMenu] = useState(false);
@@ -66,9 +67,13 @@ export default function Header() {
     setSearchBar(!searchBar);
   };
 
+  const { darkMode, setDarkMode } = useDarkMode();
   const [darkButton, setDarkButton] = useState(false);
-  const handleDarkkMode = () => {
+  const handleDarkkMode = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    Darkmode();
     setDarkButton(!darkButton);
+    setDarkMode(!darkMode);
   };
 
   return (
@@ -105,10 +110,7 @@ export default function Header() {
             {darkButton ? (
               <button
                 className="flex flex-row items-center h-full mx-2"
-                onClick={() => {
-                  Darkmode();
-                  setDarkButton(!darkButton);
-                }}
+                onClick={handleDarkkMode}
               >
                 <span className="flex items-center justify-center text-2xl text-gray-600 rounded-full material-icons w-14 h-14 hover:bg-slate-100">
                   <BsFillMoonFill />
@@ -117,10 +119,7 @@ export default function Header() {
             ) : (
               <button
                 className="flex flex-row items-center h-full mx-2"
-                onClick={() => {
-                  Darkmode();
-                  setDarkButton(!darkButton);
-                }}
+                onClick={handleDarkkMode}
               >
                 <span className="flex items-center justify-center text-2xl rounded-full material-icons w-14 h-14 hover:bg-slate-100">
                   <BsFillSunFill />
