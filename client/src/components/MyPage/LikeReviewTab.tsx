@@ -82,14 +82,14 @@ const LikeReviewTab = () => {
                     {el.content.replace(/"/g, '').replace(/<[^>]*>?/g, '')}
                   </div>
                   <div className="flex text-sm">
-                    <div className="px-3 py-0.5 bg-slate-300 rounded-lg">
+                    <div className="px-3 py-0.5 bg-slate-300 rounded-lg  dark:bg-DMSubColor">
                       {el.type}
                     </div>
                     <div className="px-3 py-0.5  hidden sm:block">
                       {el.productName}
                     </div>
-                    <div className="ml-auto text-slate-600">
-                      {new Date(el.createdAt).toLocaleDateString('en-US', {
+                    <div className="ml-auto text-slate-600 dark:text-gray-400">
+                      {new Date(el.createdAt).toLocaleDateString('ko-KR', {
                         month: 'short',
                         day: 'numeric',
                         year: 'numeric',

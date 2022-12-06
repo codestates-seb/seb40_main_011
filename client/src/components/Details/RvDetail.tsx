@@ -171,7 +171,7 @@ const RvDetail = () => {
         <div className="flex flex-col justify-center mx-auto w-full lg:w-[64rem] px-4">
           <div className="w-full flex justify-between mb-4">
             <div
-              className="grow-0 shrink-1 w-fit flex items-center h-12 pl-4 pr-8 font-bold text-black/40 hover:text-black/70 duration-150 ease-in-out bg-white rounded-full hover:bg-slate-300 hover:text-slate-700"
+              className="grow-0 shrink-1 w-fit flex items-center h-12 pl-4 pr-4 md:pr-8 font-bold text-black/40 hover:text-black/70 duration-150 ease-in-out bg-white rounded-full hover:bg-slate-300 hover:text-slate-700"
               role="button"
               onClick={onTypeClick}
             >
@@ -180,12 +180,14 @@ const RvDetail = () => {
                 {review.productName}
               </span>
             </div>
-            <div className="text-black/50 flex-none bg-white overflow-hidden h-12 rounded-full flex items-center pl-4 pr-5 ml-3">
+            <div className="text-black/20 flex-none h-12 rounded-full flex items-center pr-5 ml-5">
               <AiOutlineEye size="28" />
-              <div className="ml-1 pb-0.5 text-lg mr-2">{review.view}</div>
-              <span className="border-l border-zinc-200 mx-2 h-4" />
+              <div className="ml-1 pb-0.5 text-lg mr-2 text-black/60">
+                {review.view}
+              </div>
+              <span className="border-l border-zinc-300 mr-3 ml-2 h-4" />
               <AiOutlineHeart size="24" />
-              <div className="ml-1 pb-0.5 text-lg">
+              <div className="ml-1 pb-0.5 text-lg text-black/60">
                 {review.recommendNumber}
               </div>
             </div>

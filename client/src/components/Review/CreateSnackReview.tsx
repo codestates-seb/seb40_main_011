@@ -157,7 +157,7 @@ const CreateSnackReview = () => {
                   {el.name}
                 </span>
                 <Rating onClick={el.fnc} allowFraction size={28} />
-                <span className="px-4 md:px-2 bg-zinc-100 rounded ml-6 md:ml-3 pb-0.5 mt-1 text-black/70 font-medium text-center text-lg md:text-sm w-[4rem] md:w-[3rem]">
+                <span className="px-4 md:px-2 bg-zinc-100 rounded ml-6 md:ml-3 pb-0.5 mt-1 text-black/70 font-medium text-center text-lg md:text-sm w-[3rem]">
                   {score[el.en]}
                 </span>
               </div>

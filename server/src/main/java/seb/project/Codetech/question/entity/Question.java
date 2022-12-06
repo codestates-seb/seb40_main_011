@@ -81,7 +81,7 @@ public class Question extends BaseTime {
 	}
 
 	public boolean isDeletable() {
-		return this.adoptedId == null;
+		return this.answers.isEmpty();
 	}
 
 	public void checkAdoptable() {

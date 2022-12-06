@@ -47,21 +47,23 @@ const AvgRating = ({ productId }: any) => {
         <span className="text-black/70 tracking-tight pb-1">개</span>
       </div>
       <div className="text-black/50 mx-3 bg-white flex items-center px-4 rounded-xl pt-2 pb-3 mt-2">
-        <div className="flex flex-col md:flex-row justify-center">
-          <span className="order-2 md:order-1">가성비</span>
+        <div className="flex flex-col md:flex-row justify-center w-14 md:w-fit">
+          <span className="order-2 md:order-1 text-sm md:text-base">
+            가성비
+          </span>
           <span className="order-1 md:order-2 md:ml-1 font-medium text-black/60">
             {getDecial(snackReviewStats.avgCe)}
           </span>
         </div>
-        <span className="mx-1">·</span>
-        <div className="flex flex-col md:flex-row justify-center mx-2 md:mx-0">
+        <span className="hidden md:flex mx-1">·</span>
+        <div className="flex flex-col md:flex-row justify-center w-14 md:w-fit">
           <span className="order-2 md:order-1 text-sm md:text-base">품질</span>
           <span className="order-1 md:order-2 md:ml-1 font-medium text-black/60">
             {getDecial(snackReviewStats.avgQlt)}
           </span>
         </div>
-        <span className="mx-1">·</span>
-        <div className="flex flex-col md:flex-row justify-center mx-2 md:mx-0">
+        <span className="hidden md:flex mx-1">·</span>
+        <div className="flex flex-col md:flex-row justify-center w-14 md:w-fit">
           <span className="order-2 md:order-1 text-sm md:text-base">
             만족감
           </span>
@@ -69,15 +71,15 @@ const AvgRating = ({ productId }: any) => {
             {getDecial(snackReviewStats.avgStf)}
           </span>
         </div>
-        <span className="mx-1">·</span>
-        <div className="flex flex-col md:flex-row justify-center mx-2 md:mx-0">
+        <span className="hidden md:flex mx-1">·</span>
+        <div className="flex flex-col md:flex-row justify-center w-14 md:w-fit">
           <span className="order-2 md:order-1 text-sm md:text-base">성능</span>
           <span className="order-1 md:order-2 md:ml-1 font-medium text-black/60">
             {getDecial(snackReviewStats.avgPerf)}
           </span>
         </div>
-        <span className="mx-1">·</span>
-        <div className="flex flex-col md:flex-row justify-center mx-2 md:mx-0">
+        <span className="hidden md:flex mx-1">·</span>
+        <div className="flex flex-col md:flex-row justify-center w-14 md:w-fit">
           <span className="order-2 md:order-1 text-sm md:text-base">
             디자인
           </span>

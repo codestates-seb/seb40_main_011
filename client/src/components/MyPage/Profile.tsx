@@ -94,7 +94,7 @@ const Profile = () => {
         />
       )}
 
-      <div className="flex flex-col items-center justify-center pt-2 bg-zinc-100 md:flex-row">
+      <div className="flex flex-col items-center justify-center pt-2 bg-zinc-100 md:flex-row dark:bg-DMMainColor dark:text-white">
         <div className="mx-10">
           <img
             src={`https://codetech.nworld.dev${userProfileData?.image}`}
@@ -103,7 +103,7 @@ const Profile = () => {
           />
           <div className="flex justify-center">
             <button
-              className="px-12 py-2 mt-4 mb-10 bg-slate-300 rounded onClick={openModalHandler}"
+              className="px-12 py-2 mt-4 mb-10 rounded-2xl bg-slate-300 dark:bg-DMSubColor"
               onClick={openEditProfileImgModalHandler}
             >
               사진 업로드
@@ -122,13 +122,13 @@ const Profile = () => {
           </div>
           <div className="flex items-center justify-center mt-3 mb-5 sm:mb-10 lg:items-start lg:justify-start">
             <button
-              className="px-10 py-2 m-4 ml-0 rounded sm:px-14 bg-slate-200"
+              className="px-10 py-2 m-4 ml-0 rounded-2xl sm:px-14 bg-slate-200 dark:bg-DMSubColor"
               onClick={openEditProfileModalHandler}
             >
               닉네임 수정
             </button>
             <button
-              className="px-10 py-2 m-4 rounded sm:px-14 bg-slate-200"
+              className="px-10 py-2 m-4 rounded-2xl sm:px-14 bg-slate-200 dark:bg-DMSubColor"
               onClick={openEditPasswordModalHandler}
             >
               비밀번호 수정

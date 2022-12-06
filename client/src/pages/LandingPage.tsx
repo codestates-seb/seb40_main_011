@@ -7,12 +7,12 @@ const LandingPage = () => {
     <>
       <div className="flex flex-col items-center justify-start py-10 bg-white px-26 ">
         <div className="flex flex-col items-center lg:mt-20">
-          <p className="text-3xl font-medium lg:text-6xl sm:text-4xl md:text-5xl">
+          <p className="text-2xl font-medium lg:text-6xl sm:text-3xl md:text-4xl">
             관심있는 장비! 사고싶은 장비!
           </p>
           <br />
-          <p className="flex text-4xl font-semibold lg:text-7xl sm:text-5xl md:text-6xl">
-            <p className="mr-3 text-blue-600 lg:mr-5">자세한 리뷰가 </p>
+          <p className="flex pr-1 text-3xl font-semibold lg:text-7xl sm:text-4xl md:text-5xl">
+            <p className="pl-1 mr-3 text-blue-600 lg:mr-5">자세한 리뷰가 </p>
             {` `}궁금하다면?
           </p>
           <button
@@ -27,7 +27,7 @@ const LandingPage = () => {
           <img
             src={require('../images/Dec-05-2022 14-15-32.gif')}
             alt=""
-            className="object-cover w-full"
+            className="object-cover w-full px-3"
           />
         </div>
 

@@ -63,8 +63,16 @@ public class QuestionController {
 	public ResponseEntity<QuestionResponseDto.Adopt> adoptAnswer(@Positive @PathVariable Long id,
 		@Valid @RequestBody QuestionRequestDto.Adopt request) {
 		Long adoptedId = questionService.adoptAnswer(id, request.getAnswerId());
-		QuestionResponseDto.Adopt response = new QuestionResponseDto.Adopt(id, adoptedId);
 
-		return ResponseEntity.ok().body(response);
+		return ResponseEntity.ok()
+			.body(new QuestionResponseDto.Adopt(id, adoptedId));
+	}
+
+	@PatchMapping("/{id}/adopt")
+	public ResponseEntity<QuestionResponseDto.CancelAdoption> cancelAdoption(@Positive @PathVariable Long id) {
+		Long canceledId = questionService.cancelAdoption(id);
+
+		return ResponseEntity.ok()
+			.body(new QuestionResponseDto.CancelAdoption(id, canceledId));
 	}
 }
