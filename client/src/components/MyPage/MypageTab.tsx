@@ -1,5 +1,10 @@
 import { useState } from 'react';
 import {
+  BsHeartFill,
+  BsFillPatchQuestionFill,
+  BsFillLightbulbFill,
+  BsChatSquareTextFill,
+  BsFileRichtextFill,
   BsFileRichtext,
   BsChatSquareText,
   BsHeart,
@@ -24,30 +29,35 @@ const MypageTab = (): JSX.Element => {
   const menuArr = [
     {
       icon: <BsFileRichtext />,
+      iconSelect: <BsFileRichtextFill />,
       name: '상세 리뷰',
       content: 'reviews',
       page: <ReviewsTab />,
     },
     {
       icon: <BsChatSquareText />,
+      iconSelect: <BsChatSquareTextFill />,
       name: '한줄 리뷰',
       content: 'snack-reviews',
       page: <SnackReviewTab />,
     },
     {
       icon: <BsHeart />,
+      iconSelect: <BsHeartFill />,
       name: '좋아요',
       content: 'recommends',
       page: <LikeReviewTab />,
     },
     {
       icon: <BsPatchQuestion />,
+      iconSelect: <BsFillPatchQuestionFill />,
       name: '내 질문',
       content: 'questions',
       page: <QuestionsTab />,
     },
     {
       icon: <BsLightbulb />,
+      iconSelect: <BsFillLightbulbFill />,
       name: '내 답글',
       content: 'answers',
       page: <AnswersTab />,
@@ -61,20 +71,24 @@ const MypageTab = (): JSX.Element => {
 
   return (
     <div className="bg-white dark:bg-DMThrColor dark:text-white">
-      <div className="flex justify-center dark:border-DMThrColor">
-        <ul className="flex flex-row justify-between w-full max-w-screen-lg px-10 mx-auto lg:px-24">
+      <div className="lg:w-[64rem] mx-auto flex justify-center">
+        <ul className="w-full flex md:px-5">
           {menuArr.map((ele, index) => {
             return (
               <button
                 key={index}
-                className={
-                  currentTab === index
-                    ? 'font-medium border-b-2 border-black flex justify-evenly items-center w-1/4 py-3 px-4 lg:px-8 dark:border-white'
-                    : 'border-b-2 hover:bg-slate-200 flex justify-evenly items-center w-1/4 py-3 px-4 lg:px-8 dark:border-DMSubColor'
-                }
+                className={`h-16 flex justify-evenly items-center w-1/4  px-4 lg:px-8 text-lg font-medium
+                  ${
+                    currentTab === index
+                      ? 'font-medium border-b-2 border-slate-400 dark:border-white hover:dark:bg-DMSubColor/50 bg-slate-200 dark:bg-DMSubColor/50 dark:text-white text-slate-700'
+                      : 'border-b-2 hover:bg-slate-300  dark:border-DMSubColor/40 hover:dark:bg-DMSubColor/80 dark:text-white/70 dark:hover:text-white text-slate-500 hover:text-slate-700'
+                  }
+                `}
                 onClick={() => selectMenuHandler(index)}
               >
-                <p className="block"> {ele.icon}</p>
+                <p className="block text-slate-600 dark:text-white text-2xl md:text-xl pt-0.5">
+                  {currentTab === index ? ele.iconSelect : ele.icon}
+                </p>
                 <p className="hidden md:block"> {ele.name}</p>
               </button>
             );

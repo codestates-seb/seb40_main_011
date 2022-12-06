@@ -40,7 +40,8 @@ const MyPage = (): JSX.Element => {
             <MypageTab />
             <div className="flex justify-center">
               <button
-                className="px-12 py-2 rounded-2xl bg-slate-300 m-14 dark:text-white dark:bg-DMMainColor"
+                className="flex items-center font-medium w-32 sm:w-[10rem] md:w-[12rem] justify-center h-12 py-2 mx-1 rounded-xl  bg-zinc-50 hover:bg-zinc-200/80 dark:bg-DMSubColor/20 hover:dark:bg-DMSubColor/60 my-12 text-black/30 hover:text-black/60 dark:text-white/60 hover:dark:text-white/80"
+                // className="px-12 py-2 rounded-2xl bg-slate-300 m-14 dark:text-white dark:bg-DMMainColor"
                 onClick={openOptOutModalHandler}
               >
                 회원 탈퇴

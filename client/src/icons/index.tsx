@@ -1,4 +1,12 @@
-import { BsFillPatchExclamationFill, BsFilePerson } from 'react-icons/bs';
+import {
+  BsFileRichtextFill,
+  BsChatFill,
+  BsHeartFill,
+  BsFillPatchExclamationFill,
+  BsFillPatchQuestionFill,
+  BsFilePerson,
+  BsFillLightbulbFill,
+} from 'react-icons/bs';
 import { MdOutlineEmail } from 'react-icons/md';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import {
@@ -21,6 +29,11 @@ import {
 import { SiNaver } from 'react-icons/si';
 
 export {
+  BsFileRichtextFill,
+  BsChatFill,
+  BsHeartFill,
+  BsFillPatchQuestionFill,
+  BsFillLightbulbFill,
   SiNaver,
   AiOutlineEye,
   GiHamburgerMenu,

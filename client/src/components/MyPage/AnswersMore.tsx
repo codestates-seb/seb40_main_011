@@ -14,7 +14,7 @@ export const AnswersMore = ({ el }: any) => {
       <div>
         {!more ? (
           <>
-            <p className="mb-1 overflow-hidden text-lg text-ellipsis line-clamp-2 ">
+            <p className="mb-1 overflow-hidden text-lg dark:text-white text-black font-medium text-ellipsis line-clamp-2 ">
               {el.answers.content[0].content}
             </p>
             {count > 1 ? (
