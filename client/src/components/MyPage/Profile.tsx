@@ -97,7 +97,12 @@ const Profile = () => {
       <div className="flex flex-col items-center justify-center pt-2 bg-zinc-100 md:flex-row dark:bg-DMMainColor dark:text-white">
         <div className="mx-10">
           <img
-            src={`https://codetech.nworld.dev${userProfileData?.image}`}
+            src={
+              userProfileData?.image === 'null' ||
+              userProfileData?.image === null
+                ? require('../../images/placeholder-img-profile.png')
+                : `https://codetech.nworld.dev${userProfileData?.image}`
+            }
             alt=""
             className="object-cover mt-10 border-none rounded-full bg-gray-400/90 w-60 h-60"
           />
