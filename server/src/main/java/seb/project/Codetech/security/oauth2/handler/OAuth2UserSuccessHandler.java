@@ -98,14 +98,15 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 		redisTemplate.opsForValue()
 				.set(email,refreshToken, 168 * 60 * 60 * 1000L, TimeUnit.MILLISECONDS);
 
-		String uri = createURI("Bearer " +accessToken, refreshToken).toString();
+		String uri = createURI("Bearer " +accessToken, refreshToken, email).toString();
 		getRedirectStrategy().sendRedirect(request, response, uri);
 	}
 
-	private URI createURI(String accessToken, String refreshToken) {
+	private URI createURI(String accessToken, String refreshToken, String email) {
 		MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
 		queryParams.add("access_token", accessToken);
 		queryParams.add("refresh_token", refreshToken);
+		queryParams.add("id",userService.findUserId(email).toString());
 
 		return UriComponentsBuilder
 			.newInstance()
