@@ -66,7 +66,7 @@ const ProductList = () => {
   useEffect(() => {
     setTimeout(() => {
       setSpinner(false);
-    }, 500);
+    }, 700);
   }, []);
 
   return (

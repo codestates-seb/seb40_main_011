@@ -43,10 +43,7 @@ const RvDetail = () => {
     thumbnail: '',
     recommends: [],
   });
-  const [darkMode, setDarkMode] = useState(localStorage.getItem('color-theme'));
-  useEffect(() => {
-    setDarkMode(localStorage.getItem('color-theme'));
-  }, [localStorage.getItem('color-theme')]);
+
   const { loginId } = useIsLogin();
   const [comments, setComments] = useState<ReviewComments[]>([]);
   const [showModal, setShowModal] = useState(false);
