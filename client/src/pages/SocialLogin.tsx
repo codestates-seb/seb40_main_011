@@ -45,5 +45,5 @@ export default function SocialLogin() {
     }
   }, [token]);
 
-  return;
+  return <div></div>;
 }
