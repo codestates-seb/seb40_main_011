@@ -10,8 +10,7 @@ import AddProduct from '../components/Modal/AddProduct';
 import ThumbnailModal from '../components/Modal/ThumbnailModal';
 import useCategories from '../store/categories';
 import { editReviewProps } from '../types/mainPageTypes';
-import useDarkMode from '../store/darkMode';
-import Darkmode from '../components/Header/DarkMode';
+import { useDarkMode } from '../store/darkMode';
 
 const WriteReview = ({ isEditMode }: editReviewProps) => {
   const { title, setTitle, thumbnailImg } = useReview();
@@ -44,14 +43,6 @@ const WriteReview = ({ isEditMode }: editReviewProps) => {
     e.preventDefault();
     setOpenThum(!openThum);
   };
-
-  const { darkMode, setDarkMode } = useDarkMode();
-  useEffect(() => {
-    if (!darkMode) {
-      Darkmode();
-      setDarkMode(!darkMode);
-    }
-  }, []);
 
   return (
     <div className="flex flex-col items-center justify-center w-full bg-zinc-100 max-md:pt-0 dark:bg-DMMainColor">

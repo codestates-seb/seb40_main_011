@@ -6,8 +6,7 @@ import { useIsLogin } from '../../store/login';
 import { GiHamburgerMenu } from '../../icons';
 import { BiSearch } from 'react-icons/bi';
 import { useEffect, useState } from 'react';
-import Darkmode from './DarkMode';
-import useDarkMode from '../../store/darkMode';
+import { useDarkMode } from '../../store/darkMode';
 
 export default function Header() {
   const [menu, setMenu] = useState(false);
@@ -67,8 +66,16 @@ export default function Header() {
     setSearchBar(!searchBar);
   };
 
-  const [darkButton, setDarkButton] = useState<boolean>();
-  Darkmode();
+  const { darkMode, setDarkMode } = useDarkMode();
+  useEffect(() => {
+    if (darkMode) {
+      localStorage.setItem('color theme', 'dark');
+      document.documentElement.classList.add('dark');
+    } else {
+      localStorage.setItem('color theme', 'light');
+      document.documentElement.classList.remove('dark');
+    }
+  }, [darkMode]);
 
   return (
     <div className="sticky top-0 z-20 bg-white">
@@ -101,12 +108,11 @@ export default function Header() {
             </>
           ) : null}
           <div className="flex max-md:hidden">
-            {darkButton ? (
+            {darkMode ? (
               <button
                 className="flex flex-row items-center h-full mx-2"
                 onClick={() => {
-                  setDarkButton(true);
-                  Darkmode();
+                  setDarkMode(!darkMode);
                 }}
               >
                 <span className="flex items-center justify-center text-2xl text-gray-600 rounded-full material-icons w-14 h-14 hover:bg-slate-100">
@@ -117,8 +123,7 @@ export default function Header() {
               <button
                 className="flex flex-row items-center h-full mx-2"
                 onClick={() => {
-                  setDarkButton(false);
-                  Darkmode();
+                  setDarkMode(!darkMode);
                 }}
               >
                 <span className="flex items-center justify-center text-2xl rounded-full material-icons w-14 h-14 hover:bg-slate-100">
