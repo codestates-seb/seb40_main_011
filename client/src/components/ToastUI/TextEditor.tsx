@@ -16,6 +16,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { loginRefresh } from '../../util/loginRefresh';
 import Confirm from '../Modal/Confirm';
 import useCategories from '../../store/categories';
+import { useDarkMode } from '../../store/darkMode';
 
 function TextEditor() {
   const params = useParams();
@@ -28,6 +29,8 @@ function TextEditor() {
       setContentCount(countData);
     }
   };
+  //다크모드
+  const { darkMode } = useDarkMode();
 
   const editorRef = useRef<Editor>(null);
   const {
@@ -105,7 +108,8 @@ function TextEditor() {
           height="550px"
           initialEditType="wysiwyg"
           usageStatistics={false}
-          theme={localStorage.getItem('color-theme') === 'light' ? '' : 'dark'}
+          theme={darkMode ? 'dark' : ''}
+          onChange={onChangeContent}
           plugins={[[codeSyntaxHighlight, { highlighter: Prism }]]}
           hooks={{
             async addImageBlobHook(blob, callback) {
@@ -217,7 +221,7 @@ function TextEditor() {
         initialEditType="wysiwyg"
         height="550px"
         usageStatistics={false}
-        theme={localStorage.getItem('color-theme') === 'light' ? '' : 'dark'}
+        theme={darkMode ? 'dark' : ''}
         plugins={[[codeSyntaxHighlight, { highlighter: Prism }]]}
         onChange={onChangeContent}
         hooks={{
