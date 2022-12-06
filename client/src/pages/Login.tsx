@@ -231,10 +231,10 @@ export default function Login() {
           <div
             role="button"
             onClick={() => handleKakao()}
-            className="flex items-center h-16 p-3 mt-4 bg-white border rounded-full group hover:border-0 hover:bg-yellow-300 dark:border-DMThrColor dark:bg-DMMainColor dark:hover:bg-yellow-300"
+            className="group flex items-center h-16 p-3 mt-4 bg-white border rounded-full group hover:border-0 hover:bg-yellow-300 dark:border-DMThrColor dark:bg-DMMainColor dark:hover:bg-yellow-300"
           >
-            <RiKakaoTalkFill className="flex-none w-12 h-12 p-2 mr-2 overflow-hidden text-black transition-all duration-300 bg-yellow-300 rounded-full group-hover:p-1 bg-border-0" />
-            <div className="mr-12 font-bold text-center grow text-black/70 dark:text-white/40 group-hover:text-white">
+            <RiKakaoTalkFill className="flex-none w-12 h-12 p-2 mr-2 overflow-hidden text-black bg-yellow-300 rounded-full group-hover:p-1 bg-border-0" />
+            <div className="mr-12 font-bold text-center grow text-black/70 dark:text-white/70 dark:group-hover:text-black/80">
               카카오톡으로 로그인
             </div>
           </div>
@@ -243,8 +243,8 @@ export default function Login() {
             onClick={() => handleGoogle()}
             className="flex items-center h-16 p-3 mt-3 bg-white border rounded-full group hover:border-0 hover:bg-red-500 dark:border-DMThrColor dark:bg-DMMainColor dark:hover:hover:bg-red-500"
           >
-            <AiOutlineGoogle className="flex-none w-12 h-12 p-2 mr-2 overflow-hidden text-white transition-all duration-300 bg-red-500 rounded-full group-hover:p-1 bg-border-0" />
-            <div className="mr-12 font-bold text-center grow text-black/70 group-hover:text-black/80 group-hover:text-white dark:text-white/40">
+            <AiOutlineGoogle className="flex-none w-12 h-12 p-2 mr-2 overflow-hidden text-white bg-red-500 rounded-full group-hover:p-1 bg-border-0" />
+            <div className="mr-12 font-bold text-center grow text-black/70 group-hover:text-white dark:text-white/70">
               구글로 로그인
             </div>
           </div>
@@ -253,8 +253,10 @@ export default function Login() {
             onClick={() => handleNaver()}
             className="flex items-center h-16 p-3 mt-3 bg-white border rounded-full group hover:border-0 hover:bg-green-500 dark:border-DMThrColor dark:bg-DMMainColor dark:hover:bg-green-500"
           >
-            <SiNaver className="flex-none w-12 h-12 p-2 mr-2 overflow-hidden text-white transition-all duration-300 bg-green-500 rounded-full group-hover:p-1 bg-border-0" />
-            <div className="mr-12 font-bold text-center grow text-black/70 group-hover:text-black/80 group-hover:text-white dark:text-white/40">
+            <div className="flex-none w-12 h-12 mr-2 overflow-hidden p-1 group-hover:p-0.5 bg-green-500 rounded-full">
+              <SiNaver className="w-full h-full text-green-500 bg-white rounded-full group-hover:p-0 ring-inset ring-4 ring-green-500 p-0.5" />
+            </div>
+            <div className="mr-12 font-bold text-center grow text-black/70 group-hover:text-black/80 group-hover:text-white dark:text-white/70">
               네이버로 로그인
             </div>
           </div>
@@ -265,7 +267,7 @@ export default function Login() {
           </button> */}
         </div>
       </div>
-      <div className="my-4 pt-1.5 pb-2 px-8 hover:bg-white/20 rounded-full dark:hover:bg-DMSubColor">
+      <div className="my-4 pt-1.5 pb-2 px-8 bg-white/40 hover:bg-white/70 rounded-full dark:bg-DMSubColor/60 dark:hover:bg-DMSubColor">
         <label className="font-medium text-gray-500" htmlFor="goSignup">
           회원가입이 안되어있으시다구요?
         </label>

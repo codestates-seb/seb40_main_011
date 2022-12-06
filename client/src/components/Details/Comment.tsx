@@ -165,7 +165,7 @@ export default function Comment({ reviewComments }: CommentProps) {
           <img
             src={`https://codetech.nworld.dev${reviewComments?.userImage}`}
             alt=""
-            className="flex-none w-12 h-12 rounded-2xl mr-2 ring ring-zinc-100"
+            className="flex-none w-12 h-12 rounded-2xl mr-2 ring ring-zinc-100 dark:ring-slate-600"
           />
           <div className="grow">
             <div className="flex justify-between mb-1.5 items-center">
@@ -188,7 +188,7 @@ export default function Comment({ reviewComments }: CommentProps) {
                 />
               </div>
             </div>
-            <div className="ring-1 ring-gray-200 rounded-xl overflow-hidden bg-white">
+            <div className="ring-1 ring-gray-200 dark:ring-white/30 rounded-xl overflow-hidden bg-white">
               {isEditMode ? (
                 <>
                   <input
@@ -206,11 +206,7 @@ export default function Comment({ reviewComments }: CommentProps) {
                   >
                     <TextareaAutosize
                       onChange={handleSubComment}
-                      placeholder={
-                        isLogin
-                          ? '댓글 달기... '
-                          : '댓글을 달기위해 로그인 하세요'
-                      }
+                      placeholder={isLogin ? '댓글 달기... ' : '로그인 하세요'}
                       className="peer w-full resize-none pl-6 mt-2 mb-3 outline-none font-medium bg-transparent"
                     />
                     <button
@@ -225,7 +221,7 @@ export default function Comment({ reviewComments }: CommentProps) {
                 </>
               ) : (
                 <>
-                  <div className="dark:bg-DMSubColor dark:text-white px-6 pt-3 pb-4 border-b border-gray-200 bg-white text-gray-600 font-medium">
+                  <div className="dark:bg-DMSubColor dark:text-white px-6 pt-3 pb-4 border-b border-gray-200 dark:border-white/30 bg-white text-gray-600 font-medium">
                     {comment}
                   </div>
                   <form
@@ -234,11 +230,7 @@ export default function Comment({ reviewComments }: CommentProps) {
                   >
                     <TextareaAutosize
                       onChange={handleSubComment}
-                      placeholder={
-                        isLogin
-                          ? '댓글 달기...'
-                          : '댓글을 달기위해 로그인하세요...'
-                      }
+                      placeholder={isLogin ? '댓글 달기...' : '로그인하세요...'}
                       className="dark:text-white peer w-full resize-none pl-6 mt-2 mb-3 outline-none font-medium bg-transparent"
                     />
                     <button

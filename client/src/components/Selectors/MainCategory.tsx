@@ -29,7 +29,8 @@ const MainCategory = ({ setCategory, category }: CategoryProps) => {
             onClick={onClick}
             id={el.id}
             className={` flex-none h-14 pb-0.5 rounded-full md:grow lg:snap-x w-28 grow-0 hover:bg-slate-200/70 hover:text-slate-500 font-medium dark:hover:bg-DMThrColor/30 dark:hover:text-gray-300 ${
-              category === el.id && 'bg-slate-300 dark:bg-DMThrColor'
+              category === el.id &&
+              'bg-slate-300 dark:bg-DMThrColor dark:text-white'
             }`}
           >
             <div>{el.name}</div>

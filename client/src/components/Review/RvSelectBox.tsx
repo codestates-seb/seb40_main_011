@@ -22,15 +22,15 @@ export default function RvSelectBox({
       <button
         onClick={handleSelect}
         id={selected}
-        className={`dark:text-gray-300 dark:bg-DMMainColor  dark:border-DMThrColor flex justify-between alsolute t-0 text-sm bg-white h-10 rounded border border-slate-200 flex items-center px-4 pb-0.5 font-medium text-gray-500 ${
+        className={` dark:text-gray-300 bg-white  dark:bg-DMMainColor  dark:border-DMThrColor flex justify-between alsolute t-0 text-sm h-10 rounded border border-slate-200 items-center px-4 pb-0.5 font-medium text-gray-500 ${
           spread &&
-          'rounded-bl-none rounded-br-none bg-slate-200 text-gray-400 border-b-0'
+          'rounded-b-none bg-slate-200 text-gray-400 border-b-0 overflow-hidden'
         }`}
       >
         {selected} {spread ? <AiFillCaretUp /> : <AiFillCaretDown />}
       </button>
       {spread && (
-        <ul className="absolute w-full overflow-hidden bg-white border top-10 rounded-bl-xl rounded-br-xl drop-shadow-md">
+        <ul className="absolute w-full overflow-hidden bg-white border dark:border-gray-500 top-10 rounded-bl-xl rounded-br-xl drop-shadow-md">
           {selector
             .filter((el) => el !== selected)
             .map((el, idx) => (
