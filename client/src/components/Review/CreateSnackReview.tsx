@@ -157,7 +157,7 @@ const CreateSnackReview = () => {
                   {el.name}
                 </span>
                 <Rating onClick={el.fnc} allowFraction size={28} />
-                <span className="px-4 md:px-2 bg-zinc-100 rounded ml-6 md:ml-3 pb-0.5 mt-1 text-black/70 font-medium text-center text-lg md:text-sm w-[3rem]">
+                <span className="px-4 md:px-2 bg-zinc-100 rounded ml-6 md:ml-3 pb-0.5 mt-1 text-black/70 font-medium text-center text-lg md:text-sm w-[3rem] dark:bg-DMMainColor dark:text-gray-300">
                   {score[el.en]}
                 </span>
               </div>
@@ -173,7 +173,7 @@ const CreateSnackReview = () => {
                 onFocus={onInputFocus}
                 minRows={3}
                 maxRows={4}
-                className={` dark:bg-DMSubColor w-full outline-none text-gray-300 font-medium resize-none  focus:text-gray-700 text-lg ${
+                className={` dark:bg-DMSubColor w-full outline-none dark:text-gray-300 font-medium resize-none  text-gray-700 text-lg ${
                   content.length !== 0 && `text-gray-700`
                 }`}
                 placeholder="Enter your Review..."

@@ -96,7 +96,7 @@ const EditProfile = ({
               value={username}
               onChange={handleUsername}
               placeholder="닉네임을 입력해주세요"
-              className="flex w-full text-sm sm:text-lg "
+              className="flex w-full text-sm sm:text-lg dark:bg-DMSubColor"
             />
           </div>
           {usernameError && (
@@ -107,13 +107,13 @@ const EditProfile = ({
         </div>
         <div className="flex justify-center pt-8 mb-10">
           <button
-            className="w-1/3 py-3 mx-5 border rounded-3xl"
+            className="w-1/3 py-3 mx-5 border rounded-3xl dark:bg-DMMainTextColor dark:border-DMSubTextColor "
             onClick={openEditProfileModalHandler}
           >
             취소
           </button>
           <button
-            className="w-1/3 py-3 mx-5 border rounded-3xl bg-slate-300"
+            className="w-1/3 py-3 mx-5 text-white bg-blue-600 rounded-3xl hover:bg-blue-500"
             onClick={handleEditNickName}
           >
             확인
