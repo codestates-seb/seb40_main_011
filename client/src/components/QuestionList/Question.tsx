@@ -4,6 +4,7 @@ import Answer from './Answer';
 import { QuestionProps, AnswerCardsProps } from '../../types/mainPageTypes';
 import { useState } from 'react';
 import Avatar from '../Avatar/Avatar';
+import { BsFillChatTextFill } from 'react-icons/bs';
 
 export default function Question({
   createdAt,
