@@ -67,16 +67,8 @@ export default function Header() {
     setSearchBar(!searchBar);
   };
 
-  const { darkMode, setDarkMode } = useDarkMode();
-  const [darkButton, setDarkButton] = useState(false);
-  const handleDarkkMode = (e: React.MouseEvent<HTMLButtonElement>) => {
-    setDarkButton(!darkButton);
-    setDarkMode(!darkMode);
-  };
-
-  useEffect(() => {
-    Darkmode();
-  }, [darkMode]);
+  const [darkButton, setDarkButton] = useState<boolean>();
+  Darkmode();
 
   return (
     <div className="sticky top-0 z-20 bg-white">
@@ -113,8 +105,8 @@ export default function Header() {
               <button
                 className="flex flex-row items-center h-full mx-2"
                 onClick={() => {
+                  setDarkButton(true);
                   Darkmode();
-                  setDarkButton(!darkButton);
                 }}
               >
                 <span className="flex items-center justify-center text-2xl text-gray-600 rounded-full material-icons w-14 h-14 hover:bg-slate-100">
@@ -125,8 +117,8 @@ export default function Header() {
               <button
                 className="flex flex-row items-center h-full mx-2"
                 onClick={() => {
+                  setDarkButton(false);
                   Darkmode();
-                  setDarkButton(!darkButton);
                 }}
               >
                 <span className="flex items-center justify-center text-2xl rounded-full material-icons w-14 h-14 hover:bg-slate-100">
