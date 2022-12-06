@@ -89,7 +89,7 @@ const ReviewLists = () => {
   };
 
   return (
-    <div className="pb-12 bg-zinc-100">
+    <div className="pb-12 bg-zinc-100 dark:bg-DMMainColor dark:text-gray-300">
       <div
         className="mx-auto w-full lg:w-[64rem] flex flex-col items-center px-4"
         onClick={() => {
@@ -98,13 +98,13 @@ const ReviewLists = () => {
         }}
       >
         <div className="w-full py-8 text-center">
-          <div className="mb-3 text-xl font-medium text-black/30">
+          <div className="mb-3 text-xl font-medium text-black/30 dark:text-gray-300">
             {productData?.type}
           </div>
           <div className="text-4xl font-bold tracking-tight">
             {productData?.name}
           </div>
-          <div className="flex justify-center">
+          <div className="flex justify-center dark:text-gray-300">
             <AvgRating productId={productId} />
           </div>
           <span
@@ -123,7 +123,7 @@ const ReviewLists = () => {
           />
         )}
         <div
-          className={`w-full px-5 pt-6 bg-white rounded-t-3xl md:px-10 lg:px-12 md:pt-8 lg:pt-10`}
+          className={`w-full px-5 pt-6 bg-white rounded-t-3xl md:px-10 lg:px-12 md:pt-8 lg:pt-10  dark:bg-DMSubColor`}
         >
           <div className="flex items-center justify-between mb-4 text-xl font-medium">
             <div className="pb-1 mr-3 text-2xl font-medium">한줄 리뷰</div>
@@ -135,7 +135,6 @@ const ReviewLists = () => {
               menu={menu}
             />
           </div>
-          <div className="flex justify-end mb-3"></div>
           <SnackReview snackReviewData={snackReviewData} />
           {snackReviewData?.hasNext && (
             <div className="mx-auto w-full lg:w-[64rem] pb-12">
@@ -150,7 +149,7 @@ const ReviewLists = () => {
           )}
           {/* 한줄 리뷰 직성 */}
         </div>
-        <div className="w-full px-5 bg-white border-t md:px-12 rounded-b-3xl border-zinc-200">
+        <div className="w-full px-5 bg-white border-t md:px-12 rounded-b-3xl border-zinc-200 dark:bg-DMSubColor dark:border-DMThrColor">
           <CreateSnackReview />
         </div>
       </div>

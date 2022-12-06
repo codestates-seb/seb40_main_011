@@ -18,11 +18,11 @@ export default function RvSelectBox({
   };
 
   return (
-    <div className="relative flex flex-col w-40">
+    <div className="relative flex flex-col w-40 dark:bg-DMThrColor">
       <button
         onClick={handleSelect}
         id={selected}
-        className={`flex justify-between alsolute t-0 text-sm bg-white h-10 rounded border border-slate-200 flex items-center px-4 pb-0.5 font-medium text-gray-500 ${
+        className={`dark:text-gray-300 dark:bg-DMMainColor  dark:border-DMThrColor flex justify-between alsolute t-0 text-sm bg-white h-10 rounded border border-slate-200 flex items-center px-4 pb-0.5 font-medium text-gray-500 ${
           spread &&
           'rounded-bl-none rounded-br-none bg-slate-200 text-gray-400 border-b-0'
         }`}
@@ -38,7 +38,7 @@ export default function RvSelectBox({
                 onClick={handleSelect}
                 key={idx}
                 id={el}
-                className="flex items-center w-full px-4 pt-2 pb-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900"
+                className="flex items-center w-full px-4 pt-2 pb-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:bg-DMThrColor dark:text-gray-400 dark:hover:bg-gray-500"
               >
                 {el}
               </button>

@@ -34,56 +34,62 @@ const AvgRating = ({ productId }: any) => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row mt-1">
-      <div className="flex justify-center items-center text-2xl mt-2">
+    <div className="flex flex-col mt-1 md:flex-row dark:text-gray-300">
+      <div className="flex items-center justify-center mt-2 text-2xl">
         <div>
-          <AiFillStar className="inline-block text-2xl pb-1 h-8 mr-2 text-yellow-500" />
-          <span className="text-black/80 font-bold">{totalAverage}</span>
+          <AiFillStar className="inline-block h-8 pb-1 mr-2 text-2xl text-yellow-500" />
+          <span className="font-bold text-black/80 dark:text-gray-300">
+            {totalAverage}
+          </span>
         </div>
-        <span className="mx-2 text-black/30 pb-1 text-xl">/</span>
+        <span className="pb-1 mx-2 text-xl font-semibold text-black/30 dark:text-gray-300 ">
+          /
+        </span>
         <span className="font-bold text-black-80 mr-0.5 pb-1">
           {reviewTotal}
         </span>
-        <span className="text-black/70 tracking-tight pb-1">개</span>
+        <span className="pb-1 tracking-tight text-black/70 dark:text-gray-300">
+          개
+        </span>
       </div>
-      <div className="text-black/50 mx-3 bg-white flex items-center px-4 rounded-xl pt-2 pb-3 mt-2">
-        <div className="flex flex-col md:flex-row justify-center w-14 md:w-fit">
-          <span className="order-2 md:order-1 text-sm md:text-base">
+      <div className="flex items-center px-4 pt-2 pb-3 mx-3 mt-2 bg-white text-black/50 rounded-xl dark:bg-DMSubColor dark:text-gray-300">
+        <div className="flex flex-col justify-center md:flex-row w-14 md:w-fit">
+          <span className="order-2 text-sm md:order-1 md:text-base">
             가성비
           </span>
-          <span className="order-1 md:order-2 md:ml-1 font-medium text-black/60">
+          <span className="order-1 font-medium md:order-2 md:ml-1 text-black/ dark:text-gray-300">
             {getDecial(snackReviewStats.avgCe)}
           </span>
         </div>
-        <span className="hidden md:flex mx-1">·</span>
-        <div className="flex flex-col md:flex-row justify-center w-14 md:w-fit">
-          <span className="order-2 md:order-1 text-sm md:text-base">품질</span>
-          <span className="order-1 md:order-2 md:ml-1 font-medium text-black/60">
+        <span className="hidden mx-1 md:flex">·</span>
+        <div className="flex flex-col justify-center md:flex-row w-14 md:w-fit">
+          <span className="order-2 text-sm md:order-1 md:text-base">품질</span>
+          <span className="order-1 font-medium md:order-2 md:ml-1 text-black/ dark:text-gray-300">
             {getDecial(snackReviewStats.avgQlt)}
           </span>
         </div>
-        <span className="hidden md:flex mx-1">·</span>
-        <div className="flex flex-col md:flex-row justify-center w-14 md:w-fit">
-          <span className="order-2 md:order-1 text-sm md:text-base">
+        <span className="hidden mx-1 md:flex">·</span>
+        <div className="flex flex-col justify-center md:flex-row w-14 md:w-fit">
+          <span className="order-2 text-sm md:order-1 md:text-base">
             만족감
           </span>
-          <span className="order-1 md:order-2 md:ml-1 font-medium text-black/60">
+          <span className="order-1 font-medium md:order-2 md:ml-1 text-black/ dark:text-gray-300">
             {getDecial(snackReviewStats.avgStf)}
           </span>
         </div>
-        <span className="hidden md:flex mx-1">·</span>
-        <div className="flex flex-col md:flex-row justify-center w-14 md:w-fit">
-          <span className="order-2 md:order-1 text-sm md:text-base">성능</span>
-          <span className="order-1 md:order-2 md:ml-1 font-medium text-black/60">
+        <span className="hidden mx-1 md:flex">·</span>
+        <div className="flex flex-col justify-center md:flex-row w-14 md:w-fit">
+          <span className="order-2 text-sm md:order-1 md:text-base">성능</span>
+          <span className="order-1 font-medium md:order-2 md:ml-1 text-black/ dark:text-gray-300">
             {getDecial(snackReviewStats.avgPerf)}
           </span>
         </div>
-        <span className="hidden md:flex mx-1">·</span>
-        <div className="flex flex-col md:flex-row justify-center w-14 md:w-fit">
-          <span className="order-2 md:order-1 text-sm md:text-base">
+        <span className="hidden mx-1 md:flex">·</span>
+        <div className="flex flex-col justify-center md:flex-row w-14 md:w-fit">
+          <span className="order-2 text-sm md:order-1 md:text-base">
             디자인
           </span>
-          <span className="order-1 md:order-2 md:ml-1 font-medium text-black/60">
+          <span className="order-1 font-medium md:order-2 md:ml-1 text-black/ dark:text-gray-300">
             {getDecial(snackReviewStats.avgDsn)}
           </span>
         </div>

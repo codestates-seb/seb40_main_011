@@ -30,56 +30,56 @@ const QuestionList = () => {
   };
 
   return (
-    <div className="bg-white">
+    <div className="bg-white dark:bg-DMSubColor dark:text-gray-300">
       <div className="mx-auto w-full lg:w-[64rem] py-8 flex md:flex-row flex-col">
-        <div className="md:w-1/2 flex flex-col m-4">
+        <div className="flex flex-col m-4 md:w-1/2">
           <div
             role="button"
             onClick={handleOnClick}
-            className="bg-zinc-100 rounded-2xl py-5 px-6 md:px-8 flex items-center justify-between w-full group hover:bg-yellow-500"
+            className="flex items-center justify-between w-full px-6 py-5 bg-zinc-100 rounded-2xl md:px-8 group hover:bg-yellow-500 dark:bg-DMMainColor dark:hover:bg-yellow-500"
           >
-            <div className="font-bold text-xl text-orange-700 group-hover:text-gray-800">
+            <div className="text-xl font-bold text-orange-700 group-hover:text-gray-800 dark:group-hover:text-gray-700">
               답변이 필요한 질문
             </div>
-            <div className="flex items-center text-gray-400 font-medium group-hover:text-yellow-900">
-              <span className="mr-2 hidden md:inline-block">자세히 보기</span>
+            <div className="flex items-center font-medium text-gray-400 group-hover:text-yellow-900 dark:group-hover:text-yellow-800">
+              <span className="hidden mr-2 md:inline-block">자세히 보기</span>
               <BsArrowRight className="text-2xl" />
             </div>
           </div>
           <div className="my-4">
             {answerNeed.map((el, idx) => (
               <div key={idx} className="flex justify-between p-2 ">
-                <span className="line-clamp-1 grow break-all">
+                <span className="break-all line-clamp-1 grow">
                   {el.content}
                 </span>
-                <span className="hidden md:line-clamp-1 text-right text-gray-500/70 tracking-tight flex-none w-20">
+                <span className="flex-none hidden w-20 tracking-tight text-right md:line-clamp-1 text-gray-500/70">
                   {el.nickname}
                 </span>
               </div>
             ))}
           </div>
         </div>
-        <div className="md:w-1/2 flex flex-col m-4">
+        <div className="flex flex-col m-4 md:w-1/2">
           <div
             role="button"
             onClick={handleOnClick}
-            className="bg-zinc-100 rounded-2xl py-5 px-6 md:px-8 flex items-center justify-between group hover:bg-green-500"
+            className="flex items-center justify-between px-6 py-5 bg-zinc-100 rounded-2xl md:px-8 group hover:bg-green-500 dark:bg-DMMainColor dark:hover:bg-green-500"
           >
-            <div className="font-bold text-xl text-green-600 group-hover:text-gray-800">
+            <div className="text-xl font-bold text-green-600 group-hover:text-gray-800 dark:group-hover:text-gray-700">
               채택이 완료된 질문
             </div>
-            <div className="flex items-center text-gray-400 font-medium group-hover:text-green-900">
-              <span className="mr-2 hidden md:inline-block">자세히 보기</span>
+            <div className="flex items-center font-medium text-gray-400 group-hover:text-green-900 dark:group-hover:text-green-700">
+              <span className="hidden mr-2 md:inline-block">자세히 보기</span>
               <BsArrowRight className="text-2xl" />
             </div>
           </div>
           <div className="my-4">
             {questions.map((el, idx) => (
-              <div key={idx} className="flex md:justify-between p-2 ">
-                <span className="line-clamp-1 grow break-all">
+              <div key={idx} className="flex p-2 md:justify-between ">
+                <span className="break-all line-clamp-1 grow">
                   {el.content}
                 </span>
-                <span className="hidden md:line-clamp-1 text-right text-gray-500/70 tracking-tight flex-none w-20">
+                <span className="flex-none hidden w-20 tracking-tight text-right md:line-clamp-1 text-gray-500/70">
                   {el.nickname}
                 </span>
               </div>

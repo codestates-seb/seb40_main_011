@@ -21,15 +21,15 @@ const MainCategory = ({ setCategory, category }: CategoryProps) => {
   };
 
   return (
-    <div className="w-full flex flex-nowrap overflow-x-auto overflow-hidden bg-white rounded-full">
+    <div className="flex w-full overflow-hidden overflow-x-auto bg-white rounded-full flex-nowrap dark:bg-DMSubColor dark:text-gray-400">
       {categoryList.map((el, idx) => {
         return (
           <button
             key={idx}
             onClick={onClick}
             id={el.id}
-            className={`flex-none h-14 pb-0.5 rounded-full md:grow lg:snap-x w-28 grow-0 hover:bg-slate-200/70 hover:text-slate-500 font-medium ${
-              category === el.id && 'bg-slate-300'
+            className={` flex-none h-14 pb-0.5 rounded-full md:grow lg:snap-x w-28 grow-0 hover:bg-slate-200/70 hover:text-slate-500 font-medium   dark:hover:bg-slate-500  dark:hover:text-gray-300 ${
+              category === el.id && 'bg-slate-300 dark:bg-DMThrColor'
             }`}
           >
             <div>{el.name}</div>

@@ -27,7 +27,7 @@ const Main = () => {
   }, []);
 
   return (
-    <div className="bg-zinc-100">
+    <div className="bg-zinc-100 dark:bg-DMMainColor">
       <BestReviewList />
       <ProductList />
       <QuestionList />
