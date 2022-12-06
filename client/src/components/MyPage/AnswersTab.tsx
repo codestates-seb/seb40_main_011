@@ -57,20 +57,24 @@ export const AnswersTab = () => {
   return (
     <>
       {!reviewData || reviewData?.length === 0 ? (
-        <div className="flex flex-col justify-center w-full max-w-screen-lg p-5 px-24 mt-20">
+        <div className="flex flex-col justify-center w-full max-w-screen-lg p-5 px-5 mt-20">
           <div className="mb-2 text-xl text-center">작성한 답변이 없습니다</div>
         </div>
       ) : (
-        <>
+        <div className="mx-auto w-full lg:w-[64rem] py-4">
           {reviewData?.map((el: any, index: number) => {
             return (
               <>
                 <div
-                  className="flex flex-col justify-center w-full max-w-screen-lg py-2.5 lg:px-24 px-10"
+                  className="flex flex-col justify-center w-full max-w-screen-lg py-4 px-5"
                   key={index}
                 >
+                  <AnswersMore el={el} />
+                  <div className="mb-2 text-sm overflow-hidden text-ellipsis dark:text-white/70 text-black/60 line-clamp-2">
+                    {el.content}
+                  </div>
                   <div className="flex text-sm">
-                    <div className=" text-slate-500 dark:text-gray-400">
+                    <div className="text-black/40 dark:text-white/40">
                       {new Date(el.createdAt).toLocaleDateString('ko-KR', {
                         month: 'short',
                         day: 'numeric',
@@ -90,10 +94,6 @@ export const AnswersTab = () => {
                       <></>
                     )}
                   </div>
-                  <div className="mb-0.5 overflow-hidden text-sm text-ellipsis line-clamp-2  text-slate-700  dark:text-gray-300">
-                    {el.content}
-                  </div>
-                  <AnswersMore el={el} />
                   {/* {el.answers.content.map((ele: any, idx: number) => {
                     return (
                       <>
@@ -119,7 +119,7 @@ export const AnswersTab = () => {
           ) : (
             <></>
           )}
-        </>
+        </div>
       )}
     </>
   );

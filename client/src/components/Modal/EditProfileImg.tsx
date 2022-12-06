@@ -84,7 +84,12 @@ const EditProgileImg = (
           </div>
           <div className="flex flex-col items-center justify-center object-cover mt-5">
             <img
-              src={userImg}
+              src={
+                userProfileData?.image === 'null' ||
+                userProfileData?.image === null
+                  ? require('../../images/placeholder-img-profile.png')
+                  : userImg
+              }
               alt=""
               className="rounded-full sm:w-60 sm:h-60 w-28 h-28 bg-slate-100"
             />

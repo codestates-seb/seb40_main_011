@@ -73,7 +73,7 @@ export default function Footer() {
     },
   ];
   return (
-    <div className="px-6 pt-10 pb-10 bg-slate-900 dark:bg-black">
+    <div className="px-6 pt-10 pb-10 bg-slate-900">
       <Banner />
       <div className="text-center">
         {teamMember.map((member, index) => {
