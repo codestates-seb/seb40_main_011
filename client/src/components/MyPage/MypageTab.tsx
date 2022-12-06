@@ -60,8 +60,8 @@ const MypageTab = (): JSX.Element => {
   };
 
   return (
-    <div className="bg-white ">
-      <div className="flex justify-center border-b">
+    <div className="bg-white dark:bg-DMThrColor dark:text-white">
+      <div className="flex justify-center border-b dark:border-DMThrColor">
         <ul className="flex flex-row justify-between w-full max-w-screen-lg px-10 mx-auto lg:px-24">
           {menuArr.map((ele, index) => {
             return (
@@ -69,8 +69,8 @@ const MypageTab = (): JSX.Element => {
                 key={index}
                 className={
                   currentTab === index
-                    ? 'font-medium border-b border-black flex justify-evenly items-center w-1/4 py-3 px-4 lg:px-8'
-                    : 'border-b hover:bg-slate-200 flex justify-evenly items-center w-1/4 py-3 px-4 lg:px-8'
+                    ? 'font-medium border-b-2 border-black flex justify-evenly items-center w-1/4 py-3 px-4 lg:px-8 dark:border-white'
+                    : 'border-b-2 hover:bg-slate-200 flex justify-evenly items-center w-1/4 py-3 px-4 lg:px-8 dark:border-DMSubColor'
                 }
                 onClick={() => selectMenuHandler(index)}
               >

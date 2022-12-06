@@ -1,11 +1,13 @@
 import HeaderTextButton from '../Buttons/HeaderTextButton';
 import SearchBar from './SearchBar';
-import { BsFillSunFill } from 'react-icons/bs';
+import { BsFillSunFill, BsFillMoonFill } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 import { useIsLogin } from '../../store/login';
 import { GiHamburgerMenu } from '../../icons';
 import { BiSearch } from 'react-icons/bi';
 import { useState } from 'react';
+import Darkmode from './DarkMode';
+
 export default function Header() {
   const [menu, setMenu] = useState(false);
   const navigate = useNavigate();
@@ -54,7 +56,7 @@ export default function Header() {
   const MobileSearch = () => {
     return (
       <button className="sm:hidden" onClick={handleSearchBar}>
-        <BiSearch className="text-3xl mr-2" />
+        <BiSearch className="mr-2 text-3xl" />
       </button>
     );
   };
@@ -62,6 +64,11 @@ export default function Header() {
   const [searchBar, setSearchBar] = useState(false);
   const handleSearchBar = () => {
     setSearchBar(!searchBar);
+  };
+
+  const [darkButton, setDarkButton] = useState(false);
+  const handleDarkkMode = () => {
+    setDarkButton(!darkButton);
   };
 
   return (
@@ -78,10 +85,10 @@ export default function Header() {
           />
         </button>
         <SearchBar searchBar={searchBar} setSearchBar={setSearchBar} />
-        <div className="flex-none flex flex-row h-full">
-          <div className="h-full flex flex-row items-center md:hidden">
+        <div className="flex flex-row flex-none h-full">
+          <div className="flex flex-row items-center h-full md:hidden">
             {searchBar ? null : <MobileSearch />}
-            <span className="material-icons text-2xl w-14 h-14 rounded-full hover:bg-slate-100 flex items-center justify-center">
+            <span className="flex items-center justify-center text-2xl rounded-full material-icons w-14 h-14 hover:bg-slate-100">
               <GiHamburgerMenu role="button" onClick={onBurgerClicked} />
             </span>
           </div>
@@ -89,19 +96,40 @@ export default function Header() {
             <>
               <div
                 onClick={onBurgerClicked}
-                className="fixed inset-0 h-screen w-full flex justify-content justify-center items-center"
+                className="fixed inset-0 flex items-center justify-center w-full h-screen justify-content"
               ></div>
               <BurgurDropDown />
             </>
           ) : null}
-          <div className="max-md:hidden flex">
+          <div className="flex max-md:hidden">
+            {darkButton ? (
+              <button
+                className="flex flex-row items-center h-full mx-2"
+                onClick={() => {
+                  Darkmode();
+                  setDarkButton(!darkButton);
+                }}
+              >
+                <span className="flex items-center justify-center text-2xl text-gray-600 rounded-full material-icons w-14 h-14 hover:bg-slate-100">
+                  <BsFillMoonFill />
+                </span>
+              </button>
+            ) : (
+              <button
+                className="flex flex-row items-center h-full mx-2"
+                onClick={() => {
+                  Darkmode();
+                  setDarkButton(!darkButton);
+                }}
+              >
+                <span className="flex items-center justify-center text-2xl rounded-full material-icons w-14 h-14 hover:bg-slate-100">
+                  <BsFillSunFill />
+                </span>
+              </button>
+            )}
+
             {!isLogin ? (
               <>
-                {/* <button className="h-full flex flex-row items-center mx-2">
-                  <span className="material-icons text-2xl w-14 h-14 rounded-full hover:bg-slate-100 flex items-center justify-center">
-                    <BsFillSunFill />
-                  </span>
-                </button> */}
                 <div>
                   <HeaderTextButton name="login" />
                   <HeaderTextButton name="signup" />
@@ -109,11 +137,6 @@ export default function Header() {
               </>
             ) : (
               <>
-                {/* <button className="h-full flex flex-row items-center mx-2">
-                  <span className="material-icons text-2xl w-14 h-14 rounded-full hover:bg-slate-100 flex items-center justify-center">
-                    <BsFillSunFill />
-                  </span>
-                </button> */}
                 <div>
                   <HeaderTextButton name="My Page" />
                   <HeaderTextButton name="logout" />

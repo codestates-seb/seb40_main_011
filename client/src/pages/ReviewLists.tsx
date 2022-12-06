@@ -137,8 +137,6 @@ const ReviewLists = () => {
           </div>
           <div className="flex justify-end mb-3"></div>
           <SnackReview snackReviewData={snackReviewData} />
-          {/* <div className="flex flex-col md:flex-row "></div> */}
-          {/* <div className="w-full md:1/2 lg:w-2/3"></div> */}
           {snackReviewData?.hasNext && (
             <div className="mx-auto w-full lg:w-[64rem] pb-12">
               <span
@@ -152,7 +150,7 @@ const ReviewLists = () => {
           )}
           {/* 한줄 리뷰 직성 */}
         </div>
-        <div className="w-full px-5 md:px-12 bg-white border-t rounded-b-3xl border-zinc-200">
+        <div className="w-full px-5 bg-white border-t md:px-12 rounded-b-3xl border-zinc-200">
           <CreateSnackReview />
         </div>
       </div>

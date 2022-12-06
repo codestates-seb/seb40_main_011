@@ -24,10 +24,6 @@ const MyPage = (): JSX.Element => {
     setIsOptOut(!isOptOut);
   };
 
-  const container = isLogin
-    ? 'flex flex-col bg-white'
-    : 'flex flex-col fixed table-fixed bg-white';
-
   useEffect(() => {
     loginRefresh();
   }, []);
@@ -36,7 +32,7 @@ const MyPage = (): JSX.Element => {
     <>
       {isLogin ? (
         <>
-          <div className={container}>
+          <div className="flex flex-col bg-white dark:bg-DMThrColor">
             {isOptOut === false ? null : (
               <OptOut openOptOutModalHandler={openOptOutModalHandler} />
             )}
@@ -44,7 +40,7 @@ const MyPage = (): JSX.Element => {
             <MypageTab />
             <div className="flex justify-center">
               <button
-                className="px-12 py-2 rounded bg-slate-300 m-14"
+                className="px-12 py-2 rounded-2xl bg-slate-300 m-14 dark:text-white dark:bg-DMMainColor"
                 onClick={openOptOutModalHandler}
               >
                 회원 탈퇴
@@ -56,25 +52,25 @@ const MyPage = (): JSX.Element => {
         <>
           <div>
             {' '}
-            <div className="flex flex-col items-center justify-center w-full h-screen bg-slate-100">
+            <div className="flex flex-col items-center justify-center w-full h-screen bg-slate-100 dark:bg-DMMainColor dark:text-white">
               <div className="flex flex-col items-center ">
                 <div className="mb-3">
-                  <BsExclamationTriangle className="w-32 h-32" />
+                  <BsExclamationTriangle className="w-40 h-40" />
                 </div>
                 <h2 className="leading-10 text-left">
-                  <p className="mb-10 text-3xl font-extrabold text-center">
+                  <p className="mb-10 text-3xl font-extrabold text-center ">
                     Not Found
                   </p>
-                  <p className="mb-3 text-2xl font-medium text-center text-black">
+                  <p className="mb-3 text-2xl font-medium text-center text-black dark:text-white">
                     죄송합니다.
                   </p>
-                  <p className="text-lg text-center text-black">
+                  <p className="text-lg text-center text-black dark:text-white">
                     로그인이 필요한 서비스입니다.
                   </p>
                 </h2>
               </div>
               <button
-                className="px-10 py-3 my-28 bg-slate-300 rounded-xl"
+                className="px-10 py-3 my-28 bg-slate-300 rounded-xl dark:bg-DMThrColor dark:text-white"
                 onClick={() => navigate('/login')}
               >
                 로그인 페이지로 이동
