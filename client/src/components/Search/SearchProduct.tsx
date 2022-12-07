@@ -63,7 +63,7 @@ const SearchProduct = ({ keyword }: any) => {
           return (
             <div
               key={idx}
-              className="group flex flex-col sm:flex-[1_1_40%] lg:flex-[1_1_30%] flex-[1_1_50%] my-5 mx-3 hover:bg-white dark:hover:bg-DMSubColor rounded-3xl dark:hover:text-white"
+              className="group flex flex-col sm:flex-[1_1_40%] lg:flex-[1_1_30%] flex-[1_1_50%] my-1 hover:bg-white dark:hover:bg-DMSubColor rounded-3xl dark:hover:text-white"
             >
               <div
                 role="button"
