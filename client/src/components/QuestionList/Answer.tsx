@@ -22,6 +22,8 @@ export default function Answer({
     setShowModal(!showModal);
   };
 
+  console.log(id, adoptedId);
+
   return (
     <>
       {showModal && (
@@ -49,13 +51,16 @@ export default function Answer({
             >
               {content}
             </div>
-            <div
-              className={`tracking-tight absolute ${
-                Number(loginId) !== writerId ? 'right-6' : 'right-16'
-              } text-sm font-medium bg-green-500 text-white px-3 rounded-full pt-1 pb-1.5 -top-4`}
-            >
-              채택된 답변
-            </div>
+            {id === adoptedId && (
+              <div
+                className={`tracking-tight absolute ${
+                  Number(loginId) !== writerId ? 'right-6' : 'right-16'
+                } text-sm font-medium bg-green-500 text-white px-3 rounded-full pt-1 pb-1.5 -top-4`}
+              >
+                채택된 답변
+              </div>
+            )}
+
             {id === adoptedId && Number(loginId) === writerId && (
               <>
                 <div className="flex-none w-16 mx-2 flex justify-center items-start">
