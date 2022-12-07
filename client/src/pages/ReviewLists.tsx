@@ -139,11 +139,11 @@ const ReviewLists = () => {
           </div>
           <SnackReview snackReviewData={snackReviewData} />
           {snackReviewData?.hasNext && (
-            <div className="mx-auto w-full lg:w-[64rem] pb-12">
+            <div className="w-full pb-12 mx-auto overflow-hidden lg:w-full">
               <span
                 role="button"
                 onClick={onMoreClick}
-                className="flex items-center justify-center mx-4 text-lg font-medium tracking-tight rounded-xl h-14 bg-zinc-200/60 hover:bg-zinc-300/50 text-zinc-400 hover:text-zinc-500"
+                className="flex items-center justify-center mx-4 text-lg font-medium tracking-tight dark:bg-DMMainColor dark:text-gray-300 rounded-xl h-14 bg-zinc-200/60 hover:bg-zinc-300/50 text-zinc-400 hover:text-zinc-500"
               >
                 더 보기
               </span>
