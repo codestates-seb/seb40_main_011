@@ -132,7 +132,7 @@ export default function Header() {
         <div className="flex flex-row flex-none h-full">
           <div className="flex flex-row items-center h-full md:hidden ">
             {searchBar ? null : <MobileSearch />}
-            <span className="flex items-center justify-center text-2xl rounded-full material-icons w-14 h-14 hover:bg-slate-100 dark:hover:bg-DMThrColor">
+            <span className="ml-2 flex items-center justify-center text-2xl rounded-full material-icons w-14 h-14 hover:bg-slate-100 dark:hover:bg-DMThrColor">
               <GiHamburgerMenu role="button" onClick={onBurgerClicked} />
             </span>
           </div>

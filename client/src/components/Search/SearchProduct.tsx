@@ -52,44 +52,42 @@ const SearchProduct = ({ keyword }: any) => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-full lg:w-[64rem] mx-auto bg-zinc-100 dark:bg-DMMainColor">
-      <div className="mt-16 mb-4 justify-start w-full text-xl font-bold dark:text-white">
-        # {keyword} 에 대한 제품 검색 결과
+    <div className="flex flex-col items-center justify-center w-full lg:w-[64rem] mx-auto bg-zinc-100 dark:bg-DMMainColor px-4">
+      <div className="mt-8 md:mt-16 mb-4 justify-start w-full text-3xl font-bold dark:text-white tracking-tighter">
+        # {keyword}
+        <span className="font-normal dark:text-white/40">제품 검색 결과</span>
       </div>
       <NoResult />
-      <div className="my-16 flex flex-row w-full">
+      <div className="mb-6 flex flex-row w-full">
         {products?.map((el, idx) => {
           return (
             <div
               key={idx}
-              className="w-1/4 drop-shadow-2xl mr-4 hover:-translate-y-1 transition ease-in-out hover:scale-110"
+              className="group flex flex-col sm:flex-[1_1_40%] lg:flex-[1_1_30%] flex-[1_1_50%] my-5 mx-3 hover:bg-white dark:hover:bg-DMSubColor rounded-3xl dark:hover:text-white"
             >
               <div
                 role="button"
                 onClick={onProductClick}
                 id={el.id.toString()}
-                className="dark:bg-DMSubColor flex flex-col w-full bg-white rounded-lg"
+                className="overflow-hidden aspect-[16/9] bg-slate-200 rounded-3xl group-hover:rounded-b-none"
               >
                 {el.thumbnail.length === 0 ? (
                   <img
-                    className="rounded-t-lg h-48"
+                    className="object-cover w-full h-full scale-105"
                     src={require('../../images/noSearchResult.png')}
                   />
                 ) : (
                   <img
-                    className="rounded-t-lg h-48"
+                    className="object-cover w-full h-full scale-105"
                     src={`https://codetech.nworld.dev${el.thumbnail}`}
                   />
                 )}
-
-                <div>
-                  <div className="p-2 border-t-2 border-slate-300">
-                    {el.name}
-                  </div>
-                  <div className="flex p-2 justify-between">
-                    <div>{el.type.toLowerCase()}</div>
-                    <div>{el.createdAt}</div>
-                  </div>
+              </div>
+              <div>
+                <div className="pt-6 px-4">{el.name}</div>
+                <div className="flex pb-8 px-4 justify-between dark:text-white/50">
+                  <div>{el.type.toLowerCase()}</div>
+                  <div>{el.createdAt}</div>
                 </div>
               </div>
             </div>

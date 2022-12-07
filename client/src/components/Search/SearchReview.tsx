@@ -48,49 +48,56 @@ const SearchReview = ({ keyword }: any) => {
 
   const SearchResultView = () => {
     return (
-      <>
+      <div className="w-full bg-white rounded-3xl px-5 md:px-12 pt-6 sm:pt-8 md:pt-10 md:pb-1 mb-8 dark:bg-DMSubColor">
         {searchData?.map((el, idx) => (
           <button
             onClick={onContentClick}
             key={idx}
-            className="flex w-full items-center m-4 rounded-3xl p-4 bg-white dark:bg-DMSubColor ease-in-out duration-150 hover:bg-slate-300 dark:hover:bg-DMThrColor"
+            className="flex flex-col mb-4 md:flex-row md:mb-8"
           >
-            <div className="h-48 w-1/4">
+            <div className="w-full aspect-[16/9] md:h-48 md:w-2/5 lg:w-1/3 overflow-hidden rounded-2xl md:rounded-3xl flex-none flex items-center mr-6">
               <img
-                className="rounded-lg h-full w-full"
+                className="w-full scale-105"
                 src={`https://codetech.nworld.dev${el.thumbnail}`}
                 id={el.id}
-              ></img>
+              />
             </div>
-            <div className="flex flex-col p-3 w-3/4">
-              <div className="text-xl font-bold p-2 dark:text-white">
-                {el.title}
-              </div>
-              <div
-                className="dark:text-white/70 pb-1 text-md line-clamp-3 p-1.5 text-slate-600 hover:text-cyan-900 "
-                id={el.id}
-              >
-                {onlyText(el.content)}
-              </div>
-              <div className="flex flex-row justify-between items-center w-full">
-                <div className="flex w-1/8 items-center">
-                  <AiOutlineHeart size="30" className="p-1 text-slate-500" />
-                  <div className="py-1.5  text-slate-500">
-                    {el.recommendNumber}
-                  </div>
+            <div className="flex flex-col justify-between w-full h-48 py-2 overflow-hidden text-left md:3/5 lg:w-2/3">
+              <div>
+                <div className="mb-2 text-xl font-bold tracking-tight line-clamp-1">
+                  {el.title}
                 </div>
-                <div className="flex items-end">
-                  <div className="p-2 dark:text-white/70">{el.writer}</div>
+                <div
+                  className="pb-1 overflow-hidden tracking-tight text-black/60 line-clamp-3 dark:text-gray-400"
+                  id={el.id}
+                >
+                  {onlyText(el.content)}
+                </div>
+              </div>
+              <div className="flex items-center justify-between w-full">
+                <div className="flex items-center">
                   <img
                     className="rounded-full w-10 h-10 m-2"
                     src={`https://codetech.nworld.dev${el.userImage}`}
                   />
+                  <div className="text-lg font-medium tracking-tight text-black/80 dark:text-gray-300">
+                    {el.writer}
+                  </div>
+                </div>
+                <div className="flex items-center">
+                  <AiOutlineHeart
+                    size="30"
+                    className="text-2xl text-black/40 dark:text-gray-300"
+                  />
+                  <div className="mx-1 text-lg font-medium text-black/70 dark:text-gray-300">
+                    {el.recommendNumber}
+                  </div>
                 </div>
               </div>
             </div>
           </button>
         ))}
-      </>
+      </div>
     );
   };
 
@@ -109,9 +116,10 @@ const SearchReview = ({ keyword }: any) => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-full lg:w-[64rem] mx-auto">
-      <div className="mt-16 mb-4 justify-start w-full text-xl font-bold dark:text-white">
-        # {keyword} 에 대한 리뷰 검색 결과
+    <div className="flex flex-col items-center justify-center w-full lg:w-[64rem] mx-auto px-4">
+      <div className="mt-8 md:mt-16 mb-4 justify-start w-full text-3xl font-bold dark:text-white tracking-tighter">
+        # {keyword}{' '}
+        <span className="font-normal dark:text-white/60">리뷰 검색결과</span>
       </div>
       <NoResult />
       <SearchResultView />
