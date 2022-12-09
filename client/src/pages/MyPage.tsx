@@ -20,7 +20,7 @@ const MyPage = (): JSX.Element => {
   const { isLogin } = useIsLogin();
 
   const [isOptOut, setIsOptOut] = useState(false);
-  const openOptOutModalHandler = (event: React.MouseEvent<HTMLElement>) => {
+  const openOptOutModalHandler = () => {
     setIsOptOut(!isOptOut);
   };
 

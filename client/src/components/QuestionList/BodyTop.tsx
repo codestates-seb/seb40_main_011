@@ -42,7 +42,7 @@ export default function BodyTop({
           break;
         case 401:
           alert('에러');
-          console.error(Result.status + ' Error');
+          // console.error(Result.status + ' Error');
           break;
         case 412: {
           loginRefresh();
@@ -58,7 +58,7 @@ export default function BodyTop({
           break;
         case 401:
           alert('에러');
-          console.error(Result.status + ' Error');
+          // console.error(Result.status + ' Error');
           break;
         case 412: {
           loginRefresh();

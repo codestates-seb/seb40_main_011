@@ -3,7 +3,7 @@ import { postRefresh } from './apiCollection';
 // login status
 export const loginRefresh = async () => {
   const loginResult = await postRefresh();
-  console.log(loginResult.status);
+  // console.log(loginResult.status);
   switch (loginResult.status) {
     case 200:
       localStorage.setItem(

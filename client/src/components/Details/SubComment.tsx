@@ -55,7 +55,7 @@ const SubComment = ({ child }: SubCommentProps) => {
           <img
             src={`https://codetech.nworld.dev${child?.userImage}`}
             alt=""
-            className="flex-none w-12 h-12 rounded-2xl mx-2 ring ring-slate-200"
+            className="flex-none w-12 h-12 rounded-2xl mr-2 ring ring-zinc-100 dark:ring-slate-600"
           />
           <div className="grow">
             <div className="flex justify-between mb-1.5 items-center">
@@ -87,7 +87,7 @@ const SubComment = ({ child }: SubCommentProps) => {
                 }
               ></input>
             ) : (
-              <div className="dark:bg-DMSubColor ring-1 ring-gray-200 rounded-xl overflow-hidden bg-white px-6 pt-3 pb-4">
+              <div className="ring-1 ring-gray-200 dark:ring-white/30 rounded-xl overflow-hidden dark:bg-DMSubColor dark:text-white px-6 pt-3 pb-4 border-b border-gray-200 dark:border-white/30 bg-white text-gray-600 font-medium">
                 {comment}
               </div>
             )}

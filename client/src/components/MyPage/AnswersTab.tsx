@@ -94,18 +94,6 @@ export const AnswersTab = () => {
                       <></>
                     )}
                   </div>
-                  {/* {el.answers.content.map((ele: any, idx: number) => {
-                    return (
-                      <>
-                        <div
-                          className="mb-1 overflow-hidden text-lg text-ellipsis line-clamp-2"
-                          key={idx}
-                        >
-                          {idx + 1}. {ele.content}
-                        </div>
-                      </>
-                    );
-                  })} */}
                 </div>
               </>
             );

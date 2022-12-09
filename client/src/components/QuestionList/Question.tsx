@@ -70,7 +70,7 @@ export default function Question({
       {answerCards !== null && !showAnswer && (
         <button
           onClick={handleShowAnswer}
-          className="w-full mt-1 rounded overflow-hidden"
+          className="w-full mt-4 rounded overflow-hidden pl-5 md:pl-12"
         >
           <AnswerMore count={answerCards.length - 1} />
         </button>

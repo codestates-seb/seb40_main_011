@@ -90,7 +90,7 @@ export default function Header() {
         className="flex items-center justify-center rounded-full material-icons w-14 h-14 hover:bg-slate-100 dark:hover:bg-DMThrColor"
         onClick={handleSearchBar}
       >
-        <BiSearch className="mr-2 text-3xl" />
+        <BiSearch className="text-3xl" />
       </button>
     );
   };
