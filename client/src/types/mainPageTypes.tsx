@@ -345,3 +345,8 @@ export interface searchBarProps {
   searchBar: boolean;
   setSearchBar: Dispatch<SetStateAction<boolean>>;
 }
+
+export interface NotiProps {
+  notiClicked: boolean;
+  setNotiClicked: Dispatch<SetStateAction<boolean>>;
+}
