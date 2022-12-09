@@ -34,7 +34,7 @@ const AvgRating = ({ productId }: any) => {
   };
 
   return (
-    <div className="flex flex-col mt-1 md:flex-row dark:text-gray-300">
+    <div className="flex flex-col md:mt-2 md:flex-row dark:text-gray-300">
       <div className="flex items-center justify-center mt-2 text-2xl">
         <div>
           <AiFillStar className="inline-block h-8 pb-1 mr-2 text-2xl text-yellow-500" />
