@@ -19,10 +19,10 @@ export const AnswersMore = ({ el }: any) => {
             </p>
             {count > 1 ? (
               <button
-                className="text-slate-500 w-full font-medium text-sm px-2 pt-1 pb-1.5 bg-slate-300/60 hover:bg-slate-300 dark:bg-DMMainColor"
+                className="mb-2 text-gray-400 font-medium text-sm px-2 pb-0.5 rounded hover:bg-slate-200 hover:text-gray-500 "
                 onClick={handleMore}
               >
-                <span className="font-bold pr-0.5  dark:text-gray-300">
+                <span className="font-bold pr-0.5  dark:text-gray-300 dark:hover:text-black/70">
                   {count - 1} 개의 답글 더보기
                 </span>
               </button>

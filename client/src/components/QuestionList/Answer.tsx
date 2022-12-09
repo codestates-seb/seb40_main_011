@@ -22,7 +22,7 @@ export default function Answer({
     setShowModal(!showModal);
   };
 
-  console.log(id, adoptedId);
+  // console.log(id, adoptedId);
 
   return (
     <>

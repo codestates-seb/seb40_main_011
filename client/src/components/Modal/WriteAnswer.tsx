@@ -48,12 +48,12 @@ export default function WriteAnswer({
         case 201:
           setShowModal(false);
           setAnswer('');
-          console.log('Success');
+          // console.log('Success');
           location.reload();
           break;
         case 401:
           alert('에러');
-          console.log('...');
+          // console.log('...');
           console.error(Result.status + ' Error');
           break;
         case 412: {
@@ -69,12 +69,12 @@ export default function WriteAnswer({
         case 200:
           setShowModal(false);
           setQuestion('');
-          console.log('Success');
+          // console.log('Success');
           location.reload();
           break;
         case 401:
           alert('에러');
-          console.log('...');
+          // console.log('...');
           console.error(Result.status + ' Error');
           break;
         case 412: {

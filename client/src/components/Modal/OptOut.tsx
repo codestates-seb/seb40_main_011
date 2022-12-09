@@ -40,7 +40,7 @@ const OptOut = ({ openOptOutModalHandler }: OptOutModalHandler) => {
       const data = { password: password };
 
       const accountResult = await delAccount(data);
-      console.log(accountResult);
+      // console.log(accountResult);
       switch (accountResult.status) {
         case 200:
           localStorage.clear();

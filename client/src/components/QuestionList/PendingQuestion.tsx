@@ -108,7 +108,7 @@ export default function PendingQuestion({
       {answerCards !== null && !showAnswer && answerCards.length !== 1 && (
         <button
           onClick={handleShowAnswer}
-          className="w-full mt-2 rounded overflow-hidden pl-12"
+          className="w-full mt-2 rounded overflow-hidden pl-5 md:pl-12"
         >
           <AnswerMore count={answerCards.length - 1} />
         </button>

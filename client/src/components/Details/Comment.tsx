@@ -161,90 +161,159 @@ export default function Comment({ reviewComments }: CommentProps) {
     <>
       {reviewComments &&
       reviewComments.content !== '작성자가 삭제한 댓글입니다.' ? (
-        <div className="w-full flex my-2 ">
-          <img
-            src={`https://codetech.nworld.dev${reviewComments?.userImage}`}
-            alt=""
-            className="flex-none w-12 h-12 rounded-2xl mr-2 ring ring-zinc-100 dark:ring-slate-600"
-          />
-          <div className="grow">
-            <div className="flex justify-between mb-1.5 items-center">
-              <span className="flex items-start">
-                <span className="ml-1 font-semibold">
-                  {reviewComments.writer}
-                </span>
-                <div className="text-sm font-medium before:content-['•'] before:mr-1.5 before:ml-1.5 before:text-gray-400 text-gray-400 mt-0.5">
-                  {getParsedDate(reviewComments.createdAt)}
+        <div className="my-2">
+          <div className="w-full flex my-2 ">
+            <img
+              src={`https://codetech.nworld.dev${reviewComments?.userImage}`}
+              alt=""
+              className="flex-none w-12 h-12 rounded-2xl mr-2 ring ring-zinc-100 dark:ring-slate-600"
+            />
+            <div className="grow">
+              <div className="flex justify-between mb-1.5 items-center">
+                <div className="flex flex-col md:flex-row items-start">
+                  <span className="ml-1 font-semibold">
+                    {reviewComments.writer}
+                  </span>
+                  <div className="text-sm font-medium md:before:content-['•'] md:before:mr-1.5 before:ml-1.5 before:text-gray-400 text-gray-400 mt-0.5">
+                    {getParsedDate(reviewComments.createdAt)}
+                  </div>
                 </div>
-              </span>
-              <div className="flex items-center">
-                <EditComment
-                  isEditMode={isEditMode}
-                  setIsEditMode={setIsEditMode}
-                  editedComment={editedComment}
-                  id={reviewComments.id}
-                  userId={reviewComments.userId}
-                  setComment={setComment}
-                />
+                <div className="flex items-center">
+                  <EditComment
+                    isEditMode={isEditMode}
+                    setIsEditMode={setIsEditMode}
+                    editedComment={editedComment}
+                    id={reviewComments.id}
+                    userId={reviewComments.userId}
+                    setComment={setComment}
+                  />
+                </div>
+              </div>
+              <div className="hidden md:flex flex-col ring-1 ring-gray-200 dark:ring-white/30 rounded-xl overflow-hidden bg-white">
+                {isEditMode ? (
+                  <>
+                    <input
+                      autoFocus
+                      defaultValue={comment}
+                      className="w-full px-6 pt-3 pb-4 rounded-t-xl border-b border-gray-200"
+                      onChange={onCommentEdit}
+                      onKeyUp={(comment) =>
+                        comment.key === 'Enter' ? onEnterPress() : null
+                      }
+                    ></input>
+                    <form
+                      action=""
+                      className="flex flex-row items-center hover:bg-slate-50 peer-invalid:bg-slate-50 "
+                    >
+                      <TextareaAutosize
+                        onChange={handleSubComment}
+                        placeholder={
+                          isLogin ? '댓글 달기... ' : '로그인 하세요'
+                        }
+                        className="peer w-full resize-none pl-6 mt-2 mb-3 outline-none font-medium bg-transparent"
+                      />
+                      <button
+                        onClick={(e) =>
+                          onSubCommentClick(e, reviewComments.id.toString())
+                        }
+                        className="w-12 flex-none flex justify-center items-center"
+                      >
+                        <FiSend className="text-3xl text-gray-400 hover:text-blue-500 mr-2 hover:bg-blue-100 p-1 rounded-lg w-10 h-8 pr-1.5" />
+                      </button>
+                    </form>
+                  </>
+                ) : (
+                  <>
+                    <div className="dark:bg-DMSubColor dark:text-white px-6 pt-3 pb-4 border-b border-gray-200 dark:border-white/30 bg-white text-gray-600 font-medium">
+                      {comment}
+                    </div>
+                    <form
+                      action=""
+                      className="dark:bg-DMSubColor dark:text-white w-full flex flex-row items-center hover:bg-slate-50 peer-invalid:bg-slate-50 "
+                    >
+                      <TextareaAutosize
+                        onChange={handleSubComment}
+                        placeholder={
+                          isLogin ? '댓글 달기...' : '로그인하세요...'
+                        }
+                        className="dark:text-white peer w-full resize-none pl-6 mt-2 mb-3 outline-none font-medium bg-transparent"
+                      />
+                      <button
+                        onClick={(e) =>
+                          onSubCommentClick(e, reviewComments.id.toString())
+                        }
+                        className="w-12 flex-none flex justify-center items-center"
+                      >
+                        <FiSend className="text-3xl text-gray-400 mr-2 hover:text-blue-500  hover:bg-blue-100 p-1 rounded-lg w-10 h-8 pr-1.5" />
+                      </button>
+                    </form>
+                  </>
+                )}
+              </div>
+              <div className="hidden md:flex">
+                <HandleSubComment />
+                <SubCommentHide />
               </div>
             </div>
-            <div className="ring-1 ring-gray-200 dark:ring-white/30 rounded-xl overflow-hidden bg-white">
-              {isEditMode ? (
-                <>
-                  <input
-                    autoFocus
-                    defaultValue={comment}
-                    className="w-full px-6 pt-3 pb-4 rounded-t-xl border-b border-gray-200"
-                    onChange={onCommentEdit}
-                    onKeyUp={(comment) =>
-                      comment.key === 'Enter' ? onEnterPress() : null
+          </div>
+          <div className="md:hidden ring-1 ring-gray-200 dark:ring-white/30 rounded-xl overflow-hidden bg-white">
+            {isEditMode ? (
+              <>
+                <input
+                  autoFocus
+                  defaultValue={comment}
+                  className="w-full px-6 pt-3 pb-4 rounded-t-xl border-b border-gray-200"
+                  onChange={onCommentEdit}
+                  onKeyUp={(comment) =>
+                    comment.key === 'Enter' ? onEnterPress() : null
+                  }
+                ></input>
+                <form
+                  action=""
+                  className="flex flex-row items-center hover:bg-slate-50 peer-invalid:bg-slate-50 "
+                >
+                  <TextareaAutosize
+                    onChange={handleSubComment}
+                    placeholder={isLogin ? '댓글 달기... ' : '로그인 하세요'}
+                    className="peer w-full resize-none pl-6 mt-2 mb-3 outline-none font-medium bg-transparent"
+                  />
+                  <button
+                    onClick={(e) =>
+                      onSubCommentClick(e, reviewComments.id.toString())
                     }
-                  ></input>
-                  <form
-                    action=""
-                    className="flex flex-row items-center hover:bg-slate-50 peer-invalid:bg-slate-50 "
+                    className="w-12 flex-none flex justify-center items-center"
                   >
-                    <TextareaAutosize
-                      onChange={handleSubComment}
-                      placeholder={isLogin ? '댓글 달기... ' : '로그인 하세요'}
-                      className="peer w-full resize-none pl-6 mt-2 mb-3 outline-none font-medium bg-transparent"
-                    />
-                    <button
-                      onClick={(e) =>
-                        onSubCommentClick(e, reviewComments.id.toString())
-                      }
-                      className="w-12 flex-none flex justify-center items-center"
-                    >
-                      <FiSend className="text-3xl text-gray-400 hover:text-blue-500 mr-2 hover:bg-blue-100 p-1 rounded-lg w-10 h-8 pr-1.5" />
-                    </button>
-                  </form>
-                </>
-              ) : (
-                <>
-                  <div className="dark:bg-DMSubColor dark:text-white px-6 pt-3 pb-4 border-b border-gray-200 dark:border-white/30 bg-white text-gray-600 font-medium">
-                    {comment}
-                  </div>
-                  <form
-                    action=""
-                    className="dark:bg-DMSubColor dark:text-white w-full flex flex-row items-center hover:bg-slate-50 peer-invalid:bg-slate-50 "
+                    <FiSend className="text-3xl text-gray-400 hover:text-blue-500 mr-2 hover:bg-blue-100 p-1 rounded-lg w-10 h-8 pr-1.5" />
+                  </button>
+                </form>
+              </>
+            ) : (
+              <>
+                <div className="dark:bg-DMSubColor dark:text-white px-6 pt-3 pb-4 border-b border-gray-200 dark:border-white/30 bg-white text-gray-600 font-medium">
+                  {comment}
+                </div>
+                <form
+                  action=""
+                  className="dark:bg-DMSubColor dark:text-white w-full flex flex-row items-center hover:bg-slate-50 peer-invalid:bg-slate-50 "
+                >
+                  <TextareaAutosize
+                    onChange={handleSubComment}
+                    placeholder={isLogin ? '댓글 달기...' : '로그인하세요...'}
+                    className="dark:text-white peer w-full resize-none pl-6 mt-2 mb-3 outline-none font-medium bg-transparent"
+                  />
+                  <button
+                    onClick={(e) =>
+                      onSubCommentClick(e, reviewComments.id.toString())
+                    }
+                    className="w-12 flex-none flex justify-center items-center"
                   >
-                    <TextareaAutosize
-                      onChange={handleSubComment}
-                      placeholder={isLogin ? '댓글 달기...' : '로그인하세요...'}
-                      className="dark:text-white peer w-full resize-none pl-6 mt-2 mb-3 outline-none font-medium bg-transparent"
-                    />
-                    <button
-                      onClick={(e) =>
-                        onSubCommentClick(e, reviewComments.id.toString())
-                      }
-                      className="w-12 flex-none flex justify-center items-center"
-                    >
-                      <FiSend className="text-3xl text-gray-400 mr-2 hover:text-blue-500  hover:bg-blue-100 p-1 rounded-lg w-10 h-8 pr-1.5" />
-                    </button>
-                  </form>
-                </>
-              )}
-            </div>
+                    <FiSend className="text-3xl text-gray-400 mr-2 hover:text-blue-500  hover:bg-blue-100 p-1 rounded-lg w-10 h-8 pr-1.5" />
+                  </button>
+                </form>
+              </>
+            )}
+          </div>
+          <div className="md:hidden">
             <HandleSubComment />
             <SubCommentHide />
           </div>
