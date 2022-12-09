@@ -94,46 +94,52 @@ const Profile = () => {
         />
       )}
 
-      <div className="flex flex-col items-center justify-center pt-2 bg-zinc-100 md:flex-row">
-        <div className="mx-10">
+      <div className="flex flex-col items-center justify-center py-8 md:py-12 bg-zinc-100 dark:bg-DMMainColor dark:text-white text-black/70">
+        <div className="flex flex-col md:flex-row items-center">
           <img
-            src={`https://codetech.nworld.dev${userProfileData?.image}`}
+            src={
+              userProfileData?.image === 'null' ||
+              userProfileData?.image === null
+                ? require('../../images/placeholder-img-profile.png')
+                : `https://codetech.nworld.dev${userProfileData?.image}`
+            }
             alt=""
-            className="object-cover mt-10 border-none rounded-full bg-gray-400/90 w-60 h-60"
+            className="object-cover border-none rounded-full bg-gray-400/90 w-32 md:w-48 h-32 md:h-48 md:mr-8"
           />
-          <div className="flex justify-center">
-            <button
-              className="px-12 py-2 mt-4 mb-10 bg-slate-300 rounded onClick={openModalHandler}"
-              onClick={openEditProfileImgModalHandler}
-            >
-              사진 업로드
-            </button>
+          <div className="lg:block flex-col pt-2">
+            <div className="font-bold text-2xl pb-1 md:text-4xl md:pb-2 md:p-0 text-center md:text-left text-black dark:text-white">
+              {userProfileData?.nickname}
+            </div>
+            <div className="text-xl font-medium text-center md:text-left text-black/60 dark:text-white/60 pb-1">
+              {userProfileData?.email}
+            </div>
+            <div className="text-center md:text-left text-lg">
+              <span className="font-bold mr-1 dark:text-white text-black">
+                {userProfileData?.point}
+              </span>
+              <span className="dark:text-white/60 text-black/60">point</span>
+            </div>
           </div>
         </div>
-        <div className="lg:block sm:flex-col ">
-          <div className="px-24 m-3 mt-0 text-2xl font-bold md:text-4xl md:p-0">
-            {userProfileData?.nickname}
-          </div>
-          <div className="px-24 m-2 text-sm font-semibold md:p-0">
-            {userProfileData?.email}
-          </div>
-          <div className="px-24 m-2 text-sm font-semibold md:p-0">
-            {userProfileData?.point} point
-          </div>
-          <div className="flex items-center justify-center mt-3 mb-5 sm:mb-10 lg:items-start lg:justify-start">
-            <button
-              className="px-10 py-2 m-4 ml-0 rounded sm:px-14 bg-slate-200"
-              onClick={openEditProfileModalHandler}
-            >
-              닉네임 수정
-            </button>
-            <button
-              className="px-10 py-2 m-4 rounded sm:px-14 bg-slate-200"
-              onClick={openEditPasswordModalHandler}
-            >
-              비밀번호 수정
-            </button>
-          </div>
+        <div className="flex items-center justify-center mt-8 sm:mb-0 lg:items-start lg:justify-start text-sm md:text-base">
+          <button
+            className="flex items-center font-medium w-28 sm:w-[10rem] md:w-[12rem] justify-center h-12 py-2 rounded-xl  hover:bg-slate-300 bg-white hover:dark:bg-black/80 dark:bg-DMSubColor mx-1 md:mx-2 text-black/80 dark:text-white/80 dark:hover:text-white"
+            onClick={openEditProfileImgModalHandler}
+          >
+            사진 업로드
+          </button>
+          <button
+            className="flex items-center font-medium w-28 sm:w-[10rem] md:w-[12rem] justify-center h-12 py-2 rounded-xl  hover:bg-slate-300 bg-white hover:dark:bg-black/80 dark:bg-DMSubColor mx-1 md:mx-2 text-black/80 dark:text-white/80 dark:hover:text-white"
+            onClick={openEditProfileModalHandler}
+          >
+            닉네임 수정
+          </button>
+          <button
+            className="flex items-center font-medium w-28 sm:w-[10rem] md:w-[12rem] justify-center h-12 py-2 rounded-xl  hover:bg-slate-300 bg-white hover:dark:bg-black/80 dark:bg-DMSubColor mx-1 md:mx-2 text-black/80 dark:text-white/80 dark:hover:text-white"
+            onClick={openEditPasswordModalHandler}
+          >
+            비밀번호 수정
+          </button>
         </div>
       </div>
     </div>

@@ -6,7 +6,7 @@ import { useIsLogin } from '../../store/login';
 import Avatar from '../Avatar/Avatar';
 import { loginRefresh } from '../../util/loginRefresh';
 
-export default function PendingAnswer({
+export default function FirstAnswer({
   createdAt,
   nickname,
   content,
@@ -19,8 +19,6 @@ export default function PendingAnswer({
 }: PendingAnswerProps) {
   const { loginId } = useIsLogin();
   const answerId = id;
-
-  // // 답변 채택하기
   const handleAdopt = async () => {
     const Result = await postAdopt({ answerId, questionId });
     switch (Result.status) {
@@ -39,13 +37,13 @@ export default function PendingAnswer({
   };
 
   return (
-    <div className="w-full flex flex-col mt-5 pl-8 md:pl-12">
+    <div className="w-full flex flex-col mt-4 pl-5 md:pl-12">
       <div className="w-full flex mb-3 items-center">
         <Avatar image={image} />
         <BodyTop
           createdAt={createdAt}
           nickname={nickname}
-          writerId={writerId}
+          writerId={questionWriterId}
           answerId={answerId}
           content={content}
           questionContent={questionContent}
@@ -54,13 +52,11 @@ export default function PendingAnswer({
       <div className="w-full">
         <div className="flex w-full">
           <div
-            className={`grow px-6 pt-5 pb-6 rounded bg-white dark:bg-DMSubColor text-gray-600  dark:text-white font-medium ${
-              Number(loginId) !== questionWriterId && 'mr-2'
-            }`}
+            className={`grow px-6 pt-3 pb-4 rounded bg-white dark:bg-DMSubColor text-gray-600 dark:text-white font-medium`}
           >
             {content}
           </div>
-          {Number(loginId) === questionWriterId && (
+          {Number(loginId) === writerId && (
             <div className=" flex-none w-16 ml-2 flex justify-center items-center">
               <button
                 onClick={handleAdopt}

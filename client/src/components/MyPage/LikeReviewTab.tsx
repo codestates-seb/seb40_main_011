@@ -62,34 +62,36 @@ const LikeReviewTab = () => {
   return (
     <>
       {!reviewData || reviewData?.length === 0 ? (
-        <div className="flex flex-col justify-center w-full max-w-screen-lg p-5 px-24 mt-20">
+        <div className="flex flex-col justify-center w-full max-w-screen-lg p-5 px-5 mt-20">
           <div className="mb-2 text-xl text-center">
             좋아요한 리뷰가 없습니다
           </div>
         </div>
       ) : (
-        <>
+        <div className="mx-auto w-full lg:w-[64rem] py-4">
           {reviewData?.map((el: ReviewType, index: number) => {
             return (
               <>
                 <Link
                   to={`/review/${el.id}`}
                   key={index}
-                  className="flex flex-col justify-center w-full max-w-screen-lg py-2.5 lg:px-24 px-10"
+                  className="flex flex-col justify-center w-full max-w-screen-lg py-4 px-5"
                 >
-                  <div className="mb-2 text-xl">{el.title}</div>
-                  <div className="mb-2 overflow-hidden text-ellipsis line-clamp-2">
+                  <div className="mb-2 text-xl font-medium dark:text-white text-black">
+                    {el.title}
+                  </div>
+                  <div className="mb-2 text-sm overflow-hidden text-ellipsis dark:text-white/70 text-black/60 line-clamp-2">
                     {el.content.replace(/"/g, '').replace(/<[^>]*>?/g, '')}
                   </div>
                   <div className="flex text-sm">
-                    <div className="px-3 py-0.5 bg-slate-300 rounded-lg">
+                    <div className="px-2 pb-1 pt-0.5 bg-slate-300 rounded dark:bg-DMSubColor font-medium dark:text-white/90 text-black/60">
                       {el.type}
                     </div>
-                    <div className="px-3 py-0.5  hidden sm:block">
+                    <div className="px-3 py-0.5 dark:text-white/40 text-black/40 hidden sm:block">
                       {el.productName}
                     </div>
-                    <div className="ml-auto text-slate-600">
-                      {new Date(el.createdAt).toLocaleDateString('en-US', {
+                    <div className="ml-auto text-slate-600 dark:text-white/40 text-black/40">
+                      {new Date(el.createdAt).toLocaleDateString('ko-KR', {
                         month: 'short',
                         day: 'numeric',
                         year: 'numeric',
@@ -111,7 +113,7 @@ const LikeReviewTab = () => {
           ) : (
             <></>
           )}
-        </>
+        </div>
       )}
     </>
   );

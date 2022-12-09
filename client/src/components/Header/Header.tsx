@@ -1,12 +1,17 @@
 import HeaderTextButton from '../Buttons/HeaderTextButton';
 import SearchBar from './SearchBar';
-import { BsFillSunFill } from 'react-icons/bs';
+import { BsFillSunFill, BsFillMoonFill } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 import { useIsLogin } from '../../store/login';
-import { GiHamburgerMenu } from '../../icons';
-import { useState } from 'react';
+import { GiHamburgerMenu, IoMdNotifications } from '../../icons';
+import { BiSearch } from 'react-icons/bi';
+import { useEffect, useState } from 'react';
+import { useDarkMode } from '../../store/darkMode';
+import NotificationModal from './NotificationModal';
+
 export default function Header() {
   const [menu, setMenu] = useState(false);
+  const [notiClicked, setNotiClicked] = useState(false);
   const navigate = useNavigate();
   const handleHomeClick = () => {
     navigate('/');
@@ -18,14 +23,44 @@ export default function Header() {
 
   const { isLogin } = useIsLogin();
 
+  const DarkModeBtn = () => {
+    if (darkMode) {
+      return (
+        <button
+          className="flex flex-row items-center h-full mx-2"
+          onClick={() => {
+            setDarkMode(!darkMode);
+          }}
+        >
+          <span className="flex items-center justify-center text-2xl text-yellow-500 rounded-full material-icons w-14 h-14 hover:bg-slate-100 dark:hover:bg-DMThrColor">
+            <BsFillMoonFill />
+          </span>
+        </button>
+      );
+    } else
+      return (
+        <button
+          className="flex flex-row items-center h-full mx-2"
+          onClick={() => {
+            setDarkMode(!darkMode);
+          }}
+        >
+          <span className="flex items-center justify-center text-2xl text-red-500 rounded-full material-icons w-14 h-14 hover:bg-slate-100 ">
+            <BsFillSunFill />
+          </span>
+        </button>
+      );
+  };
+
   const BurgurDropDown = () => {
     if (menu && isLogin) {
       return (
         <div
-          className={`drop-shadow-xl m-1 p-2 md:hidden items-center justify-evenly rounded-lg bg-white fixed top-20 right-1 h-[12rem] w-[12rem] flex flex-col`}
+          className={`drop-shadow-xl m-1 p-2 md:hidden items-center justify-evenly rounded-lg bg-white fixed top-20 right-1 h-[16rem] w-[12rem] flex flex-col dark:bg-DMSubColor`}
         >
           <HeaderTextButton name="hamburgerMyPage" />
           <HeaderTextButton name="hamburgerLogout" />
+          <DarkModeBtn />
           <div className="p-2 text-sm text-slate-400">
             <div>문의</div>
             <div>contact@codetech.com</div>
@@ -36,10 +71,11 @@ export default function Header() {
     if (!isLogin) {
       return (
         <div
-          className={`drop-shadow-xl m-1 p-2 md:hidden items-center justify-evenly rounded-lg bg-white fixed top-20 right-1 h-[12rem] w-[12rem] flex flex-col`}
+          className={`drop-shadow-xl m-1 p-2 md:hidden items-center justify-evenly rounded-lg bg-white fixed top-20 right-1 h-[16rem] w-[12rem] flex flex-col dark:bg-DMSubColor`}
         >
           <HeaderTextButton name="hamburgerLogin" />
           <HeaderTextButton name="hamburgerSignup" />
+          <DarkModeBtn />
           <div className="p-2 text-sm text-slate-400">
             <div>문의</div>
             <div>contact@codetech.com</div>
@@ -50,54 +86,100 @@ export default function Header() {
     return null;
   };
 
+  const MobileSearch = () => {
+    return (
+      <button
+        className="sm:hidden flex items-center justify-center rounded-full material-icons w-14 h-14 hover:bg-slate-100 dark:hover:bg-DMThrColor"
+        onClick={handleSearchBar}
+      >
+        <BiSearch className="mr-2 text-3xl" />
+      </button>
+    );
+  };
+
+  const [searchBar, setSearchBar] = useState(false);
+  const handleSearchBar = () => {
+    setSearchBar(!searchBar);
+  };
+
+  const { darkMode, setDarkMode } = useDarkMode();
+  useEffect(() => {
+    if (darkMode) {
+      localStorage.setItem('color theme', 'dark');
+      document.documentElement.classList.add('dark');
+    } else {
+      localStorage.setItem('color theme', 'light');
+      document.documentElement.classList.remove('dark');
+    }
+  }, [darkMode]);
+
+  const Notification = () => {
+    const onBellClick = () => {
+      setNotiClicked(!notiClicked);
+    };
+    return (
+      <button
+        onClick={onBellClick}
+        className="flex items-center justify-center text-2xl rounded-full material-icons w-14 h-14 hover:bg-slate-100 dark:hover:bg-DMThrColor"
+      >
+        <IoMdNotifications />
+      </button>
+    );
+  };
+
   return (
-    <div className="sticky top-0 z-20 bg-white">
+    <div className="sticky top-0 z-20 bg-white dark:bg-DMSubColor dark:text-white transition-all">
       <div className="max-xl:w-full xl:w-[80rem] mx-auto px-4 h-20 flex flex-row items-center justify-between">
-        <button className="flex-none" onClick={handleHomeClick}>
+        <button
+          className={searchBar ? 'hidden' : `flex-none`}
+          onClick={handleHomeClick}
+        >
           <img
-            src={require('../../images/logo.png')}
+            src={
+              darkMode
+                ? require('../../images/darkmode_logo.png')
+                : require('../../images/logo.png')
+            }
             alt=""
             className="inline-block w-40 mb-1 mr-2"
           />
         </button>
-        <SearchBar />
-        <div className="flex-none flex flex-row h-full">
-          <button className="h-full flex flex-row items-center md:hidden">
-            <span className="material-icons text-2xl w-14 h-14 rounded-full hover:bg-slate-100 flex items-center justify-center">
-              <GiHamburgerMenu onClick={onBurgerClicked} />
+        <SearchBar searchBar={searchBar} setSearchBar={setSearchBar} />
+        <div className="flex flex-row flex-none h-full">
+          <div className="flex flex-row items-center h-full md:hidden ">
+            {searchBar ? null : <MobileSearch />}
+            <span className="flex items-center justify-center text-2xl rounded-full material-icons w-14 h-14 hover:bg-slate-100 dark:hover:bg-DMThrColor">
+              <GiHamburgerMenu role="button" onClick={onBurgerClicked} />
             </span>
-          </button>
+          </div>
           {menu ? (
-            <div
-              onClick={onBurgerClicked}
-              className="fixed inset-0 h-screen w-full flex justify-content justify-center items-center"
-            >
+            <>
+              <div
+                onClick={onBurgerClicked}
+                className="fixed inset-0 flex items-center justify-center w-full h-screen justify-content"
+              ></div>
               <BurgurDropDown />
-            </div>
+            </>
           ) : null}
-          <div className="max-md:hidden flex">
+          <div className="flex max-md:hidden">
+            <DarkModeBtn />
             {!isLogin ? (
               <>
-                <button className="h-full flex flex-row items-center mx-2">
-                  <span className="material-icons text-2xl w-14 h-14 rounded-full hover:bg-slate-100 flex items-center justify-center">
-                    <BsFillSunFill />
-                  </span>
-                </button>
                 <div>
-                  <HeaderTextButton name="login" />
-                  <HeaderTextButton name="signup" />
+                  <HeaderTextButton name="로그인" />
+                  <HeaderTextButton name="회원가입" />
                 </div>
               </>
             ) : (
               <>
-                <button className="h-full flex flex-row items-center mx-2">
-                  <span className="material-icons text-2xl w-14 h-14 rounded-full hover:bg-slate-100 flex items-center justify-center">
-                    <BsFillSunFill />
-                  </span>
-                </button>
-                <div>
-                  <HeaderTextButton name="My Page" />
-                  <HeaderTextButton name="logout" />
+                <div className="flex items-center">
+                  <HeaderTextButton name="마이페이지" />
+                  <HeaderTextButton name="로그아웃" />
+                  <Notification />
+                  <NotificationModal
+                    notiClicked={notiClicked}
+                    setNotiClicked={setNotiClicked}
+                  />
                 </div>
               </>
             )}

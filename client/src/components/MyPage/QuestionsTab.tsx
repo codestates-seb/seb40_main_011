@@ -61,33 +61,37 @@ const QuestionsTab = () => {
           <div className="mb-2 text-xl text-center">작성한 질문이 없습니다</div>
         </div>
       ) : (
-        <>
+        <div className="mx-auto w-full lg:w-[64rem] py-4">
           {reviewData?.map((el: ReviewType, index: number) => {
             return (
               <>
                 <div
-                  className="flex flex-col justify-center w-full max-w-screen-lg py-2.5 lg:px-24 px-10"
+                  className="flex flex-col justify-center w-full max-w-screen-lg py-4 px-5"
                   key={index}
                 >
+                  <div className="mb-2 text-lg overflow-hidden text-ellipsis dark:text-white text-black line-clamp-2">
+                    {el.content}
+                  </div>
                   <div className="flex text-sm">
-                    <div className=" text-slate-600">
-                      {new Date(el.createdAt).toLocaleDateString('kr-KO', {
+                    <div className="text-slate-600 dark:text-white/40 text-black/40">
+                      {new Date(el.createdAt).toLocaleDateString('ko-KR', {
                         month: 'short',
                         day: 'numeric',
                         year: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
                       })}
                     </div>
                     {el.adoptedId ? (
                       <>
                         <BsCheckCircleFill className=" w-[20px] h-[20px] mb-1 ml-1.5 text-emerald-500" />
-                        <p className="ml-1 text-slate-600">채택완료</p>
+                        <p className="ml-1 text-slate-600 dark:text-gray-400">
+                          채택완료
+                        </p>
                       </>
                     ) : (
                       <></>
                     )}
-                  </div>
-                  <div className="mb-2 overflow-hidden text-ellipsis line-clamp-2">
-                    {el.content}
                   </div>
                 </div>
               </>
@@ -102,7 +106,7 @@ const QuestionsTab = () => {
           ) : (
             <></>
           )}
-        </>
+        </div>
       )}
     </>
   );

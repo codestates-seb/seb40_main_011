@@ -86,12 +86,12 @@ export default function WriteAnswer({
   };
 
   return (
-    <div className="fixed inset-0 h-screen w-full z-30 bg-black/30 backdrop-blur-sm flex justify-content justify-center items-center">
+    <div className="fixed inset-0 h-screen w-full z-30 bg-black/30 dark:bg-black/70 backdrop-blur-sm flex justify-content justify-center items-center">
       <div className="w-[40rem] z-40 rounded-xl overflow-hidden">
-        <div className="px-8 py-4 bg-slate-100 border-b border-slate-200 text-gray-600 font-medium">
+        <div className="px-8 py-4 bg-slate-100 dark:bg-DMMainColor border-b border-slate-200 dark:border-white/10 text-gray-600 dark:text-white/70 font-medium">
           {questionContent ? questionContent : content}
         </div>
-        <div className="bg-white pt-4 pb-6 px-4">
+        <div className="bg-white dark:bg-DMSubColor pt-4 pb-6 px-4">
           {showError && (
             <div className="text-red-500 font-medium text-sm mx-4 bg-red-100 rounded px-2 pt-2 pb-2 mb-3">
               3글자 이상 입력하셔야 답변하실 수 있습니다.
@@ -101,7 +101,7 @@ export default function WriteAnswer({
             <TextareaAutosize
               minRows={3}
               maxRows={6}
-              className={`w-full px-4 outline-none text-gray-300 font-medium resize-none focus:text-gray-700 text-lg `}
+              className={`w-full px-4 outline-none dark:bg-DMSubColor text-gray-300 font-medium resize-none focus:text-gray-700 text-lg dark:focus:text-white`}
               placeholder="내용을 입력해주세요"
               autoFocus
               value={answerId !== undefined ? question : answer}

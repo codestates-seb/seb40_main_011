@@ -52,18 +52,13 @@ const HandleLike = ({ userId, recommends }: LikeProps) => {
     if (didLike.length !== 1) {
       return (
         <AiOutlineHeart
-          color="2962F6"
           size="40"
-          className="relative inline-flex"
+          className="relative inline-flex text-blue-500"
         />
       );
     } else
       return (
-        <AiFillHeart
-          color="2962F6"
-          size="40"
-          className="relative inline-flex"
-        />
+        <AiFillHeart size="40" className="relative inline-flex text-blue-500" />
       );
   };
 
@@ -71,7 +66,7 @@ const HandleLike = ({ userId, recommends }: LikeProps) => {
     <>
       {userId === Number(loginId) ? null : (
         <button
-          className="flex "
+          className="flex justify-center my-4"
           onClick={handleLikeClick}
           onMouseEnter={() => setIsHover(true)}
           onMouseLeave={() => setIsHover(false)}

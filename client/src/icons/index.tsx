@@ -1,4 +1,12 @@
-import { BsFillPatchExclamationFill, BsFilePerson } from 'react-icons/bs';
+import {
+  BsFileRichtextFill,
+  BsChatFill,
+  BsHeartFill,
+  BsFillPatchExclamationFill,
+  BsFillPatchQuestionFill,
+  BsFilePerson,
+  BsFillLightbulbFill,
+} from 'react-icons/bs';
 import { MdOutlineEmail } from 'react-icons/md';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import {
@@ -8,6 +16,7 @@ import {
   AiFillEyeInvisible,
   AiOutlineHeart,
   AiFillStar,
+  AiOutlineEye,
 } from 'react-icons/ai';
 import {
   RiKakaoTalkFill,
@@ -17,7 +26,19 @@ import {
   RiHeart3Line,
 } from 'react-icons/ri';
 
+import { IoMdNotifications } from 'react-icons/io';
+
+import { SiNaver } from 'react-icons/si';
+
 export {
+  IoMdNotifications,
+  BsFileRichtextFill,
+  BsChatFill,
+  BsHeartFill,
+  BsFillPatchQuestionFill,
+  BsFillLightbulbFill,
+  SiNaver,
+  AiOutlineEye,
   GiHamburgerMenu,
   BsFillPatchExclamationFill,
   MdOutlineEmail,

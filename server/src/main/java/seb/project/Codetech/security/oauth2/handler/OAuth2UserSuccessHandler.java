@@ -12,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import lombok.extern.log4j.Log4j2;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
@@ -26,7 +27,7 @@ import seb.project.Codetech.security.auth.utils.UserAuthorityUtils;
 import seb.project.Codetech.user.entity.User;
 import seb.project.Codetech.user.repository.UserRepository;
 import seb.project.Codetech.user.service.UserService;
-
+@Log4j2
 public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 	private final JwtTokenizer jwtTokenizer;
 	private final UserAuthorityUtils authorityUtils;
@@ -46,6 +47,7 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 		Authentication authentication) throws IOException, ServletException {
+		try{
 		String registrationId = ((OAuth2AuthenticationToken)authentication).getAuthorizedClientRegistrationId();
 		if(registrationId.equals("google")) {
 			var oAuth2User = (OAuth2User) authentication.getPrincipal();
@@ -53,10 +55,9 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 			String nickname = String.valueOf(oAuth2User.getAttributes().get("name"));
 			String provider = "google";
 			String password = String.valueOf(oAuth2User.getAttributes().get("providerId"));
-			String image = String.valueOf(oAuth2User.getAttributes().get("picture"));
 			List<String> authorities = authorityUtils.createRoles(username);
 			if (userRepository.findByEmail(username).isEmpty()) {
-				saveUser(nickname, username, password, provider, image);
+				saveUser(nickname, username, password, provider);
 			}
 			redirect(request, response, username, provider, authorities);
 		}
@@ -67,27 +68,28 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 			String nickname = String.valueOf(oAuth2User.getAttributes().get("name"));
 			String provider = "naver";
 			String password = String.valueOf(oAuth2User.getAttributes().get("providerId"));
-			String image = String.valueOf(oAuth2User.getAttributes().get("profile_image"));
 			List<String> authorities = authorityUtils.createRoles(username);
 			if (userRepository.findByEmail(username).isEmpty()) {
-				saveUser(nickname, username, password, provider, image);
+				saveUser(nickname, username, password, provider);
 			}
 			redirect(request, response, username, provider, authorities);
 		}
 
 		if(registrationId.equals("kakao")) {
 			var oAuth2User = (OAuth2User) authentication.getPrincipal();
-			String username = String.valueOf(oAuth2User.getAttributes().get("profile_nickname"));
-			String nickname = String.valueOf(oAuth2User.getAttributes().get("profile_nickname"));
+			log.info(authentication.getPrincipal());
+			log.info(oAuth2User.getAttributes());
+			HashMap userInfo = oAuth2User.getAttribute("properties");
+			String username = oAuth2User.getAttribute("id").toString()+"@nworld.dev";
+			String nickname = userInfo.get("nickname").toString();
 			String provider = "kakao";
-			String password = String.valueOf(oAuth2User.getAttributes().get("profile_nickname"));
-			String image = String.valueOf(oAuth2User.getAttributes().get("profile_image"));
+			String password = oAuth2User.getAttribute("id").toString()+userInfo.get("profile_image").toString();
 			List<String> authorities = authorityUtils.createRoles(username);
 			if (userRepository.findByEmail(username).isEmpty()) {
-				saveUser(nickname, username, password, provider, image);
+				saveUser(nickname, username, password, provider);
 			}
 			redirect(request, response, username, provider, authorities);
-		}
+		}} catch (Exception e){throw e;}
 	}
 
 	private void redirect(HttpServletRequest request, HttpServletResponse response, String email, String provider,
@@ -97,14 +99,15 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 		redisTemplate.opsForValue()
 				.set(email,refreshToken, 168 * 60 * 60 * 1000L, TimeUnit.MILLISECONDS);
 
-		String uri = createURI("Bearer " +accessToken, refreshToken).toString();
+		String uri = createURI("Bearer " +accessToken, refreshToken, email).toString();
 		getRedirectStrategy().sendRedirect(request, response, uri);
 	}
 
-	private URI createURI(String accessToken, String refreshToken) {
+	private URI createURI(String accessToken, String refreshToken, String email) {
 		MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
 		queryParams.add("access_token", accessToken);
 		queryParams.add("refresh_token", refreshToken);
+		queryParams.add("id",userService.findUserId(email).toString());
 
 		return UriComponentsBuilder
 			.newInstance()
@@ -113,6 +116,7 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 			.host("codetech.nworld.dev")
 //			.path("/api/token")
 //				.port(3000)
+				.path("/social")
 			.queryParams(queryParams)
 			.build()
 			.toUri();
@@ -137,8 +141,8 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 		return jwtTokenizer.generateAccessToken(claims, email, expiration, base64EncodedSecretKey);
 	}
 
-	private void saveUser(String nickname, String email, String password, String provider, String image) {
-		User user = new User(nickname, email, password, provider, image);
+	private void saveUser(String nickname, String email, String password, String provider) {
+		User user = new User(nickname, email, password, provider);
 		userService.registerUser(user);
 		user.setProvider(provider);
 		userRepository.save(user);

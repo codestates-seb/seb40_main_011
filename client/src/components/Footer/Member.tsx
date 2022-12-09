@@ -5,7 +5,7 @@ export interface propTeam {
 export default function Member({ memberInfo }: propTeam) {
   const { devRole, name, github } = memberInfo;
   return (
-    <div className="inline-block w-24 mx-2 text-center py-3">
+    <div className="inline-block w-20 mx-4 text-center py-3">
       <img
         src={require('../../images/GitHub-Mark-Light-120px-plus.png')}
         alt=""

@@ -35,7 +35,7 @@ const SnackReview = ({ snackReviewData }: any) => {
   // };
 
   return (
-    <div className="w-full">
+    <div className="w-full ">
       {isModal && (
         <SnackReviewModal
           selectedReview={selectedReview}
@@ -58,8 +58,10 @@ const SnackReview = ({ snackReviewData }: any) => {
                 <div className="flex">
                   <Avatar image={el.image} />
                   <div className="flex flex-col w-ful ml-3 font-medium tracking-tight mt-0.5">
-                    <div className="text-black/70">{el.nickname}</div>
-                    <div className="pt-0.5 text-sm text-black/40">
+                    <div className="text-black/70 dark:text-gray-300">
+                      {el.nickname}
+                    </div>
+                    <div className="pt-0.5 text-sm text-black/40 dark:text-gray-400">
                       {new Date(el.createdAt).toLocaleDateString('kr-KO', {
                         month: 'short',
                         day: 'numeric',
@@ -104,13 +106,13 @@ const SnackReview = ({ snackReviewData }: any) => {
                     {reviewList.map((ele, idx) => {
                       return (
                         <div
-                          className="flex flex-col items-center justify-center w-12 h-12 ml-2 font-medium rounded-2xl bg-zinc-100"
+                          className="flex flex-col items-center justify-center w-12 h-12 ml-2 font-medium rounded-2xl bg-zinc-100 dark:bg-DMThrColor"
                           key={idx}
                         >
-                          <div className="text-black/60">
+                          <div className="text-black/60 dark:text-gray-300">
                             {el.score[ele.avg]}
                           </div>
-                          <div className="mb-1 text-xs text-black/40">
+                          <div className="mb-1 text-xs text-black/40 dark:text-gray-300">
                             {ele.name}
                           </div>
                         </div>
@@ -119,7 +121,7 @@ const SnackReview = ({ snackReviewData }: any) => {
                   </div>
                 </div>
               </div>
-              <div className="w-full px-5 pt-2 pb-3 mt-3 mb-8">
+              <div className="w-full px-2 pt-2 pb-3 mt-3 mb-6 md:px-5 md:mb-8">
                 {el.content}
               </div>
             </div>

@@ -14,8 +14,10 @@ import { SnackReviews, ProductDetail } from '../types/mainPageTypes';
 import RvSelectBox from '../components/Review/RvSelectBox';
 import AvgRating from '../components/Review/AvgRating';
 import { useIsLogin } from '../store/login';
+import ScrollToTop from '../util/ScrollToTop';
 
 const ReviewLists = () => {
+  ScrollToTop();
   const navigate = useNavigate();
   const { isLogin } = useIsLogin();
   const [snackReviewData, setSnackReviewData] = useState<SnackReviews>();
@@ -28,7 +30,6 @@ const ReviewLists = () => {
   const [selected, setSelected] = useState('최신 순');
   const [productData, setProductData] = useState<ProductDetail>();
 
-  const ratingCategory = ['가성비', '품질', '만족감', '성능', '디자인'];
   const menu = ['최신 순', '별점 순', '낮은 별점 순'];
 
   const productId = Number(useParams().id);
@@ -90,7 +91,7 @@ const ReviewLists = () => {
   };
 
   return (
-    <div className="pb-12 bg-zinc-100">
+    <div className="pb-12 bg-zinc-100 dark:bg-DMMainColor dark:text-gray-300">
       <div
         className="mx-auto w-full lg:w-[64rem] flex flex-col items-center px-4"
         onClick={() => {
@@ -99,13 +100,13 @@ const ReviewLists = () => {
         }}
       >
         <div className="w-full py-8 text-center">
-          <div className="mb-3 text-xl font-medium text-black/30">
+          <div className="mb-3 text-xl font-medium text-black/30 dark:text-gray-300">
             {productData?.type}
           </div>
           <div className="text-4xl font-bold tracking-tight">
             {productData?.name}
           </div>
-          <div className="flex justify-center">
+          <div className="flex justify-center dark:text-gray-300">
             <AvgRating productId={productId} />
           </div>
           <span
@@ -124,7 +125,7 @@ const ReviewLists = () => {
           />
         )}
         <div
-          className={`w-full px-8 pt-6 bg-white rounded-t-3xl md:px-10 lg:px-12 md:pt-8 lg:pt-10`}
+          className={`w-full px-5 pt-6 bg-white rounded-t-3xl md:px-10 lg:px-12 md:pt-8 lg:pt-10  dark:bg-DMSubColor`}
         >
           <div className="flex items-center justify-between mb-4 text-xl font-medium">
             <div className="pb-1 mr-3 text-2xl font-medium">한줄 리뷰</div>
@@ -136,10 +137,7 @@ const ReviewLists = () => {
               menu={menu}
             />
           </div>
-          <div className="flex justify-end mb-3"></div>
           <SnackReview snackReviewData={snackReviewData} />
-          {/* <div className="flex flex-col md:flex-row "></div> */}
-          {/* <div className="w-full md:1/2 lg:w-2/3"></div> */}
           {snackReviewData?.hasNext && (
             <div className="mx-auto w-full lg:w-[64rem] pb-12">
               <span
@@ -153,8 +151,8 @@ const ReviewLists = () => {
           )}
           {/* 한줄 리뷰 직성 */}
         </div>
-        <div className="w-full px-12 bg-white rounded-b-3xl border-t border-zinc-200">
-          <CreateSnackReview ratingCategory={ratingCategory} />
+        <div className="w-full px-5 bg-white border-t md:px-12 rounded-b-3xl border-zinc-200 dark:bg-DMSubColor dark:border-DMThrColor">
+          <CreateSnackReview />
         </div>
       </div>
     </div>

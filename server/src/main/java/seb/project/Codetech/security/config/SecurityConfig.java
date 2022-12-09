@@ -44,10 +44,10 @@ import java.util.stream.Collectors;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-	@Value("${spring.security.oauth2.client.registration.google.clientId}")
-	private String googleClientId;
-	@Value("${spring.security.oauth2.client.registration.google.clientSecret}")
-	private String googleClientSecret;
+//	@Value("${spring.security.oauth2.client.registration.google.clientId}")
+//	private String googleClientId;
+//	@Value("${spring.security.oauth2.client.registration.google.clientSecret}")
+//	private String googleClientSecret;
 
 	private final JwtTokenizer jwtTokenizer;
 	private final UserAuthorityUtils authorityUtils;
@@ -130,7 +130,6 @@ public class SecurityConfig {
 
 			builder
 					.addFilter(jwtAuthenticationFilter)
-					.addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class)
 					.addFilterAfter(jwtVerificationFilter, OAuth2LoginAuthenticationFilter.class);
 		}
 	}

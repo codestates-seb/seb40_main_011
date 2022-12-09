@@ -37,15 +37,16 @@ export default function QuestionLists() {
   const handleQuestionMore = () => {
     setPendingMore(pendingMore + 3);
   };
+
   return (
     <>
       <QuestionInput />
-      <div className="bg-slate-100 flex justify-center py-16">
+      <div className="bg-slate-100 dark:bg-DMMainColor flex justify-center py-8 md:py-16">
         <div className="w-[48rem] flex flex-col items-center">
-          <div className="w-full flex justify-between pb-4 px-2">
-            <div className="flex items-center text-3xl text-slate-600">
+          <div className="w-full flex flex-col md:flex-row justify-between pb-4 px-4">
+            <div className="flex items-center text-3xl text-slate-600 dark:text-white mb-4">
               <span className="mr-2 font-bold tracking-tight">
-                저 좀 도와주세요 ㅠ_ㅠ
+                답변이 필요한 질문
               </span>
             </div>
             <SelectBox
@@ -80,7 +81,7 @@ export default function QuestionLists() {
             );
           })}
           {pendingMoreStatus && (
-            <div className="mt-12 mb-4 px-2 w-full">
+            <div className="mt-12 mb-4 px-4 w-full">
               <button
                 className="w-full bg-slate-500 hover:bg-slate-400 rounded h-12 text-white pb-0.5 font-medium"
                 onClick={handleQuestionMore}

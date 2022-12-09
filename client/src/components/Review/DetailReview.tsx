@@ -63,11 +63,11 @@ const DetailReview = ({
 
   return (
     <div
-      className={`w-full bg-white rounded-3xl px-8 md:px-12 pt-6 sm:pt-8 md:pt-10 md:pb-3 mb-8 ${
+      className={`w-full bg-white rounded-3xl px-5 md:px-12 pt-6 sm:pt-8 md:pt-10 md:pb-3 mb-8 dark:bg-DMSubColor ${
         reviewData?.reviewLists.length === 0 && `hidden`
       }`}
     >
-      <div className="w-full flex justify-between items-center text-xl font-medium mb-6">
+      <div className="flex items-center justify-between w-full mb-6 text-xl font-medium">
         <span className="text-2xl tracking-tight">상세 리뷰</span>
         <RvSelectBox
           spread={detailReviewspread}
@@ -80,56 +80,64 @@ const DetailReview = ({
 
       {reviewData?.reviewLists.map((el: any, idx: number) => {
         return (
-          <div className="flex mb-3" key={idx}>
-            <img src="" alt="" className="w-[300px] h-[250px] mr-3 rouned" />
-            <div className="flex flex-col overflow-hidden text-left w-[760px]">
-              <div className="mb-1 text-2xl">{el.title}</div>
-              <div className="pb-1 overflow-hidden text-xl text-justify whitespace-normal h-36 text-ellipsis line-clamp-5">
-                {el.content}
+          <Link to={`/review/${el.id}`} key={idx}>
+            <div className="flex flex-col mb-8 md:flex-row md:mb-10">
+              <div className="w-full aspect-[16/9] md:h-48 md:w-2/5 lg:w-1/3 overflow-hidden rounded-2xl md:rounded-3xl flex-none flex items-center mr-6">
+                <img
+                  src={`https://codetech.nworld.dev${el.thumbnail}`}
+                  alt=""
+                  className="w-full scale-105"
+                />
               </div>
-
-              <div className="flex flex-row items-center w-full ">
-                <div className="mx-1 mt-4">좋아요 {el.recommendNumber}</div>
-                <div className="mx-1 mt-4">댓글 {el.commentCount}</div>
-                <div className="flex flex-row items-start ml-auto">
-                  <Avatar image={el.userImage} />
-                  <div className="mx-1 mt-3">
-                    <div>{el.writer}</div>
-                    <div className="ml-auto text-sm text-gray-400">
-                      {' '}
-                      {new Date(el.createdAt).toLocaleDateString('kr-KO', {
-                        month: 'short',
-                        day: 'numeric',
-                        year: 'numeric',
-                      })}
-                    </div>
+              <div className="flex flex-col justify-between w-full h-48 py-2 overflow-hidden text-left md:3/5 lg:w-2/3">
+                <div>
+                  <div className="mb-2 text-xl font-bold tracking-tight line-clamp-1">
+                    {el.title}
+                  </div>
+                  <div className="pb-1 overflow-hidden tracking-tight text-black/60 line-clamp-3 dark:text-gray-400">
+                    {onlyText(el.content)}
                   </div>
                 </div>
-
-                {/* <img
-                    src=
-                    alt=""
-                    className="w-16 h-16 rounded-full bg-slate-200"
-                  /> */}
+                <div className="flex items-end justify-between w-full">
+                  <div className="flex items-center">
+                    <Avatar image={el.userImage} />
+                    <div className="pl-3">
+                      <div className="text-lg font-medium tracking-tight text-black/80 dark:text-gray-300">
+                        {el.writer}
+                      </div>
+                      <div className="text-sm font-medium tracking-tight text-black/50 dark:text-gray-300">
+                        {new Date(el.createdAt).toLocaleDateString('kr-KO', {
+                          month: 'short',
+                          day: 'numeric',
+                          year: 'numeric',
+                        })}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex items-center">
+                    <RiHeart3Line className="text-2xl text-black/40 dark:text-gray-300" />
+                    <span className="mx-1 text-lg font-medium text-black/70 dark:text-gray-300">
+                      {el.recommendNumber}
+                    </span>
+                    <RiChat3Line className="ml-2 text-2xl pl-0.5 text-black/40 dark:text-gray-300" />
+                    <span className="mx-1 text-lg font-medium text-black/70 dark:text-gray-300">
+                      {el.commentCount}
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
+          </Link>
         );
       })}
       {reviewData && reviewData?.hasNext && (
         <span
           role="button"
           onClick={onMoreClick}
-          className="w-full rounded-xl h-14 flex items-center justify-center bg-zinc-100/80 hover:bg-zinc-200/70 text-lg font-medium text-zinc-400 hover:text-zinc-500 tracking-tight my-8"
+          className="flex items-center justify-center w-full my-8 text-lg font-medium tracking-tight rounded-xl h-14 bg-zinc-100/80 hover:bg-zinc-200/70 text-zinc-400 hover:text-zinc-500"
         >
           더 보기
         </span>
-        // <button
-        //   className="px-10 py-2 my-5 rounded-xl bg-slate-200"
-        //   onClick={onMoreClick}
-        // >
-        //   더보기
-        // </button>
       )}
     </div>
   );

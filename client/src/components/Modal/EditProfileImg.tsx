@@ -84,7 +84,12 @@ const EditProgileImg = (
           </div>
           <div className="flex flex-col items-center justify-center object-cover mt-5">
             <img
-              src={userImg}
+              src={
+                userProfileData?.image === 'null' ||
+                userProfileData?.image === null
+                  ? require('../../images/placeholder-img-profile.png')
+                  : userImg
+              }
               alt=""
               className="rounded-full sm:w-60 sm:h-60 w-28 h-28 bg-slate-100"
             />
@@ -98,7 +103,7 @@ const EditProgileImg = (
             <label
               role="button"
               htmlFor="imgUpload"
-              className="px-6 py-2 m-5 rounded-2xl bg-slate-300"
+              className="px-6 py-2 m-5 rounded-2xl bg-slate-300 dark:bg-DMMainColor"
             >
               이미지 업로드
             </label>
@@ -113,13 +118,13 @@ const EditProgileImg = (
 
           <div className="flex justify-center pt-10 mb-5 sm:mb-10 sm:pt-20">
             <button
-              className="w-1/3 py-3 mx-5 border rounded-3xl"
+              className="w-1/3 py-3 mx-5 border rounded-3xl dark:bg-DMMainTextColor dark:border-DMSubTextColor "
               onClick={openEditProfileImgModalHandler}
             >
               취소
             </button>
             <button
-              className="w-1/3 py-3 mx-5 border rounded-3xl bg-slate-300"
+              className="w-1/3 py-3 mx-5 text-white bg-blue-600 rounded-3xl hover:bg-blue-500"
               onClick={handleSubmitImg}
             >
               적용

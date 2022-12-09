@@ -126,9 +126,11 @@ export default function Comment({ reviewComments }: CommentProps) {
       return (
         <button
           onClick={() => setMoreComment(!moreComment)}
-          className="w-full text-gray-400 font-medium text-sm px-2 pb-0.5 rounded hover:bg-slate-200 hover:text-gray-500 group"
+          className="dark:bg-DMSubColor hover:dark:bg-DMThrColor w-full text-gray-400 font-medium text-sm px-2 pb-0.5 rounded bg-zinc-50 hover:bg-zinc-200 hover:text-gray-500 group mb-4"
         >
-          <div className="pr-0.5 text-base group-hover:text-gray-800">접기</div>
+          <div className="hover:dark:text-white pr-0.5 py-3 text-base rounded-2xl group-hover:text-zinc-800">
+            접기
+          </div>
         </button>
       );
     }
@@ -159,21 +161,21 @@ export default function Comment({ reviewComments }: CommentProps) {
     <>
       {reviewComments &&
       reviewComments.content !== '작성자가 삭제한 댓글입니다.' ? (
-        <div className="w-full flex my-6">
+        <div className="w-full flex my-2 ">
           <img
             src={`https://codetech.nworld.dev${reviewComments?.userImage}`}
             alt=""
-            className="w-12 h-12 rounded-full mx-2 ring ring-slate-200"
+            className="flex-none w-12 h-12 rounded-2xl mr-2 ring ring-zinc-100 dark:ring-slate-600"
           />
-          <div className="w-2/3">
+          <div className="grow">
             <div className="flex justify-between mb-1.5 items-center">
-              <span className="max-sm:flex flex-col items-start">
+              <span className="flex items-start">
                 <span className="ml-1 font-semibold">
                   {reviewComments.writer}
                 </span>
-                <span className="text-sm font-medium before:content-['•'] before:mr-1.5 before:ml-1.5 before:text-gray-400 text-gray-400">
+                <div className="text-sm font-medium before:content-['•'] before:mr-1.5 before:ml-1.5 before:text-gray-400 text-gray-400 mt-0.5">
                   {getParsedDate(reviewComments.createdAt)}
-                </span>
+                </div>
               </span>
               <div className="flex items-center">
                 <EditComment
@@ -186,7 +188,7 @@ export default function Comment({ reviewComments }: CommentProps) {
                 />
               </div>
             </div>
-            <div className="ring-1 ring-gray-200 rounded-xl overflow-hidden bg-white">
+            <div className="ring-1 ring-gray-200 dark:ring-white/30 rounded-xl overflow-hidden bg-white">
               {isEditMode ? (
                 <>
                   <input
@@ -204,11 +206,7 @@ export default function Comment({ reviewComments }: CommentProps) {
                   >
                     <TextareaAutosize
                       onChange={handleSubComment}
-                      placeholder={
-                        isLogin
-                          ? '댓글 달기... '
-                          : '댓글을 달기위해 로그인 하세요'
-                      }
+                      placeholder={isLogin ? '댓글 달기... ' : '로그인 하세요'}
                       className="peer w-full resize-none pl-6 mt-2 mb-3 outline-none font-medium bg-transparent"
                     />
                     <button
@@ -223,21 +221,17 @@ export default function Comment({ reviewComments }: CommentProps) {
                 </>
               ) : (
                 <>
-                  <div className="px-6 pt-3 pb-4 border-b border-gray-200 bg-white text-gray-600 font-medium">
+                  <div className="dark:bg-DMSubColor dark:text-white px-6 pt-3 pb-4 border-b border-gray-200 dark:border-white/30 bg-white text-gray-600 font-medium">
                     {comment}
                   </div>
                   <form
                     action=""
-                    className="flex flex-row items-center hover:bg-slate-50 peer-invalid:bg-slate-50 "
+                    className="dark:bg-DMSubColor dark:text-white w-full flex flex-row items-center hover:bg-slate-50 peer-invalid:bg-slate-50 "
                   >
                     <TextareaAutosize
                       onChange={handleSubComment}
-                      placeholder={
-                        isLogin
-                          ? '댓글 달기...'
-                          : '댓글을 달기위해 로그인하세요...'
-                      }
-                      className="peer w-full resize-none pl-6 mt-2 mb-3 outline-none font-medium bg-transparent"
+                      placeholder={isLogin ? '댓글 달기...' : '로그인하세요...'}
+                      className="dark:text-white peer w-full resize-none pl-6 mt-2 mb-3 outline-none font-medium bg-transparent"
                     />
                     <button
                       onClick={(e) =>

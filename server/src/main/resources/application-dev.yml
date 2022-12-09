@@ -34,6 +34,8 @@ spring:
             scope:
               - email
               - profile
+            redirectUri: https://codetech.nworld.dev/login/oauth2/code/google
+            authorization-grant-type: authorization_code
           naver:
             clientId: ${OAUTH2_NAVER_CLIENT_ID}
             clientSecret: ${OAUTH2_NAVER_SECRET}
@@ -50,7 +52,7 @@ spring:
             clientSecret: ${OAUTH2_KAKAO_SECRET}
             clientAuthenticationMethod: post
             authorizationGrantType: authorization_code
-            redirectUri: http://codetech.nworld.dev/login/oauth2/code/kakao
+            redirectUri: https://codetech.nworld.dev/login/oauth2/code/kakao
             scope:
                 - profile_nickname
                 - profile_image

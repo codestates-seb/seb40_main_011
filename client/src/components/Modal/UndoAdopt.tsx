@@ -1,8 +1,8 @@
-import { setShowModalProps } from '../../types/mainPageTypes';
+import { PatchAdoptProps } from '../../types/mainPageTypes';
 import { useParams, useNavigate } from 'react-router-dom';
-import { deleteReview } from '../../util/apiCollection';
 import { loginRefresh } from '../../util/loginRefresh';
-const CheckModal = ({ setShowModal, msg, productId }: setShowModalProps) => {
+import { patchAdoption } from '../../util/apiCollection';
+const UndoAdopt = ({ setShowModal, msg, id }: PatchAdoptProps) => {
   const params = useParams();
   const navigate = useNavigate();
 
@@ -11,11 +11,11 @@ const CheckModal = ({ setShowModal, msg, productId }: setShowModalProps) => {
   };
 
   const handleClick = async (e: React.MouseEvent) => {
-    const response = await deleteReview(Number(params.id));
+    const response = await patchAdoption(id);
     switch (response.status) {
       default:
-        navigate(`/categories/review/${productId}`);
         setShowModal(false);
+        location.reload();
         break;
       case 500:
       case 401:
@@ -28,14 +28,13 @@ const CheckModal = ({ setShowModal, msg, productId }: setShowModalProps) => {
     }
     setShowModal(false);
   };
-
   return (
     <div
       onClick={handleCancel}
       className="fixed inset-0 h-screen w-full z-30 bg-black/30 backdrop-blur-sm flex justify-content justify-center items-center"
     >
       <div className="w-[28rem] z-40 rounded-xl overflow-hidden ">
-        <div className="dark:bg-DMSubColor dark:text-white flex flex-col h-[14rem] justify-between p-10 bg-white font-medium text-center text-lg text-gray-600">
+        <div className="flex flex-col h-[14rem] justify-between p-10 bg-white font-medium text-center text-lg text-gray-600">
           <div className="mt-12">
             <span>{msg}</span>
           </div>
@@ -59,4 +58,4 @@ const CheckModal = ({ setShowModal, msg, productId }: setShowModalProps) => {
   );
 };
 
-export default CheckModal;
+export default UndoAdopt;

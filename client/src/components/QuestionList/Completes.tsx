@@ -25,13 +25,11 @@ export default function Completes() {
   useEffect(() => {
     const getQuestion = async () => {
       const data = await fetchQuestionData(adoptMore, adoptSort, true);
-      //   console.log(data);
       switch (data.status) {
         case 200: {
           const { cards, hasNext } = data.data;
           setQuestions(cards);
           setAdoptMoreStatus(hasNext);
-          // console.log(cards);
         }
       }
     };
@@ -39,12 +37,12 @@ export default function Completes() {
   }, [adoptMore, adoptSort]);
 
   return (
-    <div className="bg-slate-200/80 flex justify-center py-16 border-t border-slate-300">
+    <div className="bg-slate-200 dark:bg-DMSubColor Color flex justify-center py-8 md:py-16 border-t border-slate-300 dark:border-white/30">
       <div className="w-[48rem] flex flex-col items-center">
-        <div className="w-full flex justify-between pb-4 px-2">
-          <div className="flex items-center text-3xl text-slate-600">
+        <div className="w-full flex flex-col md:flex-row justify-between pb-4 px-4">
+          <div className="flex items-center text-3xl text-slate-600 dark:text-white mb-4">
             <span className="mr-2 font-bold tracking-tight">
-              답변이 채택되었어요 :)
+              채택이 완료된 질문
             </span>
           </div>
           <SelectBox
@@ -80,7 +78,7 @@ export default function Completes() {
           );
         })}
         {adoptMoreStatus && (
-          <div className="mt-12 mb-4 px-2 w-full">
+          <div className="mt-12 mb-4 px-4 w-full">
             <button
               className="group w-full bg-slate-500 hover:bg-slate-400 rounded h-12 text-white pb-0.5 font-medium"
               onClick={handleQuestionMore}

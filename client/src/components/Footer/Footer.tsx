@@ -73,7 +73,7 @@ export default function Footer() {
     },
   ];
   return (
-    <div className="px-10 pt-10 pb-10 bg-slate-900 dark:bg-black">
+    <div className="px-6 pt-10 pb-10 bg-slate-900">
       <Banner />
       <div className="text-center">
         {teamMember.map((member, index) => {
@@ -81,7 +81,7 @@ export default function Footer() {
         })}
       </div>
 
-      <div className="pt-16 text-right text-slate-200">
+      <div className="py-8 text-center text-white/50">
         Copyright 2022. codeTech inc. all rights reserved.
       </div>
     </div>

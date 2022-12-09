@@ -218,13 +218,24 @@ export interface PendingAnswerProps {
 }
 
 export interface AnswerProps {
-  createdAt: number;
-  nickname: string;
   content: string;
-  writerId: number;
+  createdAt: number;
   id: number;
-  adoptedId: number;
   image: string;
+  nickname: string;
+  writerId: number;
+  adoptedId: number;
+}
+
+export interface PatchAnswerProps {
+  content: string;
+  createdAt: number;
+  id: number;
+  image: string;
+  nickname: string;
+  writerId: number;
+  adoptedId: number;
+  questionId?: number;
 }
 
 export interface AnswerCardsProps {
@@ -252,6 +263,12 @@ export interface setShowModalProps {
   setShowModal(state: boolean): void;
   msg: string;
   productId?: number;
+}
+
+export interface PatchAdoptProps {
+  setShowModal(state: boolean): void;
+  msg: string;
+  id?: number;
 }
 
 export interface EditQuestionProps {
@@ -322,4 +339,14 @@ export interface ProductDetail {
   snackReviews: SnackReviewCards[] | null;
   type: string;
   writer: string;
+}
+
+export interface searchBarProps {
+  searchBar: boolean;
+  setSearchBar: Dispatch<SetStateAction<boolean>>;
+}
+
+export interface NotiProps {
+  notiClicked: boolean;
+  setNotiClicked: Dispatch<SetStateAction<boolean>>;
 }

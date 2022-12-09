@@ -1,10 +1,10 @@
 //토스트 ui 에디터 컴포넌트
-//안지은 작성
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 
 import Prism from 'prismjs';
 import 'prismjs/themes/prism.css';
+import '@toast-ui/editor/dist/theme/toastui-editor-dark.css';
 
 import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css';
 import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
@@ -16,6 +16,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { loginRefresh } from '../../util/loginRefresh';
 import Confirm from '../Modal/Confirm';
 import useCategories from '../../store/categories';
+import { useDarkMode } from '../../store/darkMode';
 
 function TextEditor() {
   const params = useParams();
@@ -28,6 +29,8 @@ function TextEditor() {
       setContentCount(countData);
     }
   };
+  //다크모드
+  const { darkMode } = useDarkMode();
 
   const editorRef = useRef<Editor>(null);
   const {
@@ -60,7 +63,7 @@ function TextEditor() {
   //모달 메세지 저장
   const [reviewMsg, setReviewMsg] = useState(modalMsg[0]);
 
-  //리뷰수정부분 준일 작성
+  //리뷰수정부분
   if (params.id !== undefined) {
     const handleEditClick = async () => {
       const data = editorRef.current?.getInstance().getMarkdown();
@@ -103,7 +106,10 @@ function TextEditor() {
           previewStyle="vertical"
           initialValue={content || '내용을 입력하세요'}
           height="550px"
+          initialEditType="wysiwyg"
           usageStatistics={false}
+          theme={darkMode ? 'dark' : ''}
+          onChange={onChangeContent}
           plugins={[[codeSyntaxHighlight, { highlighter: Prism }]]}
           hooks={{
             async addImageBlobHook(blob, callback) {
@@ -115,6 +121,11 @@ function TextEditor() {
             },
           }}
         />
+        <div>
+          <span className="text-sm text-gray-400">
+            현재 글자수 {contentCount.length} / 최소 글자수 300자
+          </span>
+        </div>
         <div className="flex justify-center mt-10">
           <button
             onClick={handleEditClick}
@@ -199,6 +210,7 @@ function TextEditor() {
       }
     }
   };
+
   return (
     <>
       {showModal && <Confirm msg={reviewMsg} setShowModal={setShowModal} />}
@@ -209,6 +221,7 @@ function TextEditor() {
         initialEditType="wysiwyg"
         height="550px"
         usageStatistics={false}
+        theme={darkMode ? 'dark' : ''}
         plugins={[[codeSyntaxHighlight, { highlighter: Prism }]]}
         onChange={onChangeContent}
         hooks={{
