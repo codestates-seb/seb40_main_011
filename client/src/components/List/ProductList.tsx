@@ -19,19 +19,25 @@ const ProductList = () => {
   const [viewMore, setViewMore] = useState(9);
 
   useEffect(() => {
+    let isCancelled = false;
     const getProductData = async () => {
       const { data } = await getProducts();
-      if (category === 'all') {
-        await setProducts(data.cards.reverse());
-      } else {
-        setProducts(
-          data.cards
-            .reverse()
-            .filter((el: Product) => el.type.toLowerCase() === category)
-        );
+      if (!isCancelled) {
+        if (category === 'all') {
+          setProducts(data.cards.reverse());
+        } else {
+          setProducts(
+            data.cards
+              .reverse()
+              .filter((el: Product) => el.type.toLowerCase() === category)
+          );
+        }
       }
     };
     getProductData();
+    return () => {
+      isCancelled = true;
+    };
   }, [category]);
 
   const getMoreData = () => {
