@@ -3,13 +3,15 @@ import SearchBar from './SearchBar';
 import { BsFillSunFill, BsFillMoonFill } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 import { useIsLogin } from '../../store/login';
-import { GiHamburgerMenu } from '../../icons';
+import { GiHamburgerMenu, IoMdNotifications } from '../../icons';
 import { BiSearch } from 'react-icons/bi';
 import { useEffect, useState } from 'react';
 import { useDarkMode } from '../../store/darkMode';
+import NotificationModal from './NotificationModal';
 
-export default function Header() {
+function Header() {
   const [menu, setMenu] = useState(false);
+  const [notiClicked, setNotiClicked] = useState(false);
   const navigate = useNavigate();
   const handleHomeClick = () => {
     navigate('/');
@@ -87,7 +89,7 @@ export default function Header() {
   const MobileSearch = () => {
     return (
       <button
-        className="flex items-center justify-center rounded-full material-icons w-14 h-14 hover:bg-slate-100 dark:hover:bg-DMThrColor"
+        className="sm:hidden flex items-center justify-center rounded-full material-icons w-14 h-14 hover:bg-slate-100 dark:hover:bg-DMThrColor"
         onClick={handleSearchBar}
       >
         <BiSearch className="text-3xl" />
@@ -110,6 +112,20 @@ export default function Header() {
       document.documentElement.classList.remove('dark');
     }
   }, [darkMode]);
+
+  const Notification = () => {
+    const onBellClick = () => {
+      setNotiClicked(!notiClicked);
+    };
+    return (
+      <button
+        onClick={onBellClick}
+        className="flex items-center justify-center text-2xl rounded-full material-icons w-14 h-14 hover:bg-slate-100 dark:hover:bg-DMThrColor"
+      >
+        <IoMdNotifications />
+      </button>
+    );
+  };
 
   return (
     <div className="sticky top-0 z-20 bg-white dark:bg-DMSubColor dark:text-white transition-all">
@@ -156,9 +172,14 @@ export default function Header() {
               </>
             ) : (
               <>
-                <div>
+                <div className="flex items-center">
                   <HeaderTextButton name="마이페이지" />
                   <HeaderTextButton name="로그아웃" />
+                  <Notification />
+                  <NotificationModal
+                    notiClicked={notiClicked}
+                    setNotiClicked={setNotiClicked}
+                  />
                 </div>
               </>
             )}
@@ -168,3 +189,5 @@ export default function Header() {
     </div>
   );
 }
+
+export default Header;

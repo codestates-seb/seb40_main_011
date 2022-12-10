@@ -26,9 +26,12 @@ import {
   RiHeart3Line,
 } from 'react-icons/ri';
 
+import { IoMdNotifications } from 'react-icons/io';
+
 import { SiNaver } from 'react-icons/si';
 
 export {
+  IoMdNotifications,
   BsFileRichtextFill,
   BsChatFill,
   BsHeartFill,

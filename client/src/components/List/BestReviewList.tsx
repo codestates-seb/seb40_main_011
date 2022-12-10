@@ -1,5 +1,5 @@
 import { BestReview } from '../../types/mainPageTypes';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, memo } from 'react';
 import { getBestReview } from '../../util/apiCollection';
 import { useNavigate } from 'react-router-dom';
 import { FaChevronRight } from 'react-icons/fa';
@@ -154,4 +154,4 @@ const BestReviewList = () => {
   );
 };
 
-export default BestReviewList;
+export default memo(BestReviewList);

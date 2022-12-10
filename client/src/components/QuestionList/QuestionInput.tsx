@@ -77,7 +77,6 @@ export default function QuestionInput({
             placeholder={placeholder}
             onChange={handleTextarea}
             value={question}
-            autoFocus
           />
           <div className="flex items-center justify-between">
             <span className="text-sm text-gray-400">
