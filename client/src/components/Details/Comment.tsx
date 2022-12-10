@@ -250,7 +250,7 @@ export default function Comment({ reviewComments }: CommentProps) {
                   </>
                 )}
               </div>
-              <div className="hidden md:flex">
+              <div className="hidden md:flex flex-col">
                 <HandleSubComment />
                 <SubCommentHide />
               </div>
