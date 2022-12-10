@@ -1,5 +1,5 @@
 import { BsArrowRight } from 'react-icons/bs';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, memo } from 'react';
 import { fetchQuestionData } from '../../util/apiCollection';
 import { QuestionListType } from '../../types/mainPageTypes';
 import { useNavigate } from 'react-router-dom';
@@ -91,4 +91,4 @@ const QuestionList = () => {
   );
 };
 
-export default QuestionList;
+export default memo(QuestionList);

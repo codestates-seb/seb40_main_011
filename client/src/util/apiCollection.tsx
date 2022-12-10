@@ -244,7 +244,7 @@ export const getSnackStats = async (productId: number) => {
 
 export const editSnack = async (snackId: number, data: any) => {
   try {
-    console.log(data);
+    // console.log(data);
     const response = await axios.patch(`/api/snack-reviews/${snackId}`, data, {
       headers: {
         'Content-Type': 'application/json',
@@ -276,7 +276,7 @@ export const postQuestion = async (data: QuestionContent) => {
     const response = await axios.post('/api/questions', data, {
       headers: { Authorization: localStorage.getItem('authorization') },
     });
-    console.log(response);
+    // console.log(response);
     return response;
   } catch (err: any) {
     return err.response;
@@ -292,7 +292,7 @@ export const patchQuestion = async (questionId: number, content: string) => {
         headers: { Authorization: localStorage.getItem('authorization') },
       }
     );
-    console.log(response);
+    // console.log(response);
     return response;
   } catch (err: any) {
     return err.response;
@@ -308,7 +308,7 @@ export const patchAnswer = async (answerId: string, content: string) => {
         headers: { Authorization: localStorage.getItem('authorization') },
       }
     );
-    console.log(response);
+    // console.log(response);
     return response;
   } catch (err: any) {
     return err.response;
@@ -340,7 +340,7 @@ export const postAdopt = async (data: {
         headers: { Authorization: localStorage.getItem('authorization') },
       }
     );
-    console.log(response);
+    // console.log(response);
     return response;
   } catch (err: any) {
     return err.response;
@@ -352,7 +352,7 @@ export const deleteQuestion = async (questionId: number | undefined) => {
     const response = await axios.delete(`/api/questions/${questionId}`, {
       headers: { Authorization: localStorage.getItem('authorization') },
     });
-    console.log(response);
+    // console.log(response);
     return response;
   } catch (err: any) {
     return err.response;
@@ -574,7 +574,7 @@ export const patchAdoption = async (id: number | undefined) => {
     const response = await axios.patch(`/api/questions/${id}/adopt`, '', {
       headers: { Authorization: localStorage.getItem('authorization') },
     });
-    console.log(response);
+    // console.log(response);
     return response;
   } catch (err: any) {
     return err.response;

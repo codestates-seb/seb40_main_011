@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
 import { useDarkMode } from '../../store/darkMode';
 import NotificationModal from './NotificationModal';
 
-export default function Header() {
+function Header() {
   const [menu, setMenu] = useState(false);
   const [notiClicked, setNotiClicked] = useState(false);
   const navigate = useNavigate();
@@ -92,7 +92,7 @@ export default function Header() {
         className="sm:hidden flex items-center justify-center rounded-full material-icons w-14 h-14 hover:bg-slate-100 dark:hover:bg-DMThrColor"
         onClick={handleSearchBar}
       >
-        <BiSearch className="mr-2 text-3xl" />
+        <BiSearch className="text-3xl" />
       </button>
     );
   };
@@ -148,7 +148,7 @@ export default function Header() {
         <div className="flex flex-row flex-none h-full">
           <div className="flex flex-row items-center h-full md:hidden ">
             {searchBar ? null : <MobileSearch />}
-            <span className="flex items-center justify-center text-2xl rounded-full material-icons w-14 h-14 hover:bg-slate-100 dark:hover:bg-DMThrColor">
+            <span className="ml-2 flex items-center justify-center text-2xl rounded-full material-icons w-14 h-14 hover:bg-slate-100 dark:hover:bg-DMThrColor">
               <GiHamburgerMenu role="button" onClick={onBurgerClicked} />
             </span>
           </div>
@@ -189,3 +189,5 @@ export default function Header() {
     </div>
   );
 }
+
+export default Header;

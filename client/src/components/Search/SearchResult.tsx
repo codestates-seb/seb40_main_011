@@ -10,7 +10,7 @@ const SearchResult = () => {
     .toLocaleLowerCase();
 
   return (
-    <div className="bg-zinc-100 px-4 dark:bg-DMMainColor dark:text-white">
+    <div className="bg-zinc-100 dark:bg-DMMainColor dark:text-white">
       <SearchReview keyword={keyword} />
       <SearchProduct keyword={keyword} />
     </div>

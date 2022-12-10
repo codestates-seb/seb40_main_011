@@ -165,7 +165,7 @@ const RvDetail = () => {
         <div className="flex flex-col justify-center mx-auto w-full lg:w-[64rem] px-4 ">
           <div className="w-full flex justify-between mb-4">
             <div
-              className=" dark:bg-DMSubColor dark:text-white grow-0 shrink-1 w-fit flex items-center h-12 pl-4 pr-5 md:pr-8 font-bold text-black/40 hover:text-black/70 duration-150 ease-in-out bg-white rounded-full hover:bg-slate-300 hover:text-slate-700"
+              className=" dark:bg-DMSubColor dark:hover:bg-black/60 dark:text-white grow-0 shrink-1 w-fit flex items-center h-12 pl-4 pr-5 md:pr-8 font-bold text-black/40 hover:text-black/70 duration-150 ease-in-out bg-white rounded-full hover:bg-slate-300 hover:text-slate-700"
               role="button"
               onClick={onTypeClick}
             >

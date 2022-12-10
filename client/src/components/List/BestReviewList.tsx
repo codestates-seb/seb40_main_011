@@ -1,5 +1,5 @@
 import { BestReview } from '../../types/mainPageTypes';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, memo } from 'react';
 import { getBestReview } from '../../util/apiCollection';
 import { useNavigate } from 'react-router-dom';
 import { FaChevronRight } from 'react-icons/fa';
@@ -111,7 +111,7 @@ const BestReviewList = () => {
                   </div>
                 </div>
               </div>
-              <div className="items-center hidden py-3 pl-5 pr-4 font-medium text-gray-300 rounded-full md:flex group-hover:text-gray-600 group-hover:bg-white/80 dark:group-hover:bg-DMThrColor dark:group-hover:text-white">
+              <div className="items-center hidden py-3 pl-5 pr-4 font-medium text-gray-300 rounded-full md:flex group-hover:text-gray-600 group-hover:bg-gray-100 dark:group-hover:bg-DMThrColor dark:group-hover:text-white">
                 <span className="mr-2">자세히 보기</span>
                 <BsArrowRight className="text-2xl" />
               </div>
@@ -154,4 +154,4 @@ const BestReviewList = () => {
   );
 };
 
-export default BestReviewList;
+export default memo(BestReviewList);
