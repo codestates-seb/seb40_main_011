@@ -18,12 +18,12 @@ import { BsArrowLeft } from 'react-icons/bs';
 import { AiOutlineEye } from '../../icons';
 import '@toast-ui/editor/dist/theme/toastui-editor-dark.css';
 import { useDarkMode } from '../../store/darkMode';
+interface markdownProps {
+  markdown: string | undefined;
+}
 
 const RvDetail = () => {
   const { darkMode } = useDarkMode();
-  interface markdownProps {
-    markdown: string | undefined;
-  }
   const { setContent } = useReview();
   const navigate = useNavigate();
   const params = useParams();
@@ -47,10 +47,18 @@ const RvDetail = () => {
   });
 
   const { loginId } = useIsLogin();
-  const [comments, setComments] = useState<ReviewComments[]>([]);
   const [showModal, setShowModal] = useState(false);
 
   ScrollToTop();
+
+  useEffect(() => {
+    const getReviewData = async () => {
+      const { data } = await getReviewDetail(reviewId);
+      setReview(data);
+      setContent(data.content);
+    };
+    getReviewData();
+  }, []);
 
   const HandleSpinner = () => {
     if (review.content === '') {
@@ -62,16 +70,6 @@ const RvDetail = () => {
   const getParsedDate = (createdAt: string) => {
     return new Date(createdAt).toLocaleDateString('ko-KR');
   };
-
-  useEffect(() => {
-    const getReviewData = async () => {
-      const { data } = await getReviewDetail(reviewId);
-      setReview(data);
-      setComments(data?.reviewComments);
-      setContent(data.content);
-    };
-    getReviewData();
-  }, []);
 
   const onTypeClick = () => {
     navigate(`/categories/review/${review.productId}`);

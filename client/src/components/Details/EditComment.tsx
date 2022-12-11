@@ -2,6 +2,7 @@ import { EditModeProps } from '../../types/mainPageTypes';
 import { deleteComment, editComment } from '../../util/apiCollection';
 import { loginRefresh } from '../../util/loginRefresh';
 import { useIsLogin } from '../../store/login';
+import { useNavigate } from 'react-router-dom';
 const EditComment = ({
   isEditMode,
   setIsEditMode,
@@ -11,6 +12,7 @@ const EditComment = ({
   setComment,
 }: EditModeProps) => {
   const { loginId } = useIsLogin();
+  const navigate = useNavigate();
 
   const onEditClick = async (e: any) => {
     if (e.target.innerText === '수정 취소' || e.target.innerText === '수정') {
@@ -38,7 +40,7 @@ const EditComment = ({
       const response = await deleteComment(id);
       switch (response.status) {
         default:
-          location.reload();
+          navigate(-1);
           break;
         case 401:
           alert('에러');
