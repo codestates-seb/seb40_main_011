@@ -16,6 +16,7 @@ const HandleLike = ({ userId, recommends }: LikeProps) => {
   const params = useParams();
   const { loginId } = useIsLogin();
   const didLike = recommends.filter((el) => Number(loginId) === el);
+
   const handleLikeClick = async () => {
     if (!loginId) {
       navigate('/login');
@@ -35,6 +36,7 @@ const HandleLike = ({ userId, recommends }: LikeProps) => {
       }
     }
   };
+
   const HandleHover = () => {
     if (isHover && didLike.length !== 1) {
       return (

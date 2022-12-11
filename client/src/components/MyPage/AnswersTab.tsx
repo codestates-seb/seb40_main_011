@@ -13,45 +13,43 @@ interface ReviewType {
   modifiedAt: string;
 }
 
-export const AnswersTab = () => {
-  const [reviewData, setReviewData] = useState<any[]>();
-
+const AnswersTab = () => {
+  const [reviewData, setReviewData] = useState<ReviewType[]>([]);
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [isUpdate, setIsUpdate] = useState(true);
 
-  const params = `?page=${currentPage}&size=5&sort=createdAt`;
-  const DetailReviewData = async () => {
-    const data: any = await getUserReview('answers', params);
+  const fetchData = async () => {
+    const params = `?page=${currentPage}&size=5&sort=createdAt`;
+    const data = await getUserReview('answers', params);
+
     switch (data.status) {
       case 200:
-        setReviewData(data?.data.questions.content);
-        setTotalPages(data?.data.questions.totalPages);
+        setReviewData(data.data.questions.content);
+        setTotalPages(data.data.questions.totalPages);
         break;
       case 412:
         loginRefresh();
-        DetailReviewData();
+        fetchData();
         break;
       default:
+        // handle other error cases
+        break;
     }
   };
 
   useEffect(() => {
-    DetailReviewData();
-    setIsUpdate(false);
-  }, [isUpdate]);
+    fetchData();
+  }, [currentPage]);
 
-  const onClickPage = (
-    target: SetStateAction<string> | SetStateAction<number>
-  ) => {
+  const onClickPage = (target: number | 'Prev' | 'Next') => {
     if (target === 'Prev') {
       setCurrentPage(currentPage - 1);
     } else if (target === 'Next') {
       setCurrentPage(currentPage + 1);
     } else {
-      setCurrentPage(+target);
+      setCurrentPage(target);
     }
-    setIsUpdate(true);
   };
 
   return (

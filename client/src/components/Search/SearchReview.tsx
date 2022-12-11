@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { getSearchReview } from '../../util/apiCollection';
-import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
+import { AiOutlineHeart } from 'react-icons/ai';
 import { ReviewLists } from '../../types/mainPageTypes';
 import { useNavigate } from 'react-router-dom';
 
-const SearchReview = ({ keyword }: any) => {
+const SearchReview = ({ keyword }: { keyword: string }) => {
   const navigate = useNavigate();
   const [searchData, setSearchData] = useState<ReviewLists[]>([]);
   const [hasNext, setHasNext] = useState(false);
