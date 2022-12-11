@@ -19,12 +19,18 @@ const BestReviewList = () => {
   };
 
   useEffect(() => {
+    let isCancelled = false;
     const getReviewData = async () => {
-      const { data } = await getBestReview(7);
-      setSortedReviews(data);
-      setbestReviewCount(data.length);
+      if (!isCancelled) {
+        const { data } = await getBestReview(7);
+        setSortedReviews(data);
+        setbestReviewCount(data.length);
+      }
     };
     getReviewData();
+    return () => {
+      isCancelled = true;
+    };
   }, []);
 
   const onlyText = (data: string) => {

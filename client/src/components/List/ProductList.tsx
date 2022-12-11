@@ -1,13 +1,17 @@
 // [GET]
 import { getProducts } from '../../util/apiCollection';
-import { useEffect, useState, memo } from 'react';
+import { useEffect, useState, memo, useMemo, useCallback } from 'react';
 import { Product } from '../../types/mainPageTypes';
-import MainCategory from '../Selectors/MainCategory';
 import { useNavigate } from 'react-router-dom';
+import MainCategory from '../Selectors/MainCategory';
 import moment from 'moment';
 import { format } from 'timeago.js';
-import { categoryList } from '../Selectors/MainCategory';
 import ScrollToTop from '../../util/ScrollToTop';
+import { GrCube } from 'react-icons/gr';
+import { FiMonitor } from 'react-icons/fi';
+import { BiMouseAlt } from 'react-icons/bi';
+import { BsKeyboard, BsLaptop, BsThreeDots } from 'react-icons/bs';
+import { TfiDesktop } from 'react-icons/tfi';
 
 const ProductList = () => {
   ScrollToTop();
@@ -49,9 +53,21 @@ const ProductList = () => {
     navigate(`/categories/review/${e.currentTarget.id}`);
   };
 
-  const convertToKR = (type: string) => {
+  const categoryList = useMemo(() => {
+    return [
+      { id: 'all', name: '전체 보기', icon: <GrCube size="30" /> },
+      { id: 'desktop', name: '데스크탑', icon: <TfiDesktop size="30" /> },
+      { id: 'laptop', name: '노트북', icon: <BsLaptop size="30" /> },
+      { id: 'monitor', name: '모니터', icon: <FiMonitor size="30" /> },
+      { id: 'keyboard', name: '키보드', icon: <BsKeyboard size="30" /> },
+      { id: 'mouse', name: '마우스', icon: <BiMouseAlt size="30" /> },
+      { id: 'etc', name: 'etc', icon: <BsThreeDots size="30" /> },
+    ];
+  }, []);
+
+  const convertCallback = useCallback((type: string) => {
     return categoryList.filter((el) => el.id === type).map((el) => el.name);
-  };
+  }, []);
 
   const NoElement = () => {
     if (products.length === 0) {
@@ -70,7 +86,11 @@ const ProductList = () => {
   return (
     <div className="bg-zinc-100 dark:bg-DMMainColor dark:text-gray-300 transition-all">
       <div className="mx-auto w-full lg:w-[64rem] flex flex-col items-center px-4">
-        <MainCategory setCategory={setCategory} category={category} />
+        <MainCategory
+          setCategory={setCategory}
+          category={category}
+          categoryList={categoryList}
+        />
       </div>
       <div className="mx-auto w-full lg:w-[64rem] flex flex-wrap pt-4 px-1 pb-4">
         {products.slice(0, viewMore).map((el, idx): JSX.Element => {
@@ -91,7 +111,7 @@ const ProductList = () => {
                 />
               </div>
               <div className="absolute -top-6 w-fit px-3 pt-0.5 pb-1 my-3 rounded-full bg-slate-300 text-slate-600 text-sm font-medium dark:hover:text-gray-700">
-                {convertToKR(el.type.toLowerCase())}
+                {convertCallback(el.type.toLowerCase())}
               </div>
               <div className="p-4 pb-6 font-medium">
                 <div className="line-clamp-1 ">{el.name}</div>

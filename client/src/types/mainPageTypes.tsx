@@ -119,6 +119,7 @@ export interface CommentsProps {
 export interface CategoryProps {
   setCategory: Dispatch<SetStateAction<string>>;
   category: string;
+  categoryList: { id: string; name: string; icon: JSX.Element }[];
 }
 
 export interface SubCommentProps {
