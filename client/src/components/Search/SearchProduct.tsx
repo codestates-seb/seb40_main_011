@@ -1,28 +1,26 @@
 import { getSearchProduct } from '../../util/apiCollection';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { Product } from '../../types/mainPageTypes';
 import { useNavigate } from 'react-router-dom';
 import { FaChevronRight, FaChevronLeft } from 'react-icons/fa';
 
-const SearchProduct = ({ keyword }: any) => {
+const SearchProduct = ({ keyword }: { keyword: string }) => {
   const navigate = useNavigate();
   const [products, setProducts] = useState<Product[]>([]);
-  const [category, setCategory] = useState('all');
-  const [totalPage, setTotalPage] = useState(0);
+  const [totalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const pageAmount = {
-    page: '0',
-    size: '9',
-  };
-
-  useEffect(() => {
-    const getProductData = async () => {
+  const fetchProductData = useMemo(() => {
+    const fetchData = async () => {
       const { data } = await getSearchProduct(keyword);
       setProducts(data.reviewLists);
     };
-    getProductData();
+    return fetchData;
   }, [keyword]);
+
+  useEffect(() => {
+    fetchProductData();
+  }, [fetchProductData]);
 
   const onProductClick = (e: React.MouseEvent<HTMLElement>) => {
     navigate(`/categories/review/${e.currentTarget.id}`);
@@ -33,7 +31,7 @@ const SearchProduct = ({ keyword }: any) => {
     if (e.currentTarget.id === 'down' && currentPage > 1) {
       setCurrentPage(currentPage - 1);
     }
-    if (e.currentTarget.id === 'up' && currentPage < totalPage) {
+    if (e.currentTarget.id === 'up' && currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
     }
   };
@@ -55,15 +53,16 @@ const SearchProduct = ({ keyword }: any) => {
     <div className="flex flex-col items-center justify-center w-full lg:w-[64rem] mx-auto bg-zinc-100 dark:bg-DMMainColor px-4">
       <div className="mt-8 md:mt-16 mb-4 justify-start w-full text-3xl font-bold dark:text-white tracking-tighter">
         # {keyword}
-        <span className="font-normal dark:text-white/40">제품 검색 결과</span>
+        <span className="font-normal dark:text-white/40"> 제품 검색 결과</span>
       </div>
       <NoResult />
-      <div className="mb-6 flex flex-row w-full">
+      <div className="mb-6 flex flex-row w-full max-sm:flex-col">
         {products?.map((el, idx) => {
           return (
             <div
               key={idx}
-              className="group flex flex-col sm:flex-[1_1_40%] lg:flex-[1_1_30%] flex-[1_1_50%] my-1 hover:bg-white dark:hover:bg-DMSubColor rounded-3xl dark:hover:text-white"
+              className="mx-2 
+              group flex flex-col sm:flex-[1_1_40%] lg:flex-[1_1_30%] flex-[1_1_50%] my-1 hover:bg-white dark:hover:bg-DMSubColor rounded-3xl dark:hover:text-white "
             >
               <div
                 role="button"
@@ -95,7 +94,7 @@ const SearchProduct = ({ keyword }: any) => {
         })}
       </div>
       <div className="w-full">
-        {totalPage > 1 ? (
+        {totalPages > 1 ? (
           <div className="flex p-4 justify-center">
             <button
               onClick={onPageClick}
@@ -107,7 +106,7 @@ const SearchProduct = ({ keyword }: any) => {
             <div className="mx-16 font-bold text-xl flex items-center">
               <div className="p-2">{currentPage}</div>
               <div className="p-2">/</div>
-              <div className="text-gray-500 p-2">{totalPage}</div>
+              <div className="text-gray-500 p-2">{totalPages}</div>
             </div>
             <button
               onClick={onPageClick}
