@@ -11,16 +11,13 @@ const QuestionList = () => {
 
   useEffect(() => {
     const getQuestionData = async () => {
-      const { data } = await fetchQuestionData(5, false, true);
-      setQuestions(data.cards);
-    };
-    getQuestionData();
-  }, []);
-
-  useEffect(() => {
-    const getQuestionData = async () => {
-      const { data } = await fetchQuestionData(5, false, false);
-      setAnswerNeed(data.cards);
+      const [{ data: questionsData }, { data: answerNeedData }] =
+        await Promise.all([
+          fetchQuestionData(5, false, true),
+          fetchQuestionData(5, false, false),
+        ]);
+      setQuestions(questionsData.cards);
+      setAnswerNeed(answerNeedData.cards);
     };
     getQuestionData();
   }, []);

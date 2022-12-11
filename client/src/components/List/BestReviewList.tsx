@@ -1,5 +1,5 @@
 import { BestReview } from '../../types/mainPageTypes';
-import React, { useEffect, useState, memo } from 'react';
+import React, { useEffect, useState, memo, useMemo } from 'react';
 import { getBestReview } from '../../util/apiCollection';
 import { useNavigate } from 'react-router-dom';
 import { FaChevronRight } from 'react-icons/fa';
@@ -18,26 +18,23 @@ const BestReviewList = () => {
     return new Date(createdAt).toLocaleDateString('ko-KR');
   };
 
+  const getReviewData = async () => {
+    const { data } = await getBestReview(7);
+    setSortedReviews(data);
+    setbestReviewCount(data.length);
+  };
+
   useEffect(() => {
-    let isCancelled = false;
-    const getReviewData = async () => {
-      if (!isCancelled) {
-        const { data } = await getBestReview(7);
-        setSortedReviews(data);
-        setbestReviewCount(data.length);
-      }
-    };
     getReviewData();
-    return () => {
-      isCancelled = true;
-    };
   }, []);
 
-  const onlyText = (data: string) => {
-    return data
-      .replace(/(\[.*\])(\((http)(?:s)?(:\/\/).*\))/g, ' ')
-      .replace(/[^ㄱ-ㅎ가-힣a-zA-Z0-9]/g, ' ');
-  };
+  const onlyText = useMemo(() => {
+    return (data: string) => {
+      return data
+        .replace(/(\[.*\])(\((http)(?:s)?(:\/\/).*\))/g, ' ')
+        .replace(/[^ㄱ-ㅎ가-힣a-zA-Z0-9]/g, ' ');
+    };
+  }, []);
 
   const onClickPrev = () => {
     if (selectedIdx === 0) {
@@ -68,13 +65,17 @@ const BestReviewList = () => {
     }
   };
 
-  setTimeout(() => {
-    if (selectedIdx === 6) {
-      setSelectedIdx(0);
-    } else {
-      setSelectedIdx(selectedIdx + 1);
-    }
-  }, 5000);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (selectedIdx === 6) {
+        setSelectedIdx(0);
+      } else {
+        setSelectedIdx(selectedIdx + 1);
+      }
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [selectedIdx]);
 
   return (
     <div className="pt-8 bg-zinc-100 dark:bg-DMMainColor dark:text-gray-300 transition-all">
