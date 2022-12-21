@@ -89,7 +89,7 @@ function Header() {
   const MobileSearch = () => {
     return (
       <button
-        className="sm:hidden flex items-center justify-center rounded-full material-icons w-14 h-14 hover:bg-slate-100 dark:hover:bg-DMThrColor"
+        className=" flex items-center justify-center rounded-full material-icons w-14 h-14 hover:bg-slate-100 dark:hover:bg-DMThrColor"
         onClick={handleSearchBar}
       >
         <BiSearch className="text-3xl" />

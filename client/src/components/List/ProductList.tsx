@@ -22,6 +22,10 @@ const ProductList = () => {
   const [viewMore, setViewMore] = useState(9);
 
   useEffect(() => {
+    console.log('hi');
+  }, []);
+
+  useEffect(() => {
     let isCancelled = false;
     const getProductData = async () => {
       const { data } = await getProducts();

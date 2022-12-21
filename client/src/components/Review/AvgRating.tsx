@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { getSnackStats } from '../../util/apiCollection';
 import { AiFillStar } from '../../icons';
 
@@ -6,6 +6,22 @@ const AvgRating = ({ productId }: any) => {
   const [snackReviewStats, setSnackReviewStats] = useState<any>([]);
   const [reviewTotal, setReviewTotal] = useState(0);
   const [totalAverage, setTotalAverage] = useState<number | undefined>(0);
+
+  const getAverage = useCallback(() => {
+    if (snackReviewStats.length === 0) return;
+    else {
+      const { avgCe, avgDsn, avgPerf, avgQlt, avgStf } = snackReviewStats;
+      const result = (avgCe + avgDsn + avgPerf + avgQlt + avgStf) / 5;
+      return result;
+    }
+  }, [snackReviewStats]);
+
+  const getDecial = useCallback((num: number | undefined) => {
+    if (num !== undefined) {
+      const result = Math.round((num + Number.EPSILON) * 10) / 10;
+      return result;
+    }
+  }, []);
 
   useEffect(() => {
     const getSnackData = async () => {
@@ -15,23 +31,7 @@ const AvgRating = ({ productId }: any) => {
       await setTotalAverage(getDecial(getAverage()));
     };
     getSnackData();
-  }, [totalAverage]);
-
-  const getAverage = () => {
-    if (snackReviewStats.length === 0) return;
-    else {
-      const { avgCe, avgDsn, avgPerf, avgQlt, avgStf } = snackReviewStats;
-      const result = (avgCe + avgDsn + avgPerf + avgQlt + avgStf) / 5;
-      return result;
-    }
-  };
-
-  const getDecial = (num: number | undefined) => {
-    if (num !== undefined) {
-      const result = Math.round((num + Number.EPSILON) * 10) / 10;
-      return result;
-    }
-  };
+  }, [getDecial, getAverage]);
 
   return (
     <div className="flex flex-col md:mt-2 md:flex-row dark:text-gray-300">

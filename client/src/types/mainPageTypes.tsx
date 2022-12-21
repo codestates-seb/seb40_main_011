@@ -1,6 +1,4 @@
-import exp from 'constants';
 import { Dispatch, SetStateAction } from 'react';
-import { createDeflate } from 'zlib';
 
 export interface QuestionContent {
   content: string;
