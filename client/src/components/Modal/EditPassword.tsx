@@ -41,11 +41,6 @@ const EditPassword = ({
 
   const handlePrePassword = (e: any) => {
     setPrePassword(e.target.value);
-    // if (!prePassword || !passwordRegex.test(prePassword)) {
-    //   setPrePasswordError(true);
-    // } else {
-    //   setPrePasswordError(false);
-    // }
   };
   const handlePassword = (e: any) => {
     const passwordCurrent = e.target.value;
@@ -85,7 +80,6 @@ const EditPassword = ({
         newCheckPassword: passwordCheck,
       };
       const submitEditPassword = await editPassword(data);
-      // console.log(submitEditPassword);
       switch (submitEditPassword.status) {
         case 200:
           location.reload();
@@ -103,11 +97,6 @@ const EditPassword = ({
         default:
       }
     }
-    // else if (passwordError) {
-    //   alert('숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요');
-    // } else if (passwordCheckError) {
-    //   alert('비밀번호가 일치하지 않습니다');
-    // }
   };
 
   return (
