@@ -7,7 +7,7 @@ spring:
       ddl-auto: none
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://${DB_HOST_NAME}/${DB_STORAGE_NAME}?characterEncoding=UTF-8&serverTimezone=UTC
+    url: jdbc:mariadb://${DB_HOST_NAME}/${DB_STORAGE_NAME}?characterEncoding=UTF-8&serverTimezone=Asia/Seoul
     username: ${DB_AUTH_ID}
     password: ${DB_AUTH_PASSWORD}
   redis:
@@ -54,8 +54,8 @@ spring:
             authorizationGrantType: authorization_code
             redirectUri: https://codetech.nworld.dev/login/oauth2/code/kakao
             scope:
-                - profile_nickname
-                - profile_image
+              - profile_nickname
+              - profile_image
             clientName: kakao
   mail:
     host: smtp.naver.com
