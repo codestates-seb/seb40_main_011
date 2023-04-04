@@ -1,6 +1,6 @@
 //리뷰 작성 페이지
 
-import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import React, { ChangeEvent, useCallback, useState } from 'react';
 import '../components/common.css';
 import CategorySelector from '../components/Selectors/CategorySelector';
 import ProductSelector from '../components/Selectors/ProductSelector';
@@ -10,13 +10,11 @@ import AddProduct from '../components/Modal/AddProduct';
 import ThumbnailModal from '../components/Modal/ThumbnailModal';
 import useCategories from '../store/categories';
 import { editReviewProps } from '../types/mainPageTypes';
-import { useDarkMode } from '../store/darkMode';
 
 const WriteReview = ({ isEditMode }: editReviewProps) => {
   const { title, setTitle, thumbnailImg } = useReview();
   const {
     mainCategorySpread,
-    setMainCategorySpread,
     productCategorySpread,
     setProductCategorySpread,
   } = useCategories();
