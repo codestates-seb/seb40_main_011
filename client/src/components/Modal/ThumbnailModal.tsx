@@ -121,12 +121,12 @@ const ThumbnailModal = ({ openThum, setOpenThum }: ThumbModalProps) => {
                     </div>
                   </div>
                 ) : (
-                  <div className="flex items-center justify-center mx-auto my-0 overflow-hidden rounded-lg w-fullrounded-lg bg-slate-200 h-72">
+                  <div className="flex items-center justify-center w-full mx-auto my-0 overflow-hidden rounded-lg bg-slate-200 h-72">
                     <div className="m-auto">
                       <img
                         src={thumbnailCheck}
                         alt=""
-                        className="relative object-cover w-full h-full"
+                        className="relative object-cover w-[40rem] h-72"
                       />
                     </div>
                     <button

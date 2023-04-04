@@ -39,6 +39,7 @@ const AddProduct = ({ isModal, setIsModal }: ModalProps) => {
   const [productImg, setproductImg] = useState('/img');
   const [img, setImg] = useState(false);
   const [uploadImg, setUploadImg] = useState('');
+
   //이미지 올리는 함수
   const handleChangeImg = async (e: any) => {
     const reader = new FileReader();
@@ -158,7 +159,7 @@ const AddProduct = ({ isModal, setIsModal }: ModalProps) => {
                       <img
                         src={productImg}
                         alt=""
-                        className="relative object-cover w-full h-full"
+                        className="relative object-cover w-[26rem] h-28"
                       />
                     </div>
                     <button
