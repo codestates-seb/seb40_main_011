@@ -7,38 +7,6 @@ import { AiFillCaretDown } from 'react-icons/ai';
 import { AiFillCaretUp } from 'react-icons/ai';
 import useCategories from '../../store/categories';
 
-interface categoryType {
-  id: string;
-  title: string;
-}
-
-const categoryArr = [
-  {
-    id: 'DESKTOP',
-    title: 'Desktop',
-  },
-  {
-    id: 'LAPTOP',
-    title: 'Laptop',
-  },
-  {
-    id: 'MONITOR',
-    title: 'Monitor',
-  },
-  {
-    id: 'KEYBOARD',
-    title: 'Keyboard',
-  },
-  {
-    id: 'MOUSE',
-    title: 'Mouse',
-  },
-  {
-    id: 'ETC',
-    title: 'Etc',
-  },
-];
-
 const CategorySelectors = () => {
   //대분류 셀렉터 클릭 유뮤 저장, 상태에 따라 드롭다운
   //셀렉터에서 클릭한 것 이름 저장
@@ -96,16 +64,48 @@ const CategorySelectors = () => {
           onClick={handleSelectClick}
           className="absolute z-30 w-full overflow-hidden bg-white border top-10 rounded-bl-xl rounded-br-xl drop-shadow-md dark:bg-DMMainTextColor dark:border-DMSubTextColor dark:text-DMThrTextColor"
         >
-          {categoryArr.map((item: categoryType) => (
-            <button
-              id={item.id}
-              key={item.id}
-              onClick={handleButClick}
-              className="flex items-center w-full px-4 pt-2 pb-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-DMThrColor dark:text-white"
-            >
-              {item.title}
-            </button>
-          ))}
+          <button
+            onClick={handleButClick}
+            id="DESKTOP"
+            className="flex items-center w-full px-4 pt-2 pb-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-DMThrColor dark:text-white"
+          >
+            Desktop
+          </button>
+          <button
+            onClick={handleButClick}
+            id="LAPTOP"
+            className="flex items-center w-full px-4 pt-2 pb-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-DMThrColor dark:text-white"
+          >
+            Laptop
+          </button>
+          <button
+            onClick={handleButClick}
+            id="MONITOR"
+            className="flex items-center w-full px-4 pt-2 pb-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-DMThrColor dark:text-white"
+          >
+            Monitor
+          </button>
+          <button
+            onClick={handleButClick}
+            id="KEYBOARD"
+            className="flex items-center w-full px-4 pt-2 pb-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-DMThrColor dark:text-white"
+          >
+            Keyboard
+          </button>
+          <button
+            onClick={handleButClick}
+            id="MOUSE"
+            className="flex items-center w-full px-4 pt-2 pb-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-DMThrColor dark:text-white"
+          >
+            Mouse
+          </button>
+          <button
+            onClick={handleButClick}
+            id="ETC"
+            className="flex items-center w-full px-4 pt-2 pb-3 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-DMThrColor dark:text-white"
+          >
+            Etc
+          </button>
         </div>
       )}
     </div>

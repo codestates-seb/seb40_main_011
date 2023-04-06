@@ -113,23 +113,12 @@ const RvDetail = () => {
 
     return (
       <div className="flex items-center justify-between w-full px-5 md:px-12 ">
-<<<<<<< Updated upstream
         <div className="flex items-center">
           <img
             className="w-12 h-12 rounded-2xl"
             src={`https://codetech.nworld.dev${review?.userImage}`}
           />
           <div className="flex flex-col pl-3 pb-1">
-=======
-        <div className="flex items-center p-3 bg-white rounded-3xl dark:bg-DMThrColor">
-          <div>
-            <img
-              className="w-12 h-12 rounded-2xl"
-              src={`https://codetech.nworld.dev${review?.userImage}`}
-            />
-          </div>
-          <div className="flex flex-col pb-1 pl-2">
->>>>>>> Stashed changes
             <span className="pt-0.5 font-medium text-black/70 text-lg dark:text-white">
               {review?.writer}
             </span>
@@ -160,8 +149,6 @@ const RvDetail = () => {
     );
   };
 
-  console.log(review);
-
   return (
     <>
       {showModal && (
@@ -172,19 +159,11 @@ const RvDetail = () => {
         />
       )}
       <HandleSpinner />
-<<<<<<< Updated upstream
       <div className="bg-zinc-100 py-8 dark:bg-DMMainColor dark:text-white transition-all ease-in">
-=======
-      <div className="py-8 transition-all ease-in bg-zinc-100 dark:bg-DMSubColor dark:text-white">
->>>>>>> Stashed changes
         <div className="flex flex-col justify-center mx-auto w-full lg:w-[64rem] px-4 ">
-          <div className="flex justify-between w-full mb-4">
+          <div className="w-full flex justify-between mb-4">
             <div
-<<<<<<< Updated upstream
               className=" dark:bg-DMSubColor dark:hover:bg-black/60 dark:text-white grow-0 shrink-1 w-fit flex items-center h-12 pl-4 pr-5 md:pr-8 font-bold text-black/40 hover:text-black/70 duration-150 ease-in-out bg-white rounded-full hover:bg-slate-300 hover:text-slate-700"
-=======
-              className="flex items-center h-12 pl-4 pr-4 font-bold duration-150 ease-in-out bg-white rounded-full dark:bg-DMMainColor dark:text-white grow-0 shrink-1 w-fit md:pr-8 text-black/40 hover:text-black/70 hover:bg-slate-300 hover:text-slate-700"
->>>>>>> Stashed changes
               role="button"
               onClick={onTypeClick}
             >
@@ -196,7 +175,6 @@ const RvDetail = () => {
                 {review.productName}
               </span>
             </div>
-<<<<<<< Updated upstream
             <div className="text-black/20 flex-none h-12 rounded-full flex items-center pr-5 ml-5 ">
               <AiOutlineEye size="28" className="dark:text-white/40" />
               <div className="font-medium ml-1 pb-0.5 text-lg mr-2 text-black/60 dark:text-white/90">
@@ -205,25 +183,11 @@ const RvDetail = () => {
               <span className="border-l border-zinc-300 dark:border-white/20 mr-3 ml-2 h-4" />
               <AiOutlineHeart size="24" className="dark:text-white/40" />
               <div className="font-medium ml-1 pb-0.5 text-lg text-black/60 dark:text-white/90">
-=======
-            <div className="flex items-center flex-none h-12 pr-5 ml-5 rounded-full text-black/20 dark:text-white">
-              <AiOutlineEye size="28" />
-              <div className="ml-1 pb-0.5 text-lg mr-2 text-black/60 dark:text-white">
-                {review.view}
-              </div>
-              <span className="h-4 ml-2 mr-3 border-l border-zinc-300" />
-              <AiOutlineHeart size="24" />
-              <div className="ml-1 pb-0.5 text-lg text-black/60 dark:text-white">
->>>>>>> Stashed changes
                 {review.recommendNumber}
               </div>
             </div>
           </div>
-<<<<<<< Updated upstream
           <div className="bg-white dark:bg-DMSubColor rounded-t-3xl py-4 md:py-8">
-=======
-          <div className="py-4 bg-white dark:bg-DMForColor rounded-t-3xl md:py-8">
->>>>>>> Stashed changes
             <ReviewInfo />
             <div className="flex justify-center px-5 md:px-12 pt-6 md:pt-12 pb-6 text-5xl leading-tight tracking-tight font-bold max-md:text-[2rem] break-keep text-center">
               {review?.title}
@@ -238,13 +202,8 @@ const RvDetail = () => {
               </div>
             )}
           </div>
-<<<<<<< Updated upstream
           <section className="bg-white rounded-b-3xl flex flex-col items-center px-5 md:px-12 dark:bg-DMSubColor ">
             <div className="w-full md:px-12 my-6 md:my-12 whitespace-pre-wrap flex flex-col justify-center">
-=======
-          <section className="flex flex-col items-center px-5 bg-white rounded-b-3xl md:px-12 dark:bg-DMForColor ">
-            <div className="flex flex-col justify-center w-full my-6 whitespace-pre-wrap md:px-12 md:my-12">
->>>>>>> Stashed changes
               <ConvertedContent markdown={review.content} />
               <HandleLike
                 userId={review.userId}
@@ -254,13 +213,8 @@ const RvDetail = () => {
           </section>
         </div>
         <div className="flex flex-col justify-center mx-auto w-full lg:w-[64rem] px-4 mt-4 ">
-<<<<<<< Updated upstream
           <div className="flex flex-col items-center bg-white rounded-3xl px-5 md:px-12 dark:bg-DMSubColor">
             <div className="flex justify-start w-full text-2xl font-bold mb-4 mt-6 md:mt-8 dark:text-white">
-=======
-          <div className="flex flex-col items-center px-5 bg-white rounded-3xl md:px-12 dark:bg-DMMainColor">
-            <div className="flex justify-start w-full mt-6 mb-4 text-2xl font-bold md:mt-8 dark:text-white">
->>>>>>> Stashed changes
               Comment
             </div>
             <CommentView />
