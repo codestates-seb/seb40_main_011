@@ -4,7 +4,7 @@ module.exports = function (app) {
   app.use(
     '/api',
     createProxyMiddleware({
-      target: 'https://codetech.nworld.dev',
+      target: 'https://codetech.laterre.me',
       changeOrigin: true,
     })
   );
