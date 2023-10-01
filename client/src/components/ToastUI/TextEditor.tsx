@@ -17,6 +17,7 @@ import { loginRefresh } from '../../util/loginRefresh';
 import Confirm from '../Modal/Confirm';
 import useCategories from '../../store/categories';
 import { useDarkMode } from '../../store/darkMode';
+import { domain } from '../../constant';
 
 function TextEditor() {
   const params = useParams();
@@ -117,7 +118,7 @@ function TextEditor() {
               formData.append('file', blob);
               const imageURL = await uploadEditorImage(formData);
               const imageUrlData = imageURL.data;
-              callback(`https://codetech.nworld.dev${imageUrlData}`, '');
+              callback(`${domain}${imageUrlData}`, '');
             },
           }}
         />
@@ -230,7 +231,7 @@ function TextEditor() {
             formData.append('file', blob);
             const imageURL = await uploadEditorImage(formData);
             const imageUrlData = imageURL.data;
-            callback(`https://codetech.nworld.dev${imageUrlData}`, '');
+            callback(`${domain}${imageUrlData}`, '');
           },
         }}
       />

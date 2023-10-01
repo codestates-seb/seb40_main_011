@@ -1,3 +1,5 @@
+import { domain } from '../../constant';
+
 export default function Avatar(data: { image: string | undefined }) {
   const { image } = data;
   return (
@@ -5,7 +7,7 @@ export default function Avatar(data: { image: string | undefined }) {
       src={
         image === 'null' || image === null
           ? require('../../images/placeholder-img-profile.png')
-          : `https://codetech.nworld.dev${image}`
+          : `${domain}${image}`
       }
       alt="user-image"
       className="w-12 h-12 rounded-2xl"

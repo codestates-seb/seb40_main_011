@@ -3,6 +3,7 @@ import { useEffect, useState, useMemo } from 'react';
 import { Product } from '../../types/mainPageTypes';
 import { useNavigate } from 'react-router-dom';
 import { FaChevronRight, FaChevronLeft } from 'react-icons/fa';
+import { domain } from '../../constant';
 
 const SearchProduct = ({ keyword }: { keyword: string }) => {
   const navigate = useNavigate();
@@ -78,7 +79,7 @@ const SearchProduct = ({ keyword }: { keyword: string }) => {
                 ) : (
                   <img
                     className="object-cover w-full h-full scale-105"
-                    src={`https://codetech.nworld.dev${el.thumbnail}`}
+                    src={`${domain}${el.thumbnail}`}
                   />
                 )}
               </div>

@@ -6,15 +6,14 @@ import { EditProfileImgModalHandler } from '../MyPage/Profile';
 import { UserProfile } from '../MyPage/Profile';
 import { editProfileImg } from '../../util/apiCollection';
 import { loginRefresh } from '../../util/loginRefresh';
+import { domain } from '../../constant';
 
 const EditProgileImg = (
   // { openEditProfileImgModalHandler }: EditProfileImgModalHandler,
   { openEditProfileImgModalHandler, userProfileData }: any
 ) => {
   // 이미지 전송 후 이미지 리렌더링
-  const [userImg, setUserImg] = useState(
-    `https://codetech.nworld.dev${userProfileData?.image}`
-  );
+  const [userImg, setUserImg] = useState(`${domain}${userProfileData?.image}`);
   const [uploadImg, setUploadImg] = useState();
   const [notiNew, setNotiNew] = useState(false);
   const navigate = useNavigate();

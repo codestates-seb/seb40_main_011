@@ -8,6 +8,7 @@ import Avatar from '../Avatar/Avatar';
 import { useNavigate } from 'react-router-dom';
 import { useIsLogin } from '../../store/login';
 import { AiFillStar, RiChat3Line, RiHeart3Line } from '../../icons';
+import { domain } from '../../constant';
 
 interface ReviewDataType {
   hasNext: boolean | undefined;
@@ -84,7 +85,7 @@ const DetailReview = ({
             <div className="flex flex-col mb-8 md:flex-row md:mb-10">
               <div className="w-full aspect-[16/9] md:h-48 md:w-2/5 lg:w-1/3 overflow-hidden rounded-2xl md:rounded-3xl flex-none flex items-center mr-6">
                 <img
-                  src={`https://codetech.nworld.dev${el.thumbnail}`}
+                  src={`${domain}${el.thumbnail}`}
                   alt=""
                   className="w-full scale-105"
                 />

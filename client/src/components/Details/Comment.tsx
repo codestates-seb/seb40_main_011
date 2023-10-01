@@ -8,6 +8,7 @@ import { useIsLogin } from '../../store/login';
 import { loginRefresh } from '../../util/loginRefresh';
 import { useParams, useNavigate } from 'react-router-dom';
 import { postComment, editComment } from '../../util/apiCollection';
+import { domain } from '../../constant';
 
 export interface count {
   count: number;
@@ -164,7 +165,7 @@ export default function Comment({ reviewComments }: CommentProps) {
         <div className="my-2">
           <div className="w-full flex my-2 ">
             <img
-              src={`https://codetech.nworld.dev${reviewComments?.userImage}`}
+              src={`${domain}${reviewComments?.userImage}`}
               alt=""
               className="flex-none w-12 h-12 rounded-2xl mr-2 ring ring-zinc-100 dark:ring-slate-600"
             />

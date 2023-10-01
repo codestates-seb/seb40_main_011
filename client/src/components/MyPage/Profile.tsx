@@ -7,6 +7,7 @@ import EditProfileImg from '../Modal/EditProfileImg';
 import { getUserProfile } from '../../util/apiCollection';
 import { loginRefresh } from '../../util/loginRefresh';
 import { useNavigate } from 'react-router-dom';
+import { domain } from '../../constant';
 
 export interface UserProfile {
   email: string | undefined;
@@ -101,7 +102,7 @@ const Profile = () => {
               userProfileData?.image === 'null' ||
               userProfileData?.image === null
                 ? require('../../images/placeholder-img-profile.png')
-                : `https://codetech.nworld.dev${userProfileData?.image}`
+                : `${domain}${userProfileData?.image}`
             }
             alt=""
             className="object-cover border-none rounded-full bg-gray-400/90 w-32 md:w-48 h-32 md:h-48 md:mr-8"

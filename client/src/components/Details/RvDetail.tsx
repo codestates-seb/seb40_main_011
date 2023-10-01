@@ -18,6 +18,7 @@ import { BsArrowLeft } from 'react-icons/bs';
 import { AiOutlineEye } from '../../icons';
 import '@toast-ui/editor/dist/theme/toastui-editor-dark.css';
 import { useDarkMode } from '../../store/darkMode';
+import { domain } from '../../constant';
 interface markdownProps {
   markdown: string | undefined;
 }
@@ -116,7 +117,7 @@ const RvDetail = () => {
         <div className="flex items-center">
           <img
             className="w-12 h-12 rounded-2xl"
-            src={`https://codetech.nworld.dev${review?.userImage}`}
+            src={`${domain}${review?.userImage}`}
           />
           <div className="flex flex-col pl-3 pb-1">
             <span className="pt-0.5 font-medium text-black/70 text-lg dark:text-white">
@@ -198,7 +199,7 @@ const RvDetail = () => {
               <div
                 className={`bg-white w-full flex justify-center items-center dark:bg-DMSubColor`}
               >
-                <img src={`https://codetech.nworld.dev${review?.thumbnail}`} />
+                <img src={`${domain}${review?.thumbnail}`} />
               </div>
             )}
           </div>

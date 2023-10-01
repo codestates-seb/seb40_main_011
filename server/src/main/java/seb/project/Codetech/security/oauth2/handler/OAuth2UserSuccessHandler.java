@@ -80,7 +80,7 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 			log.info(authentication.getPrincipal());
 			log.info(oAuth2User.getAttributes());
 			HashMap userInfo = oAuth2User.getAttribute("properties");
-			String username = oAuth2User.getAttribute("id").toString()+"@nworld.dev";
+			String username = oAuth2User.getAttribute("id").toString()+"@laterre.dev";
 			String nickname = userInfo.get("nickname").toString();
 			String provider = "kakao";
 			String password = oAuth2User.getAttribute("id").toString()+userInfo.get("profile_image").toString();
@@ -113,7 +113,7 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 			.newInstance()
 			.scheme("https")
 //			.host("localhost")
-			.host("codetech.nworld.dev")
+			.host("codetech.laterre.dev")
 //			.path("/api/token")
 //				.port(3000)
 				.path("/social")

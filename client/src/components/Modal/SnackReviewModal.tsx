@@ -146,11 +146,6 @@ const SnackReviewModal = ({ selectedReview, openModalHandler }: any) => {
           <div className="flex justify-start items-top">
             <div className="pt-3 pl-2">
               <Avatar image={el.image} />
-              {/* <img
-              src={`https://codetech.nworld.dev${el?.image}`}
-              alt=""
-              className="w-16 h-16 rounded-full bg-slate-200"
-            /> */}
             </div>
             <div className="flex flex-col items-center justify-start pt-1.5 ml-3">
               <div className="pt-1.5 mr-auto">{el.nickname}</div>
