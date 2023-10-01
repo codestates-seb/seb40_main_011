@@ -12,6 +12,7 @@ import { FiMonitor } from 'react-icons/fi';
 import { BiMouseAlt } from 'react-icons/bi';
 import { BsKeyboard, BsLaptop, BsThreeDots } from 'react-icons/bs';
 import { TfiDesktop } from 'react-icons/tfi';
+import { domain } from '../../constant';
 
 const ProductList = () => {
   ScrollToTop();
@@ -110,7 +111,7 @@ const ProductList = () => {
               <NoElement />
               <div className="overflow-hidden aspect-[16/9] bg-slate-200 rounded-3xl group-hover:rounded-b-none">
                 <img
-                  src={`https://codetech.nworld.dev${thumbnail}`}
+                  src={`${domain}${thumbnail}`}
                   className="object-cover w-full h-full scale-105"
                 />
               </div>

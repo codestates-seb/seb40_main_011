@@ -3,6 +3,7 @@ import { getSearchReview } from '../../util/apiCollection';
 import { AiOutlineHeart } from 'react-icons/ai';
 import { ReviewLists } from '../../types/mainPageTypes';
 import { useNavigate } from 'react-router-dom';
+import { domain } from '../../constant';
 
 const SearchReview = ({ keyword }: { keyword: string }) => {
   const navigate = useNavigate();
@@ -58,7 +59,7 @@ const SearchReview = ({ keyword }: { keyword: string }) => {
             <div className="w-full aspect-[16/9] md:h-48 md:w-2/5 lg:w-1/3 overflow-hidden rounded-2xl md:rounded-3xl flex-none flex items-center mr-6">
               <img
                 className="w-full scale-105"
-                src={`https://codetech.nworld.dev${el.thumbnail}`}
+                src={`${domain}${el.thumbnail}`}
                 id={el.id}
               />
             </div>
@@ -78,7 +79,7 @@ const SearchReview = ({ keyword }: { keyword: string }) => {
                 <div className="flex items-center">
                   <img
                     className="rounded-full w-10 h-10 m-2"
-                    src={`https://codetech.nworld.dev${el.userImage}`}
+                    src={`${domain}${el.userImage}`}
                   />
                   <div className="text-lg font-medium tracking-tight text-black/80 dark:text-gray-300">
                     {el.writer}

@@ -15,6 +15,7 @@ import {
 import { emailRegex, passwordRegex } from '../util/Regex';
 import Confirm from '../components/Modal/Confirm';
 import { useDarkMode } from '../store/darkMode';
+import { domain } from '../constant';
 
 export default function Login() {
   // 홈으로 이동
@@ -106,21 +107,18 @@ export default function Login() {
 
   // naver.com login
   const handleNaver = () => {
-    window.location.href =
-      'https://codetech.nworld.dev/api/oauth2/authorize/naver';
+    window.location.href = `${domain}/api/oauth2/authorize/naver`;
     return;
   };
 
   // google login
   const handleGoogle = () => {
-    window.location.href =
-      'https://codetech.nworld.dev/api/oauth2/authorize/google';
+    window.location.href = `${domain}/api/oauth2/authorize/google`;
   };
 
   // google login
   const handleKakao = () => {
-    window.location.href =
-      'https://codetech.nworld.dev/api/oauth2/authorize/kakao';
+    window.location.href = `${domain}/api/oauth2/authorize/kakao`;
     return;
   };
 

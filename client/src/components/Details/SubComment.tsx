@@ -5,6 +5,7 @@ import { loginRefresh } from '../../util/loginRefresh';
 import { editComment } from '../../util/apiCollection';
 import { useIsLogin } from '../../store/login';
 import { useNavigate } from 'react-router-dom';
+import { domain } from '../../constant';
 
 const SubComment = ({ child }: SubCommentProps) => {
   const navigate = useNavigate();
@@ -53,7 +54,7 @@ const SubComment = ({ child }: SubCommentProps) => {
       {comment !== '작성자가 삭제한 댓글입니다.' ? (
         <div className="w-full flex my-4 mr-16">
           <img
-            src={`https://codetech.nworld.dev${child?.userImage}`}
+            src={`${domain}${child?.userImage}`}
             alt=""
             className="flex-none w-12 h-12 rounded-2xl mr-2 ring ring-zinc-100 dark:ring-slate-600"
           />

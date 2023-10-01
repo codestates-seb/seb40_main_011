@@ -6,6 +6,7 @@ import { FaChevronRight } from 'react-icons/fa';
 import { format } from 'timeago.js';
 import { BsArrowRight } from 'react-icons/bs';
 import { useIsLogin } from '../../store/login';
+import { domain } from '../../constant';
 
 const BestReviewList = () => {
   const { isLogin } = useIsLogin();
@@ -100,7 +101,7 @@ const BestReviewList = () => {
               <div className="flex items-center">
                 <img
                   className="w-12 h-12 mr-3 rounded-2xl"
-                  src={`https://codetech.nworld.dev${sortedReviews[selectedIdx]?.image}`}
+                  src={`${domain}${sortedReviews[selectedIdx]?.image}`}
                 />
                 <div>
                   <span className="pt-0.5 font-medium text-gray-600 dark:text-white/90">
