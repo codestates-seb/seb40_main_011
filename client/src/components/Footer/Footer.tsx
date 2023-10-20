@@ -59,7 +59,7 @@ export default function Footer() {
     {
       devRole: 'Back-End',
       name: '김창일',
-      github: 'https://github.com/INewWorldI',
+      github: 'https://github.com/laterre39',
     },
     {
       devRole: 'Back-End',
