@@ -97,7 +97,7 @@ const ProductList = () => {
           categoryList={categoryList}
         />
       </div>
-      <div className="mx-auto w-full lg:w-[64rem] grid sm:grid-cols-2 md:grid-cols-3 pt-4 px-1 pb-4">
+      <div className="mx-auto w-full lg:w-[64rem] grid pt-4 px-1 pb-4">
         {products.slice(0, viewMore).map((el, idx): JSX.Element => {
           const { thumbnail } = el;
           return (
